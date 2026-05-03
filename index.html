@@ -268,6 +268,30 @@ section{position:relative;z-index:5}
 #cta{padding:12rem 5rem 20rem;text-align:center;}
 .cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
+/* FAQ */
+#faq { padding: 10rem 5rem; }
+.faq-grid { max-width: 900px; margin: 4rem auto; display: flex; flex-direction: column; gap: 1.5rem; }
+.faq-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2.5rem; transition: 0.3s; }
+.faq-item:hover { border-color: var(--accent); background: rgba(255,255,255,0.04); }
+.faq-q { font-family: var(--font-h); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 1rem; display: block; }
+.faq-a { font-size: 18px; color: var(--white); line-height: 1.6; font-weight: 300; }
+
+/* Offer Block */
+.offer-block { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 40px; padding: 6rem; margin: 6rem auto; max-width: 1100px; text-align: center; position: relative; overflow: hidden; }
+.offer-block::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: radial-gradient(circle, rgba(255,138,0,0.05) 0%, transparent 70%); pointer-events: none; }
+.offer-h { font-family: var(--font-d); font-size: clamp(32px, 4vw, 54px); font-weight: 300; margin-bottom: 1.5rem; color: var(--white); }
+.offer-sub { font-size: 18px; color: var(--g1); line-height: 1.7; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+/* List Styles */
+.v-list { list-style: none; text-align: left; max-width: 700px; margin: 3rem auto; }
+.v-item { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: flex-start; }
+.v-icon { color: var(--accent); font-size: 20px; margin-top: 3px; }
+.v-text { font-size: 18px; line-height: 1.6; color: var(--white); font-weight: 300; }
+
+/* Why Now Section */
+#why-now { padding: 10rem 5rem; text-align: center; }
+.wn-text { font-family: var(--font-d); font-size: clamp(28px, 3.5vw, 48px); line-height: 1.3; font-weight: 300; max-width: 900px; margin: 0 auto; color: var(--white); }
+
 /* Reveal */
 .rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(0.16, 1, 0.3, 1)}
 .rv.on{opacity:1;transform:translateY(0)}
@@ -284,7 +308,9 @@ section{position:relative;z-index:5}
   .pr-steps::before{display:none}
   .st-grid{grid-template-columns:1fr 1fr}
   #hero { padding-top: 10rem; }
-  #manifesto, #portfolio, #transform, #templates, #services, #process, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  #context, #portfolio, #solution, #templates, #results, #offer, #why-now, #faq, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .offer-block { padding: 4rem 2rem; border-radius: 30px; }
+  .v-text { font-size: 16px; }
   
   .tr-cols { display: none; }
   .tr-mobile-list { display: block; max-width: 600px; margin: 0 auto; }
@@ -534,34 +560,46 @@ body.loading { overflow: hidden; }
 
 <section id="hero">
   <div class="h-bg-glow"></div>
-  <!-- Hero Content Force Visible -->
   <div class="h-content">
+    <span class="h-eyebrow rv" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 14px; letter-spacing: 2px; text-transform: none;">Ha a céged már növekszik, de a folyamataid kezdenek lemaradni:</span>
     <div class="logo-block rv">
-      <h1 class="logo-ll" data-i18n="hero_main_title">Életre keltjük az <em>elképzeléseid</em></h1>
+      <h1 class="logo-ll">Hatékonyabb működés <em>egyedi AI</em> rendszerekkel</h1>
     </div>
     <div class="h-rule rv"></div>
-    <span class="h-eyebrow rv" data-i18n="hero_eyebrow" style="display:none;"></span>
-    <p class="h-tagline rv" data-i18n="hero_sub">Személyre szabott digitális transzformáció KKV-knak, határok nélkül</p>
+    <p class="h-tagline rv">Segítünk automatizálni a folyamataidat, hogy kevesebb manuális munkával, nagyobb átláthatóság mellett működj.</p>
     <div class="h-btns rv">
-      <a href="contact.html" class="btn-p">Kezdjük el</a>
+      <a href="contact.html" class="btn-p">Foglalj időpontot</a>
       <a href="#portfolio" class="btn-g">Munkáink</a>
     </div>
+    
+    <div class="offer-block rv" style="margin-top: 8rem;">
+      <h2 class="offer-h">Derítsd ki, hol lassítják a rendszereid a céged növekedését</h2>
+      <p class="offer-sub">Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.</p>
+      <a href="contact.html" class="btn-p">Discovery Call foglalása</a>
+    </div>
+
     <div class="scroll-indicator" style="position: static; margin-top: 4rem; transform: none;">
-      <span class="si-text" data-i18n="hero_scroll">Görgess</span>
+      <span class="si-text">Görgess</span>
       <div class="si-line"></div>
     </div>
   </div>
 </section>
 
-<section id="manifesto">
-  <div class="rv">
-    <p class="mf-text" data-i18n="manifesto_text">
-      Minden vállalkozásban egy <em>korlátlan potenciál</em> rejtőzik.<br>
-      Mi nem weboldalt adunk el — mi azt hozzuk napvilágra,<br>
-      amit eddig a piac <em>nem látott meg benned.</em>
+<section id="context">
+  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
+    <span class="s-tag">Kihívások</span>
+    <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
+    <p class="mf-text" style="font-size: 24px; max-width: 800px; margin: 0 auto 4rem;">
+      Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is.
+      A folyamatok, amelyek korábban működtek, egyre több manuális munkát igényelnek — és elkezdik lassítani a működést.
     </p>
-    <div class="mf-rule"></div>
-    <span class="mf-sub">Limitlesser Difference</span>
+    <ul class="v-list">
+      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A sales és operáció egyre több manuális munkát igényel</span></li>
+      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A csapat ideje ismétlődő feladatokra megy el</span></li>
+      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">Nehezebb átlátni, mi történik a folyamatokban</span></li>
+      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A növekedés egyre inkább szervezési kérdéssé válik</span></li>
+    </ul>
+    <p class="mf-sub" style="margin-top: 4rem;">Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.</p>
   </div>
 </section>
 
@@ -611,58 +649,42 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
-<!-- Transform Table -->
-<section id="transform">
-  <div class="tr-header rv">
-    <span class="s-tag" data-i18n="transform_tag">Pozicionálás & Stratégia</span>
-    <h2 class="s-title" data-i18n="transform_title">Amit a piac <em>nem lát meg</em> benned</h2>
+<section id="solution">
+  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem; background: rgba(255,255,255,0.01);">
+    <span class="s-tag">A Megoldás</span>
+    <h2 class="s-title">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
+    <p class="mf-text" style="font-size: 24px; max-width: 800px; margin: 0 auto 4rem;">
+      Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét.
+    </p>
+    <div class="pr-steps">
+      <div class="pr-step rv">
+        <div class="pr-num">01</div>
+        <div class="pr-step-title">Feltérképezés</div>
+        <p class="pr-step-desc">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket</p>
+      </div>
+      <div class="pr-step rv">
+        <div class="pr-num">02</div>
+        <div class="pr-step-title">Tervezés</div>
+        <p class="pr-step-desc">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez</p>
+      </div>
+      <div class="pr-step rv">
+        <div class="pr-num">03</div>
+        <div class="pr-step-title">Implementáció</div>
+        <p class="pr-step-desc">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül</p>
+      </div>
+    </div>
   </div>
-  <div class="tr-cols">
-    <div class="tr-col-head left rv" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</div>
-    <div class="tr-mid-head rv"></div>
-    <div class="tr-col-head right rv" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</div>
-    
-    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_1_left">Csak egy a sok közül (Árverseny)</span></div>
-    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
-    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_1_right">A kategória egyetlen és megkerülhetetlen szereplője</span></div>
-    
-    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_2_left">Digitális jelenlét (Weboldal)</span></div>
-    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
-    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_2_right">Digitális dominancia és automatizált növekedés</span></div>
-    
-    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_3_left">Üzleti kiadás és költség</span></div>
-    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
-    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_3_right">Hosszútávú értékteremtés és profit-gépezet</span></div>
-    
-    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_4_left">Lokális megoldások</span></div>
-    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
-    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_4_right">Határok nélküli globális expanzió</span></div>
-  </div>
+</section>
 
-  <div class="tr-mobile-list">
-    <div class="tr-m-item rv">
-      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
-      <span class="tr-m-before-v" data-i18n="transform_item_1_left">Csak egy a sok közül (Árverseny)</span>
-      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
-      <span class="tr-m-after-v" data-i18n="transform_item_1_right">A kategória egyetlen és megkerülhetetlen szereplője</span>
-    </div>
-    <div class="tr-m-item rv">
-      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
-      <span class="tr-m-before-v" data-i18n="transform_item_2_left">Digitális jelenlét (Weboldal)</span>
-      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
-      <span class="tr-m-after-v" data-i18n="transform_item_2_right">Digitális dominancia és automatizált növekedés</span>
-    </div>
-    <div class="tr-m-item rv">
-      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
-      <span class="tr-m-before-v" data-i18n="transform_item_3_left">Üzleti kiadás és költség</span>
-      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
-      <span class="tr-m-after-v" data-i18n="transform_item_3_right">Hosszútávú értékteremtés és profit-gépezet</span>
-    </div>
-    <div class="tr-m-item rv">
-      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
-      <span class="tr-m-before-v" data-i18n="transform_item_4_left">Lokális megoldások</span>
-      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
-      <span class="tr-m-after-v" data-i18n="transform_item_4_right">Határok nélküli globális expanzió</span>
+<section id="results">
+  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
+    <span class="s-tag">Eredmények</span>
+    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
+    <div class="st-grid" style="margin-top: 4rem;">
+      <div class="rv"><span class="st-n">01</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Kevesebb manuális feladat</p></div>
+      <div class="rv"><span class="st-n">02</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Gyorsabb folyamatok</p></div>
+      <div class="rv"><span class="st-n">03</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Jobb kontroll</p></div>
+      <div class="rv"><span class="st-n">04</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Stabilabb alap</p></div>
     </div>
   </div>
 </section>
@@ -697,83 +719,88 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
-<section id="services">
-  <div class="sv-header rv">
-    <span class="s-tag" data-i18n="services_tag">Szolgáltatások</span>
-    <h2 class="s-title" data-i18n="services_title">Egyedi megoldások,<br><em>valódi eredmények</em></h2>
-  </div>
-  <div class="sv-grid">
-    <div class="sv-card rv">
-      <span class="sv-num">01</span>
-      <div class="sv-title" data-i18n="service_1_title">Webshop & Weboldal</div>
-      <p class="sv-desc" data-i18n="service_1_desc">Egyedi tervezésű, konverzióra optimalizált digitális otthon, ami nemcsak szép — hanem eladja az értékeidet.</p>
-      <div class="sv-link" data-i18n="service_1_link">DIGITÁLIS JELENLÉT</div>
+<section id="offer">
+  <div class="offer-block rv">
+    <span class="s-tag">Ingyenes Audit</span>
+    <h2 class="offer-h">Nézd meg, hol lehet hatékonyabb a működésed</h2>
+    <p class="offer-sub">Egy rövid audit során feltárjuk, mely folyamatok automatizálhatók, és milyen lehetőségek vannak a működésed fejlesztésére.</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; text-align: left; max-width: 900px; margin: 0 auto 4rem;">
+      <div>
+        <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Mit kapsz:</h4>
+        <ul style="list-style: none; font-size: 14px; line-height: 2;">
+          <li>• Áttekintést a jelenlegi működésedről</li>
+          <li>• Azonosított fejlesztési lehetőségeket</li>
+          <li>• Javaslatokat automatizációra</li>
+          <li>• Egy konkrét irányt a következő lépésekhez</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Kinek szól:</h4>
+        <ul style="list-style: none; font-size: 14px; line-height: 2;">
+          <li>• Már működő, bevétellel rendelkező cégeknek</li>
+          <li>• Akik hatékonyabbá tennék a működésüket</li>
+          <li>• Akik nyitottak új rendszerek bevezetésére</li>
+        </ul>
+      </div>
     </div>
-    <div class="sv-card rv d1">
-      <span class="sv-num">02</span>
-      <div class="sv-title" data-i18n="service_2_title">Brand Identity</div>
-      <p class="sv-desc" data-i18n="service_2_desc">Az értékeid vizuális hangja. Logó, arculat és brand stratégia, ami pontosan azt sugározza, amit te képviselsz.</p>
-      <div class="sv-link" data-i18n="service_2_link">MÁRKAÉPÍTÉS</div>
-    </div>
-    <div class="sv-card rv d2">
-      <span class="sv-num">03</span>
-      <div class="sv-title" data-i18n="service_3_title">Konverzió Optimalizálás</div>
-      <p class="sv-desc" data-i18n="service_3_desc">Forgalom van, de nem vásárolnak? Megtaláljuk a gátat és lebontjuk — adatvezérelt módszerekkel.</p>
-      <div class="sv-link" data-i18n="service_3_link">BEVÉTEL NÖVELÉS</div>
-    </div>
-    <div class="sv-card rv">
-      <span class="sv-num">04</span>
-      <div class="sv-title" data-i18n="service_4_title">UX / UI Design</div>
-      <p class="sv-desc" data-i18n="service_4_desc">Olyan felhasználói élmény, ami visszahozza az embereket. Design, ami gondolkodik helyettük.</p>
-      <div class="sv-link" data-i18n="process_4_link">ÉLMÉNY TERVEZÉS</div>
-    </div>
-    <div class="sv-card rv d1">
-      <span class="sv-num">05</span>
-      <div class="sv-title" data-i18n="service_5_title">Performance Marketing</div>
-      <p class="sv-desc" data-i18n="service_5_desc">Láthatóság a maximumon. Célzott kampányok, amelyek pontosan a te ideális vásárlóidat szólítják meg.</p>
-      <div class="sv-link" data-i18n="process_4_link">LÁTHATÓSÁG</div>
-    </div>
-    <div class="sv-card rv d2">
-      <span class="sv-num">06</span>
-      <div class="sv-title" data-i18n="service_6_title">Egyedi Automatizáció & Admin</div>
-      <p class="sv-desc" data-i18n="service_6_desc">Saját fejlesztésű irányítópult, ahol egy gombnyomással kezelhetsz mindent. Felejtsd el a külső platformokat: teljes kontroll és drasztikus időmegtakarítás egyetlen felületen.</p>
-      <div class="sv-link" data-i18n="service_6_link">KÖZPONTI IRÁNYÍTÁS</div>
-    </div>
+    
+    <a href="contact.html" class="btn-p">Foglalj időpontot a Discovery Callra</a>
+    <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);">Ingyenes beszélgetés. Nincs kötelezettség.</p>
   </div>
 </section>
 
-<section id="process">
-  <div class="pr-header rv">
-    <span class="pr-tag">A Limitlesser Módszer</span>
-    <h2 class="pr-title">Hogyan hozzuk ki a<br><em>maximumot</em></h2>
+<section id="why-now">
+  <div class="rv">
+    <span class="s-tag">Stratégia</span>
+    <h2 class="wn-text">A működés minősége határozza meg a növekedés tempóját</h2>
+    <p style="max-width: 700px; margin: 2rem auto; font-size: 18px; color: var(--g1); line-height: 1.6;">
+      Minél komplexebb egy cég működése, annál fontosabbá válik, hogy a folyamatok jól legyenek felépítve.
+      Az automatizáció nem csak időt spórol — hanem lehetővé teszi a kiszámíthatóbb növekedést is.
+    </p>
   </div>
-  <div class="pr-steps">
-    <div class="pr-step rv">
-      <div class="pr-num">01</div>
-      <div class="pr-step-title">Feltárás</div>
-      <p class="pr-step-desc">Megértjük a vállalkozásodat — az értékeidet, a korlátaidat és azt, amit még magad sem látszál.</p>
+</section>
+
+<section id="faq">
+  <div class="rv" style="text-align: center;">
+    <span class="s-tag">GYIK</span>
+    <h2 class="s-title">Gyakori <em>kérdések</em></h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item rv">
+      <span class="faq-q">Mennyire egyedi a megoldás?</span>
+      <p class="faq-a">Minden rendszer a konkrét működésedre épül — nincs sablon.</p>
     </div>
-    <div class="pr-step rv d1">
-      <div class="pr-num">02</div>
-      <div class="pr-step-title">Stratégia</div>
-      <p class="pr-step-desc">Egyedi útvonalat tervezünk rád szabva. Nincs sablon — minden döntés az te céljaidat szolgálja.</p>
+    <div class="faq-item rv">
+      <span class="faq-q">Mennyi idő alatt valósul meg?</span>
+      <p class="faq-a">Az első működő megoldások általában 30 napon belül elkészülnek.</p>
     </div>
-    <div class="pr-step rv d2">
-      <div class="pr-num">03</div>
-      <div class="pr-step-title">Építés</div>
-      <p class="pr-step-desc">A vízióból valóság lesz. Prémium kivitelezés, ahol minden pixel és minden szó számít.</p>
+    <div class="faq-item rv">
+      <span class="faq-q">Milyen árakkal dolgoztok?</span>
+      <p class="faq-a">Projekttől függően jellemzően 5–20k USD között.</p>
     </div>
-    <div class="pr-step rv d3">
-      <div class="pr-num">04</div>
-      <div class="pr-step-title">Skálázás</div>
-      <p class="pr-step-desc">A munka nem ér véget az indulással. Toljuk tovább a határokat — folyamatosan.</p>
+    <div class="faq-item rv">
+      <span class="faq-q">Milyen cégeknek érdemes belevágni?</span>
+      <p class="faq-a">Olyanoknak, ahol már van működés — és van mit optimalizálni.</p>
     </div>
   </div>
 </section>
 
 <section id="cta">
-  <h2 class="cta-title rv">Lebontjuk a korlátokat?</h2>
-  <a href="contact.html" class="btn-p" style="padding: 1.5rem 4rem; font-size: 14px;">AJÁNLATKÉRÉS</a>
+  <div class="rv" style="text-align: center;">
+    <h2 class="cta-title">Érdemes nálatok automatizálni? Nézzük meg.</h2>
+    <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 20px; color: var(--g1); line-height: 1.6;">
+      Egy rövid beszélgetés során segítünk felmérni, hol vannak a szűk keresztmetszetek — és hogy van-e valódi üzleti értelme automatizálni.
+    </p>
+    <a href="contact.html" class="btn-p" style="padding: 1.5rem 4rem; font-size: 14px;">Discovery Call foglalása</a>
+    <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);">Ingyenes. Nincs kötelezettség.</p>
+    
+    <div style="margin-top: 8rem; opacity: 0.6;">
+      <p style="font-family: var(--font-d); font-size: 24px; font-style: italic; max-width: 600px; margin: 0 auto;">
+        "Nem minden cégnek van szüksége automatizációra — de ahol igen, ott jelentős különbséget tud hozni."
+      </p>
+    </div>
+  </div>
 </section>
 
 <footer id="footer">
