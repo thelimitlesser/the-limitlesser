@@ -268,32 +268,37 @@ section{position:relative;z-index:5}
 #cta{padding:12rem 5rem 20rem;text-align:center;}
 .cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
-/* Bento Results Grid */
-.res-bento { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 400px); gap: 1.5rem; max-width: 1000px; margin: 4rem auto 0; }
-.bento-card { border-radius: 32px; padding: 3rem; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255,255,255,0.05); }
-.bento-card:hover { transform: scale(1.02); z-index: 2; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+/* Neural Map Results */
+.nm-wrapper { position: relative; max-width: 1200px; margin: 6rem auto; min-height: 600px; display: flex; align-items: center; justify-content: center; }
+.nm-core { width: 120px; height: 120px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); border-radius: 50%; position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(217,119,6,0.4); }
+.nm-core::after { content: 'AI'; font-family: var(--font-d); font-size: 24px; font-weight: 700; color: #fff; font-style: italic; text-shadow: 0 0 20px #fff; }
+.nm-ring { position: absolute; width: 160%; height: 160%; border: 1px solid rgba(217,119,6,0.2); border-radius: 50%; animation: nm-rotate 10s linear infinite; }
+.nm-ring:nth-child(2) { width: 220%; height: 220%; border-style: dashed; animation-duration: 15s; animation-direction: reverse; }
 
-/* Card Variants */
-.res-dark { background: linear-gradient(145deg, #0a0a0a, #050505); }
-.res-dark:hover { border-color: rgba(255,255,255,0.2); }
+.nm-nodes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10rem; pointer-events: none; }
+.nm-node { pointer-events: auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; backdrop-filter: blur(15px); transition: 0.4s; position: relative; z-index: 5; display: flex; align-items: center; gap: 1.5rem; max-width: 380px; }
+.nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.06); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
 
-.res-light { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); }
-.res-light .res-text { color: var(--white); }
+.nm-node.n-tl { justify-self: end; align-self: end; transform: translateX(-50px); }
+.nm-node.n-tr { justify-self: start; align-self: end; transform: translateX(50px); }
+.nm-node.n-bl { justify-self: end; align-self: start; transform: translateX(-50px); }
+.nm-node.n-br { justify-self: start; align-self: start; transform: translateX(50px); }
 
-.res-accent { background: linear-gradient(135deg, var(--accent), #b45309); border: none; }
-.res-accent .res-text, .res-accent .res-icon { color: #fff; }
-.res-accent .res-icon { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+.nm-node-icon { width: 44px; height: 44px; background: rgba(217,119,6,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
+.nm-node-text { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--white); font-weight: 500; line-height: 1.4; }
 
-.res-glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.1); }
+.nm-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.15; stroke-dasharray: 5, 5; animation: nm-dash 20s linear infinite; }
 
-/* Bento Elements */
-.bento-card .res-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); color: var(--accent); transition: 0.3s; }
-.bento-card:hover .res-icon { transform: scale(1.1) rotate(-5deg); background: var(--accent); color: #fff; border-color: transparent; }
-.bento-card .res-text { font-family: var(--font-d); font-size: 28px; line-height: 1.2; font-weight: 300; color: var(--white); }
+@keyframes nm-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes nm-dash { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
 
-@media(max-width:900px) {
-  .res-bento { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .bento-card { height: 350px; }
+@media(max-width:1000px) {
+  .nm-wrapper { flex-direction: column; min-height: auto; gap: 3rem; padding: 4rem 0; }
+  .nm-core { order: -1; margin-bottom: 2rem; }
+  .nm-nodes { position: static; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+  .nm-node { max-width: 100%; transform: none !important; justify-self: stretch; align-self: stretch; }
+  .nm-lines { display: none; }
 }
 
 /* Challenges Section (Redesigned) */
@@ -711,43 +716,57 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
-<section id="results" style="padding: 12rem 5rem;">
+<section id="results" style="padding: 12rem 5rem; overflow: hidden;">
   <div class="section-wrap rv" style="text-align: center;">
     <span class="s-tag">Eredmények</span>
     <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
     
-    <div class="res-bento">
-      <!-- Dark Card -->
-      <div class="bento-card res-dark rv">
-        <div class="res-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="res-text">Stabilabb alap a <em>növekedéshez</em></div>
+    <div class="nm-wrapper">
+      <!-- AI Core -->
+      <div class="nm-core rv">
+        <div class="nm-ring"></div>
+        <div class="nm-ring"></div>
       </div>
       
-      <!-- Light Card -->
-      <div class="bento-card res-light rv">
-        <div class="res-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <!-- Nodes -->
+      <div class="nm-nodes">
+        <div class="nm-node n-tl rv">
+          <div class="nm-node-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="nm-node-text">Kevesebb manuális feladat a csapatod számára</div>
         </div>
-        <div class="res-text">Gyorsabb és <em>átláthatóbb</em> folyamatok</div>
+        
+        <div class="nm-node n-tr rv">
+          <div class="nm-node-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="nm-node-text">Gyorsabb és átláthatóbb folyamatok</div>
+        </div>
+        
+        <div class="nm-node n-bl rv">
+          <div class="nm-node-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="nm-node-text">Jobb kontroll a működés felett</div>
+        </div>
+        
+        <div class="nm-node n-br rv">
+          <div class="nm-node-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="nm-node-text">Stabilabb alap a növekedéshez</div>
+        </div>
       </div>
       
-      <!-- Accent Card -->
-      <div class="bento-card res-accent rv">
-        <div class="res-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <div class="res-text">Jobb kontroll a <em>működés</em> felett</div>
-      </div>
-      
-      <!-- Glass Card -->
-      <div class="bento-card res-glass rv">
-        <div class="res-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="res-text">Kevesebb manuális feladat a <em>csapatod</em> számára</div>
-      </div>
+      <!-- Connecting Lines (Desktop only) -->
+      <svg class="nm-lines" viewBox="0 0 1200 600">
+        <!-- Lines from core (600, 300) to nodes -->
+        <path class="nm-line-path" d="M600,300 L400,200" />
+        <path class="nm-line-path" d="M600,300 L800,200" />
+        <path class="nm-line-path" d="M600,300 L400,400" />
+        <path class="nm-line-path" d="M600,300 L800,400" />
+      </svg>
     </div>
   </div>
 </section>
