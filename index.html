@@ -272,21 +272,22 @@ section{position:relative;z-index:5}
 #results { background: #050200; overflow: hidden; position: relative; padding: 12rem 5rem; }
 .nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; pointer-events: none; }
 
-.nm-grid { display: grid; grid-template-columns: 1fr 200px 1fr; align-items: center; gap: 4rem; max-width: 1300px; margin: 4rem auto; position: relative; z-index: 5; }
+.nm-grid { display: grid; grid-template-columns: 1fr 140px 1fr; align-items: center; gap: 4rem; max-width: 1200px; margin: 4rem auto; position: relative; z-index: 5; }
 
-.nm-col { display: flex; flex-direction: column; gap: 3rem; }
-.nm-col.left { text-align: left; align-items: flex-start; }
-.nm-col.right { text-align: left; align-items: flex-start; }
+.nm-col { display: flex; flex-direction: column; gap: 4rem; }
+.nm-col.left { align-items: flex-end; }
+.nm-col.right { align-items: flex-start; }
 
-.nm-core-col { display: flex; justify-content: center; align-items: center; position: relative; width: 200px; height: 200px; }
-.nm-core { width: 120px; height: 120px; background: radial-gradient(circle, var(--accent) 0%, transparent 75%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(217,119,6,0.5); position: relative; z-index: 10; }
-.nm-core::after { content: 'AI'; font-family: var(--font-d); font-size: 26px; font-weight: 700; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 15px #fff; }
+.nm-core-col { display: flex; justify-content: center; align-items: center; position: relative; }
+.nm-core-container { position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; }
+.nm-core { width: 100px; height: 100px; background: radial-gradient(circle, var(--accent) 0%, transparent 75%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(217,119,6,0.5); position: relative; z-index: 10; }
+.nm-core::after { content: 'AI'; font-family: var(--font-d); font-size: 22px; font-weight: 700; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 10px #fff; }
 
 .nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.15); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; pointer-events: none; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.nm-orbit-1 { width: 180px; height: 180px; border-style: solid; }
-.nm-orbit-2 { width: 240px; height: 240px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; }
+.nm-orbit-1 { width: 160px; height: 160px; }
+.nm-orbit-2 { width: 220px; height: 220px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; }
 
-.nm-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; backdrop-filter: blur(15px); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 1.5rem; width: 100%; max-width: 400px; position: relative; z-index: 20; }
+.nm-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 1.8rem; backdrop-filter: blur(15px); transition: 0.4s; display: flex; align-items: center; gap: 1.5rem; width: 100%; max-width: 380px; position: relative; z-index: 20; text-align: left; }
 .nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
 .nm-node-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
@@ -745,11 +746,12 @@ body.loading { overflow: hidden; }
         </div>
       </div>
       
-      <!-- Center Column (Core) -->
       <div class="nm-core-col">
-        <div class="nm-orbit nm-orbit-1"></div>
-        <div class="nm-orbit nm-orbit-2"></div>
-        <div class="nm-core rv"></div>
+        <div class="nm-core-container rv">
+          <div class="nm-orbit nm-orbit-1"></div>
+          <div class="nm-orbit nm-orbit-2"></div>
+          <div class="nm-core"></div>
+        </div>
       </div>
       
       <!-- Right Column -->
@@ -769,18 +771,16 @@ body.loading { overflow: hidden; }
       </div>
       
       <!-- SVG Lines Background -->
-      <svg class="nm-lines" viewBox="0 0 1300 500" preserveAspectRatio="none">
-        <!-- Lines from core to nodes -->
-        <!-- Paths are simplified for stable grid alignment -->
-        <path class="nm-line-path" d="M650,250 L400,100" />
-        <path class="nm-line-path" d="M650,250 L400,400" />
-        <path class="nm-line-path" d="M650,250 L900,100" />
-        <path class="nm-line-path" d="M650,250 L900,400" />
+      <svg class="nm-lines" viewBox="0 0 1200 500" preserveAspectRatio="none">
+        <path class="nm-line-path" d="M600,250 L380,120" />
+        <path class="nm-line-path" d="M600,250 L380,380" />
+        <path class="nm-line-path" d="M600,250 L820,120" />
+        <path class="nm-line-path" d="M600,250 L820,380" />
         
-        <path class="nm-bullet" d="M650,250 L400,100" />
-        <path class="nm-bullet" d="M650,250 L400,400" style="animation-delay: 1.5s;" />
-        <path class="nm-bullet" d="M650,250 L900,100" style="animation-delay: 0.7s;" />
-        <path class="nm-bullet" d="M650,250 L900,400" style="animation-delay: 2.2s;" />
+        <path class="nm-bullet" d="M600,250 L380,120" />
+        <path class="nm-bullet" d="M600,250 L380,380" style="animation-delay: 1.5s;" />
+        <path class="nm-bullet" d="M600,250 L820,120" style="animation-delay: 0.7s;" />
+        <path class="nm-bullet" d="M600,250 L820,380" style="animation-delay: 2.2s;" />
       </svg>
     </div>
   </div>
