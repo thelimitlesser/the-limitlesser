@@ -103,7 +103,7 @@ nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop
 .logo-block{margin-bottom:1rem;}
 .logo-ll{display:block;font-family:var(--font-d);font-size:clamp(32px, 5vw, 68px);letter-spacing:-1px;font-weight:300;line-height:1.2;color:var(--white);text-transform:none;margin-bottom:1.5rem; position: relative; z-index: 2;}
 .logo-ll em{font-style:italic;color:var(--accent);}
-.h-rule{width:clamp(300px, 45vw, 780px);height:2px;background:var(--accent);margin:2.5rem auto;box-shadow:0 0 15px var(--accent);border-radius:10px;}
+.h-rule{width:clamp(300px, 80vw, 1100px);height:2px;background:var(--accent);margin:2.5rem auto;box-shadow:0 0 20px var(--accent);border-radius:10px;}
 .h-tagline{font-family:var(--font-b);font-size:clamp(14px, 1.2vw, 18px);font-weight:400;line-height:1.6;letter-spacing:1px;color:rgba(255,255,255,0.9);max-width:700px;margin:0 auto 2.5rem; position: relative; z-index: 2;}
 
 .h-tagline em{font-style:italic;color:var(--accent)}
@@ -132,14 +132,14 @@ nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop
 @keyframes si-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 @keyframes si-travel { 0% { top: -50px; } 100% { top: 100%; } }
 section{position:relative;z-index:5}
-.s-tag{font-family:'Inter', sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--blue2);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
+.s-tag{font-family:'Inter', sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
 .s-title{font-family:var(--font-d);font-size:clamp(38px,5vw,76px);font-weight:300;line-height:1.15;margin-bottom:2rem}
 .s-title em{font-style:italic;color:var(--blue2)}
 
 /* Manifesto */
 #manifesto{padding:15rem 5rem;text-align:center;position:relative;z-index:2;}
 #portfolio { padding: 9rem 5rem; position:relative;z-index:2; }
-.mf-text { font-family: var(--font-d); font-size: clamp(32px, 5vw, 68px); line-height: 1.1; font-weight: 300; max-width: 1100px; margin: 0 auto 4rem; letter-spacing: -1px; color: var(--white); }
+.mf-text { font-family: 'Inter', sans-serif; font-size: clamp(20px, 3vw, 26px); line-height: 1.6; font-weight: 400; max-width: 900px; margin: 0 auto 4rem; letter-spacing: 0; color: var(--white); }
 .mf-text em { font-style: italic; color: var(--accent); }
 .mf-rule { width: 1px; height: 80px; background: linear-gradient(to bottom, var(--accent), transparent); margin: 0 auto 2.5rem; }
 .mf-sub { font-family: var(--font-h); font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); opacity: 0.8; font-weight: 700; }
@@ -249,7 +249,7 @@ section{position:relative;z-index:5}
 .pr-tag{font-family:var(--font-h);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
 .pr-title{font-family:var(--font-d);font-size:clamp(40px,6vw,72px);font-weight:300;line-height:1.1}
 .pr-title em{font-style:italic;color:var(--accent)}
-.pr-steps{display:grid;grid-template-columns:repeat(4,1fr);max-width:1200px;margin:5rem auto;position:relative}
+.pr-steps{display:grid;grid-template-columns:repeat(3,1fr);max-width:1200px;margin:5rem auto;position:relative;justify-content:center;}
 .pr-steps::before{content:'';position:absolute;top:25px;left:12.5%;right:12.5%;height:1px;background:var(--accent);opacity:0.2;}
 .pr-step{padding:0 1.5rem;text-align:center;transition:0.3s;cursor:none}
 .pr-num{width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;background:#000;z-index:2;position:relative;font-family:var(--font-d);font-size:18px;font-style:italic;color:var(--white);transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
@@ -453,7 +453,7 @@ footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgb
 .p-info { text-align: center; max-width: 700px; min-height: 220px; }
 .p-item-info { display: none; animation: fadeInSlider 0.8s ease forwards; }
 .p-item-info.active { display: block; }
-.p-cat { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 4px; color: var(--blue2); text-transform: uppercase; display: block; margin-bottom: 1.5rem; font-weight: 600; }
+.p-cat { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; display: block; margin-bottom: 1.5rem; font-weight: 600; }
 .p-name { font-family: var(--font-d); font-size: clamp(32px, 4vw, 54px); font-weight: 300; margin-bottom: 1.5rem; color: var(--white); }
 .p-desc { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 2.5rem; }
 
@@ -573,8 +573,8 @@ body.loading { overflow: hidden; }
     </div>
     
     <div class="offer-block rv" style="margin-top: 8rem;">
-      <h2 class="offer-h">Derítsd ki, hol lassítják a rendszereid a céged növekedését</h2>
-      <p class="offer-sub">Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.</p>
+      <h2 class="offer-h"><em style="font-style: normal; color: var(--accent);">Derítsd ki</em>, hol lassítják a rendszereid a céged növekedését</h2>
+      <p class="offer-sub" style="color: var(--white); opacity: 0.9;">Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.</p>
       <a href="contact.html" class="btn-p">Discovery Call foglalása</a>
     </div>
 
@@ -589,7 +589,7 @@ body.loading { overflow: hidden; }
   <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
     <span class="s-tag">Kihívások</span>
     <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
-    <p class="mf-text" style="font-size: 24px; max-width: 800px; margin: 0 auto 4rem;">
+    <p class="mf-text">
       Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is.
       A folyamatok, amelyek korábban működtek, egyre több manuális munkát igényelnek — és elkezdik lassítani a működést.
     </p>
@@ -599,15 +599,42 @@ body.loading { overflow: hidden; }
       <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">Nehezebb átlátni, mi történik a folyamatokban</span></li>
       <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A növekedés egyre inkább szervezési kérdéssé válik</span></li>
     </ul>
-    <p class="mf-sub" style="margin-top: 4rem;">Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.</p>
+    <p class="mf-sub" style="margin-top: 4rem; font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); text-transform: none;">Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.</p>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem; background: rgba(255,255,255,0.01);">
+    <span class="s-tag">A Megoldás</span>
+    <h2 class="s-title">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
+    <p class="mf-text">
+      Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét.
+    </p>
+    <div class="pr-steps" style="grid-template-columns: repeat(3, 1fr); justify-content: center;">
+      <div class="pr-step rv">
+        <div class="pr-num">01</div>
+        <div class="pr-step-title">Feltérképezés</div>
+        <p class="pr-step-desc">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket</p>
+      </div>
+      <div class="pr-step rv">
+        <div class="pr-num">02</div>
+        <div class="pr-step-title">Tervezés</div>
+        <p class="pr-step-desc">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez</p>
+      </div>
+      <div class="pr-step rv">
+        <div class="pr-num">03</div>
+        <div class="pr-step-title">Implementáció</div>
+        <p class="pr-step-desc">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- Portfolio (Mac Slider) -->
 <section id="portfolio">
-  <div class="p-header rv">
-    <span class="s-tag" data-i18n="portfolio_tag">Esettanulmányok</span>
-    <h2 class="s-title" data-i18n="portfolio_title">Amire <em>büszkék</em> vagyunk</h2>
+  <div class="p-header rv" style="text-align: center;">
+    <span class="s-tag">Esettanulmányok</span>
+    <h2 class="s-title">Amire <em>büszkék</em> vagyunk</h2>
   </div>
 
   <div class="p-slider-wrap rv">
@@ -635,48 +662,32 @@ body.loading { overflow: hidden; }
       <div class="p-item-info active">
         <span class="p-cat">WEBÁRUHÁZ / AUTÓ</span>
         <h3 class="p-name">Bontoaruhaz.hu</h3>
-        <p class="p-desc" data-i18n="portfolio_bonto_desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
-        <a href="https://www.bontoaruhaz.hu" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
+        <p class="p-desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
+        <a href="https://www.bontoaruhaz.hu" target="_blank" class="p-btn">Megnézem az oldalt</a>
       </div>
       <!-- Item 2 -->
       <div class="p-item-info">
         <span class="p-cat">MEMBERSHIP / COMMUNITY</span>
         <h3 class="p-name">Folyamat.hu</h3>
-        <p class="p-desc" data-i18n="portfolio_folyamat_desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
-        <a href="https://hu.folyamat.com" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="solution">
-  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem; background: rgba(255,255,255,0.01);">
-    <span class="s-tag">A Megoldás</span>
-    <h2 class="s-title">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
-    <p class="mf-text" style="font-size: 24px; max-width: 800px; margin: 0 auto 4rem;">
-      Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét.
-    </p>
-    <div class="pr-steps">
-      <div class="pr-step rv">
-        <div class="pr-num">01</div>
-        <div class="pr-step-title">Feltérképezés</div>
-        <p class="pr-step-desc">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket</p>
-      </div>
-      <div class="pr-step rv">
-        <div class="pr-num">02</div>
-        <div class="pr-step-title">Tervezés</div>
-        <p class="pr-step-desc">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez</p>
-      </div>
-      <div class="pr-step rv">
-        <div class="pr-num">03</div>
-        <div class="pr-step-title">Implementáció</div>
-        <p class="pr-step-desc">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül</p>
+        <p class="p-desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
+        <a href="https://hu.folyamat.com" target="_blank" class="p-btn">Megnézem az oldalt</a>
       </div>
     </div>
   </div>
 </section>
 
 <section id="results">
+  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
+    <span class="s-tag">Eredmények</span>
+    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
+    <div class="st-grid" style="margin-top: 4rem;">
+      <div class="rv"><span class="st-n">01</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Kevesebb manuális feladat</p></div>
+      <div class="rv"><span class="st-n">02</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Gyorsabb folyamatok</p></div>
+      <div class="rv"><span class="st-n">03</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Jobb kontroll</p></div>
+      <div class="rv"><span class="st-n">04</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Stabilabb alap</p></div>
+    </div>
+  </div>
+</section>
   <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
     <span class="s-tag">Eredmények</span>
     <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
