@@ -268,6 +268,19 @@ section{position:relative;z-index:5}
 #cta{padding:12rem 5rem 20rem;text-align:center;}
 .cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
+/* Challenges Section (Redesigned) */
+.ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; }
+.ch-intro { font-family: 'Inter', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; }
+.ch-cards { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.ch-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: center; transition: 0.4s; backdrop-filter: blur(10px); }
+.ch-card:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); transform: translateX(10px); box-shadow: 0 10px 40px rgba(217,119,6,0.1); }
+.ch-card-icon { width: 44px; height: 44px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
+.ch-card-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--white); font-weight: 400; }
+
+@media(max-width:1050px) {
+  .ch-grid { grid-template-columns: 1fr; gap: 4rem; }
+}
+
 /* FAQ */
 #faq { padding: 10rem 5rem; }
 .faq-grid { max-width: 900px; margin: 4rem auto; display: flex; flex-direction: column; gap: 1.5rem; }
@@ -585,21 +598,47 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
-<section id="context">
-  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
-    <span class="s-tag">Kihívások</span>
-    <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
-    <p class="mf-text">
-      Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is.
-      A folyamatok, amelyek korábban működtek, egyre több manuális munkát igényelnek — és elkezdik lassítani a működést.
-    </p>
-    <ul class="v-list">
-      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A sales és operáció egyre több manuális munkát igényel</span></li>
-      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A csapat ideje ismétlődő feladatokra megy el</span></li>
-      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">Nehezebb átlátni, mi történik a folyamatokban</span></li>
-      <li class="v-item rv"><span class="v-icon">→</span><span class="v-text">A növekedés egyre inkább szervezési kérdéssé válik</span></li>
-    </ul>
-    <p class="mf-sub" style="margin-top: 4rem; font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); text-transform: none;">Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.</p>
+<section id="context" style="padding: 12rem 5rem;">
+  <div class="ch-grid rv">
+    <div class="ch-left">
+      <span class="s-tag">Kihívások</span>
+      <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
+      <p class="ch-intro">
+        Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. 
+        A folyamatok, amelyek korábban működtek, elkezdenek lassítani.
+      </p>
+      <div style="width: 60px; height: 2px; background: var(--accent); margin: 3rem 0;"></div>
+      <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;">
+        Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.
+      </p>
+    </div>
+    
+    <div class="ch-cards">
+      <div class="ch-card rv">
+        <div class="ch-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="ch-card-text">A sales és operáció egyre több manuális munkát igényel</div>
+      </div>
+      <div class="ch-card rv">
+        <div class="ch-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="ch-card-text">A csapat ideje ismétlődő feladatokra megy el</div>
+      </div>
+      <div class="ch-card rv">
+        <div class="ch-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="ch-card-text">Nehezebb átlátni, mi történik a folyamatokban</div>
+      </div>
+      <div class="ch-card rv">
+        <div class="ch-card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <div class="ch-card-text">A növekedés egyre inkább szervezési kérdéssé válik</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -677,17 +716,6 @@ body.loading { overflow: hidden; }
 </section>
 
 <section id="results">
-  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
-    <span class="s-tag">Eredmények</span>
-    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
-    <div class="st-grid" style="margin-top: 4rem;">
-      <div class="rv"><span class="st-n">01</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Kevesebb manuális feladat</p></div>
-      <div class="rv"><span class="st-n">02</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Gyorsabb folyamatok</p></div>
-      <div class="rv"><span class="st-n">03</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Jobb kontroll</p></div>
-      <div class="rv"><span class="st-n">04</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Stabilabb alap</p></div>
-    </div>
-  </div>
-</section>
   <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
     <span class="s-tag">Eredmények</span>
     <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
