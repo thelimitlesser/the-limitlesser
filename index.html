@@ -249,9 +249,9 @@ section{position:relative;z-index:5}
 .pr-tag{font-family:var(--font-h);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
 .pr-title{font-family:var(--font-d);font-size:clamp(40px,6vw,72px);font-weight:300;line-height:1.1}
 .pr-title em{font-style:italic;color:var(--accent)}
-.pr-steps{display:grid;grid-template-columns:repeat(3,1fr);max-width:1200px;margin:5rem auto;position:relative;justify-content:center;}
-.pr-steps::before{content:'';position:absolute;top:25px;left:12.5%;right:12.5%;height:1px;background:var(--accent);opacity:0.2;}
-.pr-step{padding:0 1.5rem;text-align:center;transition:0.3s;cursor:none}
+.pr-steps{display:grid;grid-template-columns:repeat(3,1fr);max-width:1200px;margin:5rem auto;position:relative}
+.pr-steps::before{content:'';position:absolute;top:25px;left:calc(100% / 6);right:calc(100% / 6);height:1px;background:var(--accent);opacity:0.2;}
+.pr-step{padding:0 1.5rem;text-align:center;transition:0.3s;cursor:none;position:relative;z-index:2;}
 .pr-num{width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;background:#000;z-index:2;position:relative;font-family:var(--font-d);font-size:18px;font-style:italic;color:var(--white);transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
 .pr-step:hover .pr-num{border-color:var(--accent);color:var(--accent);box-shadow:0 0 25px rgba(217,119,6,0.3);transform:scale(1.1)}
 .pr-step-title{font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.5rem;transition:0.3s}
@@ -663,32 +663,21 @@ body.loading { overflow: hidden; }
       Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét — és strukturáltabbá teszik a működést.
     </p>
     
-    <div class="sol-grid">
-      <div class="sol-card rv">
-        <div class="sol-num">01</div>
-        <div class="sol-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        </div>
-        <div class="sol-card-title">Feltérképezés</div>
-        <p class="sol-card-desc">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket, ahol a legnagyobb hatékonyság érhető el.</p>
+    <div class="pr-steps">
+      <div class="pr-step rv">
+        <div class="pr-num">01</div>
+        <div class="pr-step-title">Feltérképezés</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket.</p>
       </div>
-      
-      <div class="sol-card rv">
-        <div class="sol-num">02</div>
-        <div class="sol-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <div class="sol-card-title">Tervezés</div>
-        <p class="sol-card-desc">Olyan egyedi megoldásokat tervezünk, amelyek szervesen illeszkednek a céged meglévő működéséhez és kultúrájához.</p>
+      <div class="pr-step rv">
+        <div class="pr-num">02</div>
+        <div class="pr-step-title">Tervezés</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez.</p>
       </div>
-      
-      <div class="sol-card rv">
-        <div class="sol-num">03</div>
-        <div class="sol-card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
-        <div class="sol-card-title">Implementáció</div>
-        <p class="sol-card-desc">Lépésről lépésre, folyamatos kontroll mellett vezetjük be az automatizációt, a napi munka megszakítása nélkül.</p>
+      <div class="pr-step rv">
+        <div class="pr-num">03</div>
+        <div class="pr-step-title">Implementáció</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül.</p>
       </div>
     </div>
   </div>
