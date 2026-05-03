@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VÉRA — Luxury Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --gold: #C5A059;
+  --gold-dim: rgba(197, 160, 89, 0.2);
+  --text: #FDFCFA;
+  --muted: #888;
+  --font-h: 'Cormorant Garamond', serif;
+  --font-b: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body { background: var(--bg); color: var(--text); font-family: var(--font-b); overflow-x: hidden; cursor: none; }
+
+/* Cursor */
+#cur{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .3s;}
+#cur-r{position:fixed;width:40px;height:40px;border:1px solid var(--gold-dim);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+body.ch #cur{transform:translate(-50%,-50%) scale(3);background:var(--text);mix-blend-mode:difference;}
+body.ch #cur-r{width:60px;border-color:var(--gold);opacity:0.5;}
+
+/* Background Decor */
+.gold-glow { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%); top: -10%; right: -10%; pointer-events: none; z-index: -1; filter: blur(100px); }
+
+/* Nav */
+nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: center; padding: 3rem 5rem; z-index: 1000; mix-blend-mode: difference; }
+.logo { font-family: var(--font-h); font-size: 32px; font-weight: 300; letter-spacing: 18px; color: var(--text); text-decoration: none; text-transform: uppercase; }
+
+/* Hero */
+.hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
+.h-tag { font-size: 10px; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); margin-bottom: 2.5rem; display: block; }
+h1 { font-family: var(--font-h); font-size: clamp(60px, 12vw, 160px); font-weight: 300; line-height: 0.85; margin-bottom: 3.5rem; text-transform: uppercase; letter-spacing: -6px; }
+h1 em { font-style: italic; color: var(--gold); }
+.h-line { width: 1px; height: 120px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+/* Sections */
+.section { padding: 12rem 10%; text-align: center; }
+.s-label { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: block; }
+.s-title { font-family: var(--font-h); font-size: clamp(32px, 5vw, 64px); font-weight: 300; margin-bottom: 3rem; font-style: italic; }
+.s-text { font-size: 18px; color: var(--muted); line-height: 1.8; max-width: 800px; margin: 0 auto; font-weight: 300; }
+
+/* Grid */
+.v-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(197, 160, 89, 0.1); margin-top: 8rem; }
+.v-item { background: var(--bg); padding: 6rem 3rem; transition: 0.5s; }
+.v-item:hover { background: rgba(197, 160, 89, 0.05); }
+.v-num { font-family: var(--font-h); font-size: 14px; color: var(--gold); display: block; margin-bottom: 2rem; }
+.v-title { font-family: var(--font-h); font-size: 28px; margin-bottom: 1.5rem; letter-spacing: -1px; }
+.v-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* Back Bar */
+.back-bar { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: rgba(5,5,5,0.8); backdrop-filter: blur(20px); padding: 0.8rem 1.2rem; border-radius: 100px; display: flex; gap: 1.5rem; z-index: 10000; border: 1px solid var(--gold-dim); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+.bb-b { color: var(--muted); text-decoration: none; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 500; transition: 0.3s; cursor: none; display: flex; align-items: center; padding: 0 1rem; }
+.bb-b:hover { color: var(--gold); }
+.bb-c { background: var(--gold); color: #000; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; padding: 1rem 2.2rem; border-radius: 100px; transition: all 0.3s; cursor: none; }
+.bb-c:hover { background: var(--text); transform: translateY(-3px); box-shadow: 0 0 30px var(--gold-dim); }
+
+.rv { opacity: 0; transform: translateY(40px); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.rv.on { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .hero { padding: 0 2rem; }
+  .v-grid { grid-template-columns: 1fr; }
+  .back-bar { width: calc(100% - 4rem); bottom: 1.5rem; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div class="gold-glow"></div>
+
+<nav>
+  <a href="#" class="logo">VÉRA</a>
+</nav>
+
+<section class="hero">
+  <span class="h-tag rv" id="h-tagline">Essence / Identity / Soul</span>
+  <h1 class="rv d1" id="h-title">Define Your <em>Aura.</em></h1>
+  <div class="h-line rv d2"></div>
+</section>
+
+<section class="section">
+  <div class="rv">
+    <span class="s-label" id="s-label">The Vision</span>
+    <h2 class="s-title" id="s-title">"Minden márka egy történet, ami méltó az örökkévalóságra."</h2>
+    <p class="s-text" id="s-desc">Nem csupán vizuális elemeket tervezünk. A márka lelkét hozzuk felszínre, és egy olyan digitális aurát építünk köré, amely vonzza a tekintetet és bizalmat ébreszt.</p>
+  </div>
+
+  <div class="v-grid">
+    <div class="v-item rv">
+      <span class="v-num">I</span>
+      <h3 class="v-title" id="v1-t">Vizuális Esszencia</h3>
+      <p class="v-desc" id="v1-d">Letisztult formák és időtlen tipográfia, amely kiemeli a márka egyediségét a tömegből.</p>
+    </div>
+    <div class="v-item rv d1">
+      <span class="v-num">II</span>
+      <h3 class="v-title" id="v2-t">Digitális Jelenlét</h3>
+      <p class="v-desc" id="v2-d">Modern, reszponzív élmények, ahol minden interakció a luxus és a minőség érzetét kelti.</p>
+    </div>
+    <div class="v-item rv d2">
+      <span class="v-num">III</span>
+      <h3 class="v-title" id="v3-t">Márka Stratégia</h3>
+      <p class="v-desc" id="v3-d">Mélyreható elemzés és pozicionálás, hogy a márka a megfelelő közönséghez szóljon.</p>
+    </div>
+  </div>
+</section>
+
+<div class="back-bar">
+  <a href="../index.html" class="bb-b" id="bb-back">← Vissza</a>
+  <a href="../index.html#quote" class="bb-c" id="bb-want">Ezt akarom →</a>
+</div>
+
+<script>
+const translations = {
+  hu: {
+    tagline: "Esszencia / Identitás / Lélek",
+    title: "Define Your <em>Aura.</em>",
+    label: "A Vízió",
+    stitle: "\"Minden márka egy történet, ami méltó az örökkévalóságra.\"",
+    sdesc: "Nem csupán vizuális elemeket tervezünk. A márka lelkét hozzuk felszínre, és egy olyan digitális aurát építünk köré, amely vonzza a tekintetet és bizalmat ébreszt.",
+    v1_t: "Vizuális Esszencia", v1_d: "Letisztult formák és időtlen tipográfia, amely kiemeli a márka egyediségét.",
+    v2_t: "Digitális Jelenlét", v2_d: "Modern élmények, ahol minden interakció a luxus érzetét kelti.",
+    v3_t: "Márka Stratégia", v3_d: "Mélyreható elemzés és pozicionálás a megfelelő közönséghez.",
+    bb_back: "← Vissza", bb_want: "Ezt akarom →"
+  },
+  en: {
+    tagline: "Essence / Identity / Soul",
+    title: "Define Your <em>Aura.</em>",
+    label: "The Vision",
+    stitle: "\"Every brand is a story worthy of eternity.\"",
+    sdesc: "We don't just design visual elements. We bring the soul of the brand to the surface and build a digital aura that attracts and builds trust.",
+    v1_t: "Visual Essence", v1_d: "Clean shapes and timeless typography that sets the brand apart.",
+    v2_t: "Digital Presence", v2_d: "Modern experiences where every interaction feels luxurious.",
+    v3_t: "Brand Strategy", v3_d: "In-depth analysis and positioning to reach the right audience.",
+    bb_back: "← Back", bb_want: "Get Started →"
+  }
+};
+
+function syncLanguage() {
+  const savedLang = localStorage.getItem('limitlesser_lang') || 'hu';
+  const t = translations[savedLang];
+  document.getElementById('h-tagline').textContent = t.tagline;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('s-label').textContent = t.label;
+  document.getElementById('s-title').textContent = t.stitle;
+  document.getElementById('s-desc').textContent = t.sdesc;
+  document.getElementById('v1-t').textContent = t.v1_t; document.getElementById('v1-d').textContent = t.v1_d;
+  document.getElementById('v2-t').textContent = t.v2_t; document.getElementById('v2-d').textContent = t.v2_d;
+  document.getElementById('v3-t').textContent = t.v3_t; document.getElementById('v3-d').textContent = t.v3_d;
+  document.getElementById('bb-back').textContent = t.bb_back;
+  document.getElementById('bb-want').textContent = t.bb_want;
+}
+
+// Cursor
+const mc=document.getElementById('cur'),rc=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;mc.style.left=mx+'px';mc.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;rc.style.left=rx+'px';rc.style.top=ry+'px';requestAnimationFrame(a)})();
+
+// Reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+window.onload = syncLanguage;
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rólunk | The Limitlesser</title>
+  <style>
+    :root {
+      --bg: #050200;
+      --accent: #D97706;
+      --accent2: #FF8A00;
+      --white: #fff;
+      --g1: #888; --g2: #1a1a1a; --g3: #111;
+      --font-d: 'Times New Roman', Times, serif;
+      --font-h: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; }
+    
+    /* Mouse Glow Effect (Flashlight) */
+    #mouse-glow {
+      position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
+      background: radial-gradient(circle, rgba(217,119,6,0.15) 0%, rgba(217,119,6,0.05) 30%, transparent 70%);
+      pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+      filter: blur(80px); opacity: 0; transition: opacity 1s ease;
+    }
+
+    .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; }
+    .b1 { width: 600px; height: 600px; background: var(--accent); top: -10%; right: -5%; }
+    .b2 { width: 500px; height: 500px; background: #2200cc; bottom: -10%; left: -5%; opacity: 0; }
+
+    /* Nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
+    nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.4rem 5rem;border-bottom-color:rgba(217,119,6,0.15)}
+    .n-logo{text-decoration:none;color:var(--white);cursor:none; display: flex; flex-direction: column;}
+    .n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
+    .n-links{display:flex;gap:3rem;list-style:none}
+    .n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;cursor:none;line-height:1.2;font-weight:500;}
+    .n-links a:hover{color:var(--white)}
+    .n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
+    .n-btn:hover{background:#ccc;transform:translateY(-2px);}
+
+    /* Mobile Toggle */
+    .mob-toggle { display: none; background: none; border: none; cursor: none; flex-direction: column; gap: 5px; padding: 0.5rem; z-index: 1001; }
+    .mob-toggle span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+    .mob-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .mob-toggle.open span:nth-child(2) { opacity: 0; }
+    .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile Menu Overlay */
+    .mob-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050200; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-family: var(--font-d); font-size: 32px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+    .mob-menu a:hover { color: var(--accent); }
+    .mob-menu .n-btn { font-size: 14px; padding: 1.2rem 3rem; margin-top: 2rem; }
+
+    /* Lang Dropdown */
+    .lang-dropdown { position: relative; margin-right: 2rem; z-index: 1000; }
+    .lang-selected { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); cursor: none; transition: 0.3s; }
+    .lang-selected:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .lang-flag { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); }
+    .lang-chevron { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform 0.3s; opacity: 0.6; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-options { position: absolute; top: calc(100% + 10px); right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; transform: translateY(10px); pointer-events: none; transition: 0.3s; }
+    .lang-dropdown.open .lang-options { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .lang-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; cursor: none; transition: 0.2s; color: #1a1a1a; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; }
+    .lang-option:hover { background: #f5f5f5; }
+    .lang-option .lang-flag { width: 24px; height: 24px; border: 1px solid rgba(0,0,0,0.05); }
+    .lang-option-check { margin-left: auto; width: 14px; height: 14px; color: #1a1a1a; opacity: 0; transition: 0.2s; }
+    .lang-option.active .lang-option-check { opacity: 1; }
+    .lang-option.active { background: rgba(0,85,255,0.05); color: #0055ff; }
+
+    /* Footer Styles */
+    footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .f-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; text-align: left; }
+    .f-brand .logo-ll { font-size: 20px; margin-bottom: 2rem; display: block; letter-spacing: 4px; }
+    .f-brand p { font-size: 14px; color: #888; line-height: 1.8; max-width: 280px; }
+    .f-col h4 { font-family: 'Syne', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 2rem; font-weight: 700; }
+    .f-col ul { list-style: none; padding: 0; }
+    .f-col ul li { margin-bottom: 1rem; }
+    .f-col ul li a { color: #888; font-size: 14px; text-decoration: none; transition: 0.3s; }
+    .f-col ul li a:hover { color: #4499FF; padding-left: 5px; }
+    .f-bottom { max-width: 1300px; margin: 6rem auto 0; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .f-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .f-legal { display: flex; gap: 2rem; }
+    .f-legal a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: 0.3s; }
+    .f-legal a:hover { color: #fff; }
+
+    /* About Sections */
+    .hero-about { padding: 18rem 2rem 10rem; text-align: center; }
+    .s-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
+    .hero-title { font-family: var(--font-d); font-size: clamp(44px, 8vw, 84px); font-weight: 300; line-height: 1.15; max-width: 1200px; margin: 0 auto; letter-spacing: -2px; }
+    .hero-title em { font-style: italic; color: var(--accent); }
+
+    .section-wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+    .content-block { margin-bottom: 12rem; }
+    .content-block h2 { font-family: var(--font-d); font-size: 48px; font-weight: 300; margin-bottom: 3rem; color: var(--white); }
+    .content-block p { font-size: 20px; color: var(--g1); line-height: 1.8; margin-bottom: 2.5rem; font-weight: 300; font-family: var(--font-b); }
+    .content-block b { color: var(--white); font-weight: 400; }
+
+    .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; margin-top: 5rem; }
+    .h-item { position: relative; }
+    .h-item h3 { font-family: var(--font-h); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .h-item p { font-size: 16px; line-height: 1.6; color: var(--g1); }
+
+    .vision-box { background: rgba(217,119,6,0.02); border: 1px solid rgba(217,119,6,0.1); padding: 5rem; border-radius: 40px; text-align: center; margin-bottom: 12rem; }
+    .vision-box h3 { font-family: var(--font-d); font-size: 36px; font-weight: 300; margin-bottom: 2rem; color: var(--white); }
+    .vision-box p { font-size: 18px; color: var(--g1); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+    .val-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-bottom: 10rem; }
+    .val-card { padding: 4rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 30px; background: rgba(217,119,6,0.02); transition: 0.4s; }
+    .val-card:hover { border-color: var(--accent); background: rgba(217,119,6,0.05); }
+    .val-card h3 { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.5rem; color: var(--white); }
+    .val-card p { font-size: 15px; color: var(--g1); }
+
+    /* Reveal */
+    .rv { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .rv.on { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1000px) {
+      nav { padding: 1.5rem 2rem; }
+      .n-links { display: none; }
+      .lang-dropdown { display: none; }
+      .n-btn { display: none; }
+      .mob-toggle { display: flex; }
+      .highlights { grid-template-columns: 1fr; gap: 3rem; }
+      .val-grid { grid-template-columns: 1fr; }
+      .f-container { grid-template-columns: 1fr 1fr; }
+      .hero-about { padding: 12rem 2rem 6rem; }
+      .hero-title { font-size: clamp(32px, 7vw, 54px); }
+      .content-block h2 { font-size: 32px; }
+      .content-block p { font-size: 17px; }
+      .vision-box { padding: 3rem 2rem; }
+    }
+    @media (max-width: 600px) {
+      .f-container { grid-template-columns: 1fr; }
+      .f-bottom { flex-direction: column; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mesh-bg">
+    <div class="mesh-ball b1"></div>
+    <div class="mesh-ball b2"></div>
+  </div>
+  <div id="mouse-glow" style="z-index: -1;"></div>
+
+  <nav id="nav">
+    <a href="index.html" class="n-logo">
+      <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
+    </a>
+    <div class="n-links">
+      <a href="index.html#hero" data-i18n="nav_home">Kezdőlap</a>
+      <a href="about.html" data-i18n="nav_about">Rólunk</a>
+      <a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a>
+      <a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a>
+      <a href="contact.html">Kapcsolat</a>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-selected" onclick="toggleLangDropdown()">
+          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" id="currentFlag">
+          <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+        </div>
+        <div class="lang-options">
+          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')">
+            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag">
+            <span>Magyar (HU)</span>
+            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')">
+            <img src="https://flagcdn.com/w80/gb.png" class="lang-flag">
+            <span>English (EN)</span>
+            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <a href="contact.html" class="n-btn">Kezdjük el</a>
+      <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mob-menu" id="mob-menu">
+    <a href="index.html#hero" onclick="toggleMob()">Kezdőlap</a>
+    <a href="about.html" onclick="toggleMob()">Rólunk</a>
+    <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
+    <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
+    <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
+    <a href="contact.html" class="n-btn" onclick="toggleMob()">Kezdjük el</a>
+  </div>
+
+  <section class="hero-about">
+    <span class="s-tag rv" data-i18n="about_hero_tag">Küldetésünk</span>
+    <h1 class="hero-title rv">
+      Minden vállalkozásban van érték. Mi azért vagyunk, hogy ezt <em>láthatóvá tegyük</em> a világ számára.
+    </h1>
+  </section>
+
+  <div class="section-wrap">
+    <div class="content-block rv">
+      <p>Sokszor több érték rejlik egy üzletben, mint amit a piac elsőre lát belőle. A mi célunk, hogy ezeket a <b>rejtett kincseket</b> felszínre hozzuk, és láthatóvá tegyük azok számára, akiknek valóban szükségük van rá.</p>
+      <p>Olyan digitális felületeket építünk, amelyek nem csak jelen vannak, hanem közvetítenek, kiemelnek és irányt adnak. Segítünk tisztán megmutatni, miben vagy erős — és ezt eljuttatjuk a megfelelő emberekhez.</p>
+      <p>Mert amikor az érték láthatóvá válik, a <b>növekedés nem erőltetett</b> — hanem természetes következmény.</p>
+    </div>
+
+    <div class="content-block rv">
+      <h2>Amit valójában csinálunk</h2>
+      <p>Nem csak kódokat írunk és pixeleket mozgatunk. Segítünk abban, hogy többen értsék meg, amit képviselsz, könnyebb legyen dönteni melletted, és nagyobb hatással legyél a piacodon.</p>
+      
+      <div class="highlights">
+        <div class="h-item">
+          <h3>Értés</h3>
+          <p>Hogy a célközönséged azonnal felfogja az üzenetedet.</p>
+        </div>
+        <div class="h-item">
+          <h3>Bizalom</h3>
+          <p>Hogy a választás egyértelmű legyen az irányodba.</p>
+        </div>
+        <div class="h-item">
+          <h3>Hatás</h3>
+          <p>Hogy a növekedésed mérhető és fenntartható legyen.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vision-box rv">
+      <span class="s-tag">Szemléletmód</span>
+      <h3>Eszköz, nem cél</h3>
+      <p>A Limitlesser egy olyan szemléletre épül, ahol a weboldal nem a végállomás, hanem a motor. Letisztult rendszerekben és olyan struktúrákban gondolkodunk, amelyek nem csak jól néznek ki — hanem működnek is.</p>
+    </div>
+
+    <div class="content-block rv">
+      <h2>Értékeink</h2>
+      <div class="val-grid">
+        <div class="val-card">
+          <h3>Határtalanság</h3>
+          <p>Nem ismerünk lehetetlent a technológia és a kreativitás területén. Ott kezdjük, ahol mások megállnak.</p>
+        </div>
+        <div class="val-card">
+          <h3>Precizitás</h3>
+          <p>Minden pixelnek és minden kódsornak célja van. A luxus a részletekben rejlik.</p>
+        </div>
+        <div class="val-card">
+          <h3>Eredményfókusz</h3>
+          <p>A szép design nálunk csak az alap. A valódi siker a konverzióban és a profitban mérhető.</p>
+        </div>
+        <div class="val-card">
+          <h3>Automatizáció</h3>
+          <p>Hiszünk abban, hogy a technológiának az embert kell szolgálnia, nem fordítva.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vision-box rv" style="margin-top: 8rem;">
+      <span class="s-tag">Készen állsz?</span>
+      <h3>Vágjunk bele a közös munkába.</h3>
+      <p style="margin-bottom: 3rem;">Ha úgy érzed, hogy a te vállalkozásodban is több van, mint amit jelenleg mutatsz, vedd fel velünk a kapcsolatot.</p>
+      <a href="contact.html" class="n-btn" style="background: var(--accent); color: #fff; padding: 1.5rem 3.5rem;">AJÁNLATKÉRÉS INDÍTÁSA →</a>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="f-container rv">
+      <div class="f-brand">
+        <div class="logo-ll">LIMIT<span style="color:var(--accent)">LESSER</span></div>
+        <p data-i18n="footer_tagline">A vállalkozásod teljes potenciálját hozzuk felszínre egyedi digitális megoldásokkal és automatizált rendszerekkel.</p>
+      </div>
+      
+      <div class="f-col">
+        <h4 data-i18n="footer_nav">Navigáció</h4>
+        <ul>
+          <li><a href="index.html#hero" data-i18n="nav_home">Kezdőlap</a></li>
+          <li><a href="about.html" data-i18n="nav_about">Rólunk</a></li>
+          <li><a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a></li>
+          <li><a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a></li>
+        </ul>
+      </div>
+      
+      <div class="f-col">
+        <h4 data-i18n="footer_services">Szolgáltatások</h4>
+        <ul>
+          <li><a href="services.html#web" data-i18n="service_1_title">Webshop & Weboldal</a></li>
+          <li><a href="services.html#auto" data-i18n="service_6_title">Automatizáció & Admin</a></li>
+          <li><a href="services.html#cro" data-i18n="service_3_title">Konverzió Optimalizálás</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="f-bottom">
+      <p>&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
+      <div class="f-legal">
+        <a href="aszf.html" data-i18n="footer_aszf">ÁSZF</a>
+        <a href="privacy.html" data-i18n="footer_privacy">Adatkezelés</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script>
+    // Mouse Glow
+    const mg = document.getElementById('mouse-glow');
+    document.addEventListener('mousemove', e => {
+      if(mg) {
+        mg.style.left = e.clientX + 'px';
+        mg.style.top = e.clientY + 'px';
+        mg.style.opacity = '1';
+      }
+    });
+
+    // Nav
+    const nav=document.getElementById('nav');
+    window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>60));
+
+    // Mobile Menu Toggle
+    function toggleMob() {
+      const btn = document.getElementById('mob-toggle');
+      const menu = document.getElementById('mob-menu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.classList.toggle('loading'); // Disable scroll
+    }
+
+    // Reveal
+    const revObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
+    },{threshold:.1});
+    document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
+  </script>
+</body>
+</html>

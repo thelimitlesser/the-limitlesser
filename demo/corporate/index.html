@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Strategic Growth Partners</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FA;--surface:#fff;--navy:#081628;--navy2:#0D2040;
+  --blue:#0057FF;--blue2:#3B82F6;--cyan:#00D4FF;--cyan2:rgba(0,212,255,.1);
+  --border:#DDE3EE;--fg:#0D1B2A;--muted:#64748B;--subtle:#EEF2F8;
+  --font-h:'Syne',sans-serif;--font-d:'Cormorant Garamond',serif;--font-b:'DM Sans',sans-serif;
+  --gold:#B8966A; /* For standardized back-bar */
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-b);overflow-x:hidden;cursor:none}
+body.loading{overflow:hidden}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:7px;height:7px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s}
+#cur-r{position:fixed;width:32px;height:32px;border:1px solid rgba(0,87,255,.3);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+body.ch #cur{width:16px;height:16px;background:var(--cyan)}
+body.ch #cur-r{width:52px;height:52px;border-color:rgba(0,212,255,.5)}
+
+/* ── PRELOADER ── */
+#preloader{position:fixed;inset:0;background:var(--navy);z-index:100001;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .7s ease,visibility .7s ease}
+#preloader.hidden{opacity:0;visibility:hidden}
+.pl-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,87,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,87,255,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 20%,transparent 100%)}
+.pl-logo-wrap{overflow:hidden;margin-bottom:2rem;position:relative;z-index:1}
+.pl-logo{font-family:var(--font-h);font-size:clamp(24px,4vw,42px);font-weight:800;letter-spacing:6px;color:#fff;text-transform:uppercase;display:block;transform:translateY(110%);animation:pl-rise .75s .2s cubic-bezier(.25,.46,.45,.94) forwards}
+@keyframes pl-rise{to{transform:translateY(0)}}
+.pl-tagline{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(0,212,255,.6);display:block;transform:translateY(100%);animation:pl-rise .7s .5s forwards;position:relative;z-index:1;margin-bottom:2.5rem;overflow:hidden}
+.pl-bar-wrap{width:320px;height:2px;background:rgba(255,255,255,.08);position:relative;z-index:1}
+.pl-bar{height:100%;background:linear-gradient(to right,var(--blue),var(--cyan));animation:pl-load 1.4s .4s ease forwards;width:0}
+@keyframes pl-load{to{width:100%}}
+.pl-counter{font-family:var(--font-h);font-size:11px;font-weight:600;color:rgba(255,255,255,.25);letter-spacing:2px;margin-top:1rem;position:relative;z-index:1;animation:pl-cnt 1.4s .4s linear forwards}
+@keyframes pl-cnt{0%{content:'0%'}100%{opacity:.6}}
+
+/* ── BACK BAR (Standardized) ── */
+.back-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;gap:1.5rem;align-items:center;padding:8px 12px;padding-left:30px;background:#222;border-radius:100px;box-shadow:0 20px 40px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1)}
+.bb-b{color:#aaa;font-size:12px;letter-spacing:2px;text-decoration:none;font-family:var(--font-b);font-weight:600;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
+.bb-b:hover{color:#fff}
+.bb-c{background:var(--gold);color:#fff;font-size:12px;letter-spacing:2px;text-decoration:none;font-weight:700;font-family:var(--font-b);padding:14px 35px;border-radius:100px;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
+.bb-c:hover{background:#d4af37;transform:scale(1.02)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.6rem 5rem;background:rgba(244,246,250,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:padding .4s}
+nav.compact{padding:1.1rem 5rem}
+.n-logo{display:flex;align-items:center;gap:.8rem;text-decoration:none;cursor:none}
+.n-logo-mark{width:32px;height:32px;background:var(--navy);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.n-logo-mark::before{content:'M';font-family:var(--font-h);font-size:16px;font-weight:800;color:#fff;position:relative;z-index:1}
+.n-logo-mark::after{content:'';position:absolute;top:-4px;right:-4px;width:10px;height:10px;background:var(--cyan);border-radius:50%}
+.n-logo-text{display:flex;flex-direction:column;gap:0}
+.n-logo-name{font-family:var(--font-h);font-size:15px;font-weight:700;letter-spacing:2px;color:var(--navy);text-transform:uppercase;line-height:1.1}
+.n-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.n-links{display:flex;gap:2.5rem;list-style:none}
+.n-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;cursor:none;font-family:var(--font-b)}
+.n-links a:hover{color:var(--fg)}
+.n-right{display:flex;align-items:center;gap:1rem}
+.n-cta{background:var(--navy);color:#fff;font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:.72rem 1.6rem;border:none;cursor:none;text-decoration:none;transition:all .3s;font-weight:600;border-radius:50px}
+.n-cta:hover{background:var(--blue);transform:translateY(-2px)}
+.mob-toggle{display:none;background:none;border:none;cursor:none;flex-direction:column;gap:5px;padding:.4rem}
+.mob-toggle span{display:block;width:22px;height:1.5px;background:var(--navy);transition:all .35s}
+.mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.mob-toggle.open span:nth-child(2){opacity:0}
+.mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mob-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--navy);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transform:translateX(100%);transition:transform .45s cubic-bezier(.25,.46,.45,.94)}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu a{font-family:var(--font-h);font-size:clamp(26px,6vw,44px);font-weight:700;color:#fff;text-decoration:none;letter-spacing:2px;text-transform:uppercase;cursor:none;transition:color .3s}
+.mob-menu a:hover{color:var(--cyan)}
+.mob-menu .mob-cta-lnk{background:var(--blue);color:#fff;padding:1.1rem 2.8rem;font-size:13px;margin-top:1rem;border-radius:50px}
+.mob-divider{width:30px;height:1px;background:rgba(0,212,255,.25)}
+
+/* ── STICKY CTA ── */
+#sticky-cta{position:fixed;bottom:2rem;right:2rem;z-index:997;transform:translateY(100px);opacity:0;transition:transform .5s cubic-bezier(.25,.46,.45,.94),opacity .5s;pointer-events:none}
+#sticky-cta.visible{transform:translateY(0);opacity:1;pointer-events:all}
+.scta{display:flex;align-items:center;gap:.8rem;background:var(--navy);color:#fff;padding:.9rem 1.8rem;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 32px rgba(8,22,40,.25);transition:all .3s;cursor:none;border-radius:50px;border:1px solid rgba(255,255,255,.1)}
+.scta:hover{background:var(--blue);transform:translateY(-3px)}
+.scta-dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;padding-top:80px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;position:relative;background:var(--surface)}
+.hero-left::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border) 30%,var(--border) 70%,transparent)}
+.h-kicker{display:flex;align-items:center;gap:.8rem;margin-bottom:2.5rem}
+.hk-line{width:24px;height:1.5px;background:var(--blue)}
+.hk-text{font-family:var(--font-h);font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--blue);font-weight:600}
+.h-title{font-family:var(--font-h);font-size:clamp(34px,4.2vw,58px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;color:var(--navy);margin-bottom:1.4rem}
+.h-title strong{font-weight:700;display:block;font-size:inherit;letter-spacing:-1.5px;color:var(--navy)}
+.h-title em{font-style:normal;color:var(--blue);font-weight:700}
+.h-tagline{font-family:var(--font-b);font-size:16px;font-weight:400;color:var(--muted);margin-bottom:2rem;line-height:1.6;max-width:460px}
+.h-desc{font-size:15px;line-height:1.8;color:var(--muted);max-width:420px;margin-bottom:3rem}
+.h-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{background:var(--navy);color:#fff;font-family:var(--font-h);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:1rem 2.4rem;border:none;cursor:none;text-decoration:none;display:inline-block;font-weight:700;transition:all .35s;border-radius:50px}
+.btn-primary:hover{background:var(--blue)}
+.btn-secondary{background:transparent;color:var(--navy);font-family:var(--font-h);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:1rem 2.4rem;border:1.5px solid var(--border);cursor:none;text-decoration:none;display:inline-block;font-weight:600;transition:all .3s;border-radius:50px}
+.btn-secondary:hover{border-color:var(--navy);background:var(--navy);color:#fff}
+.h-metrics{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);background:var(--subtle)}
+.hm-item{padding:1.4rem 1.2rem;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .3s;border-radius:12px}
+.hm-item:last-child{border-right:none}
+.hm-item:hover{background:var(--surface)}
+.hm-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.hm-item:hover::before{transform:scaleX(1)}
+.hm-num{font-family:var(--font-b);font-size:clamp(22px,2.2vw,28px);font-weight:600;color:var(--navy);display:block;line-height:1;letter-spacing:-0.5px}
+.hm-num span{color:var(--blue)}
+.hm-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;display:block;font-weight:500}
+
+.hero-right{background:var(--navy);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4rem 3rem}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.4;display:block}
+.dashboard{position:relative;z-index:1;width:100%;max-width:480px;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);padding:2rem;border-radius:24px;border:1px solid rgba(255,255,255,0.08)}
+.db-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.db-title{font-family:var(--font-h);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.db-live{display:flex;align-items:center;gap:.4rem;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);opacity:.9}
+.db-live-dot{width:5px;height:5px;background:var(--cyan);border-radius:50%;animation:pulse 1.5s infinite}
+.db-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+.db-kpi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:.9rem 1rem;transition:background .3s;border-radius:16px}
+.db-kpi:hover{background:rgba(0,212,255,.06)}
+.dbk-val{font-family:var(--font-b);font-size:20px;font-weight:600;color:#fff;letter-spacing:-0.5px;display:block;line-height:1}
+.dbk-val span{color:var(--cyan)}
+.dbk-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.35rem;display:block}
+.dbk-trend{font-size:10px;font-weight:600;display:block;margin-top:.2rem}
+.dbk-trend.up{color:#4ade80}
+.dbk-trend.dn{color:#f87171}
+.db-chart{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:1rem 1rem 1.8rem;margin-bottom:1rem;overflow:visible;border-radius:16px}
+.dbc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.dbc-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);font-family:var(--font-h)}
+.dbc-val{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--cyan)}
+.dbc-bars{display:flex;align-items:flex-end;gap:4px;height:70px;padding-bottom:0;margin-bottom:20px}
+.bar-item{flex:1;border-radius:2px 2px 0 0;position:relative;cursor:default}
+.bar-item::after{content:attr(data-label);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:8px;color:rgba(255,255,255,.4);white-space:nowrap;font-family:var(--font-h)}
+.db-tasks{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:1rem;border-radius:16px}
+.dbt-head{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.7rem;display:block;font-family:var(--font-h)}
+.dbt-item{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.dbt-item:last-child{border-bottom:none}
+.dbt-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dbt-text{font-size:12px;color:rgba(255,255,255,.7);flex:1}
+.dbt-tag{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:.15rem .5rem;border-radius:4px}
+
+/* MARQUEE */
+.marquee{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 0;overflow:hidden;background:var(--surface)}
+.mq-inner{display:flex;align-items:center;gap:0}
+.mq-label{font-family:var(--font-h);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);padding:0 3rem 0 5rem;white-space:nowrap;flex-shrink:0;border-right:1px solid var(--border)}
+.mq-track{display:flex;gap:4rem;animation:mq-scroll 22s linear infinite;width:max-content;padding:0 4rem}
+.mq-item{font-family:var(--font-h);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(8,22,40,.2);white-space:nowrap;transition:color .3s}
+.mq-item:hover{color:var(--navy)}
+@keyframes mq-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* AWARDS */
+#awards{background:var(--surface);border-bottom:1px solid var(--border);padding:2.5rem 5rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap}
+.aw-label{font-family:var(--font-h);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.aw-sep{width:1px;height:32px;background:var(--border);flex-shrink:0}
+.aw-list{display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap}
+.aw-item{display:flex;flex-direction:column;align-items:center;gap:.3rem;cursor:default;transition:transform .3s}
+.aw-item:hover{transform:translateY(-2px)}
+.aw-ico{font-size:20px;line-height:1}
+.aw-name{font-family:var(--font-h);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.3}
+.aw-yr{font-family:var(--font-d);font-size:13px;font-style:italic;color:var(--blue)}
+.aw-score{margin-left:auto;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:.7rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+.aw-score-stars{color:var(--cyan);font-size:12px;letter-spacing:3px}
+.aw-score-text{font-family:var(--font-h);font-size:11px;font-weight:600;letter-spacing:.5px}
+
+/* SOLUTIONS */
+#solutions{padding:8rem 5rem;background:var(--bg)}
+#solutions .sol-wrap{max-width:1200px;margin:0 auto}
+.sec-kicker{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.sk-line{width:20px;height:1.5px;background:var(--blue)}
+.sk-text{font-family:var(--font-h);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--blue);font-weight:600}
+.sec-title{font-family:var(--font-h);font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-1.5px;color:var(--navy);line-height:1.05;margin-bottom:1rem}
+.sec-title em{font-style:normal;color:var(--blue);font-size:inherit;font-weight:400}
+.sec-title strong{font-family:var(--font-h);font-size:inherit;font-weight:700;display:block;color:var(--navy)}
+.sec-desc{font-size:15px;line-height:1.75;color:var(--muted);max-width:520px;margin-bottom:4rem}
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:3.5rem;overflow-x:auto;max-width:1200px;margin-left:auto;margin-right:auto}
+.tab-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:.9rem 2rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);cursor:none;transition:all .3s;white-space:nowrap}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--navy)}
+.tab-panel{display:none}.tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;animation:tabIn .4s ease;max-width:1200px;margin:0 auto}
+@keyframes tabIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tp-icon{font-size:42px;display:block;margin-bottom:1.5rem}
+.tp-title{font-family:var(--font-h);font-size:clamp(22px,2.8vw,36px);font-weight:700;color:var(--navy);margin-bottom:1.2rem;line-height:1.1;letter-spacing:-1px}
+.tp-title em{font-style:normal;color:var(--blue);font-weight:400}
+.tp-desc{font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:2.5rem}
+.tp-stats{display:flex;gap:3rem}
+.tp-stat-n{font-family:var(--font-b);font-size:32px;font-weight:600;color:var(--navy);display:block;letter-spacing:-1px;line-height:1}
+.tp-stat-n span{color:var(--blue)}
+.tp-stat-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;display:block}
+.tp-right{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tp-feat{background:var(--surface);border:1px solid var(--border);padding:1.5rem;position:relative;overflow:hidden;transition:all .4s;cursor:none}
+.tp-feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.tp-feat:hover::before{transform:scaleX(1)}
+.tp-feat:hover{border-color:rgba(0,87,255,.2);background:var(--subtle)}
+.tf-ico{font-size:18px;margin-bottom:.7rem;display:block}
+.tf-title{font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--navy);margin-bottom:.3rem}
+.tf-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* IMPACT */
+#impact{padding:7rem 5rem;background:var(--navy);position:relative;overflow:hidden}
+#impact-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.25;display:block;z-index:0}
+.impact-inner{position:relative;z-index:1}
+.impact-header{text-align:center;margin-bottom:5rem;max-width:700px;margin-left:auto;margin-right:auto}
+.sec-kicker-w{display:flex;align-items:center;gap:.7rem;justify-content:center;margin-bottom:1rem}
+.skw-line{width:20px;height:1.5px;background:var(--cyan)}
+.skw-text{font-family:var(--font-h);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);font-weight:600;opacity:.8}
+.sec-title-w{font-family:var(--font-h);font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-1.5px;color:#fff;line-height:1.05;margin-bottom:0}
+.sec-title-w em{font-style:normal;color:var(--cyan);font-weight:400}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);max-width:1100px;margin:0 auto}
+.ig-item{padding:3rem 2.5rem;background:rgba(255,255,255,.02);position:relative;overflow:hidden;transition:background .4s;cursor:default}
+.ig-item:hover{background:rgba(0,212,255,.05)}
+.ig-item::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s}
+.ig-item:hover::before{opacity:.4}
+.ig-num{font-family:var(--font-b);font-size:clamp(32px,3.8vw,52px);font-weight:600;color:#fff;display:block;line-height:1;letter-spacing:-1px;margin-bottom:.6rem}
+.ig-num span{color:var(--cyan)}
+.ig-label{font-family:var(--font-b);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);display:block;margin-bottom:1rem;font-weight:500}
+.ig-bar{height:2px;background:rgba(255,255,255,.06);width:100%;border-radius:1px;overflow:hidden}
+.ig-bar-fill{height:100%;background:linear-gradient(to right,var(--blue),var(--cyan));width:0;transition:width 1.2s cubic-bezier(.25,.46,.45,.94)}
+
+/* CASE STUDIES */
+#cases{padding:8rem 5rem;background:var(--bg)}
+.cs-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;flex-wrap:wrap;gap:2rem;max-width:1200px;margin-left:auto;margin-right:auto}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+.cc{background:var(--surface);border:1px solid var(--border);overflow:hidden;cursor:none;transition:all .4s;position:relative}
+.cc:hover{box-shadow:0 20px 60px rgba(8,22,40,.08);transform:translateY(-4px)}
+.cc:hover .cc-progress{width:100%}
+.cc-stripe{height:3px;background:linear-gradient(to right,var(--blue),var(--cyan))}
+.cc-top{padding:1.8rem 2rem 1.5rem;border-bottom:1px solid var(--border);position:relative}
+.cc-tag{font-family:var(--font-h);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:.6rem;display:block;font-weight:600}
+.cc-title{font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--navy);line-height:1.2;letter-spacing:-.5px}
+.cc-progress{position:absolute;bottom:0;left:0;height:1.5px;background:var(--blue);width:0;transition:width .6s ease}
+.cc-body{padding:1.5rem 2rem}
+.ccr{display:flex;gap:.9rem;margin-bottom:.9rem;align-items:flex-start}
+.ccr-ico{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:.15rem}
+.ccr-ico.p{background:rgba(239,68,68,.1);color:#ef4444}
+.ccr-ico.s{background:rgba(0,87,255,.1);color:var(--blue)}
+.ccr-ico.r{background:rgba(8,22,40,.08);color:var(--navy)}
+.ccr-lbl{font-family:var(--font-h);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.2rem;font-weight:600}
+.ccr-txt{font-size:13px;line-height:1.6;color:var(--fg)}
+.ccr-big{font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--navy);display:block;line-height:1;letter-spacing:-1px;margin-bottom:.15rem}
+.ccr-big span{color:var(--blue)}
+.ccr-sm{font-size:11px;color:var(--muted)}
+
+/* INDUSTRIES */
+#industries{padding:8rem 5rem;background:var(--surface);border-top:1px solid var(--border)}
+.ind-header{text-align:center;margin-bottom:4rem;max-width:700px;margin-left:auto;margin-right:auto}
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);max-width:1200px;margin:0 auto}
+.ind-card{background:var(--surface);padding:2.5rem 2rem;text-align:center;cursor:none;transition:all .4s;position:relative;overflow:hidden}
+.ind-card:hover{background:var(--subtle)}
+.ic-num{font-family:var(--font-h);font-size:56px;font-weight:800;color:rgba(8,22,40,.04);position:absolute;top:1rem;right:1.2rem;line-height:1;letter-spacing:-2px}
+.ic-ico{font-size:32px;margin-bottom:1.2rem;display:block}
+.ic-title{font-family:var(--font-h);font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--navy);margin-bottom:.5rem}
+.ic-desc{font-size:12px;color:var(--muted);line-height:1.55}
+
+/* TEAM */
+#team{padding:8rem 5rem;background:var(--bg)}
+.team-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;max-width:1200px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1200px;margin:0 auto}
+.tcard{cursor:none;transition:transform .4s}
+.tcard:hover{transform:translateY(-4px)}
+.tc-wrap{overflow:hidden;aspect-ratio:3/4;background:var(--subtle);border:1px solid var(--border);position:relative}
+.tc-face{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px;background:linear-gradient(145deg,var(--subtle),var(--border));transition:transform .5s}
+.tc-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,rgba(8,22,40,.9));opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem}
+.tc-wrap:hover .tc-overlay{opacity:1}
+.tco-role{font-family:var(--font-h);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:.3rem}
+.tco-spec{font-size:12px;color:rgba(255,255,255,.65);line-height:1.45}
+.tc-info{padding:1.1rem 0}
+.tc-name{font-family:var(--font-h);font-size:15px;font-weight:600;color:var(--navy);margin-bottom:.15rem;letter-spacing:.3px}
+.tc-title{font-family:var(--font-h);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;font-weight:600}
+.tc-edu{font-size:11px;color:var(--muted)}
+
+/* TESTIMONIALS */
+#testimonials{padding:8rem 5rem;background:var(--navy);position:relative;overflow:hidden}
+.test-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 100%,rgba(0,87,255,.08),transparent);pointer-events:none}
+.test-inner{max-width:820px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.test-rating{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:2.5rem}
+.tr-stars{color:var(--cyan);font-size:18px;letter-spacing:4px}
+.tr-score{font-family:var(--font-h);font-size:13px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:2px}
+.test-quote{font-family:var(--font-b);font-size:clamp(17px,2.2vw,26px);font-weight:300;font-style:italic;line-height:1.55;color:#fff;margin-bottom:3rem;transition:opacity .4s;letter-spacing:-.2px}
+.test-nav{display:flex;gap:.5rem;justify-content:center;margin-bottom:2.5rem}
+.tn-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);cursor:none;transition:all .35s}
+.tn-dot.a{background:var(--cyan);width:22px;border-radius:4px}
+.test-author{display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.ta-name{font-family:var(--font-h);font-size:14px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
+.ta-role{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* PROCESS */
+#process{padding:8rem 5rem;background:var(--subtle);border-top:1px solid var(--border)}
+.proc-head{text-align:center;margin-bottom:5rem;max-width:600px;margin-left:auto;margin-right:auto}
+.proc-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;max-width:1100px;margin:0 auto;position:relative}
+.proc-steps::before{content:'';position:absolute;top:27px;left:10%;right:10%;height:1px;background:linear-gradient(to right,var(--blue),rgba(0,87,255,.15),var(--blue))}
+.ps{text-align:center;padding:0 .8rem}
+.ps-num{width:54px;height:54px;border:1.5px solid var(--border);background:var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;position:relative;z-index:1;font-family:var(--font-h);font-size:14px;font-weight:800;color:var(--navy);transition:all .4s;cursor:none;letter-spacing:-1px}
+.ps:hover .ps-num{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ps-title{font-family:var(--font-h);font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--navy);margin-bottom:.6rem}
+.ps-desc{font-size:12px;line-height:1.65;color:var(--muted)}
+
+/* INSIGHTS */
+#insights{padding:8rem 5rem;background:var(--bg);border-top:1px solid var(--border)}
+.ins-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;max-width:1200px;margin:0 auto}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+.ins-card{background:var(--surface);border:1px solid var(--border);overflow:hidden;cursor:none;transition:all .4s}
+.ins-card:hover{box-shadow:0 12px 40px rgba(8,22,40,.07);transform:translateY(-3px)}
+.ins-img{height:200px;overflow:hidden;background:var(--subtle);position:relative}
+.ic-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px;transition:transform .5s}
+.ins-cat-tag{position:absolute;top:1rem;left:1rem;background:var(--navy);color:#fff;font-family:var(--font-h);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:.25rem .7rem;font-weight:700}
+.ins-body{padding:1.5rem}
+.ins-date{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;display:block}
+.ins-title{font-family:var(--font-b);font-size:15px;font-weight:600;color:var(--navy);margin-bottom:.6rem;line-height:1.4}
+.ins-excerpt{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:1.2rem}
+.ins-link{font-family:var(--font-h);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);border-bottom:1px solid rgba(0,87,255,.3);padding-bottom:1px;text-decoration:none;transition:border-color .3s;font-weight:600}
+
+/* ROI */
+#roi{padding:8rem 5rem;background:var(--navy);position:relative;overflow:hidden}
+.roi-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.roi-box{display:grid;grid-template-columns:1fr 1fr;gap:2rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:32px;overflow:hidden}
+.roi-left{padding:3rem;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:2.5rem}
+.roi-right{padding:3rem;display:flex;flex-direction:column;gap:1.5rem}
+.roi-field-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.roi-label{font-family:var(--font-h);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.roi-val-badge{font-family:var(--font-h);font-size:12px;font-weight:700;color:var(--cyan);background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);padding:.2rem .8rem;border-radius:4px}
+.roi-slider{width:100%;accent-color:var(--cyan);cursor:pointer;height:3px}
+.roi-slider-labels{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.4);margin-top:.4rem;font-family:var(--font-h)}
+.roi-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem}
+.roi-chip{font-family:var(--font-h);font-size:11px;font-weight:600;letter-spacing:1px;padding:.5rem 1.1rem;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);cursor:none;transition:all .3s;border-radius:50px}
+.roi-chip.active{background:rgba(0,212,255,.12);border-color:var(--cyan);color:var(--cyan)}
+.roi-primary-result{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);padding:1.8rem;margin-bottom:1.5rem;text-align:center;border-radius:24px}
+.roi-primary-num{font-family:var(--font-b);font-size:clamp(26px,3.5vw,42px);font-weight:700;color:#fff;display:block;letter-spacing:-1px;line-height:1;margin-bottom:.5rem}
+.roi-primary-period{font-size:12px;color:rgba(255,255,255,.6);display:block;font-family:var(--font-h);letter-spacing:1px;text-transform:uppercase}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.roi-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);padding:1.1rem;display:flex;flex-direction:column;gap:.3rem;border-radius:16px}
+.roi-metric-val{font-family:var(--font-b);font-size:18px;font-weight:600;color:#fff;display:block;letter-spacing:-0.5px;line-height:1}
+.roi-metric-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);font-family:var(--font-b);font-weight:500}
+.roi-bar-track{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.roi-bar-after{height:100%;background:linear-gradient(to right,var(--blue),var(--cyan));border-radius:3px;transition:width .6s cubic-bezier(.25,.46,.45,.94)}
+.roi-cta{display:block;text-align:center;background:var(--blue);color:#fff;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:1.1rem;text-decoration:none;transition:background .3s;cursor:none;margin-top:.5rem;border-radius:50px}
+
+/* DIAGNOSIS MODAL */
+#diag-modal{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;padding:2rem}
+#diag-modal.open{display:flex}
+.dm-overlay{position:absolute;inset:0;background:rgba(8,22,40,.92);backdrop-filter:blur(8px);cursor:none}
+.dm-box{position:relative;z-index:1;background:var(--surface);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,0.4);animation:dm-in .5s cubic-bezier(.19,1,.22,1)}
+@keyframes dm-in{from{opacity:0;transform:scale(.95) translateY(20px)}to{opacity:1;transform:none}}
+.dm-head{padding:2rem 2.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.dm-title{font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--navy);letter-spacing:-.5px}
+.dm-close{background:none;border:none;font-size:24px;cursor:none;color:var(--muted);line-height:1;transition:color .3s;padding:.3rem}
+.dm-close:hover{color:var(--navy)}
+.dm-progress{height:3px;background:var(--subtle);overflow:hidden}
+.dm-progress-fill{height:100%;background:linear-gradient(to right,var(--blue),var(--cyan));transition:width .6s cubic-bezier(.65,0,.35,1)}
+.dm-step{padding:2.5rem;display:none}
+.dm-step.active{display:block;animation:fadeUp .4s ease}
+.dm-question{font-family:var(--font-h);font-size:clamp(18px,2.5vw,24px);font-weight:700;color:var(--navy);letter-spacing:-.5px;margin-bottom:2rem;line-height:1.2}
+.dm-options{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.dm-opt{background:var(--surface);border:1.5px solid var(--border);padding:1.4rem;cursor:none;transition:all .3s;display:flex;align-items:center;gap:1.2rem;text-align:left;border-radius:16px;position:relative}
+.dm-opt:hover{border-color:var(--blue);background:var(--subtle)}
+.dm-opt.selected{border-color:var(--blue);background:rgba(0,87,255,.05)}
+.dm-opt-badge{width:28px;height:28px;background:rgba(0,87,255,.1);color:var(--blue);display:flex;align-items:center;justify-content:center;border-radius:8px;font-family:var(--font-h);font-size:12px;font-weight:700;flex-shrink:0}
+.dm-opt.selected .dm-opt-badge{background:var(--blue);color:#fff}
+.dm-opt-text{font-size:14px;color:var(--navy);font-weight:500;line-height:1.4}
+.dm-next-wrap{margin-top:2.5rem;display:flex;justify-content:flex-end}
+.dm-next{background:var(--navy);color:#fff;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:1.1rem 2.8rem;border:none;cursor:none;transition:all .3s;border-radius:50px}
+.dm-next:disabled{opacity:.3;cursor:not-allowed}
+.dm-next:not(:disabled):hover{background:var(--blue);transform:translateY(-2px)}
+
+.dm-result{padding:2rem 3rem 3rem;display:none}
+.dm-result.active{display:block;animation:fadeUp .6s ease}
+.dm-score-ring{width:100px;height:100px;margin:0 auto 1.5rem;position:relative}
+.dm-score-val{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--navy);letter-spacing:-1px}
+.dm-score-label{font-family:var(--font-h);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:2.5rem}
+.dm-radar-wrap{display:flex;justify-content:center;margin:1.5rem 0;min-height:300px}
+.dm-dims{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2rem 0}
+.dm-dim{display:flex;flex-direction:column;gap:.5rem}
+.dm-dim-head{display:flex;justify-content:space-between;align-items:center}
+.dm-dim-name{font-family:var(--font-h);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.dm-dim-val{font-family:var(--font-b);font-size:12px;font-weight:700;color:var(--navy)}
+.dm-dim-bar{height:4px;background:var(--subtle);border-radius:2px;overflow:hidden}
+.dm-dim-fill{height:100%;background:linear-gradient(to right,var(--blue),var(--cyan));border-radius:2px;width:0;transition:width 1s cubic-bezier(.19,1,.22,1)}
+.dm-recommendation{background:var(--subtle);border-left:4px solid var(--blue);padding:1.8rem 2.2rem;margin:2.5rem 0;border-radius:4px 20px 20px 4px}
+.dm-rec-label{font-family:var(--font-h);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:.8rem;display:block}
+.dm-rec-text{font-size:15px;line-height:1.6;color:var(--navy);font-weight:500}
+.dm-result-cta{display:block;text-align:center;background:var(--navy);color:#fff;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:1.2rem;text-decoration:none;transition:all .3s;border-radius:50px;margin-top:1.5rem}
+.dm-result-cta:hover{background:var(--blue);transform:translateY(-2px)}
+
+/* TRIGGER STRIP */
+.diag-trigger-strip{padding:5rem;background:linear-gradient(135deg,var(--navy) 0%,#0d2a50 100%);display:flex;align-items:center;justify-content:space-between;gap:3rem}
+.dts-left{display:flex;flex-direction:column;gap:.8rem}
+.dts-badge{display:inline-block;background:var(--cyan);color:var(--navy);font-family:var(--font-h);font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.35rem .9rem;border-radius:4px;width:max-content}
+.dts-title{font-family:var(--font-h);font-size:clamp(22px,3.2vw,36px);font-weight:700;color:#fff;letter-spacing:-1px;line-height:1.1}
+.dts-btn{background:var(--cyan);color:var(--navy);font-family:var(--font-h);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:1.2rem 2.8rem;border:none;cursor:none;transition:all .3s;white-space:nowrap;border-radius:50px;display:flex;align-items:center;gap:.8rem}
+.dts-btn:hover{background:#fff;transform:scale(1.05)}
+
+/* SIMULATOR */
+#simulator{padding:8rem 5rem;background:var(--surface);border-top:1px solid var(--border)}
+.sim-inner{max-width:1100px;margin:0 auto}
+.sim-header-wrap{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;gap:2rem}
+.sim-controls{display:flex;gap:1.5rem;margin-bottom:3rem}
+.sim-ctrl{flex:1;background:var(--bg);padding:1.5rem;border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;gap:.8rem}
+.sim-ctrl-head{display:flex;justify-content:space-between;align-items:center}
+.sim-ctrl-label{font-family:var(--font-h);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sim-ctrl-badge{background:var(--navy);color:#fff;font-size:12px;font-weight:700;padding:.2rem .6rem;border-radius:6px;font-family:var(--font-b)}
+.sim-slider{width:100%;accent-color:var(--blue);cursor:pointer;height:4px}
+.sim-canvas-wrap{background:var(--surface);border:1px solid var(--border);padding:2rem;border-radius:24px;position:relative}
+#sim-canvas{width:100%;height:380px;display:block}
+.sim-legend{display:flex;gap:2rem;justify-content:center;margin-top:2rem;margin-bottom:2rem}
+.sl-item{display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--muted);font-weight:500}
+.sl-dot{width:12px;height:3px;border-radius:2px}
+.sim-outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.sim-out-card{background:var(--bg);padding:1.5rem;border-radius:20px;border:1px solid var(--border)}
+.sim-out-card.highlight{border-color:var(--blue);background:rgba(0,87,255,.03)}
+.sim-out-lbl{font-family:var(--font-h);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
+.sim-out-val{font-family:var(--font-b);font-size:22px;font-weight:700;color:var(--navy);display:block}
+.sim-out-card.highlight .sim-out-val{color:var(--blue)}
+
+/* REPORT */
+#report{padding:8rem 5rem;background:var(--subtle);border-top:1px solid var(--border)}
+.rep-inner{max-width:1100px;margin:0 auto}
+.rep-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:1rem;align-items:end;margin-bottom:4rem}
+.rep-field{display:flex;flex-direction:column;gap:.6rem}
+.rep-label{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.rep-input,.rep-select{background:var(--surface);border:1.5px solid var(--border);padding:0 1.2rem;height:52px;font-size:14px;color:var(--navy);font-family:var(--font-b);outline:none;border-radius:14px;transition:all .3s;width:100%}
+.rep-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1.2rem center;padding-right:3rem;cursor:none}
+.rep-input:focus,.rep-select:focus{border-color:var(--blue);background:#fff;box-shadow:0 8px 20px rgba(0,87,255,.05)}
+.rep-gen-btn{background:var(--navy);color:#fff;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:0 2.5rem;height:52px;border:none;cursor:none;transition:all .3s;border-radius:50px;white-space:nowrap}
+.rep-gen-btn:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,87,255,.2)}
+
+#rep-preview{display:none;margin-top:2rem;animation:fadeUp .6s ease}
+.doc-wrap{background:#fff;box-shadow:0 50px 120px rgba(8,22,40,.2);border-radius:8px;overflow:hidden;position:relative;border:1px solid var(--border)}
+.doc-header{background:var(--navy);padding:3.5rem 4rem;color:#fff;display:flex;justify-content:space-between;align-items:center;position:relative}
+.doc-header::after{content:'';position:absolute;bottom:0;left:4rem;right:4rem;height:1px;background:rgba(255,255,255,.1)}
+.dh-left .ft-logo-name{color:#fff;font-size:24px;letter-spacing:-.5px}
+.dh-left .ft-logo-mark{background:var(--blue);width:32px;height:32px}
+.dh-left .ft-logo-mark::before{color:#fff;font-size:15px}
+.dh-right{text-align:right;opacity:.7;font-size:10px;letter-spacing:2px;text-transform:uppercase;line-height:1.8;font-weight:600}
+.doc-body{padding:5rem 4rem}
+.db-title-block{margin-bottom:4rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.db-kicker{color:var(--blue);font-family:var(--font-h);font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;margin-bottom:1rem;display:block}
+.db-name{font-family:var(--font-h);font-size:52px;font-weight:800;color:var(--navy);letter-spacing:-2px;margin-bottom:.8rem;line-height:1.1}
+.db-meta{font-size:15px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:1rem}
+.db-meta::before{content:'';width:12px;height:2px;background:var(--blue)}
+.db-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:5rem}
+.db-col-title{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--navy);margin-bottom:2.2rem;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:1.2rem}
+.db-col-title::after{content:'';height:1px;background:var(--border);flex:1}
+.db-finding{margin-bottom:2rem;display:flex;gap:1.5rem;align-items:flex-start}
+.dbf-num{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--blue);background:rgba(0,87,255,.08);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.dbf-text{font-size:15px;line-height:1.7;color:var(--navy);font-weight:500}
+.db-results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.dbr-item{border:1px solid var(--border);background:var(--bg);padding:1.8rem;border-radius:12px;transition:all .3s}
+.dbr-item:hover{border-color:var(--blue);background:#fff;box-shadow:0 10px 30px rgba(0,87,255,.06)}
+.dbr-val{font-family:var(--font-b);font-size:28px;font-weight:800;color:var(--blue);display:block;line-height:1;margin-bottom:.5rem}
+.dbr-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.db-phase{margin-bottom:2.2rem;display:flex;gap:1.5rem}
+.dbp-badge{background:var(--navy);color:#fff;font-family:var(--font-h);font-size:10px;font-weight:700;padding:.4rem .8rem;border-radius:4px;white-space:nowrap;height:max-content;letter-spacing:1px}
+.dbp-content strong{display:block;font-size:15px;color:var(--navy);margin-bottom:.4rem;font-weight:700}
+.dbp-content p{font-size:14px;color:var(--muted);line-height:1.6;font-weight:450}
+.db-next-step{background:var(--navy);padding:2.5rem;margin-top:3rem;border-radius:12px;color:#fff}
+.dbns-title{font-family:var(--font-h);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem;display:block}
+.dbns-text{font-size:15px;line-height:1.7;color:rgba(255,255,255,.9);font-weight:450}
+.doc-footer{padding:2.5rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
+.df-copy{font-size:12px;color:var(--muted);font-weight:500}
+.df-btn{background:var(--blue);color:#fff;font-family:var(--font-h);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:.9rem 2rem;border:none;cursor:none;border-radius:50px;transition:all .3s}
+.df-btn:hover{background:var(--navy);transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,87,255,.2)}
+
+
+/* FAQ */
+#faq{padding:7rem 5rem;background:var(--surface);border-top:1px solid var(--border)}
+.faq-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1100px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-head{display:flex;justify-content:space-between;align-items:center;padding:1.3rem 0;cursor:none}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.25,.46,.45,.94)}
+.faq-item.op .faq-body{max-height:220px}
+
+/* CONTACT */
+#contact{padding:8rem 5rem;background:var(--navy);position:relative;overflow:hidden}
+.ct-inner{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start;max-width:1100px;position:relative;z-index:1;margin:0 auto}
+.ct-title{font-family:var(--font-h);font-size:clamp(28px,3.8vw,50px);font-weight:700;color:#fff;line-height:1.08;letter-spacing:-1.5px;margin-bottom:1.5rem}
+.ct-desc{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:2.5rem;line-height:1.6}
+.ct-features{display:flex;flex-direction:column;gap:1.3rem}
+.ctf{display:flex;align-items:center;gap:1rem;font-size:14px;color:rgba(255,255,255,.85);font-family:var(--font-b);line-height:1.4}
+.ctf-ico{width:32px;height:32px;background:rgba(255,255,255,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cf-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.6rem;display:block;font-weight:600}
+.cf-input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);padding:0 1rem;height:48px;font-size:14px;color:#fff;font-family:var(--font-b);outline:none;width:100%;border-radius:8px;transition:border-color .3s;box-sizing:border-box}
+.cf-sel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);padding:0 1.2rem;padding-right:3rem;height:48px;font-size:14px;color:#fff;font-family:var(--font-b);outline:none;width:100%;border-radius:8px;transition:border-color .3s;box-sizing:border-box;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1.2rem center}
+.cf-input:focus{border-color:var(--blue)}
+.cf-submit{width:100%;background:var(--blue);color:#fff;border:none;padding:1.1rem;font-family:var(--font-h);font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:none;font-weight:700;transition:all .35s;margin-top:.5rem;border-radius:50px}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding:5rem 5rem 2.5rem;color:rgba(255,255,255,.35)}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.ft-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.ft-list a{color:rgba(255,255,255,.3);text-decoration:none;font-size:13px;transition:color .3s;cursor:none}
+
+.demo-badge{position:fixed;top:0;right:0;background:var(--blue);color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:.32rem .9rem;z-index:99999;font-weight:700;font-family:var(--font-h)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .9s,transform .9s}.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+@media(max-width:1100px){.sim-grid{grid-template-columns:1fr}.sim-controls{flex-direction:column}}
+@media(max-width:900px){
+  nav{padding:1.1rem 2rem}.n-links{display:none}.n-cta{display:none}.mob-toggle{display:flex}
+  #solutions,#impact,#cases,#industries,#team,#testimonials,#process,#insights,#faq,#contact,footer,#awards,#simulator,#report{padding-left:2rem;padding-right:2rem}
+  .impact-grid{grid-template-columns:1fr 1fr}.ind-grid{grid-template-columns:1fr 1fr}.cases-grid{grid-template-columns:1fr}.ins-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}.proc-steps{grid-template-columns:1fr 1fr}.ft-top{grid-template-columns:1fr 1fr}
+  #sticky-cta{bottom:5rem;right:1rem}
+  #roi{padding-left:2rem;padding-right:2rem}
+  .roi-box{grid-template-columns:1fr}
+  .diag-trigger-strip{flex-direction:column;text-align:center;padding:3rem 2rem}
+  .dm-options{grid-template-columns:1fr}
+  .sim-controls{flex-direction:column}
+  .sim-outcomes{grid-template-columns:1fr}
+  .rep-form{grid-template-columns:1fr}
+  .db-grid{grid-template-columns:1fr}
+  .doc-header,.doc-body{padding-left:1.5rem;padding-right:1.5rem}
+}
+</style>
+</head>
+<body class="loading">
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pl-grid"></div>
+  <div class="pl-logo-wrap"><span class="pl-logo">MERIDIAN</span></div>
+  <div style="overflow:hidden"><span class="pl-tagline">Strategic Growth Partners</span></div>
+  <div class="pl-bar-wrap"><div class="pl-bar"></div></div>
+  <span class="pl-counter" id="pl-pct">Loading…</span>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div><div id="cur-r"></div>
+<div class="demo-badge">Demo</div>
+
+<!-- BACK BAR (Standardized) -->
+<div class="back-bar">
+  <a href="../../index.html#templates" class="bb-b">← VISSZA</a>
+  <a href="../../contact.html" class="bb-c">EZT SZERETNÉM →</a>
+</div>
+
+<!-- STICKY CTA -->
+<div id="sticky-cta">
+  <a href="#contact" class="scta"><span class="scta-dot"></span>Stratégiai megbeszélés</a>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mob-menu">
+  <a href="#solutions" onclick="toggleMob()">Megoldások</a>
+  <div class="mob-divider"></div>
+  <a href="#cases" onclick="toggleMob()">Eredmények</a>
+  <div class="mob-divider"></div>
+  <a href="#team" onclick="toggleMob()">Csapat</a>
+  <div class="mob-divider"></div>
+  <a href="#process" onclick="toggleMob()">Folyamat</a>
+  <div class="mob-divider"></div>
+  <a href="#contact" class="mob-cta-lnk" onclick="toggleMob()">Stratégiai megbeszélés</a>
+</div>
+
+<!-- NAV -->
+<nav id="mnav">
+  <a href="#" class="n-logo" onclick="window.scrollTo(0,0);return false">
+    <div class="n-logo-mark"></div>
+    <div class="n-logo-text">
+      <span class="n-logo-name">Meridian</span>
+      <span class="n-logo-sub">Strategic Growth Partners</span>
+    </div>
+  </a>
+  <ul class="n-links">
+    <li><a href="#solutions">Megoldások</a></li>
+    <li><a href="#impact">Eredmények</a></li>
+    <li><a href="#roi">ROI Kalkulátor</a></li>
+    <li><a href="#insights">Insights</a></li>
+  </ul>
+  <div class="n-right">
+    <a href="#contact" class="n-cta">Stratégiai megbeszélés</a>
+    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="h-kicker rv"><div class="hk-line"></div><span class="hk-text">Global Strategic Advisory</span></div>
+    <h1 class="h-title rv d1">Ambitious<br>companies<br>grow <em>faster.</em></h1>
+    <p class="h-tagline rv d2">A Meridian komplex vállalati kihívásokra ad adatvezérelt, skálázható stratégiai megoldásokat — 18 éve, 340+ vezető vállalatnak.</p>
+    <div class="h-btns rv d3">
+      <a href="#contact" class="btn-primary">Stratégiai megbeszélés</a>
+      <a href="#solutions" class="btn-secondary">Megoldásaink →</a>
+    </div>
+    <div class="h-metrics rv d4">
+      <div class="hm-item">
+        <span class="hm-num" data-target="340"><span>0</span><span style="color:var(--blue)">+</span></span>
+        <span class="hm-label">Vállalati ügyfél</span>
+      </div>
+      <div class="hm-item">
+        <span class="hm-num" data-target="3" data-suffix="×"><span>0</span></span>
+        <span class="hm-label">Átlag növekedés</span>
+      </div>
+      <div class="hm-item">
+        <span class="hm-num" data-target="18"><span>0</span><span style="color:var(--blue)">+</span></span>
+        <span class="hm-label">Év tapasztalat</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <canvas id="hero-canvas"></canvas>
+    <div class="dashboard">
+      <div class="db-header">
+        <span class="db-title">Growth Command Center</span>
+        <span class="db-live"><span class="db-live-dot"></span>Élő adatok</span>
+      </div>
+      <div class="db-kpis">
+        <div class="db-kpi"><span class="dbk-val">94<span>%</span></span><span class="dbk-lbl">Célteljesítés</span><span class="dbk-trend up">▲ +12%</span></div>
+        <div class="db-kpi"><span class="dbk-val">48</span><span class="dbk-lbl">Aktív projekt</span><span class="dbk-trend up">▲ +6</span></div>
+        <div class="db-kpi"><span class="dbk-val">3.2<span>×</span></span><span class="dbk-lbl">Átlag ROI</span><span class="dbk-trend up">▲ +0.4×</span></div>
+      </div>
+      <div class="db-chart">
+        <div class="dbc-head"><span class="dbc-title">Negyedéves növekedés</span><span class="dbc-val">+38% YoY</span></div>
+        <div class="dbc-bars" id="chart-bars">
+          <div class="bar-item" style="height:42%;background:rgba(0,87,255,.25);border-top:2px solid rgba(0,87,255,.6)" data-label="Q1"></div>
+          <div class="bar-item" style="height:58%;background:rgba(0,87,255,.25);border-top:2px solid rgba(0,87,255,.6)" data-label="Q2"></div>
+          <div class="bar-item" style="height:52%;background:rgba(0,87,255,.25);border-top:2px solid rgba(0,87,255,.6)" data-label="Q3"></div>
+          <div class="bar-item" style="height:74%;background:rgba(0,87,255,.25);border-top:2px solid rgba(0,87,255,.6)" data-label="Q4"></div>
+          <div class="bar-item" style="height:65%;background:rgba(0,87,255,.25);border-top:2px solid rgba(0,87,255,.6)" data-label="Q1"></div>
+          <div class="bar-item" style="height:88%;background:rgba(0,212,255,.2);border-top:2px solid rgba(0,212,255,.8)" data-label="Q2"></div>
+          <div class="bar-item" style="height:80%;background:rgba(0,212,255,.15);border-top:2px solid rgba(0,212,255,.5)" data-label="Q3"></div>
+        </div>
+      </div>
+      <div class="db-tasks">
+        <span class="dbt-head">Aktuális mérföldkövek</span>
+        <div class="dbt-item"><div class="dbt-dot" style="background:#4ade80"></div><span class="dbt-text">Q2 piacelemzés lezárva</span><span class="dbt-tag" style="background:rgba(74,222,128,.1);color:#4ade80">Kész</span></div>
+        <div class="dbt-item"><div class="dbt-dot" style="background:var(--cyan)"></div><span class="dbt-text">Növekedési stratégia — review</span><span class="dbt-tag" style="background:rgba(0,212,255,.1);color:var(--cyan)">Folyamatban</span></div>
+        <div class="dbt-item"><div class="dbt-dot" style="background:rgba(255,255,255,.2)"></div><span class="dbt-text">Stakeholder prezentáció</span><span class="dbt-tag" style="background:rgba(255,255,255,.05);color:rgba(255,255,255,.3)">Tervezett</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-inner">
+    <span class="mq-label">Ügyfeleink között</span>
+    <div class="mq-track">
+      <span class="mq-item">OTP Bank</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">MOL Group</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">Magyar Telekom</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">Richter Gedeon</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">Edenred CEE</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">Wizz Air</span><span class="mq-item" style="opacity:.2">·</span>
+      <span class="mq-item">CIG Pannónia</span><span class="mq-item" style="opacity:.2">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- AWARDS -->
+<div id="awards" class="rv">
+  <span class="aw-label">Elismerések</span>
+  <div class="aw-sep"></div>
+  <div class="aw-list">
+    <div class="aw-item"><span class="aw-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></span><span class="aw-name">McKinsey<br>Alumni</span><span class="aw-yr">Certified · 2024</span></div>
+    <div class="aw-item"><span class="aw-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="aw-name">Forbes<br>Best Advisory</span><span class="aw-yr">Top 10 · 2024</span></div>
+    <div class="aw-item"><span class="aw-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span><span class="aw-name">Deloitte<br>Fast 500</span><span class="aw-yr">CEE Leader · 2023</span></div>
+    <div class="aw-item"><span class="aw-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span class="aw-name">World<br>Economic Forum</span><span class="aw-yr">Partner · 2024</span></div>
+    <div class="aw-item"><span class="aw-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="aw-name">BCG<br>Partner Network</span><span class="aw-yr">Gold · 2024</span></div>
+  </div>
+  <div class="aw-score"><span class="aw-score-stars"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="aw-score-text">4.9 / 5 · 280+ vélemény</span></div>
+</div>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="sol-wrap">
+    <div class="rv">
+      <div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Kompetenciák</span></div>
+      <h2 class="sec-title">Ahol<br><em>brillírozunk</em></h2>
+      <p class="sec-desc">Négy fő területen nyújtunk mélyen szakosodott stratégiai tanácsadást — adatvezérelt megközelítéssel, mérhető eredményekkel.</p>
+    </div>
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="0">Digitális transzformáció</button>
+      <button class="tab-btn" data-tab="1">Növekedési stratégia</button>
+      <button class="tab-btn" data-tab="2">Szervezeti hatékonyság</button>
+      <button class="tab-btn" data-tab="3">M&A és tőkepiacok</button>
+    </div>
+  </div>
+  <div class="tab-panel active">
+    <div class="tp-left"><span class="tp-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span><h3 class="tp-title">Digitális<br><em>transzformáció</em></h3><p class="tp-desc">Vállalati folyamatok teljes digitalizálása — az ERP integrációtól a papírmentes irodáig és az AI-alapú döntéstámogatásig. Nem elméleti, hanem végrehajtott változás.</p><div class="tp-stats"><div><span class="tp-stat-n">87<span>%</span></span><span class="tp-stat-l">Hatékonyság növekedés</span></div><div><span class="tp-stat-n">4<span>×</span></span><span class="tp-stat-l">Gyorsabb folyamatok</span></div></div></div>
+    <div class="tp-right"><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><div class="tf-title">Folyamat-automatizáció</div><p class="tf-desc">RPA és AI integráció ismétlődő folyamatokba</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19l-5.5-5.5L6.5 19"/><path d="M17.5 10.5l-5.5-5.5L6.5 10.5"/></svg></span><div class="tf-title">Cloud migráció</div><p class="tf-desc">Biztonságos, skálázható felhő architektúra</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5 5-2-2-4 4"/></svg></span><div class="tf-title">Adatvizualizáció</div><p class="tf-desc">Valós idejű BI dashboardok C-suite-nak</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><div class="tf-title">Rendszerintegráció</div><p class="tf-desc">Széttagolt rendszerek egységes platformba</p></div></div>
+  </div>
+  <div class="tab-panel">
+    <div class="tp-left"><span class="tp-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><h3 class="tp-title">Növekedési<br><em>stratégia</em></h3><p class="tp-desc">Piacelemzéstől 24 hónapos növekedési roadmap-ig. Adatvezérelt stratégiák, amelyek nem csak papíron léteznek — mérőszámokkal, felelősökkel, határidőkkel.</p><div class="tp-stats"><div><span class="tp-stat-n">3.2<span>×</span></span><span class="tp-stat-l">Átlag növekedés</span></div><div><span class="tp-stat-n">92<span>%</span></span><span class="tp-stat-l">Célok teljesítése</span></div></div></div>
+    <div class="tp-right"><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><div class="tf-title">Piacelemzés</div><p class="tf-desc">Versenyhelyzet és trendanalízis</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></span><div class="tf-title">Growth Roadmap</div><p class="tf-desc">24 hónapos mérföldköves terv</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><div class="tf-title">Bevételi modellek</div><p class="tf-desc">Új csatornák és pricing stratégia</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><div class="tf-title">KPI rendszer</div><p class="tf-desc">Mérhető sikerkritériumok</p></div></div>
+  </div>
+  <div class="tab-panel">
+    <div class="tp-left"><span class="tp-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3 class="tp-title">Szervezeti<br><em>hatékonyság</em></h3><p class="tp-desc">A legjobb stratégia sem ér semmit, ha a szervezet nem tudja végrehajtani. Struktúra optimalizálás, kulturális transzformáció és teljesítménymenedzsment rendszerek.</p><div class="tp-stats"><div><span class="tp-stat-n">45<span>%</span></span><span class="tp-stat-l">Termelékenység növekedés</span></div><div><span class="tp-stat-n">−18<span>h</span></span><span class="tp-stat-l">Megtakarított idő/hét</span></div></div></div>
+    <div class="tp-right"><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span><div class="tf-title">Szervezeti design</div><p class="tf-desc">Skálázható struktúra kialakítása</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="tf-title">Kultúra fejlesztés</div><p class="tf-desc">High-performance vállalati kultúra</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span><div class="tf-title">Talent strategy</div><p class="tf-desc">Executive search és fejlesztés</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg></span><div class="tf-title">Lean folyamatok</div><p class="tf-desc">Agilis módszertanok bevezetése</p></div></div>
+  </div>
+  <div class="tab-panel">
+    <div class="tp-left"><span class="tp-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><h3 class="tp-title">M&A és<br><em>tőkepiacok</em></h3><p class="tp-desc">Felvásárlások, fúziók és tőkebevonások teljes stratégiai támogatása — due diligence-től az integrációig. Évente több milliárd forint értékű tranzakció mögött állunk.</p><div class="tp-stats"><div><span class="tp-stat-n">2<span>Md+</span></span><span class="tp-stat-l">Kezelt tranzakciók (Ft)</span></div><div><span class="tp-stat-n">96<span>%</span></span><span class="tp-stat-l">Sikeres lezárás</span></div></div></div>
+    <div class="tp-right"><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><div class="tf-title">Due Diligence</div><p class="tf-desc">Átfogó pénzügyi és stratégiai audit</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="tf-title">Deal structuring</div><p class="tf-desc">Tranzakció struktúra optimalizálás</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span><div class="tf-title">Értékteremtés</div><p class="tf-desc">Post-merger integrációs terv</p></div><div class="tp-feat" style="border-radius:24px"><span class="tf-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><div class="tf-title">Cross-border</div><p class="tf-desc">Határon átnyúló tranzakciók</p></div></div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <canvas id="impact-canvas"></canvas>
+  <div class="impact-inner">
+    <div class="impact-header rv">
+      <div class="sec-kicker-w"><div class="skw-line"></div><span class="skw-text">Számok</span></div>
+      <h2 class="sec-title-w">Eredmények, amik<br><em>bizonyítanak</em></h2>
+    </div>
+    <div class="impact-grid">
+      <div class="ig-item rv"><span class="ig-num" data-target="340"><span>0</span><span style="color:var(--cyan)">+</span></span><span class="ig-label">Vállalati partner</span><div class="ig-bar"><div class="ig-bar-fill" data-w="95"></div></div></div>
+      <div class="ig-item rv d1"><span class="ig-num" data-target="18"><span>0</span><span style="color:var(--cyan)">+</span></span><span class="ig-label">Év a piacon</span><div class="ig-bar"><div class="ig-bar-fill" data-w="75"></div></div></div>
+      <div class="ig-item rv d2"><span class="ig-num" data-target="97"><span>0</span><span style="color:var(--cyan)">%</span></span><span class="ig-label">Ügyfél-elégedettség</span><div class="ig-bar"><div class="ig-bar-fill" data-w="97"></div></div></div>
+      <div class="ig-item rv d3"><span class="ig-num" data-target="12"><span>0</span><span style="color:var(--cyan)">Mrd+</span></span><span class="ig-label">Kezelt forgalom (Ft)</span><div class="ig-bar"><div class="ig-bar-fill" data-w="60"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="cases">
+  <div class="cs-head rv">
+    <div><div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Esettanulmányok</span></div><h2 class="sec-title">Valódi kihívások,<br><em>valódi eredmények</em></h2></div>
+    <a href="#contact" class="btn-secondary">Saját projektjét is megoldjuk →</a>
+  </div>
+  <div class="cases-grid">
+    <div class="cc rv">
+      <div class="cc-stripe"></div>
+      <div class="cc-top"><span class="cc-tag">Digitális transzformáció · Pénzügy</span><div class="cc-title">Regionális bank teljes digitalizációja</div><div class="cc-progress"></div></div>
+      <div class="cc-body">
+        <div class="ccr"><div class="ccr-ico p"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><span class="ccr-lbl">Kihívás</span><span class="ccr-txt">800 fős regionális bank papír-alapú folyamatai 3× lassabbak voltak a piaci átlagnál, ügyfél-elégedettség 58%-on stagnált.</span></div></div>
+        <div class="ccr"><div class="ccr-ico s"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div><div><span class="ccr-lbl">Megoldás</span><span class="ccr-txt">Teljes folyamat-digitalizáció, core banking rendszer csere, mobilapp fejlesztés és személyzeti átképzés 9 hónap alatt.</span></div></div>
+        <div class="ccr" style="margin-bottom:0"><div class="ccr-ico r"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><span class="ccr-lbl">Eredmény</span><span class="ccr-big">+67<span>%</span></span><span class="ccr-sm">ügyfél-elégedettség · 18 hónap alatt</span></div></div>
+      </div>
+    </div>
+    <div class="cc rv d1">
+      <div class="cc-stripe"></div>
+      <div class="cc-top"><span class="cc-tag">M&A · Technológia</span><div class="cc-title">CEE SaaS startup felvásárlása</div><div class="cc-progress"></div></div>
+      <div class="cc-body">
+        <div class="ccr"><div class="ccr-ico p"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><span class="ccr-lbl">Kihívás</span><span class="ccr-txt">Nemzetközi PE alap 2,4 Mrd Ft-os akvizíciót tervezett, de a target IP struktúrája és a növekedési modellje rendezetlen volt.</span></div></div>
+        <div class="ccr"><div class="ccr-ico s"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div><div><span class="ccr-lbl">Megoldás</span><span class="ccr-txt">Full due diligence, üzleti modell restrukturálás, befektetői pitch deck és tranzakciós dokumentáció párhuzamosan.</span></div></div>
+        <div class="ccr" style="margin-bottom:0"><div class="ccr-ico r"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><span class="ccr-lbl">Eredmény</span><span class="ccr-big">2.4<span>Mrd Ft</span></span><span class="ccr-sm">tranzakció, 11 hét alatt lezárva</span></div></div>
+      </div>
+    </div>
+    <div class="cc rv d2">
+      <div class="cc-stripe"></div>
+      <div class="cc-top"><span class="cc-tag">Szervezeti hatékonyság · FMCG</span><div class="cc-title">Gyártócég szervezeti transzformációja</div><div class="cc-progress"></div></div>
+      <div class="cc-body">
+        <div class="ccr"><div class="ccr-ico p"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><span class="ccr-lbl">Kihívás</span><span class="ccr-txt">1200 fős gyártó vállalat 5 éve stagnáló bevételei mögött silókban dolgozó csapatok és elavult döntési struktúra állt.</span></div></div>
+        <div class="ccr"><div class="ccr-ico s"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div><div><span class="ccr-lbl">Megoldás</span><span class="ccr-txt">Szervezeti redesign, cross-functional teamek kialakítása, OKR rendszer bevezetése és vezetői coaching program.</span></div></div>
+        <div class="ccr" style="margin-bottom:0"><div class="ccr-ico r"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><span class="ccr-lbl">Eredmény</span><span class="ccr-big">+38<span>%</span></span><span class="ccr-sm">bevétel növekedés első évben</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="ind-header rv">
+    <div class="sec-kicker" style="justify-content:center"><div class="sk-line"></div><span class="sk-text">Iparágak</span></div>
+    <h2 class="sec-title" style="text-align:center">Mélyen értjük az<br><em>iparágadat</em></h2>
+  </div>
+  <div class="ind-grid">
+    <div class="ind-card rv"><span class="ic-num">01</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="10" width="20" height="12" rx="2"/><path d="M6 10V6a6 6 0 0 1 12 0v4"/></svg></span><div class="ic-title">Pénzügy & Banking</div><p class="ic-desc">Digitalizáció, compliance, fintech integráció és ügyfélélmény fejlesztés.</p></div>
+    <div class="ind-card rv d1"><span class="ic-num">02</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/><path d="M7 22v-4a5 5 0 0 1 10 0v4"/></svg></span><div class="ic-title">Gyártás & Ipari</div><p class="ic-desc">Ipar 4.0 transzformáció, supply chain optimalizálás és lean automatizáció.</p></div>
+    <div class="ind-card rv d2"><span class="ic-num">03</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><div class="ic-title">Egészségügy</div><p class="ic-desc">Digitális egészségügyi megoldások, szervezeti hatékonyság, adatvédelem.</p></div>
+    <div class="ind-card rv d3"><span class="ic-num">04</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><div class="ic-title">Energetika</div><p class="ic-desc">Megújuló energetikai stratégiák, ESG jelentések és regulatív megfelelés.</p></div>
+    <div class="ind-card rv"><span class="ic-num">05</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span><div class="ic-title">Retail & FMCG</div><p class="ic-desc">Omnichannel stratégia, pricing optimalizálás és fogyasztói insight elemzés.</p></div>
+    <div class="ind-card rv d1"><span class="ic-num">06</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 9h3m3 0h3m3 0h3m3 0h3M3 18h18M3 21h18M3 6h18M3 3h18"/></svg></span><div class="ic-title">Logisztika & Transport</div><p class="ic-desc">Hálózat optimalizálás, digitális nyomkövetés és ügyfélélmény fejlesztés.</p></div>
+    <div class="ind-card rv d2"><span class="ic-num">07</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span><div class="ic-title">Tech & SaaS</div><p class="ic-desc">Go-to-market stratégia, product-market fit és Series A/B felkészítés.</p></div>
+    <div class="ind-card rv d3"><span class="ic-num">08</span><span class="ic-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><div class="ic-title">Ingatlan & Fejlesztés</div><p class="ic-desc">Piacelemzés, értékteremtési stratégia és ESG-alapú fejlesztési modellek.</p></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="team-head rv">
+    <div><div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Vezető csapat</span></div><h2 class="sec-title">Az emberek<br><em>mögötte</em></h2></div>
+    <a href="#contact" class="btn-secondary">Találkozzunk személyesen →</a>
+  </div>
+  <div class="team-grid">
+    <div class="tcard rv"><div class="tc-wrap"><div class="tc-face"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(8,22,40,.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="tc-overlay"><span class="tco-role">Alapító & CEO</span><span class="tco-spec">Digitális transzformáció, M&A, vállalati stratégia. McKinsey alumni.</span></div></div><div class="tc-info"><div class="tc-name">Meridian Péter</div><div class="tc-title">Managing Partner</div><div class="tc-edu">Corvinus MBA · INSEAD</div></div></div>
+    <div class="tcard rv d1"><div class="tc-wrap"><div class="tc-face"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(8,22,40,.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="tc-overlay"><span class="tco-role">Partner</span><span class="tco-spec">Szervezeti transzformáció, HR stratégia, leadership fejlesztés.</span></div></div><div class="tc-info"><div class="tc-name">Horváth Zsófia</div><div class="tc-title">People & Org Partner</div><div class="tc-edu">ELTE · London Business School</div></div></div>
+    <div class="tcard rv d2"><div class="tc-wrap"><div class="tc-face"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(8,22,40,.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="tc-overlay"><span class="tco-role">Partner</span><span class="tco-spec">M&A advisory, tőkepiac, due diligence és deal structuring.</span></div></div><div class="tc-info"><div class="tc-name">Szabó András</div><div class="tc-title">M&A Partner</div><div class="tc-edu">BCE · CFA · Wharton</div></div></div>
+    <div class="tcard rv d3"><div class="tc-wrap"><div class="tc-face"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(8,22,40,.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="tc-overlay"><span class="tco-role">Partner</span><span class="tco-spec">Digitális stratégia, AI integráció, product és technológiai roadmap.</span></div></div><div class="tc-info"><div class="tc-name">Kiss Katalin</div><div class="tc-title">Digital Strategy Partner</div><div class="tc-edu">BME · MIT Sloan Executive</div></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-bg"></div>
+  <div class="test-inner">
+    <div class="sec-kicker-w rv" style="justify-content:center"><div class="skw-line"></div><span class="skw-text">Ügyfeleink mondták</span></div>
+    <div class="test-rating rv d1"><span class="tr-stars"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan); margin-left:4px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="tr-score">4.9 / 5</span></div>
+    <blockquote class="test-quote rv d2" id="tq">"A Meridian nem csak tanácsokat adott — teljes mértékben mellénk állt a digitális transzformáció során. Az eredmények 12 hónap alatt messze meghaladták az elvárásainkat."</blockquote>
+    <div class="test-nav rv d3">
+      <div class="tn-dot a" onclick="setT(0)"></div>
+      <div class="tn-dot" onclick="setT(1)"></div>
+      <div class="tn-dot" onclick="setT(2)"></div>
+    </div>
+    <div class="test-author rv d3">
+      <span class="ta-name" id="tn">Kovács Márton</span>
+      <span class="ta-role" id="tr">CEO · Fortune 500 Regional</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="proc-head rv">
+    <div class="sec-kicker" style="justify-content:center"><div class="sk-line"></div><span class="sk-text">Hogyan dolgozunk</span></div>
+    <h2 class="sec-title" style="text-align:center">A <em>Meridian-módszer</em></h2>
+  </div>
+  <div class="proc-steps">
+    <div class="ps rv"><div class="ps-num">01</div><div class="ps-title">Diagnózis</div><p class="ps-desc">Jelenlegi helyzet teljes feltérképezése, szűk keresztmetszetek azonosítása adatalapon.</p></div>
+    <div class="ps rv d1"><div class="ps-num">02</div><div class="ps-title">Stratégia</div><p class="ps-desc">Egyedi növekedési terv: OKR-ok, mérföldkövek és felelősök meghatározása.</p></div>
+    <div class="ps rv d2"><div class="ps-num">03</div><div class="ps-title">Tervezés</div><p class="ps-desc">Részletes implementációs roadmap sprint-alapú végrehajtással.</p></div>
+    <div class="ps rv d3"><div class="ps-num">04</div><div class="ps-title">Végrehajtás</div><p class="ps-desc">Agilis implementáció, heti check-in és folyamatos optimalizálás.</p></div>
+    <div class="ps rv d4"><div class="ps-num">05</div><div class="ps-title">Skálázás</div><p class="ps-desc">Bevált modell replikálása, piaci terjeszkedés és long-term partnerség.</p></div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="ins-head rv">
+    <div><div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Thought Leadership</span></div><h2 class="sec-title">Legújabb<br><em>Insights</em></h2></div>
+    <a href="#contact" class="btn-secondary">Összes cikk →</a>
+  </div>
+  <div class="ins-grid">
+    <div class="ins-card rv"><div class="ins-img"><div class="ic-img-inner"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><span class="ins-cat-tag">Stratégia</span></div><div class="ins-body"><span class="ins-date">2025. április 18.</span><div class="ins-title">Az AI-alapú döntéstámogatás jövője a vállalati stratégiában</div><p class="ins-excerpt">Hogyan változtatja meg az mesterséges intelligencia a C-suite döntéshozatali folyamatait és mit jelent ez a versenyelőnyért.</p><a href="#contact" class="ins-link">Cikk olvasása →</a></div></div>
+    <div class="ins-card rv d1"><div class="ins-img"><div class="ic-img-inner"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V9l4-2 5 2 5-2 6 2v11"/><path d="M7 21v-4"/><path d="M12 21v-4"/><path d="M17 21v-4"/><path d="M2 12h20"/><path d="M2 7h20"/></svg></div><span class="ins-cat-tag">Ipar 4.0</span></div><div class="ins-body"><span class="ins-date">2025. március 29.</span><div class="ins-title">Miért buknak meg a digitális transzformációk 70%-a és hogyan kerüljük el</div><p class="ins-excerpt">Az adatok szerint a legtöbb transzformáció nem a technológián, hanem az emberi tényezőn bukik meg. A megoldás nem az, amit gondol.</p><a href="#contact" class="ins-link">Cikk olvasása →</a></div></div>
+    <div class="ins-card rv d2"><div class="ins-img"><div class="ic-img-inner"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><span class="ins-cat-tag">M&A</span></div><div class="ins-body"><span class="ins-date">2025. március 10.</span><div class="ins-title">CEE M&A trendek 2025 — mit kell tudnia minden vállalatvezetőnek</div><p class="ins-excerpt">A közép-kelet-európai felvásárlási piac átalakulóban van. Kik a vevők, mi a célpont és milyen értékelési logika érvényesül 2025-ben.</p><a href="#contact" class="ins-link">Cikk olvasása →</a></div></div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="roi">
+  <div class="roi-inner">
+    <div class="roi-header rv">
+      <div class="sec-kicker"><div class="sk-line"></div><span class="sk-text" style="color:rgba(255,255,255,0.7)">ROI Kalkulátor</span></div>
+      <h2 class="sec-title" style="color:#fff">Mennyi értéket<br><em style="color:var(--cyan)">teremthetünk</em> neked?</h2>
+      <p class="sec-desc" style="color:rgba(255,255,255,0.6)">Adj meg néhány alapadatot — azonnal megmutatjuk a várható megtakarítást és növekedési potenciált.</p>
+    </div>
+
+    <div class="roi-box rv d1">
+      <div class="roi-left">
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <span class="roi-label">Éves árbevétel</span>
+            <span class="roi-val-badge" id="rev-badge">500M Ft</span>
+          </div>
+          <input type="range" class="roi-slider" id="rev-slider" min="1" max="20" value="5" step="1">
+          <div class="roi-slider-labels"><span>100M Ft</span><span>2 Mrd+ Ft</span></div>
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <span class="roi-label">Alkalmazottak száma</span>
+            <span class="roi-val-badge" id="emp-badge">50–200 fő</span>
+          </div>
+          <input type="range" class="roi-slider" id="emp-slider" min="1" max="5" value="2" step="1">
+          <div class="roi-slider-labels"><span>1–50 fő</span><span>1000+ fő</span></div>
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head"><span class="roi-label">Fő kihívás</span></div>
+          <div class="roi-chips" id="roi-chips">
+            <div class="roi-chip active" data-type="digital">Digitális transzformáció</div>
+            <div class="roi-chip" data-type="growth">Növekedési stratégia</div>
+            <div class="roi-chip" data-type="org">Szervezeti hatékonyság</div>
+            <div class="roi-chip" data-type="ma">M&A tanácsadás</div>
+          </div>
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <span class="roi-label">Időhorizont</span>
+            <span class="roi-val-badge" id="time-badge">2 év</span>
+          </div>
+          <input type="range" class="roi-slider" id="time-slider" min="1" max="5" value="2" step="1">
+          <div class="roi-slider-labels"><span>1 év</span><span>5 év</span></div>
+        </div>
+      </div>
+      <div class="roi-right">
+        <div class="roi-result-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem">
+          <span class="roi-result-label" style="font-family:var(--font-h); font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.5)">Becsült eredmény</span>
+          <div class="roi-live-badge" style="display:flex; align-items:center; gap:0.5rem; font-size:10px; color:var(--cyan); text-transform:uppercase; letter-spacing:1px"><div class="roi-live-dot" style="width:5px; height:5px; background:var(--cyan); border-radius:50%; animation:pulse 1.5s infinite"></div>Élő számítás</div>
+        </div>
+        <div class="roi-primary-result">
+          <span class="roi-primary-label" style="font-family:var(--font-h); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); display:block; margin-bottom:0.5rem">Várható értékteremtés</span>
+          <span class="roi-primary-num" id="roi-main">0 Ft</span>
+          <span class="roi-primary-period" id="roi-period">2 év alatt</span>
+        </div>
+        <div class="roi-grid">
+          <div class="roi-metric"><span class="roi-metric-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><span class="roi-metric-val" id="roi-efficiency">0%</span><span class="roi-metric-lbl">Hatékonysági növekedés</span></div>
+    <div class="roi-metric"><span class="roi-metric-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="roi-metric-val" id="roi-saving">0 Ft</span><span class="roi-metric-lbl">Éves megtakarítás</span></div>
+          <div class="roi-metric"><span class="roi-metric-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span class="roi-metric-val" id="roi-payback">0 hó</span><span class="roi-metric-lbl">Megtérülési idő</span></div>
+          <div class="roi-metric"><span class="roi-metric-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.5-1 1-4c1.5 0 3 0 4 1.5"/><path d="M15 15v5c-3 1.5-4 1-4 1s1.5-2.5 1.5-4"/></svg></span><span class="roi-metric-val" id="roi-rev">0%</span><span class="roi-metric-lbl">Bevétel növekedés</span></div>
+        </div>
+        <div class="roi-bar-section">
+          <div class="roi-bar-track"><div class="roi-bar-after" id="roi-bar-after" style="width:100%"></div></div>
+        </div>
+        <a href="#contact" class="roi-cta">Részletes elemzés kérése →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS TRIGGER STRIP -->
+<div class="diag-trigger-strip rv">
+  <div class="dts-left">
+    <span class="dts-badge">Ingyenes · 60 másodperc</span>
+    <div class="dts-title">Hol áll a vállalkozásod stratégiailag?</div>
+  </div>
+  <button class="dts-btn" onclick="openDiag()">⚡ Diagnózis indítása</button>
+</div>
+
+<!-- GROWTH SIMULATOR -->
+<section id="simulator">
+  <div class="sim-inner">
+    <div class="sim-header-wrap rv">
+      <div class="sim-header">
+        <div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Growth Simulator</span></div>
+        <h2 class="sec-title">Stratégiai növekedési <em>szimuláció</em></h2>
+      </div>
+      <a href="#contact" class="btn-secondary">Részletes elemzés kérése →</a>
+    </div>
+
+    <div class="sim-controls rv d1">
+      <div class="sim-ctrl">
+        <div class="sim-ctrl-head"><span class="sim-ctrl-label">Éves növekedés</span><span class="sim-ctrl-badge" id="sim-grow-val">8%</span></div>
+        <input type="range" class="sim-slider" id="sim-grow" min="1" max="25" value="8">
+      </div>
+      <div class="sim-ctrl">
+        <div class="sim-ctrl-head"><span class="sim-ctrl-label">Aktuális árbevétel</span><span class="sim-ctrl-badge" id="sim-rev-val">500M Ft</span></div>
+        <input type="range" class="sim-slider" id="sim-rev" min="0" max="19" value="3">
+      </div>
+      <div class="sim-ctrl">
+        <div class="sim-ctrl-head"><span class="sim-ctrl-label">Időhorizont</span><span class="sim-ctrl-badge" id="sim-time-val">5 év</span></div>
+        <input type="range" class="sim-slider" id="sim-time" min="2" max="7" value="5">
+      </div>
+    </div>
+
+    <div class="sim-canvas-wrap rv d2">
+      <canvas id="sim-canvas"></canvas>
+      <div class="sim-legend">
+        <div class="sl-item"><div class="sl-dot" style="background:#cbd5e1; border:1px dashed #94a3b8"></div> Jelenlegi pálya</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--blue)"></div> Meridian-boosted pálya (+22%)</div>
+      </div>
+      <div class="sim-outcomes">
+        <div class="sim-out-card"><span class="sim-out-lbl">Ma</span><span class="sim-out-val" id="out-today">500M Ft</span></div>
+        <div class="sim-out-card"><span class="sim-out-lbl" id="out-alone-lbl">5 év múlva (Önállóan)</span><span class="sim-out-val" id="out-alone">734M Ft</span></div>
+        <div class="sim-out-card highlight"><span class="sim-out-lbl" id="out-with-lbl">5 év múlva (Meridiannal)</span><span class="sim-out-val" id="out-with">1.2 Mrd Ft</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOARDROOM REPORT -->
+<section id="report">
+  <div class="rep-inner">
+    <div class="rep-header rv">
+      <div class="sec-kicker"><div class="sk-line"></div><span class="sk-text">Boardroom Report Generator</span></div>
+      <h2 class="sec-title">Generálj egy<br><em>személyre szabott</em> jelentést</h2>
+      <p class="sec-desc">Adj meg 3 adatot, és azonnal elkészítjük a vállalkozásodra szabott stratégiai összefoglalót — Board-szintű kivitelezésben.</p>
+    </div>
+    <div class="rep-form rv d1">
+      <div class="rep-field">
+        <label class="rep-label">Vállalat neve</label>
+        <input class="rep-input" type="text" id="rep-company" placeholder="pl. Kovács Group Zrt.">
+      </div>
+      <div class="rep-field">
+        <label class="rep-label">Iparág</label>
+        <select class="rep-select" id="rep-industry">
+          <option value="finance">Pénzügy & Banking</option>
+          <option value="manufacturing">Gyártás & Ipari</option>
+          <option value="tech">Tech & SaaS</option>
+          <option value="retail">Retail & FMCG</option>
+          <option value="health">Egészségügy & Pharma</option>
+          <option value="logistics">Logisztika & Szállítás</option>
+        </select>
+      </div>
+      <div class="rep-field">
+        <label class="rep-label">Fő kihívás</label>
+        <select class="rep-select" id="rep-challenge">
+          <option value="growth">Növekedési stratégia</option>
+          <option value="digital">Digitális transzformáció</option>
+          <option value="efficiency">Működési hatékonyság</option>
+          <option value="exit">M&A / Exit felkészülés</option>
+        </select>
+      </div>
+      <button class="rep-gen-btn" onclick="generateReport()">Jelentés generálása →</button>
+    </div>
+    <div id="rep-preview"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div><div class="sec-kicker rv"><div class="sk-line"></div><span class="sk-text">GYIK</span></div><h2 class="sec-title rv d1">Gyakori<br><em>kérdések</em></h2></div>
+    <div>
+      <div class="faq-item rv"><div class="faq-head" onclick="toggleFaq(this)"><span class="faq-q">Miben különböznek a Meridiántól a tipikus tanácsadóktól?</span><span class="faq-arr">+</span></div><div class="faq-body"><div class="faq-ans">Nem slide-okat adunk — eredményeket szállítunk. Minden engagement-nél konkrét KPI-okban állapodunk meg előre, és az eredmény számon kérhető. A csapatunk ex-McKinsey, BCG és Bain tanácsadókból áll, akik operatív vezetői tapasztalattal is rendelkeznek.</div></div></div>
+      <div class="faq-item rv d1"><div class="faq-head" onclick="toggleFaq(this)"><span class="faq-q">Milyen méretű vállalatokkal dolgoztok?</span><span class="faq-arr">+</span></div><div class="faq-body"><div class="faq-ans">Leginkább 100M–10Mrd Ft árbevételű vállalatokkal, de projekttől függően kisebb növekedési fázisú cégekkel is dolgozunk. A lényeg a szándék és a végrehajtási kapacitás, nem a méret.</div></div></div>
+      <div class="faq-item rv d2"><div class="faq-head" onclick="toggleFaq(this)"><span class="faq-q">Mennyi ideig tart egy tipikus engagement?</span><span class="faq-arr">+</span></div><div class="faq-body"><div class="faq-ans">Diagnosztikai projektek 4–8 hét. Teljes transzformációs programok 6–18 hónap. M&A megbízások 8–16 hét. Minden esetben heti mérföldkövekkel és átlátható kommunikációval dolgozunk.</div></div></div>
+      <div class="faq-item rv d3"><div class="faq-head" onclick="toggleFaq(this)"><span class="faq-q">Hogyan néz ki az első megbeszélés?</span><span class="faq-arr">+</span></div><div class="faq-body"><div class="faq-ans">60 perces stratégiai bevezető call — ingyenes és kötelezettségmentes. Megértjük a helyzetet, megosztjuk a tapasztalatainkat és őszintén megmondjuk, tudunk-e segíteni. Ha nem mi vagyunk a legjobb megoldás, elmonduk azt is.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="ct-inner">
+    <div class="rv">
+      <h2 class="ct-title">Kezdjük el<br><span>együtt.</span></h2>
+      <p class="ct-desc">Egy 60 perces stratégiai megbeszélés keretében feltárjuk, hol rejlik a legnagyobb növekedési lehetőség — kötelezettség és díj nélkül.</p>
+      <div class="ct-features">
+        <div class="ctf"><div class="ctf-ico" style="color:var(--cyan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>60 perces ingyenes stratégiai call</div>
+        <div class="ctf"><div class="ctf-ico" style="color:var(--cyan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>Azonnali benchmark a saját iparágában</div>
+        <div class="ctf"><div class="ctf-ico" style="color:var(--cyan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>48 órán belüli visszaigazolás</div>
+        <div class="ctf"><div class="ctf-ico" style="color:var(--cyan)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>Teljes NDA és titoktartás</div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <form id="ct-form" onsubmit="submitForm(event)">
+        <div class="cf-grid" style="margin-bottom:.9rem">
+          <div><label class="cf-label">Keresztnév</label><input class="cf-input" type="text" placeholder="Péter" required></div>
+          <div><label class="cf-label">Vezetéknév</label><input class="cf-input" type="text" placeholder="Kovács" required></div>
+        </div>
+        <div style="margin-bottom:.9rem"><label class="cf-label">Vállalat neve</label><input class="cf-input" type="text" placeholder="Kovács & Társai Zrt." required></div>
+        <div style="margin-bottom:.9rem"><label class="cf-label">Email cím</label><input class="cf-input" type="email" placeholder="peter@cege.hu" required></div>
+        <div style="margin-bottom:.9rem"><label class="cf-label">Telefonszám</label><input class="cf-input" type="tel" placeholder="+36 30 123 4567"></div>
+        <div style="margin-bottom:.9rem"><label class="cf-label">Fő kihívás / célterület</label>
+          <select class="cf-sel">
+            <option value="">Válasszon területet…</option>
+            <option>Digitális transzformáció</option><option>Növekedési stratégia</option><option>Szervezeti hatékonyság</option><option>M&A és tőkepiacok</option><option>Egyéb</option>
+          </select>
+        </div>
+        <div style="margin-bottom:.9rem"><label class="cf-label">Röviden a helyzetéről</label><textarea class="cf-input" rows="3" placeholder="Hol tart a cég és mi a legnagyobb kihívás…" style="resize:vertical"></textarea></div>
+        <button type="submit" class="cf-submit">Stratégiai megbeszélés foglalása →</button>
+        <div class="cf-note" style="font-size:11px; color:rgba(255,255,255,0.4); margin-top:1rem; text-align:center">Teljes titoktartás · NDA igény esetén azonnal küldünk</div>
+      </form>
+      <div class="form-ok" id="form-ok">
+        <span class="fok-check">✓</span>
+        <div class="fok-title">Megkaptuk!</div>
+        <p class="fok-sub" style="color:rgba(255,255,255,0.6)">48 órán belül visszajelzünk a megadott elérhetőségen. Az első megbeszélés ingyenes és kötelezettségmentes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-logo"><div class="ft-logo-mark"></div><span class="ft-logo-name">Meridian</span></div>
+      <p class="ft-about">Komplex vállalati kihívásokra adatvezérelt, skálázható megoldásokat adunk — 18 éve, 340+ partnerrel.</p>
+    </div>
+    <div><span class="ft-col-t">Megoldások</span><ul class="ft-list"><li><a href="#">Digitális transzformáció</a></li><li><a href="#">Növekedési stratégia</a></li><li><a href="#">Szervezeti hatékonyság</a></li><li><a href="#">M&A tanácsadás</a></li></ul></div>
+    <div><span class="ft-col-t">Iparágak</span><ul class="ft-list"><li><a href="#">Pénzügy & Banking</a></li><li><a href="#">Gyártás & Ipari</a></li><li><a href="#">Tech & SaaS</a></li><li><a href="#">Retail & FMCG</a></li></ul></div>
+    <div><span class="ft-col-t">Kapcsolat</span><ul class="ft-list"><li><a href="#">hello@meridian.hu</a></li><li><a href="#">+36 1 234 5678</a></li><li><a href="#">1051 Budapest, Roosevelt tér 7.</a></li></ul></div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2025 Meridian Strategic Growth Partners. Minden jog fenntartva. · Demo — The Limitlesser</span>
+  </div>
+</footer>
+
+<!-- DIAGNOSIS MODAL -->
+<div id="diag-modal">
+  <div class="dm-overlay" onclick="closeDiag()"></div>
+  <div class="dm-box">
+    <div class="dm-head">
+      <span class="dm-title">Stratégiai Diagnózis — 5 kérdés</span>
+      <button class="dm-close" onclick="closeDiag()">×</button>
+    </div>
+    <div class="dm-progress"><div class="dm-progress-fill" id="dm-prog" style="width:0%"></div></div>
+    
+    <div id="dm-steps">
+      <!-- Steps injected by JS -->
+    </div>
+
+    <div class="dm-result" id="dm-result">
+      <div class="dm-score-ring">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="none" stroke="var(--subtle)" stroke-width="8"/>
+          <circle id="score-arc" cx="50" cy="50" r="44" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 50 50)"/>
+          <defs><linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="var(--blue)"/><stop offset="100%" stop-color="var(--cyan)"/></linearGradient></defs>
+        </svg>
+        <div class="dm-score-val" id="dm-score-val">0</div>
+      </div>
+      <div class="dm-score-label">Strategic Growth Score</div>
+      
+      <div class="dm-radar-wrap">
+        <canvas id="radar-canvas" width="320" height="280"></canvas>
+      </div>
+
+      <div class="dm-dims" id="dm-dims">
+        <!-- Dimensions injected by JS -->
+      </div>
+
+      <div class="dm-recommendation" id="dm-rec">
+        <span class="dm-rec-label">Szakértői javaslat</span>
+        <p class="dm-rec-text" id="dm-rec-text">Elemzés folyamatban...</p>
+      </div>
+
+      <a href="#contact" class="dm-result-cta" onclick="closeDiag()">Teljes stratégiai elemzés kérése →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Preloader ──────────────────────────────────
+window.addEventListener('load',()=>{
+  const loader = document.getElementById('preloader');
+  if (sessionStorage.getItem('corpPreloaderShown')) {
+    if(loader) loader.style.display = 'none';
+    document.body.classList.remove('loading');
+    return;
+  }
+  let pct=0;const pctEl=document.getElementById('pl-pct');
+  const pctInt=setInterval(()=>{
+    pct=Math.min(pct+(Math.random()*8+4),100);
+    pctEl.textContent=Math.round(pct)+'%';
+    if(pct>=100){
+      clearInterval(pctInt);
+      setTimeout(()=>{
+        if(loader) loader.classList.add('hidden');
+        document.body.classList.remove('loading');
+        sessionStorage.setItem('corpPreloaderShown', 'true');
+      },200);
+    }
+  },60);
+});
+
+// ── Cursor ─────────────────────────────────────
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button,.cc,.tcard,.ind-card,.tp-feat,.ig-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+// ── Nav + Sticky ───────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('mnav').classList.toggle('compact',scrollY>70);
+  document.getElementById('sticky-cta').classList.toggle('visible',scrollY>700);
+});
+
+// ── Mobile Menu ────────────────────────────────
+function toggleMob(){const m=document.getElementById('mob-menu'),t=document.getElementById('mob-toggle');m.classList.toggle('open');t.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+
+// ── Hero Canvas ───────────────────────────────
+const hc=document.getElementById('hero-canvas');
+const hx=hc.getContext('2d');
+let HW,HH,hnodes;
+function initH(){
+  const p=hc.parentElement;
+  HW=hc.width=p.offsetWidth||800;
+  HH=hc.height=p.offsetHeight||600;
+  hnodes=Array.from({length:40},()=>({x:Math.random()*HW,y:Math.random()*HH,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}))
+}
+window.addEventListener('load',initH);
+window.addEventListener('resize',initH);
+function drawH(){
+  hx.clearRect(0,0,HW,HH);
+  hnodes&&hnodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>HW)n.vx*=-1;if(n.y<0||n.y>HH)n.vy*=-1});
+  hnodes&&hnodes.forEach((a,i)=>{
+    hnodes.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<140){hx.beginPath();hx.moveTo(a.x,a.y);hx.lineTo(b.x,b.y);hx.strokeStyle=`rgba(0,212,255,${(.15*(1-d/140)).toFixed(3)})`;hx.lineWidth=.5;hx.stroke()}
+    });
+    hx.beginPath();hx.arc(a.x,a.y,.8,0,Math.PI*2);hx.fillStyle='rgba(0,212,255,.4)';hx.fill();
+  });
+  requestAnimationFrame(drawH);
+}
+drawH();
+
+// ── Impact Canvas ─────────────────────────────
+const ic2=document.getElementById('impact-canvas');
+if(ic2){
+  const ix=ic2.getContext('2d');
+  let IW,IH,inodes;
+  function initI(){
+    const p=ic2.parentElement;
+    IW=ic2.width=p.offsetWidth||1200;
+    IH=ic2.height=p.offsetHeight||400;
+    inodes=Array.from({length:35},()=>({x:Math.random()*IW,y:Math.random()*IH,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))
+  }
+  window.addEventListener('load',initI);
+  window.addEventListener('resize',initI);
+  function drawI(){
+    ix.clearRect(0,0,IW,IH);
+    inodes&&inodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>IW)n.vx*=-1;if(n.y<0||n.y>IH)n.vy*=-1});
+    inodes&&inodes.forEach((a,i)=>{
+      inodes.slice(i+1).forEach(b=>{
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<120){ix.beginPath();ix.moveTo(a.x,a.y);ix.lineTo(b.x,b.y);ix.strokeStyle=`rgba(0,87,255,${(.1*(1-d/120)).toFixed(3)})`;ix.lineWidth=.5;ix.stroke()}
+      });
+      ix.beginPath();ix.arc(a.x,a.y,.7,0,Math.PI*2);ix.fillStyle='rgba(0,87,255,.3)';ix.fill();
+    });
+    requestAnimationFrame(drawI);
+  }
+  drawI();
+}
+
+// ── Counter animation ──────────────────────────
+const cObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=+el.dataset.target,suffix=el.dataset.suffix||'';
+    const span=el.querySelector('span');let v=0;
+    const step=Math.ceil(target/55);
+    const t=setInterval(()=>{v=Math.min(v+step,target);span.textContent=v;if(v>=target){if(suffix)span.textContent=target+suffix;clearInterval(t)}},28);
+    cObs.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
+
+// ── Impact bar fill ────────────────────────────
+const bObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.ig-bar-fill').forEach(b=>{
+      const w=b.dataset.w||'70';
+      setTimeout(()=>{b.style.width=w+'%'},300);
+    });
+    bObs.unobserve(e.target);
+  });
+},{threshold:.3});
+document.querySelectorAll('.ig-item').forEach(el=>bObs.observe(el));
+
+// ── Reveal ─────────────────────────────────────
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// ── Form ───────────────────────────────────────
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('ct-form').style.display='none';
+  document.getElementById('form-ok').style.display='block';
+}
+
+// ── Tab logic ──────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.querySelectorAll('.tab-panel')[i].classList.add('active');
+  });
+});
+
+// ── Testimonials ───────────────────────────────
+const tests=[
+  {q:'"A Meridian nem csak tanácsokat adott — teljes mértékben mellénk állt a digitális transzformáció során. Az eredmények 12 hónap alatt messze meghaladták az elvárásainkat."',n:'Kovács Márton',r:'CEO · Fortune 500 Regional'},
+  {q:'"Az M&A tanácsadásuk során minden kétséget kizáróan a legjobb csapattal dolgoztunk. A tranzakciót a tervezett határidő előtt 3 héttel zártuk le."',n:'Dr. Nagy Erzsébet',r:'CFO · Magyar Holding Zrt.'},
+  {q:'"A szervezeti transzformáció az első évben 38% bevételnövekedést hozott. Őszintén nem gondoltuk, hogy ilyen gyorsan kézzel fogható lesz az eredmény."',n:'Horváth Tibor',r:'COO · Ipari Csoport Nyrt.'},
+];
+let ti=0;
+function setT(i){
+  ti=i;
+  const tq=document.getElementById('tq');
+  if(!tq)return;
+  tq.style.opacity='0';
+  setTimeout(()=>{
+    tq.textContent=tests[i].q;
+    document.getElementById('tn').textContent=tests[i].n;
+    document.getElementById('tr').textContent=tests[i].r;
+    tq.style.opacity='1';
+    document.querySelectorAll('.tn-dot').forEach((d,j)=>d.classList.toggle('a',j===i));
+  },250);
+}
+setInterval(()=>setT((ti+1)%tests.length),5500);
+
+// ── FAQ ────────────────────────────────────────
+function toggleFaq(h){const item=h.parentElement;const open=item.classList.contains('op');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('op'));if(!open)item.classList.add('op');}
+
+// ── 3D tilt on team cards ──────────────────────
+document.querySelectorAll('.tcard').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(800px) rotateY(${x*6}deg) rotateX(${-y*6}deg) translateY(-4px)`});
+  c.addEventListener('mouseleave',()=>{c.style.transform=''});
+});
+
+// ── ROI Calculator ────────────────────────────
+const revS=document.getElementById('rev-slider'),empS=document.getElementById('emp-slider'),timeS=document.getElementById('time-slider');
+const revB=document.getElementById('rev-badge'),empB=document.getElementById('emp-badge'),timeB=document.getElementById('time-badge');
+const revL=['100M Ft','200M Ft','350M Ft','500M Ft','750M Ft','1 Mrd Ft','1.2 Mrd Ft','1.5 Mrd Ft','1.8 Mrd Ft','2 Mrd Ft','2.5 Mrd Ft','3 Mrd Ft','4 Mrd Ft','5 Mrd Ft','6 Mrd Ft','7 Mrd Ft','8 Mrd Ft','10 Mrd Ft','15 Mrd Ft','20 Mrd+ Ft'];
+const revV=[100,200,350,500,750,1000,1200,1500,1800,2000,2500,3000,4000,5000,6000,7000,8000,10000,15000,20000];
+const empL=['1–50 fő','50–200 fő','200–500 fő','500–1000 fő','1000+ fő'],timeL=['1 év','2 év','3 év','4 év','5 év'];
+const tData={digital:{eff:28,sav:.18,pb:14,rev:22},growth:{eff:20,sav:.12,pb:10,rev:38},org:{eff:34,sav:.22,pb:12,rev:15},ma:{eff:18,sav:.08,pb:8,rev:28}};
+let aType='digital';
+
+function animN(el,t,s,p){
+  let v=0;const dur=600,start=Date.now();
+  const f=()=>{
+    const e=Math.min((Date.now()-start)/dur,1),ease=1-Math.pow(1-e,3);
+    v=t*ease;el.textContent=(p||'')+ (t%1===0?Math.round(v).toLocaleString('hu-HU'):v.toFixed(1))+(s||'');
+    if(e<1)requestAnimationFrame(f);
+  };requestAnimationFrame(f);
+}
+
+function calcROI(){
+  if(!revS)return;
+  const rIdx=revS.value-1,eIdx=empS.value-1,y=+timeS.value,rM=revV[rIdx],t=tData[aType],eM=[0.7,1,1.4,1.8,2.4][eIdx];
+  const eff=Math.round(t.eff*eM),sav=Math.round(rM*t.sav*eM*y),revG=Math.round(t.rev*eM);
+  revB.textContent=revL[rIdx];empB.textContent=empL[eIdx];timeB.textContent=timeL[y-1];
+  document.getElementById('roi-main').textContent=sav>=1000?(sav/1000).toFixed(1)+' Mrd Ft':sav+' M Ft';
+  document.getElementById('roi-period').textContent=timeL[y-1]+' alatt';
+  animN(document.getElementById('roi-efficiency'),eff,'%');
+  animN(document.getElementById('roi-rev'),revG,'%');
+  animN(document.getElementById('roi-payback'),Math.round(t.pb/eM),' hó');
+  document.getElementById('roi-saving').textContent=(sav/y>=1000?(sav/y/1000).toFixed(1)+' Mrd Ft':(sav/y).toFixed(0)+' M Ft');
+  document.getElementById('roi-bar-after').style.width=Math.min(100+eff+revG,180)+'%';
+}
+[revS,empS,timeS].forEach(s=>s&&s.addEventListener('input',calcROI));
+document.querySelectorAll('.roi-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.roi-chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');aType=c.dataset.type;calcROI()}));
+calcROI();
+
+// ── Diagnosis Logic ───────────────────────────
+const diagSteps = [
+  { q: 'Hogyan határozná meg a jelenlegi piaci stratégiájukat?', o: ['Reaktív (versenytársak követése)', 'Stabil (meglévő piaci rés őrzése)', 'Agilis (folyamatos tesztelés)', 'Diszruptív (piacformálás)'], w: [20, 50, 75, 95] },
+  { q: 'Milyen szintű a vállalati folyamatok digitalizációja?', o: ['Papír/Excel alapú', 'Szigetszerű szoftverek', 'Integrált ERP rendszer', 'AI-optimalizált ökoszisztéma'], w: [15, 45, 80, 95] },
+  { q: 'Hogyan történik a stratégiai döntéshozatal?', o: ['Megérzés alapú', 'Alapszintű riportok alapján', 'Adatvezérelt (BI dashboardok)', 'Prediktív analitika segítségével'], w: [20, 40, 75, 95] },
+  { q: 'Mennyire skálázható a jelenlegi szervezeti struktúra?', o: ['Személyfüggő (bottleneck)', 'Osztály alapú (silók)', 'Folyamat alapú (skálázható)', 'Hálózatos (önvezérlő)'], w: [25, 50, 80, 95] },
+  { q: 'Mekkora hangsúlyt kap az innováció a mindennapokban?', o: ['Nincs külön keret', 'Ad-hoc projektek', 'Dedikált innovációs büdzsé', 'Innováció-fókuszú kultúra'], w: [15, 45, 75, 95] }
+];
+
+let curDiagStep = 0;
+let diagAnswers = [];
+const diagDims = ['Stratégia', 'Digitális', 'Adat', 'Szervezet', 'Innováció'];
+
+function openDiag() {
+  document.getElementById('diag-modal').classList.add('open');
+  curDiagStep = 0;
+  diagAnswers = [];
+  document.getElementById('dm-steps').style.display = 'block';
+  document.getElementById('dm-result').classList.remove('active');
+  renderDiagStep();
+}
+
+function closeDiag() {
+  document.getElementById('diag-modal').classList.remove('open');
+}
+
+function renderDiagStep() {
+  const cont = document.getElementById('dm-steps');
+  cont.innerHTML = '';
+  const s = diagSteps[curDiagStep];
+  const div = document.createElement('div');
+  div.className = 'dm-step active';
+  div.innerHTML = `
+    <div class="dm-question">${s.q}</div>
+    <div class="dm-options">
+      ${s.o.map((o, i) => `
+        <div class="dm-opt" onclick="selectDiagOpt(${i})">
+          <div class="dm-opt-badge">${String.fromCharCode(65 + i)}</div>
+          <div class="dm-opt-text">${o}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="dm-next-wrap">
+      <button class="dm-next" id="dm-next-btn" disabled onclick="nextDiagStep()">Következő kérdés →</button>
+    </div>
+  `;
+  cont.appendChild(div);
+  document.getElementById('dm-prog').style.width = (curDiagStep / diagSteps.length * 100) + '%';
+}
+
+function selectDiagOpt(idx) {
+  const opts = document.querySelectorAll('.dm-opt');
+  opts.forEach((o, i) => o.classList.toggle('selected', i === idx));
+  document.getElementById('dm-next-btn').disabled = false;
+  diagAnswers[curDiagStep] = diagSteps[curDiagStep].w[idx];
+}
+
+function nextDiagStep() {
+  if (curDiagStep < diagSteps.length - 1) {
+    curDiagStep++;
+    renderDiagStep();
+  } else {
+    showDiagResult();
+  }
+}
+
+function showDiagResult() {
+  document.getElementById('dm-steps').style.display = 'none';
+  document.getElementById('dm-result').classList.add('active');
+  document.getElementById('dm-prog').style.width = '100%';
+
+  const avgScore = Math.round(diagAnswers.reduce((a, b) => a + b, 0) / diagAnswers.length);
+  
+  // Score Ring Animation
+  const ring = document.getElementById('score-arc');
+  const valEl = document.getElementById('dm-score-val');
+  let v = 0;
+  const dur = 1200;
+  const start = Date.now();
+  const f = () => {
+    const e = Math.min((Date.now() - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - e, 3);
+    v = avgScore * ease;
+    valEl.textContent = Math.round(v);
+    ring.style.strokeDashoffset = 276 - (276 * v / 100);
+    if (e < 1) requestAnimationFrame(f);
+  };
+  requestAnimationFrame(f);
+
+  // Radar Chart
+  renderRadar(diagAnswers);
+
+  // Dimension Bars
+  const dimsCont = document.getElementById('dm-dims');
+  dimsCont.innerHTML = diagDims.map((d, i) => `
+    <div class="dm-dim">
+      <div class="dm-dim-head"><span class="dm-dim-name">${d}</span><span class="dm-dim-val">${diagAnswers[i]}%</span></div>
+      <div class="dm-dim-bar"><div class="dm-dim-fill" style="width:${diagAnswers[i]}%"></div></div>
+    </div>
+  `).join('');
+
+  // Recommendation logic
+  const minVal = Math.min(...diagAnswers);
+  const minIdx = diagAnswers.indexOf(minVal);
+  const recs = [
+    'A stratégiai fókusz finomítása javasolt: a piaci változásokra való gyorsabb reagálás érdekében vezessenek be agilis tervezési ciklusokat.',
+    'A technológiai adósság csökkentése prioritás: az integrált rendszerek hiánya gátolja a skálázódást. Javasoljuk a digitális alapok újratervezését.',
+    'Az adatokban rejlő érték kihasználatlan: a manuális riportálás helyett automatizált BI dashboardok bevezetése szükséges a pontos döntéshozatalhoz.',
+    'A szervezeti silók gátolják a növekedést: a folyamatalapú működés és a felelősségi körök tisztázása azonnali hatékonyságnövekedést hozna.',
+    'Az innováció rendszerszintű hiánya kockázat: dedikált K+F keret és belső ötletgazda program indítása javasolt a versenyképesség megőrzéséhez.'
+  ];
+  document.getElementById('dm-rec-text').textContent = recs[minIdx];
+}
+
+function renderRadar(data) {
+  const canvas = document.getElementById('radar-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const cw = 320, ch = 300; // Increased height slightly for labels
+  
+  canvas.style.width = cw + 'px';
+  canvas.style.height = ch + 'px';
+  canvas.width = cw * dpr;
+  canvas.height = ch * dpr;
+  ctx.scale(dpr, dpr);
+
+  const center = { x: cw / 2, y: ch / 2 };
+  const radius = 85;
+  const sides = 5;
+
+  ctx.clearRect(0, 0, cw, ch);
+
+  const navy = '#081628', blue = '#0057FF', muted = '#94a3b8';
+
+  // Background Web
+  ctx.strokeStyle = 'rgba(8,22,40,0.05)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i <= 5; i++) {
+    const r = (radius / 5) * i;
+    ctx.beginPath();
+    for (let j = 0; j < sides; j++) {
+      const angle = (j * 2 * Math.PI / sides) - Math.PI / 2;
+      ctx[j === 0 ? 'moveTo' : 'lineTo'](center.x + r * Math.cos(angle), center.y + r * Math.sin(angle));
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // Axes
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(8,22,40,0.05)';
+  for (let j = 0; j < sides; j++) {
+    const angle = (j * 2 * Math.PI / sides) - Math.PI / 2;
+    ctx.moveTo(center.x, center.y);
+    ctx.lineTo(center.x + radius * Math.cos(angle), center.y + radius * Math.sin(angle));
+  }
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#475569';
+  ctx.font = '800 10px Syne';
+  ctx.textAlign = 'center';
+  diagDims.forEach((d, i) => {
+    const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+    const offset = 35; // Increased offset
+    const r = radius + offset;
+    const x = center.x + r * Math.cos(angle);
+    const y = center.y + r * Math.sin(angle) + 4;
+    
+    // Adjust Y slightly for top/bottom labels to prevent cutoff
+    let finalY = y;
+    if (i === 0) finalY -= 5; 
+    if (i === 2 || i === 3) finalY += 5;
+    
+    ctx.fillText(d.toUpperCase(), x, finalY);
+  });
+
+  // Data Polygon
+  ctx.beginPath();
+  ctx.strokeStyle = blue;
+  ctx.fillStyle = 'rgba(0,87,255,0.18)';
+  ctx.lineWidth = 3;
+  ctx.lineJoin = 'round';
+  data.forEach((val, i) => {
+    const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+    const r = (val / 100) * radius;
+    ctx[i === 0 ? 'moveTo' : 'lineTo'](center.x + r * Math.cos(angle), center.y + r * Math.sin(angle));
+  });
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Points
+  data.forEach((val, i) => {
+    const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+    const r = (val / 100) * radius;
+    ctx.beginPath();
+    ctx.fillStyle = blue;
+    ctx.arc(center.x + r * Math.cos(angle), center.y + r * Math.sin(angle), 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+}
+
+// ── Simulator Logic ───────────────────────────
+const sGrow = document.getElementById('sim-grow'), sRev = document.getElementById('sim-rev'), sTime = document.getElementById('sim-time');
+const revVals = ['100M Ft', '250M Ft', '400M Ft', '500M Ft', '750M Ft', '1 Mrd Ft', '1.5 Mrd Ft', '2 Mrd Ft', '2.5 Mrd Ft', '3 Mrd Ft', '4 Mrd Ft', '5 Mrd Ft', '6 Mrd Ft', '8 Mrd Ft', '10 Mrd Ft', '12 Mrd Ft', '14 Mrd Ft', '16 Mrd Ft', '18 Mrd Ft', '20 Mrd Ft'];
+const revNums = [100, 250, 400, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000];
+
+function formatHUF(v) {
+  if (v >= 1000) return (v / 1000).toFixed(1) + ' Mrd Ft';
+  return Math.round(v) + ' M Ft';
+}
+
+function updateSim() {
+  const g = parseInt(sGrow.value), r = revNums[sRev.value], t = parseInt(sTime.value);
+  document.getElementById('sim-grow-val').textContent = g + '%';
+  document.getElementById('sim-rev-val').textContent = revVals[sRev.value];
+  document.getElementById('sim-time-val').textContent = t + ' év';
+
+  const lone = r * Math.pow(1 + (g / 100), t);
+  const withM = r * Math.pow(1 + ((g + 22) / 100), t);
+
+  document.getElementById('out-today').textContent = formatHUF(r);
+  document.getElementById('out-alone').textContent = formatHUF(lone);
+  document.getElementById('out-with').textContent = formatHUF(withM);
+  document.getElementById('out-alone-lbl').textContent = t + ' év múlva (Önállóan)';
+  document.getElementById('out-with-lbl').textContent = t + ' év múlva (Meridiannal)';
+
+  drawSimCanvas(g, r, t, lone, withM);
+}
+
+function drawSimCanvas(g, r, t, lone, withM) {
+  const canvas = document.getElementById('sim-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const cw = canvas.clientWidth, ch = canvas.clientHeight;
+  canvas.width = cw * dpr; canvas.height = ch * dpr;
+  ctx.scale(dpr, dpr);
+
+  const padX = 60, padY = 40;
+  const maxV = withM * 1.1;
+
+  ctx.clearRect(0, 0, cw, ch);
+
+  // Y-Axis Grid
+  ctx.strokeStyle = 'rgba(8,22,40,0.04)';
+  ctx.lineWidth = 1;
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(8,22,40,0.3)';
+  ctx.font = '500 10px Inter';
+  for (let i = 0; i <= 5; i++) {
+    const y = ch - padY - (i / 5) * (ch - 2 * padY);
+    ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(cw - padX, y); ctx.stroke();
+    ctx.fillText(formatHUF((i / 5) * maxV).replace(' Ft', ''), padX - 10, y + 4);
+  }
+
+  // X-Axis Labels
+  ctx.textAlign = 'center';
+  for (let i = 0; i <= t; i++) {
+    const x = padX + (i / t) * (cw - 2 * padX);
+    ctx.fillText(i === 0 ? 'Ma' : `+${i}év`, x, ch - padY + 20);
+  }
+
+  // Trajectories with Animation
+  let startTime = null;
+  const duration = 900;
+  const step = (timestamp) => {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    ctx.clearRect(padX, 0, cw - padX, ch - padY); // Clear area for redraw
+
+    // Redraw Grid (optional, or just redraw lines)
+    // Lone Trajectory
+    ctx.beginPath();
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 2;
+    for (let i = 0; i <= t * ease; i++) {
+      const x = padX + (i / t) * (cw - 2 * padX);
+      const val = r * Math.pow(1 + (g / 100), i);
+      const y = ch - padY - (val / maxV) * (ch - 2 * padY);
+      ctx[i === 0 ? 'moveTo' : 'lineTo'](x, y);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Meridian Trajectory
+    ctx.beginPath();
+    ctx.strokeStyle = '#0057FF';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    let lx, ly;
+    for (let i = 0; i <= t * ease; i++) {
+      const x = padX + (i / t) * (cw - 2 * padX);
+      const val = r * Math.pow(1 + ((g + 22) / 100), i);
+      const y = ch - padY - (val / maxV) * (ch - 2 * padY);
+      ctx[i === 0 ? 'moveTo' : 'lineTo'](x, y);
+      lx = x; ly = y;
+    }
+    ctx.stroke();
+
+    // Fill
+    if (progress > 0) {
+      const grad = ctx.createLinearGradient(0, ch - padY, 0, padY);
+      grad.addColorStop(0, 'rgba(0,87,255,0)');
+      grad.addColorStop(1, 'rgba(0,87,255,0.08)');
+      ctx.lineTo(lx, ch - padY);
+      ctx.lineTo(padX, ch - padY);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+[sGrow, sRev, sTime].forEach(s => s && s.addEventListener('input', updateSim));
+const simObs = new IntersectionObserver(es => { if (es[0].isIntersecting) { updateSim(); simObs.unobserve(es[0].target) } }, { threshold: 0.3 });
+if (document.getElementById('simulator')) simObs.observe(document.getElementById('simulator'));
+
+// ── Report Logic ──────────────────────────────
+const indData = {
+  finance: { findings: ['Szigetszerű legacy rendszerek lassítják a Time-to-Market-et.', 'A compliance költségek 18%-kal csökkenthetők automatizációval.', 'Az ügyfélélmény digitalizációja 22% növekedési potenciált rejt.'], results: ['2.4x', 'ROI 12hó', '-35%', 'Lassulás'] },
+  manufacturing: { findings: ['Az OEE mutatók 15-20%-kal javíthatók IoT integrációval.', 'Az ellátási lánc átláthatósága kritikus a globális versenyben.', 'A prediktív karbantartás évi 40M Ft megtakarítást eredményezhet.'], results: ['+18%', 'OEE jav.', '99.8%', 'SLA'] },
+  tech: { findings: ['A skálázható architektúra hiánya gátolja a nemzetközi expanziót.', 'A Product-Market Fit utáni skálázás során 40% a "waste".', 'Az engineering hatékonyság 30%-kal növelhető modern devops-szal.'], results: ['4.8x', 'Scale', '2.5d', 'Cycle'], },
+  retail: { findings: ['Az omnichannel élmény hiánya 15% bevételkiesést okoz.', 'A készletoptimalizálás AI segítségével 25% tőkét szabadít fel.', 'A perszonalizált marketing 3x-os konverzió-növekedést hoz.'], results: ['320%', 'LTV', '-15%', 'Churn'] },
+  health: { findings: ['A betegút-digitalizáció 40%-kal csökkenti az adminisztrációt.', 'A távdiagnosztikai megoldások 2x-es kapacitásbővülést hoznak.', 'Az adatbiztonság és GDPR megfelelés kritikus bizalmi faktor.'], results: ['92%', 'Patient Sat', '2x', 'Capacity'] },
+  logistics: { findings: ['Az útvonaloptimalizálás 14% üzemanyag-megtakarítást eredményez.', 'A raktár-automatizáció 3x-os áteresztőképességet biztosít.', 'A real-time tracking ma már alapvető ügyfélelvárás a szektorban.'], results: ['-14%', 'Cost', '3x', 'Throughput'] }
+};
+
+const chalData = {
+  growth: { kpis: ['+38% Bevételnövekedés', '15% Piaci részesedés jav.', '2.4x LTV növekedés', '12 hó Megtérülés'], phases: ['Piaci résanalízis & Stratégiai fókusz', 'Értékesítési tölcsér optimalizálás', 'Nemzetközi skálázás indítása'] },
+  digital: { kpis: ['-45% Operatív költségek', '100% Adat-integritás', '3.5x Gyorsabb folyamatok', '14 hó Megtérülés'], phases: ['Legacy audit & Tech stack tervezés', 'MVP fejlesztés & Core integráció', 'Teljeskörű roll-out & Betanítás'] },
+  efficiency: { kpis: ['+28% Munkatársi hatékonyság', '-22% Waste / Veszteség', '99.9% Minőségi mutatók', '9 hó Megtérülés'], phases: ['Folyamatbányászat & Szűk keresztmetszet', 'Lean / Six Sigma implementáció', 'Folyamatos javítási kultúra (Kaizen)'] },
+  exit: { kpis: ['+45% Cégérték növekedés', 'Clean Exit előkészítés', '8-12 hó Tranzakciós idő', 'Expert DD support'], phases: ['Vállalati értékvezérelt audit', 'Eredményjavító beavatkozások', 'Adatszoba & Befektetői roadshow'] }
+};
+
+function generateReport() {
+  const comp = document.getElementById('rep-company').value || 'Vállalkozás';
+  const ind = document.getElementById('rep-industry').value;
+  const chal = document.getElementById('rep-challenge').value;
+  const prev = document.getElementById('rep-preview');
+  
+  const iD = indData[ind];
+  const cD = chalData[chal];
+
+  prev.style.display = 'block';
+  prev.innerHTML = `
+    <div class="doc-wrap">
+      <div class="doc-header">
+        <div class="dh-left">
+          <div class="ft-logo"><div class="ft-logo-mark"></div><span class="ft-logo-name">Meridian</span></div>
+        </div>
+        <div class="dh-right">
+          Confidential Strategic Assessment<br>
+          Draft Copy — ${new Date().toLocaleDateString('hu-HU')}
+        </div>
+      </div>
+      <div class="doc-body">
+        <div class="db-title-block">
+          <span class="db-kicker">Executive Summary</span>
+          <h2 class="db-name">${comp}</h2>
+          <div class="db-meta">${document.getElementById('rep-industry').options[document.getElementById('rep-industry').selectedIndex].text} · ${document.getElementById('rep-challenge').options[document.getElementById('rep-challenge').selectedIndex].text}</div>
+        </div>
+        <div class="db-grid">
+          <div class="db-col">
+            <div class="db-col-title">Iparági Megállapítások</div>
+            ${iD.findings.map((f, i) => `
+              <div class="db-finding">
+                <div class="dbf-num">0${i + 1}</div>
+                <div class="dbf-text">${f}</div>
+              </div>
+            `).join('')}
+            <div class="db-col-title" style="margin-top:2rem">Várható KPI Javulás</div>
+            <div class="db-results-grid">
+              ${cD.kpis.map((k, i) => `
+                <div class="dbr-item">
+                  <span class="dbr-val">${k.split(' ')[0]}</span>
+                  <span class="dbr-lbl">${k.split(' ').slice(1).join(' ')}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="db-col">
+            <div class="db-col-title">Beavatkozási Terv</div>
+            ${cD.phases.map((p, i) => `
+              <div class="db-phase">
+                <div class="dbp-badge">Phase ${i + 1}</div>
+                <div class="dbp-content">
+                  <strong>${p}</strong>
+                  <p>A szisztematikus megközelítés biztosítja a minimális üzletmenet-kockázatot és a maximális ROI-t.</p>
+                </div>
+              </div>
+            `).join('')}
+            <div class="db-next-step">
+              <span class="dbns-title">Következő lépés</span>
+              <p class="dbns-text">Egy 60 perces mélyfúrás keretében validáljuk ezeket a feltételezéseket és pontosítjuk az ütemtervet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="doc-footer">
+        <div class="df-copy">© 2025 Meridian Strategic Growth Partners. Szigorúan bizalmas.</div>
+        <button class="df-btn" onclick="window.print()">Letöltés PDF-ként</button>
+      </div>
+    </div>
+  `;
+  
+  prev.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>

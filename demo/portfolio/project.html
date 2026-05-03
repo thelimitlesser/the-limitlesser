@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Details — SOLIDUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --surface: #141418;
+  --accent: #d4a373;
+  --fg: #ffffff;
+  --muted: #88888e;
+  --border: rgba(255, 255, 255, 0.08);
+  --font-h: 'Syne', sans-serif;
+  --font-b: 'Outfit', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-b); overflow-x: hidden; cursor: none; }
+
+#cur { position: fixed; width: 10px; height: 10px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.15s ease-out; mix-blend-mode: difference; }
+#cur-r { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.25s ease-out; }
+
+nav { position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; z-index: 5000; mix-blend-mode: difference; }
+.n-logo { font-family: var(--font-h); font-weight: 800; font-size: 1.2rem; letter-spacing: 4px; text-decoration: none; color: #fff; }
+.n-back { text-decoration: none; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: 1px solid var(--border); padding: 10px 25px; border-radius: 100px; transition: 0.3s; }
+.n-back:hover { background: #fff; color: #000; }
+
+.p-hero { width: 100%; height: 75vh; padding: 8rem 2rem 0; box-sizing: border-box; }
+.hero-inner { width: 100%; height: 100%; border-radius: 40px; overflow: hidden; position: relative; }
+#pImg { width: 100%; height: 100%; object-fit: cover; }
+
+.p-content { max-width: 1200px; margin: 0 auto; padding: 8rem 2rem; display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; }
+.p-sidebar { position: sticky; top: 10rem; }
+.p-sidebar span { font-size: 11px; text-transform: uppercase; letter-spacing: 4px; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
+.p-sidebar h3 { font-family: var(--font-h); font-size: 20px; margin-bottom: 1rem; color: #fff; text-transform: uppercase; }
+.p-sidebar p { font-size: 15px; color: var(--muted); margin-bottom: 3rem; line-height: 1.8; }
+
+h1 { font-family: var(--font-h); font-size: clamp(40px, 6vw, 90px); font-weight: 800; margin-bottom: 3rem; line-height: 0.95; letter-spacing: -3px; text-transform: uppercase; }
+.p-text { font-size: 22px; line-height: 1.7; color: #fff; opacity: 0.8; margin-bottom: 4rem; font-weight: 300; }
+
+.p-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.g-img { width: 100%; height: 500px; border-radius: 32px; object-fit: cover; }
+
+@media(max-width: 1000px) {
+  .p-content { grid-template-columns: 1fr; }
+  .p-sidebar { position: static; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<nav>
+  <a href="index.html" class="n-logo">SOLIDUM</a>
+  <a href="index.html" class="n-back">← All Projects</a>
+</nav>
+
+<div class="p-hero">
+  <div class="hero-inner">
+    <img src="" id="pImg">
+  </div>
+</div>
+
+<div class="p-content">
+  <div class="p-sidebar">
+    <span id="pMeta">Commercial / 2024</span>
+    <h3>Strategy</h3>
+    <p id="pBrief">Delivering high-performance architecture through innovative engineering and precision building.</p>
+    <h3>Location</h3>
+    <p id="pLoc">Metropolitan Area</p>
+  </div>
+  
+  <div class="p-main">
+    <h1 id="pTitle">Loading...</h1>
+    <p class="p-text" id="pText">Project summary...</p>
+    
+    <div class="p-gallery">
+      <img src="assets/commercial.png" class="g-img">
+      <img src="assets/renovation.png" class="g-img">
+    </div>
+  </div>
+</div>
+
+<script>
+const data = {
+  'crystal': { title: 'The Crystal Tower', meta: 'Commercial / 2024', img: 'assets/commercial.png', loc: 'Downtown', text: 'A beacon of modern engineering, the Crystal Tower stands as a testament to our ability to handle complex, high-scale commercial developments. Every glass panel and steel joint was placed with surgical precision.' },
+  'heritage': { title: 'Heritage Lofts', meta: 'Renovation / 2023', img: 'assets/renovation.png', loc: 'Industrial District', text: 'Transforming a century-old warehouse into high-end residential lofts. We preserved the raw industrial soul while integrating state-of-the-art climate control and luxury finishes.' }
+};
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id') || 'crystal';
+const item = data[id];
+
+if(item) {
+  document.getElementById('pTitle').textContent = item.title;
+  document.getElementById('pMeta').textContent = item.meta;
+  document.getElementById('pImg').src = item.img;
+  document.getElementById('pLoc').textContent = item.loc;
+  document.getElementById('pText').textContent = item.text;
+}
+
+const cur = document.getElementById('cur'), curR = document.getElementById('cur-r');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.transform = `translate(${mx}px, ${my}px)`;
+});
+function animate() {
+  cx += (mx - cx) * 0.1; cy += (my - cy) * 0.1;
+  curR.style.transform = `translate(${cx - 15}px, ${cy - 15}px)`;
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>

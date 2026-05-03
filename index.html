@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Limitlesser — Határok nélküli növekedés</title>
+<!-- No external fonts needed for system font stack -->
+<style>
+/* ─── Variables (Original) ────────────────────────── */
+:root {
+  --bg: #050200;
+  --accent: #FF8A00;
+  --accent2: #FFD600;
+  --accent3: rgba(255, 138, 0, 0.15);
+  --white: #fff;
+  --g1: #888; --g2: #1a1a1a; --g3: #111;
+  --font-d: 'Times New Roman', Times, serif;
+  --font-h: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; }
+
+/* ─── Background Effects ───────────────────────────── */
+body::after {
+  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/svg%3E");
+  opacity: 0.04; pointer-events: none; z-index: 9999;
+}
+.mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; background: #050200; }
+.mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; transition: transform 0.2s ease-out; }
+.b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
+.b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
+.b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
+
+/* Page background gradient flow - SEAMLESS */
+section { background: transparent !important; position: relative; width: 100%; }
+#hero { z-index: 10; }
+#manifesto, #portfolio, #transform, #templates, #services, #process, #cta { z-index: 5; }
+
+/* Global Bottom-Up Lighting */
+.global-light {
+  position: fixed;
+  bottom: -20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150vw;
+  height: 80vh;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255,138,0,0.15) 0%, transparent 75%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(80px);
+}
+
+/* Mouse Glow Effect (Flashlight) */
+#mouse-glow {
+  position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
+  background: radial-gradient(circle, rgba(255,138,0,0.25) 0%, rgba(255,138,0,0.12) 35%, transparent 70%);
+  pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+  filter: blur(80px); opacity: 0; transition: opacity 1s ease;
+}
+body.link-hover #cur-r{width:54px;height:54px;border-color:rgba(0,85,255,.6)}
+
+#streaks{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.sk{position:absolute;background:linear-gradient(to bottom,transparent 0%,rgba(217,119,6,.07) 30%,rgba(255,138,0,.04) 50%,rgba(217,119,6,.07) 70%,transparent 100%);width:1px}
+.sk-h{position:absolute;background:linear-gradient(to right,transparent 0%,rgba(217,119,6,.05) 30%,rgba(255,138,0,.03) 50%,rgba(217,119,6,.05) 70%,transparent 100%);height:1px}
+@keyframes sk-drift{0%{transform:translateY(-10%) rotate(var(--a));opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateY(10%) rotate(var(--a));opacity:0}}
+@keyframes sk-drift-h{0%{transform:translateX(-5%);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(5%);opacity:0}}
+
+/* ─── Nav ─────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
+nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.4rem 5rem;border-bottom-color:rgba(217,119,6,0.15)}
+.n-logo{text-decoration:none;color:var(--white);cursor:none; display: flex; flex-direction: column;}
+.n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
+.n-links{display:flex;gap:3rem;list-style:none}
+.n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;cursor:none;line-height:1.2;font-weight:500;}
+.n-links a:hover{color:var(--white)}
+.n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;cursor:none;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
+.n-btn:hover{background:#ccc;transform:translateY(-2px);}
+
+/* Mobile Toggle */
+.mob-toggle { display: none; background: none; border: none; cursor: none; flex-direction: column; gap: 5px; padding: 0.5rem; z-index: 1001; }
+.mob-toggle span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+.mob-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.mob-toggle.open span:nth-child(2) { opacity: 0; }
+.mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile Menu Overlay */
+.mob-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050200; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.mob-menu.open { transform: translateX(0); }
+.mob-menu a { font-family: var(--font-d); font-size: 32px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+.mob-menu a:hover { color: var(--accent); }
+.mob-menu .n-btn { font-size: 14px; padding: 1.2rem 3rem; margin-top: 2rem; }
+
+/* ─── Hero ─────────────────────────────────────── */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;overflow:hidden; text-align: center; padding-top: 12rem;}
+.h-content{position:relative;z-index:10;text-align:center;padding:0 2rem;}
+.h-eyebrow{font-family:var(--font-h);font-size:10px;letter-spacing:7px;text-transform:uppercase;color:rgba(217,119,6,.8);margin-bottom:1.5rem;display:block;line-height:1.2;font-weight:500;}
+.logo-block{margin-bottom:1rem;}
+.logo-ll{display:block;font-family:var(--font-d);font-size:clamp(32px, 5vw, 68px);letter-spacing:-1px;font-weight:300;line-height:1.2;color:var(--white);text-transform:none;margin-bottom:1.5rem; position: relative; z-index: 2;}
+.logo-ll em{font-style:italic;color:var(--accent);}
+.h-rule{width:clamp(300px, 45vw, 780px);height:2px;background:var(--accent);margin:2.5rem auto;box-shadow:0 0 15px var(--accent);border-radius:10px;}
+.h-tagline{font-family:var(--font-b);font-size:clamp(14px, 1.2vw, 18px);font-weight:400;line-height:1.6;letter-spacing:1px;color:rgba(255,255,255,0.9);max-width:700px;margin:0 auto 2.5rem; position: relative; z-index: 2;}
+
+.h-tagline em{font-style:italic;color:var(--accent)}
+.h-btns{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;}
+
+/* Buttons (Rounded) */
+.btn-p{font-family:var(--font-h);font-size:12px;letter-spacing:3px;text-transform:uppercase;background:#D97706;color:var(--white);border:none;padding:1.1rem 2.8rem;cursor:none;transition:all .3s;text-decoration:none;display:inline-block;border-radius:100px;}
+.btn-p:hover{background:#B45309;transform:translateY(-3px);box-shadow: 0 10px 25px rgba(217,119,6,0.3);}
+.btn-g{font-family:var(--font-h);font-size:12px;letter-spacing:3px;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,0.4);padding:1.1rem 2.8rem;cursor:none;transition:all .3s;text-decoration:none;display:inline-block;border-radius:100px;}
+.btn-g:hover{border-color:var(--white); color:var(--white);}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  z-index: 15; opacity: 0.6; transition: 0.3s;
+}
+.scroll-indicator:hover { opacity: 1; }
+.si-text { font-family: var(--font-h); font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--white); animation: si-pulse 2s infinite ease-in-out; }
+.si-line { width: 1px; height: 60px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+.si-line::after {
+  content: ''; position: absolute; top: -50px; left: 0; width: 100%; height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  animation: si-travel 2s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes si-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+@keyframes si-travel { 0% { top: -50px; } 100% { top: 100%; } }
+section{position:relative;z-index:5}
+.s-tag{font-family:'Inter', sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--blue2);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
+.s-title{font-family:var(--font-d);font-size:clamp(38px,5vw,76px);font-weight:300;line-height:1.15;margin-bottom:2rem}
+.s-title em{font-style:italic;color:var(--blue2)}
+
+/* Manifesto */
+#manifesto{padding:15rem 5rem;text-align:center;position:relative;z-index:2;}
+#portfolio { padding: 9rem 5rem; position:relative;z-index:2; }
+.mf-text { font-family: var(--font-d); font-size: clamp(32px, 5vw, 68px); line-height: 1.1; font-weight: 300; max-width: 1100px; margin: 0 auto 4rem; letter-spacing: -1px; color: var(--white); }
+.mf-text em { font-style: italic; color: var(--accent); }
+.mf-rule { width: 1px; height: 80px; background: linear-gradient(to bottom, var(--accent), transparent); margin: 0 auto 2.5rem; }
+.mf-sub { font-family: var(--font-h); font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); opacity: 0.8; font-weight: 700; }
+.p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 4rem auto; }
+.p-card { 
+  background: #000; 
+  border: 1px solid rgba(255,255,255,0.08); 
+  overflow: hidden; 
+  transition: transform 0.2s ease-out, box-shadow 0.4s; 
+  border-radius: 24px; 
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.p-card:hover { 
+  border-color: var(--accent); 
+  box-shadow: 0 40px 100px rgba(217,119,6,0.25); 
+}
+.p-mockup { transform: translateZ(30px); }
+.p-content { transform: translateZ(50px); }
+.p-mockup { width: 100%; height: 400px; overflow: hidden; position: relative; background: #080808; }
+.p-img { width: 100%; height: auto; transition: transform 7s ease-in-out; }
+.p-card:hover .p-img { transform: translateY(calc(-100% + 400px)); }
+.p-content { padding: 3rem; }
+.p-card-title { font-family: var(--font-d); font-size: 34px; font-weight: 300; margin-bottom: 1.2rem; }
+.p-card-desc { font-size: 15px; color: var(--g1); line-height: 1.7; margin-bottom: 2.5rem; }
+.p-btn { border: 1px solid var(--accent); color: var(--white); padding: .8rem 2.2rem; text-decoration: none; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; font-family: var(--font-h); transition: 0.3s; display: inline-block; border-radius: 100px; }
+.p-btn:hover { background: var(--accent); }
+
+/* Transformation Table */
+#transform{padding:8rem 5rem}
+.tr-header{text-align:center;margin-bottom:6rem}
+.tr-cols{display:grid;grid-template-columns:1fr 80px 1fr;gap:0;max-width:1100px;margin:0 auto}
+.tr-col-head{font-family:var(--font-h);font-size:11px;letter-spacing:5px;text-transform:uppercase;padding-bottom:2rem;border-bottom:1px solid}
+.tr-col-head.left{color:var(--g1);border-color:rgba(255,255,255,.08)}
+.tr-col-head.right{color:var(--accent);border-color:rgba(217,119,6,0.3);text-align:right}
+.tr-row-left,.tr-row-mid,.tr-row-right{padding:2.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center}
+.tr-row-right{justify-content:flex-end}
+.tr-row-mid{justify-content:center}
+.tr-left-v{font-family:var(--font-d);font-size:clamp(18px,2.2vw,28px);font-weight:300;color:rgba(255,255,255,.4)}
+.tr-right-v{font-family:var(--font-d);font-size:clamp(17px,1.8vw,24px);font-weight:300;color:var(--white);text-align:right;}
+.tr-arrow svg{width:24px;height:24px;color:var(--accent)}
+
+/* Templates (Interactive) */
+#templates { padding: 10rem 5rem; }
+.t-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; margin-top: 5rem; }
+.t-card { 
+  position: relative; 
+  background: rgba(255,255,255,0.03); 
+  border: 1px solid rgba(255,255,255,0.08); 
+  padding: 4rem 2rem; 
+  text-align: center; 
+  text-decoration: none; 
+  color: inherit; 
+  transition: transform 0.2s ease-out, border 0.4s, background 0.4s; 
+  border-radius: 20px; 
+  overflow: hidden;
+  z-index: 1;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.t-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: var(--bg-img);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.8s;
+  z-index: -1;
+  filter: brightness(0.6) saturate(1.2);
+}
+.t-card:hover { 
+  background: rgba(0,0,0,0.6); 
+  border-color: var(--accent); 
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7);
+}
+.t-card span { transform: translateZ(60px) scale(1.2); }
+.t-card h3 { transform: translateZ(40px); }
+.t-card p { transform: translateZ(20px); }
+.t-card:hover::before {
+  opacity: 0.4;
+  transform: scale(1.1);
+}
+.t-card span { font-size: 32px; display: block; margin-bottom: 2rem; transition: transform 0.4s; }
+.t-card:hover span { transform: scale(1.2) translateY(-5px); }
+.t-card h3 { font-family: var(--font-h); font-size: 14px; text-transform: uppercase; margin: 1.5rem 0; letter-spacing: 2px; position: relative; }
+.t-card p { font-size: 12px; color: var(--g1); line-height: 1.7; transition: color 0.3s; }
+.t-card:hover p { color: #fff; }
+
+/* Services (Grid Style) */
+#services{padding:10rem 5rem;border-top:1px solid rgba(255,255,255,0.05)}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);max-width:1400px;margin:0 auto;border-left:1px solid rgba(255,255,255,0.05)}
+.sv-card{padding:4rem 3rem;text-align:left;transition:0.4s;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);cursor:none;position:relative}
+.sv-card:hover{background:rgba(255,255,255,0.02)}
+.sv-num{font-family:var(--font-d);font-size:42px;font-weight:300;font-style:italic;color:rgba(217,119,6,.5);margin-bottom:2rem;display:block;}
+.sv-title{font-family:var(--font-h);font-size:16px;font-weight:700;letter-spacing:1px;color:var(--white);margin-bottom:1.5rem}
+.sv-desc{font-size:14px;line-height:1.8;color:var(--g1);margin-bottom:2rem;min-height:80px}
+.sv-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;text-decoration:none;display:inline-block;border-bottom:1px solid transparent;transition:0.3s}
+.sv-card:hover .sv-link{border-bottom-color:var(--accent)}
+
+/* Process */
+#process{padding:10rem 5rem;position:relative;background:rgba(0,0,0,0.2)}
+.pr-header{text-align:center;margin-bottom:6rem}
+.pr-tag{font-family:var(--font-h);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.5rem;line-height:1.2;font-weight:600;}
+.pr-title{font-family:var(--font-d);font-size:clamp(40px,6vw,72px);font-weight:300;line-height:1.1}
+.pr-title em{font-style:italic;color:var(--accent)}
+.pr-steps{display:grid;grid-template-columns:repeat(4,1fr);max-width:1200px;margin:5rem auto;position:relative}
+.pr-steps::before{content:'';position:absolute;top:25px;left:12.5%;right:12.5%;height:1px;background:var(--accent);opacity:0.2;}
+.pr-step{padding:0 1.5rem;text-align:center;transition:0.3s;cursor:none}
+.pr-num{width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;background:#000;z-index:2;position:relative;font-family:var(--font-d);font-size:18px;font-style:italic;color:var(--white);transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
+.pr-step:hover .pr-num{border-color:var(--accent);color:var(--accent);box-shadow:0 0 25px rgba(217,119,6,0.3);transform:scale(1.1)}
+.pr-step-title{font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.5rem;transition:0.3s}
+.pr-step:hover .pr-step-title{color:var(--accent)}
+.pr-step-desc{font-size:13px;color:var(--g1);line-height:1.8;max-width:240px;margin:0 auto;opacity:0.8}
+
+/* Stats */
+#stats{padding:6rem 5rem}
+.st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3rem;max-width:1100px;margin:0 auto;text-align:center}
+.st-n{font-family:var(--font-d);font-size:clamp(60px,6vw,96px);font-weight:300;font-style:italic;color:var(--white);line-height:1;}
+.st-n span{color:var(--accent)}
+
+/* CTA (Rounded) */
+#cta{padding:12rem 5rem 20rem;text-align:center;}
+.cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(0.16, 1, 0.3, 1)}
+.rv.on{opacity:1;transform:translateY(0)}
+
+@media(max-width:1050px){
+  nav{padding:1.5rem 2rem}
+  .n-links{display:none}
+  .n-btn{display:none}
+  .mob-toggle{display:flex}
+  .p-grid { grid-template-columns: 1fr; }
+  .t-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .sv-grid{grid-template-columns:1fr}
+  .pr-steps{grid-template-columns:1fr 1fr; gap:4rem;}
+  .pr-steps::before{display:none}
+  .st-grid{grid-template-columns:1fr 1fr}
+  #hero { padding-top: 10rem; }
+  #manifesto, #portfolio, #transform, #templates, #services, #process, #cta { padding-left: 2rem; padding-right: 2rem; }
+  .tr-cols { grid-template-columns: 1fr; }
+  .tr-mid-head, .tr-row-mid { display: none; }
+  .tr-col-head.right, .tr-row-right { text-align: left; justify-content: flex-start; }
+  .tr-row-left, .tr-row-right { padding: 1.5rem 0; }
+}
+
+@media(max-width: 600px) {
+  .pr-steps { grid-template-columns: 1fr; }
+  .st-grid { grid-template-columns: 1fr; }
+  .h-btns { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+  .btn-p, .btn-g { width: 100%; text-align: center; }
+}
+
+/* Lang Switcher */
+/* Language Dropdown */
+.lang-dropdown { position: relative; margin-right: 2rem; z-index: 1000; }
+.lang-selected { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); cursor: none; transition: 0.3s; }
+.lang-selected:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+.lang-flag { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); }
+.lang-chevron { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform 0.3s; opacity: 0.6; }
+.lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+
+.lang-options { position: absolute; top: calc(100% + 10px); right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; transform: translateY(10px); pointer-events: none; transition: 0.3s; }
+.lang-dropdown.open .lang-options { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.lang-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; cursor: none; transition: 0.2s; color: #1a1a1a; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; }
+.lang-option:hover { background: #f5f5f5; }
+.lang-option .lang-flag { width: 24px; height: 24px; border: 1px solid rgba(0,0,0,0.05); }
+.lang-option-check { margin-left: auto; width: 14px; height: 14px; color: #1a1a1a; opacity: 0; transition: 0.2s; }
+.lang-option.active .lang-option-check { opacity: 1; }
+/* ─── Footer (Premium) ────────────────────────── */
+footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+.f-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 4rem; }
+.f-brand .logo-ll { font-size: 20px; margin-bottom: 2rem; display: block; }
+.f-brand p { font-size: 14px; color: var(--g1); line-height: 1.8; max-width: 280px; }
+
+.f-col h4 { font-family: var(--font-h); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--white); margin-bottom: 2rem; font-weight: 700; }
+.f-col ul { list-style: none; padding: 0; }
+.f-col ul li { margin-bottom: 1rem; }
+.f-col ul li a { color: var(--g1); font-size: 14px; text-decoration: none; transition: 0.3s; }
+.f-col ul li a:hover { color: var(--blue2); padding-left: 5px; }
+
+.f-contact-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; color: var(--g1); font-size: 14px; line-height: 1.6; }
+.f-contact-item span { color: var(--blue2); font-weight: 600; }
+
+.f-bottom { max-width: 1300px; margin: 6rem auto 0; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+.f-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.f-legal { display: flex; gap: 2rem; }
+.f-legal a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: 0.3s; }
+.f-legal a:hover { color: var(--white); }
+
+@media (max-width: 1000px) {
+  .f-container { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .f-container { grid-template-columns: 1fr; }
+  .f-bottom { flex-direction: column; gap: 2rem; text-align: center; }
+}
+
+/* ─── Portfolio Slider ────────────────────────── */
+#portfolio { padding: 10rem 2rem; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 50%, rgba(0,85,255,0.05) 0%, transparent 70%); }
+.p-slider-wrap { max-width: 1200px; margin: 4rem auto; position: relative; display: flex; flex-direction: column; align-items: center; gap: 4rem; }
+
+/* MacBook Mockup (Enhanced) */
+.macbook { position: relative; width: 100%; max-width: 850px; perspective: 1200px; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); margin-top: 2rem; }
+.macbook:hover { transform: translateY(-15px) rotateX(3deg); }
+
+.mac-screen { 
+  position: relative; 
+  background: #000; 
+  border: 12px solid #1d1d1f; 
+  border-radius: 16px 16px 0 0; 
+  aspect-ratio: 16/10; 
+  overflow: hidden; 
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1); 
+}
+
+/* Realistic Glare */
+.mac-screen::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 55%);
+  z-index: 10;
+  pointer-events: none;
+  animation: glareMove 8s infinite linear;
+}
+
+.mac-content-wrap { position: relative; width: 100%; height: 100%; background: #000; }
+.mac-slide { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  opacity: 0; 
+  transition: opacity 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); 
+  transform: scale(1.02); 
+  background-size: 100% auto; 
+  background-position: top center; 
+  background-repeat: no-repeat;
+}
+.mac-slide.active { opacity: 1; transform: scale(1); }
+
+.mac-base { 
+  position: relative; 
+  height: 22px; 
+  background: linear-gradient(to bottom, #3a3a3c 0%, #1d1d1f 100%); 
+  border-radius: 0 0 24px 24px; 
+  width: 106%; 
+  margin-left: -3%; 
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4); 
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.mac-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 8px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 0 0 12px 12px;
+}
+
+@keyframes glareMove {
+  0% { transform: translate(-10%, -10%) rotate(0deg); }
+  100% { transform: translate(10%, 10%) rotate(5deg); }
+}
+
+/* Portfolio Info */
+.p-info { text-align: center; max-width: 700px; min-height: 220px; }
+.p-item-info { display: none; animation: fadeInSlider 0.8s ease forwards; }
+.p-item-info.active { display: block; }
+.p-cat { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 4px; color: var(--blue2); text-transform: uppercase; display: block; margin-bottom: 1.5rem; font-weight: 600; }
+.p-name { font-family: var(--font-d); font-size: clamp(32px, 4vw, 54px); font-weight: 300; margin-bottom: 1.5rem; color: var(--white); }
+.p-desc { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 2.5rem; }
+
+/* Nav Buttons */
+.p-nav { position: absolute; top: 40%; width: 110%; left: -5%; display: flex; justify-content: space-between; pointer-events: none; }
+.p-nav-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--white); display: flex; align-items: center; justify-content: center; cursor: none; transition: 0.3s; pointer-events: auto; backdrop-filter: blur(10px); }
+.p-nav-btn:hover { background: var(--blue); border-color: var(--blue); transform: scale(1.1); }
+.p-nav-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+@keyframes fadeInSlider { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+  .p-nav { position: relative; width: 100%; left: 0; top: 0; justify-content: center; gap: 2rem; margin-top: 2rem; }
+  .mac-base { width: 100%; margin-left: 0; }
+}
+/* Preloader */
+#preloader {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0a0500 0%, #1f0d00 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 100000; transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1), visibility 0.8s;
+}
+#preloader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+.pl-text {
+  font-family: var(--font-d); font-size: 3rem; color: #fff;
+  letter-spacing: 12px; font-weight: 300; margin-bottom: 1.5rem;
+  animation: pl-pulse 2s infinite ease-in-out;
+}
+.pl-bar-wrap { width: 200px; height: 1px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; margin-bottom: 1.5rem; }
+.pl-tagline {
+  font-family: var(--font-b); font-size: 9px; color: rgba(255,255,255,0.4);
+  letter-spacing: 4px; text-transform: uppercase; font-weight: 500;
+}
+.pl-bar { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: #D97706; transition: width 0.4s ease; box-shadow: 0 0 15px rgba(217, 119, 6, 0.6); }
+@keyframes pl-pulse { 0%, 100% { opacity: 0.7; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
+body.loading { overflow: hidden; }
+</style>
+</head>
+<body class="loading">
+<div id="preloader">
+  <div class="pl-text">LIMITLESSER</div>
+  <div class="pl-bar-wrap">
+    <div class="pl-bar" id="pl-bar"></div>
+  </div>
+  <div class="pl-tagline">Digital Transformation Agency</div>
+</div>
+
+
+<div class="mesh-bg" style="z-index: -2;">
+  <div class="mesh-ball b1" id="pb1"></div>
+  <div class="mesh-ball b2" id="pb2"></div>
+  <div class="mesh-ball b3" id="pb3"></div>
+</div>
+<div id="mouse-glow" style="z-index: -1;"></div>
+<div class="global-light" id="gLight"></div>
+
+<div id="streaks" style="display:none;"></div>
+
+<nav id="nav">
+  <a href="#" class="n-logo">
+    <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
+  </a>
+  <div class="n-links">
+    <a href="index.html#hero" data-i18n="nav_home">Kezdőlap</a>
+    <a href="about.html" data-i18n="nav_about">Rólunk</a>
+    <a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a>
+    <a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a>
+    <a href="contact.html">Kapcsolat</a>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-selected" onclick="toggleLangDropdown()">
+        <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" id="currentFlag">
+        <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+      </div>
+      <div class="lang-options">
+        <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')">
+          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag">
+          <span>Magyar (HU)</span>
+          <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')">
+          <img src="https://flagcdn.com/w80/gb.png" class="lang-flag">
+          <span>English (EN)</span>
+          <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <a href="contact.html" class="n-btn" data-i18n="nav-cta">Kezdjük el</a>
+    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mob-menu">
+  <a href="index.html#hero" onclick="toggleMob()">Kezdőlap</a>
+  <a href="about.html" onclick="toggleMob()">Rólunk</a>
+  <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
+  <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
+  <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
+  <a href="contact.html" class="n-btn" onclick="toggleMob()">Kezdjük el</a>
+</div>
+
+<section id="hero">
+  <div class="h-bg-glow"></div>
+  <!-- Hero Content Force Visible -->
+  <div class="h-content">
+    <div class="logo-block rv">
+      <h1 class="logo-ll" data-i18n="hero_main_title">Életre keltjük az <em>elképzeléseid</em></h1>
+    </div>
+    <div class="h-rule rv"></div>
+    <span class="h-eyebrow rv" data-i18n="hero_eyebrow" style="display:none;"></span>
+    <p class="h-tagline rv" data-i18n="hero_sub">Személyre szabott digitális transzformáció KKV-knak, határok nélkül</p>
+    <div class="h-btns rv">
+      <a href="contact.html" class="btn-p">Kezdjük el</a>
+      <a href="#portfolio" class="btn-g">Munkáink</a>
+    </div>
+    <div class="scroll-indicator" style="position: static; margin-top: 4rem; transform: none;">
+      <span class="si-text" data-i18n="hero_scroll">Görgess</span>
+      <div class="si-line"></div>
+    </div>
+  </div>
+</section>
+
+<section id="manifesto">
+  <div class="rv">
+    <p class="mf-text" data-i18n="manifesto_text">
+      Minden vállalkozásban egy <em>korlátlan potenciál</em> rejtőzik.<br>
+      Mi nem weboldalt adunk el — mi azt hozzuk napvilágra,<br>
+      amit eddig a piac <em>nem látott meg benned.</em>
+    </p>
+    <div class="mf-rule"></div>
+    <span class="mf-sub">Limitlesser Difference</span>
+  </div>
+</section>
+
+<!-- Portfolio (Mac Slider) -->
+<section id="portfolio">
+  <div class="p-header rv">
+    <span class="s-tag" data-i18n="portfolio_tag">Esettanulmányok</span>
+    <h2 class="s-title" data-i18n="portfolio_title">Amire <em>büszkék</em> vagyunk</h2>
+  </div>
+
+  <div class="p-slider-wrap rv">
+    <div class="macbook">
+      <div class="mac-screen">
+        <div class="mac-content-wrap" id="macContent">
+          <div class="mac-slide active" style="background-image: url('projects/bontoaruhaz.png');"></div>
+          <div class="mac-slide" style="background-image: url('projects/folyamat.png');"></div>
+        </div>
+      </div>
+      <div class="mac-base"></div>
+      
+      <div class="p-nav">
+        <button class="p-nav-btn" onclick="movePortfolio(-1)">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="p-nav-btn" onclick="movePortfolio(1)">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="p-info" id="pInfo">
+      <!-- Item 1 -->
+      <div class="p-item-info active">
+        <span class="p-cat">WEBÁRUHÁZ / AUTÓ</span>
+        <h3 class="p-name">Bontoaruhaz.hu</h3>
+        <p class="p-desc" data-i18n="portfolio_bonto_desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
+        <a href="https://www.bontoaruhaz.hu" target="_blank" class="n-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
+      </div>
+      <!-- Item 2 -->
+      <div class="p-item-info">
+        <span class="p-cat">MEMBERSHIP / COMMUNITY</span>
+        <h3 class="p-name">Folyamat.hu</h3>
+        <p class="p-desc" data-i18n="portfolio_folyamat_desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
+        <a href="https://hu.folyamat.com" target="_blank" class="n-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Transform Table -->
+<section id="transform">
+  <div class="tr-header rv">
+    <span class="s-tag" data-i18n="transform_tag">Pozicionálás & Stratégia</span>
+    <h2 class="s-title" data-i18n="transform_title">Amit a piac <em>nem lát meg</em> benned</h2>
+  </div>
+  <div class="tr-cols">
+    <div class="tr-col-head left rv" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</div>
+    <div class="tr-mid-head rv"></div>
+    <div class="tr-col-head right rv" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</div>
+    
+    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_1_left">Csak egy a sok közül (Árverseny)</span></div>
+    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_1_right">A kategória egyetlen és megkerülhetetlen szereplője</span></div>
+    
+    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_2_left">Digitális jelenlét (Weboldal)</span></div>
+    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_2_right">Digitális dominancia és automatizált növekedés</span></div>
+    
+    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_3_left">Üzleti kiadás és költség</span></div>
+    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_3_right">Hosszútávú értékteremtés és profit-gépezet</span></div>
+    
+    <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_4_left">Lokális megoldások</span></div>
+    <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_4_right">Határok nélküli globális expanzió</span></div>
+  </div>
+</section>
+
+<!-- Templates (Rounded) -->
+<section id="templates">
+  <div class="rv" style="text-align:center;">
+    <span class="s-tag" data-i18n="templates_tag">Iparági koncepciók</span>
+    <h2 class="s-title" data-i18n="templates_title">Válassz egy <em>alapot</em>, mi egyedivé tesszük</h2>
+  </div>
+  <div class="t-grid">
+    <a href="./demo/retail/index.html" class="t-card rv" style="--bg-img: url('templates/retail.png');">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem;opacity:0.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+      <h3>Retail</h3><p data-i18n="templates_retail_desc">Konverzió-fókuszú shopok.</p>
+    </a>
+    <a href="./demo/professional/index.html" class="t-card rv" style="--bg-img: url('templates/pro.png');">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem;opacity:0.8"><path d="M16 16v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H20a2 2 0 012 2v10a2 2 0 01-2 2h-6.34M7 9h3m-3 4h3m-3 4h3"/></svg>
+      <h3>Professional</h3><p data-i18n="templates_pro_desc">Szakmai bizalomépítés.</p>
+    </a>
+    <a href="./demo/corporate/index.html" class="t-card rv" style="--bg-img: url('templates/corp.png');">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem;opacity:0.8"><path d="M3 21h18M9 21V9l3-3 3 3v12M12 12h.01M12 15h.01M12 18h.01"/></svg>
+      <h3>Corporate</h3><p data-i18n="templates_corp_desc">Tiszta vállalati üzenetek.</p>
+    </a>
+    <a href="/demo/portfolio/index.html" class="t-card rv" style="--bg-img: url('templates/portfolio.png');">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem;opacity:0.8"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l5 5M9.5 4.5l.5 2.5"/></svg>
+      <h3>Portfolio</h3><p data-i18n="templates_portfolio_desc">Vizuális történetmesélés.</p>
+    </a>
+    <a href="/demo/tech/index.html" class="t-card rv" style="--bg-img: url('templates/tech.png');">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem;opacity:0.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <h3>Tech / SaaS</h3><p data-i18n="templates_tech_desc">Modern digitális termékek.</p>
+    </a>
+  </div>
+</section>
+
+<section id="services">
+  <div class="sv-header rv">
+    <span class="s-tag" data-i18n="services_tag">Szolgáltatások</span>
+    <h2 class="s-title" data-i18n="services_title">Egyedi megoldások,<br><em>valódi eredmények</em></h2>
+  </div>
+  <div class="sv-grid">
+    <div class="sv-card rv">
+      <span class="sv-num">01</span>
+      <div class="sv-title" data-i18n="service_1_title">Webshop & Weboldal</div>
+      <p class="sv-desc" data-i18n="service_1_desc">Egyedi tervezésű, konverzióra optimalizált digitális otthon, ami nemcsak szép — hanem eladja az értékeidet.</p>
+      <div class="sv-link" data-i18n="service_1_link">DIGITÁLIS JELENLÉT</div>
+    </div>
+    <div class="sv-card rv d1">
+      <span class="sv-num">02</span>
+      <div class="sv-title" data-i18n="service_2_title">Brand Identity</div>
+      <p class="sv-desc" data-i18n="service_2_desc">Az értékeid vizuális hangja. Logó, arculat és brand stratégia, ami pontosan azt sugározza, amit te képviselsz.</p>
+      <div class="sv-link" data-i18n="service_2_link">MÁRKAÉPÍTÉS</div>
+    </div>
+    <div class="sv-card rv d2">
+      <span class="sv-num">03</span>
+      <div class="sv-title" data-i18n="service_3_title">Konverzió Optimalizálás</div>
+      <p class="sv-desc" data-i18n="service_3_desc">Forgalom van, de nem vásárolnak? Megtaláljuk a gátat és lebontjuk — adatvezérelt módszerekkel.</p>
+      <div class="sv-link" data-i18n="service_3_link">BEVÉTEL NÖVELÉS</div>
+    </div>
+    <div class="sv-card rv">
+      <span class="sv-num">04</span>
+      <div class="sv-title" data-i18n="service_4_title">UX / UI Design</div>
+      <p class="sv-desc" data-i18n="service_4_desc">Olyan felhasználói élmény, ami visszahozza az embereket. Design, ami gondolkodik helyettük.</p>
+      <div class="sv-link" data-i18n="process_4_link">ÉLMÉNY TERVEZÉS</div>
+    </div>
+    <div class="sv-card rv d1">
+      <span class="sv-num">05</span>
+      <div class="sv-title" data-i18n="service_5_title">Performance Marketing</div>
+      <p class="sv-desc" data-i18n="service_5_desc">Láthatóság a maximumon. Célzott kampányok, amelyek pontosan a te ideális vásárlóidat szólítják meg.</p>
+      <div class="sv-link" data-i18n="process_4_link">LÁTHATÓSÁG</div>
+    </div>
+    <div class="sv-card rv d2">
+      <span class="sv-num">06</span>
+      <div class="sv-title" data-i18n="service_6_title">Egyedi Automatizáció & Admin</div>
+      <p class="sv-desc" data-i18n="service_6_desc">Saját fejlesztésű irányítópult, ahol egy gombnyomással kezelhetsz mindent. Felejtsd el a külső platformokat: teljes kontroll és drasztikus időmegtakarítás egyetlen felületen.</p>
+      <div class="sv-link" data-i18n="service_6_link">KÖZPONTI IRÁNYÍTÁS</div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="pr-header rv">
+    <span class="pr-tag">A Limitlesser Módszer</span>
+    <h2 class="pr-title">Hogyan hozzuk ki a<br><em>maximumot</em></h2>
+  </div>
+  <div class="pr-steps">
+    <div class="pr-step rv">
+      <div class="pr-num">01</div>
+      <div class="pr-step-title">Feltárás</div>
+      <p class="pr-step-desc">Megértjük a vállalkozásodat — az értékeidet, a korlátaidat és azt, amit még magad sem látszál.</p>
+    </div>
+    <div class="pr-step rv d1">
+      <div class="pr-num">02</div>
+      <div class="pr-step-title">Stratégia</div>
+      <p class="pr-step-desc">Egyedi útvonalat tervezünk rád szabva. Nincs sablon — minden döntés az te céljaidat szolgálja.</p>
+    </div>
+    <div class="pr-step rv d2">
+      <div class="pr-num">03</div>
+      <div class="pr-step-title">Építés</div>
+      <p class="pr-step-desc">A vízióból valóság lesz. Prémium kivitelezés, ahol minden pixel és minden szó számít.</p>
+    </div>
+    <div class="pr-step rv d3">
+      <div class="pr-num">04</div>
+      <div class="pr-step-title">Skálázás</div>
+      <p class="pr-step-desc">A munka nem ér véget az indulással. Toljuk tovább a határokat — folyamatosan.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <h2 class="cta-title rv">Lebontjuk a korlátokat?</h2>
+  <a href="contact.html" class="btn-p" style="padding: 1.5rem 4rem; font-size: 14px;">AJÁNLATKÉRÉS</a>
+</section>
+
+<footer id="footer">
+  <div class="f-container rv">
+    <div class="f-brand">
+      <div class="logo-ll">LIMIT<span style="color:var(--accent)">LESSER</span></div>
+      <p data-i18n="footer_tagline">A vállalkozásod teljes potenciálját hozzuk felszínre egyedi digitális megoldásokkal és automatizált rendszerekkel.</p>
+    </div>
+    
+    <div class="f-col">
+      <h4 data-i18n="footer_nav">Navigáció</h4>
+      <ul>
+        <li><a href="index.html#hero" data-i18n="nav_home">Kezdőlap</a></li>
+        <li><a href="about.html" data-i18n="nav_about">Rólunk</a></li>
+        <li><a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a></li>
+        <li><a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a></li>
+      </ul>
+    </div>
+    
+    <div class="f-col">
+      <h4 data-i18n="footer_services">Szolgáltatások</h4>
+      <ul>
+        <li><a href="services.html#web" data-i18n="service_1_title">Webshop & Weboldal</a></li>
+        <li><a href="services.html#auto" data-i18n="service_6_title">Automatizáció & Admin</a></li>
+        <li><a href="services.html#cro" data-i18n="service_3_title">Konverzió Optimalizálás</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="f-bottom">
+    <p>&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
+    <div class="f-legal">
+      <a href="aszf.html" data-i18n="footer_aszf">ÁSZF</a>
+      <a href="privacy.html" data-i18n="footer_privacy">Adatkezelés</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Preloader Logic
+window.addEventListener('load', () => {
+  const bar = document.getElementById('pl-bar');
+  const loader = document.getElementById('preloader');
+  
+  if (sessionStorage.getItem('preloaderShown')) {
+    if(loader) loader.style.display = 'none';
+    document.body.classList.remove('loading');
+    return;
+  }
+
+  let prog = 0;
+  const interval = setInterval(() => {
+    prog += Math.random() * 25;
+    if (prog > 100) prog = 100;
+    if(bar) bar.style.width = prog + '%';
+    if (prog === 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        if(loader) loader.classList.add('loaded');
+        document.body.classList.remove('loading');
+        sessionStorage.setItem('preloaderShown', 'true');
+      }, 500);
+    }
+  }, 120);
+});
+
+// Mouse Glow
+const mg = document.getElementById('mouse-glow');
+document.addEventListener('mousemove', e => {
+  if(mg) {
+    mg.style.left = e.clientX + 'px';
+    mg.style.top = e.clientY + 'px';
+    mg.style.opacity = '1';
+  }
+});
+
+// Nav & Parallax
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  const b1 = document.getElementById('pb1');
+  const b2 = document.getElementById('pb2');
+  const b3 = document.getElementById('pb3');
+  
+  if(b1) b1.style.transform = `translateX(-50%) translateY(${-s * 0.4}px)`;
+  if(b2) b2.style.transform = `translateY(${-s * 0.2}px)`;
+  if(b3) b3.style.transform = `translateY(${-s * 0.15}px)`;
+  
+  const nav = document.getElementById('nav');
+  if(nav) nav.classList.toggle('stuck', s > 60);
+});
+
+// Mobile Menu Toggle
+function toggleMob() {
+  const btn = document.getElementById('mob-toggle');
+  const menu = document.getElementById('mob-menu');
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+  document.body.classList.toggle('loading'); // Disable scroll
+}
+
+// Reveal
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
+// Streaks
+const sc=document.getElementById('streaks');
+function mkStr(type){
+  const el=document.createElement('div'),isV=type==='v';
+  el.className=isV?'sk':'sk-h';
+  const dur=(Math.random()*12+10)+'s',del=Math.random()*10+'s',ang=(Math.random()*20-10)+'deg';
+  if(isV) el.style.cssText=`left:${Math.random()*100}%;top:-20%;height:${Math.random()*40+30}%;--a:${ang};animation:sk-drift ${dur} ${del} linear infinite`;
+  else el.style.cssText=`top:${Math.random()*100}%;left:-10%;width:${Math.random()*35+20}%;animation:sk-drift-h ${dur} ${del} linear infinite`;
+  sc.appendChild(el);
+}
+for(let i=0;i<10;i++) mkStr('v');
+for(let i=0;i<6;i++) mkStr('h');
+// 3D Tilt Logic
+const tiltCards = document.querySelectorAll('.p-card, .t-card');
+tiltCards.forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    const dx = x - xc;
+    const dy = y - yc;
+    card.style.transform = `rotateY(${dx / 12}deg) rotateX(${-dy / 12}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// Portfolio Slider Logic
+let pIdx = 0;
+const pSlides = document.querySelectorAll('.mac-slide');
+const pInfos = document.querySelectorAll('.p-item-info');
+
+window.movePortfolio = (dir) => {
+  pSlides[pIdx].classList.remove('active');
+  pInfos[pIdx].classList.remove('active');
+  pIdx = (pIdx + dir + pSlides.length) % pSlides.length;
+  pSlides[pIdx].classList.add('active');
+  pInfos[pIdx].classList.add('active');
+};
+</script>
+<script src="js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "the-limitlesser",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}

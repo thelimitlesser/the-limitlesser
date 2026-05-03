@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUANTUM — AI-Powered Data Ecosystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --bg: #020205;
+  --accent: #00f2ff;
+  --accent-rgb: 0, 242, 255;
+  --white: #ffffff;
+  --gray: #666;
+  --border: rgba(0, 242, 255, 0.1);
+  --font-h: 'Syne', sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+  --font-b: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; cursor: none; }
+
+/* ── Cursor ── */
+#cur{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .3s;box-shadow: 0 0 15px var(--accent);}
+#cur-r{position:fixed;width:40px;height:40px;border:1px solid rgba(0,242,255,.3);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+body.ch #cur{transform:translate(-50%,-50%) scale(2.5);background:var(--white);}
+body.ch #cur-r{width:60px;border-color:var(--white);opacity:0.5;}
+
+#three-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+
+/* Grid Background */
+.tech-grid { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: -1; mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%); }
+
+/* Nav */
+nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; z-index: 1000; transition: 0.4s; }
+nav.stuck { background: rgba(2,2,5,0.8); backdrop-filter: blur(20px); padding: 1.2rem 4rem; border-bottom: 1px solid var(--border); }
+.n-logo { font-family: var(--font-h); font-weight: 800; color: var(--accent); letter-spacing: 2px; text-decoration: none; font-size: 20px; }
+.n-cta { background: var(--accent); color: #000; font-family: var(--font-h); font-size: 11px; letter-spacing: 2px; padding: 0.8rem 2rem; border-radius: 100px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+.n-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,242,255,0.4); }
+
+/* MOBILE TOGGLE */
+.mob-toggle{display:none;background:none;border:none;cursor:none;flex-direction:column;gap:5px;padding:.4rem;z-index:1001}
+.mob-toggle span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .35s}
+.mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.mob-toggle.open span:nth-child(2){opacity:0}
+.mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mob-menu{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu a{font-family:var(--font-h);font-size:32px;font-weight:800;color:var(--white);text-decoration:none;text-transform:uppercase;letter-spacing:4px}
+
+/* Hero */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 2rem; }
+.h-tag { font-family: var(--font-m); font-size: 11px; color: var(--accent); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 2rem; display: block; opacity: 0.8; }
+h1 { font-family: var(--font-h); font-size: clamp(50px, 10vw, 160px); font-weight: 800; line-height: 0.8; margin-bottom: 4rem; letter-spacing: -6px; }
+h1 span { -webkit-text-stroke: 1px rgba(0,242,255,0.3); color: transparent; }
+.h-desc { font-size: clamp(16px, 1.2vw, 20px); color: var(--gray); max-width: 650px; line-height: 1.8; margin-bottom: 5rem; font-weight: 300; }
+
+/* Features Grid */
+.section { padding: 10rem 4rem; max-width: 1400px; margin: 0 auto; }
+.s-header { text-align: center; margin-bottom: 8rem; }
+.s-title { font-family: var(--font-h); font-size: clamp(32px, 5vw, 64px); letter-spacing: -2px; margin-top: 1rem; }
+
+.f-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+.f-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 4rem 3rem; border-radius: 24px; position: relative; overflow: hidden; transition: 0.4s; }
+.f-card:hover { background: rgba(0,242,255,0.03); border-color: var(--accent); transform: translateY(-10px); }
+.f-icon { width: 50px; height: 50px; color: var(--accent); margin-bottom: 2rem; }
+.f-title { font-family: var(--font-h); font-size: 24px; margin-bottom: 1.5rem; }
+.f-text { font-size: 15px; color: var(--gray); line-height: 1.7; }
+
+/* Pricing Cards */
+.p-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.p-card { background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 5rem 3rem; border-radius: 32px; position: relative; transition: 0.4s; }
+.p-card.featured { background: linear-gradient(135deg, rgba(0,242,255,0.05), transparent); border-color: var(--accent); }
+.p-label { position: absolute; top: 2rem; right: 2rem; font-family: var(--font-m); font-size: 10px; color: var(--accent); border: 1px solid var(--accent); padding: 4px 10px; border-radius: 100px; }
+.p-price { font-family: var(--font-h); font-size: 64px; margin: 2rem 0; display: block; letter-spacing: -2px; }
+.p-price span { font-size: 16px; font-family: var(--font-b); letter-spacing: 0; color: var(--gray); }
+.p-list { list-style: none; margin-bottom: 4rem; }
+.p-list li { margin-bottom: 1.2rem; font-size: 14px; color: var(--gray); display: flex; gap: 1rem; align-items: center; }
+.p-list li::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+/* Back Bar */
+.back-bar { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: rgba(10,10,20,0.8); backdrop-filter: blur(20px); padding: 0.8rem 1.2rem; border-radius: 100px; display: flex; gap: 1.5rem; z-index: 10000; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.bb-b { color: var(--gray); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; transition: 0.3s; cursor: none; display: flex; align-items: center; padding: 0 1rem; }
+.bb-b:hover { color: var(--accent); }
+.bb-c { background: var(--accent); color: #000; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; padding: 1rem 2.2rem; border-radius: 100px; transition: all 0.3s; cursor: none; }
+.bb-c:hover { transform: translateY(-3px); box-shadow: 0 0 30px var(--accent); }
+
+.rv { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.rv.on { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 1000px) {
+  nav { padding: 1.5rem 2rem; }
+  .n-cta { display: none; }
+  .mob-toggle { display: flex; }
+  .f-grid, .p-grid { grid-template-columns: 1fr; }
+  .back-bar { width: calc(100% - 4rem); bottom: 1.5rem; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="three-canvas"></canvas>
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div class="tech-grid"></div>
+
+<nav id="nav">
+  <a href="#" class="n-logo">QUANTUM</a>
+  <a href="#consultation" class="n-cta" id="nav-cta">GET STARTED</a>
+  <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-menu" id="mob-menu">
+  <a href="#" onclick="toggleMob()">HOME</a>
+  <a href="#pricing" onclick="toggleMob()">PRICING</a>
+  <a href="../../index.html" onclick="toggleMob()">BACK</a>
+  <a href="#consultation" class="bb-c" onclick="toggleMob()">GET STARTED</a>
+</div>
+
+<section class="hero">
+  <span class="h-tag rv" id="h-eyebrow">Autonomous Intelligence Layer</span>
+  <h1 class="rv d1" id="h-title">ELITE<br><span>NETWORK.</span></h1>
+  <p class="h-desc rv d2" id="h-desc">Húzd meg az új határokat a skálázható adatfeldolgozásban. Automatizált rendszerek, amelyek tanulnak és veled együtt nőnek.</p>
+  <div class="rv d2"><a href="#pricing" class="bb-c" id="hero-btn">Explore Infrastructure</a></div>
+</section>
+
+<section class="section">
+  <div class="s-header rv">
+    <span class="h-tag">Capabilities</span>
+    <h2 class="s-title" id="s-title">Architected for <em>Dominance</em></h2>
+  </div>
+  <div class="f-grid">
+    <div class="f-card rv">
+      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      <h3 class="f-title" id="f1-t">AI Orchestration</h3>
+      <p class="f-text" id="f1-d">Automatizált munkafolyamatok, amelyek mesterséges intelligencia segítségével optimalizálják az erőforrás-kihasználtságot.</p>
+    </div>
+    <div class="f-card rv d1">
+      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 7h20M2 17h20"/></svg>
+      <h3 class="f-title" id="f2-t">Edge Computing</h3>
+      <p class="f-text" id="f2-d">Zéró késleltetés a globális elosztott hálózatnak köszönhetően. Feldolgozás ott, ahol az adat keletkezik.</p>
+    </div>
+    <div class="f-card rv d2">
+      <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <h3 class="f-title" id="f3-t">Quantum Security</h3>
+      <p class="f-text" id="f3-d">Katonai szintű titkosítás és behatolás-megelőzés, ami már a fenyegetés megjelenése előtt közbelép.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="s-header rv">
+    <span class="h-tag">Pricing</span>
+    <h2 class="s-title">Scalable <em>Resources</em></h2>
+  </div>
+  <div class="p-grid">
+    <div class="p-card rv">
+      <h3 id="p1-t">Node</h3>
+      <span class="p-price">$99<span>/mo</span></span>
+      <ul class="p-list">
+        <li>100GB High-speed Storage</li>
+        <li>Basic AI Insights</li>
+        <li>Standard Support</li>
+      </ul>
+      <a href="#" class="p-btn">Select Node</a>
+    </div>
+    <div class="p-card featured rv d1">
+      <div class="p-label">RECOMMENDED</div>
+      <h3 id="p2-t">Cluster</h3>
+      <span class="p-price">$499<span>/mo</span></span>
+      <ul class="p-list">
+        <li>1TB Dedicated NVMe</li>
+        <li>Full AI Orchestration</li>
+        <li>Priority Edge Routing</li>
+        <li>24/7 Tech Lead Support</li>
+      </ul>
+      <a href="#" class="bb-c" style="width: 100%; display: block; text-align: center;">Go Pro</a>
+    </div>
+    <div class="p-card rv d2">
+      <h3 id="p3-t">Grid</h3>
+      <span class="p-price">Custom</span>
+      <ul class="p-list">
+        <li>Unlimited Expansion</li>
+        <li>On-premise Integration</li>
+        <li>Custom Security Layer</li>
+      </ul>
+      <a href="#" class="p-btn">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<div class="back-bar">
+  <a href="../../index.html" class="bb-b" id="bb-back">← Vissza</a>
+  <a href="../../index.html#quote" class="bb-c" id="bb-want">Ezt akarom →</a>
+</div>
+
+<script>
+// Language Logic
+const translations = {
+  hu: {
+    eyebrow: "Autonóm Intelligencia Réteg",
+    title: "ELITE<br><span>HÁLÓZAT.</span>",
+    desc: "Húzd meg az új határokat a skálázható adatfeldolgozásban. Automatizált rendszerek, amelyek tanulnak és veled együtt nőnek.",
+    btn: "Infrastruktúra felfedezése",
+    back: "← Vissza",
+    want: "Ezt akarom →",
+    cta: "INDÍTÁS"
+  },
+  en: {
+    eyebrow: "Autonomous Intelligence Layer",
+    title: "ELITE<br><span>NETWORK.</span>",
+    desc: "Push the boundaries of scalable data processing. Automated systems that learn and grow with you.",
+    btn: "Explore Infrastructure",
+    back: "← Back",
+    want: "Get Started →",
+    cta: "GET STARTED"
+  }
+};
+
+function syncLanguage() {
+  const savedLang = localStorage.getItem('limitlesser_lang') || 'hu';
+  const t = translations[savedLang];
+  document.getElementById('h-eyebrow').textContent = t.eyebrow;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('h-desc').textContent = t.desc;
+  document.getElementById('hero-btn').textContent = t.btn;
+  document.getElementById('bb-back').textContent = t.back;
+  document.getElementById('bb-want').textContent = t.want;
+  document.getElementById('nav-cta').textContent = t.cta;
+}
+
+// Three.js Background
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const geometry = new THREE.BufferGeometry();
+const vertices = [];
+for (let i = 0; i < 4000; i++) {
+  vertices.push(THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000));
+}
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+const particles = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x00f2ff, size: 2, transparent: true, opacity: 0.5 }));
+scene.add(particles);
+
+camera.position.z = 1000;
+let mx = 0, my = 0;
+document.addEventListener('mousemove', (e) => {
+  mx = (e.clientX - window.innerWidth / 2) / 200;
+  my = (e.clientY - window.innerHeight / 2) / 200;
+  const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+  particles.rotation.x += 0.0005 + (my * 0.01);
+  particles.rotation.y += 0.0005 + (mx * 0.01);
+  renderer.render(scene, camera);
+}
+animate();
+
+// UI Logic
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',window.scrollY>60));
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+function toggleMob(){
+  const m=document.getElementById('mob-menu'), t=document.getElementById('mob-toggle');
+  m.classList.toggle('open'); t.classList.toggle('open');
+}
+
+window.onload = syncLanguage;
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adatkezelési Tájékoztató | The Limitlesser</title>
+  <style>
+    :root { 
+      --bg: #050200; 
+      --white: #fff; 
+      --g1: #a1a1a1; 
+      --accent: #D97706; 
+      --font-d: 'Times New Roman', Times, serif;
+      --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-b); line-height: 1.8; padding: 10rem 2rem 5rem; max-width: 900px; margin: 0 auto; overflow-x: hidden; }
+    
+    /* Mouse Glow Effect */
+    #mouse-glow {
+      position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
+      background: radial-gradient(circle, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0.05) 30%, transparent 70%);
+      pointer-events: none; z-index: -1; transform: translate(-50%, -50%);
+      filter: blur(80px); opacity: 0; transition: opacity 1s ease;
+    }
+
+    h1 { font-family: var(--font-d); font-size: 42px; margin-bottom: 3rem; color: var(--accent); font-weight: 300; }
+    h2 { font-family: var(--font-d); font-size: 24px; margin: 3.5rem 0 1.5rem; color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; font-weight: 300; }
+    p, li { color: var(--g1); font-size: 16px; margin-bottom: 1.2rem; font-weight: 300; }
+    ul { margin-left: 1.5rem; margin-bottom: 2rem; }
+    .nav-back { position: fixed; top: 2.2rem; left: 5rem; color: var(--white); text-decoration: none; font-size: 11px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 22px; border-radius: 100px; background: rgba(0,0,0,0.5); backdrop-filter: blur(24px); z-index: 1000; letter-spacing: 2px; font-weight: 600; transition: 0.3s; }
+    .nav-back:hover { background: var(--white); color: #000; border-color: var(--white); transform: translateY(-2px); }
+    
+    @media (max-width: 768px) {
+      .nav-back { left: 2rem; top: 1.5rem; }
+      body { padding-top: 8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="mouse-glow"></div>
+  <a href="index.html" class="nav-back">← VISSZA A FŐOLDALRA</a>
+  
+  <h1>Adatkezelési Tájékoztató</h1>
+  
+  <p>A The Limitlesser (továbbiakban: Szolgáltató) elkötelezett a látogatók személyes adatainak védelme mellett. Jelen tájékoztató részletezi, hogyan kezeljük az Ön adatait.</p>
+
+  <h2>1. Gyűjtött adatok köre</h2>
+  <p>A weboldalon keresztül történő kapcsolatfelvétel során az alábbi adatokat kérhetjük be:</p>
+  <ul>
+    <li>Név (vagy cégnév)</li>
+    <li>E-mail cím</li>
+    <li>Üzenet tartalma</li>
+  </ul>
+
+
+  <p style="margin-top: 5rem; font-size: 12px; opacity: 0.5;">Utolsó frissítés: 2024. április 29.</p>
+</body>
+</html>

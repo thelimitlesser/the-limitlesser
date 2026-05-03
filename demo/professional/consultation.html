@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultation — V & ASSOCIATES</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #fdfdfd; --text: #1a1a1a; --accent: #1c2e4a; --gold: #b5a48b; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+
+.form-card { background: white; padding: 5rem; border-radius: 4px; box-shadow: 0 40px 100px rgba(0,0,0,0.03); max-width: 600px; width: 100%; border: 1px solid #eee; }
+h2 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; margin-bottom: 1rem; color: var(--accent); text-align: center; }
+.sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 4rem; }
+
+.group { margin-bottom: 2rem; }
+label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 0.8rem; }
+input, select, textarea { width: 100%; padding: 1.2rem; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 15px; background: #fafafa; transition: border-color 0.3s; }
+input:focus { outline: none; border-color: var(--accent); background: #fff; }
+
+.submit-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 1.5rem; font-family: inherit; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 2rem; }
+.submit-btn:hover { background: #000; }
+.back { display: block; text-align: center; margin-top: 2.5rem; text-decoration: none; color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+<div class="form-card">
+  <h2>Confidential Inquiry</h2>
+  <p class="sub">Please provide your details below. Our senior partner will contact you within 12 hours for a preliminary assessment.</p>
+  
+  <div class="group">
+    <label>Full Legal Name</label>
+    <input type="text" placeholder="John Vance">
+  </div>
+  
+  <div class="group">
+    <label>Organization</label>
+    <input type="text" placeholder="Global Systems Inc.">
+  </div>
+  
+  <div class="group">
+    <label>Practice Area</label>
+    <select>
+      <option>Corporate Strategy</option>
+      <option>Digital Assets & IP</option>
+      <option>Risk & Crisis Management</option>
+      <option>Other</option>
+    </select>
+  </div>
+  
+  <div class="group">
+    <label>Brief Briefing</label>
+    <textarea rows="4" placeholder="Briefly describe the context of your inquiry..."></textarea>
+  </div>
+  
+  <a href="success.html" style="text-decoration:none;"><button class="submit-btn" type="button">Submit Request</button></a>
+  <a href="index.html" class="back">← Cancel Request</a>
+</div>
+</body>
+</html>

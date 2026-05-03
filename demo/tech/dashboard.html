@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — QUANTUM</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root { --sidebar: #0a0a0a; --bg: #050505; --accent: #00f2ff; --text: #fff; --gray: #888; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+.sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid #1a1a1a; padding: 2rem; display: flex; flex-direction: column; }
+.s-logo { color: var(--accent); font-weight: 800; letter-spacing: 2px; margin-bottom: 4rem; text-decoration: none; display: block; }
+.s-links { list-style: none; padding: 0; margin: 0; flex: 1; }
+.s-links li { margin-bottom: 2rem; }
+.s-links a { color: var(--gray); text-decoration: none; font-size: 14px; transition: 0.3s; }
+.s-links a:hover, .s-links a.active { color: var(--white); }
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+header { height: 70px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; }
+.h-search { color: var(--gray); font-size: 13px; }
+.h-user { display: flex; align-items: center; gap: 1rem; }
+.u-avatar { width: 32px; height: 32px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+.content { flex: 1; padding: 3rem; overflow-y: auto; background: var(--bg); }
+.dash-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid #222; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+.back-btn { display: inline-block; margin-bottom: 2rem; color: var(--gray); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+.back-btn:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <a href="index.html" class="s-logo">QUANTUM</a>
+  <ul class="s-links">
+    <li><a href="#" class="active">Overview</a></li>
+    <li><a href="#">Real-time Analytics</a></li>
+    <li><a href="#">Nodes & Clusters</a></li>
+    <li><a href="#">Security Logs</a></li>
+    <li><a href="#">System Config</a></li>
+  </ul>
+  <div style="color: var(--gray); font-size: 10px; letter-spacing: 1px;">v2.4.0-Stable</div>
+</div>
+
+<div class="main">
+  <header>
+    <div class="h-search">Search system assets...</div>
+    <div class="h-user">
+      <span style="font-size: 13px;">Demo User</span>
+      <div class="u-avatar">JD</div>
+    </div>
+  </header>
+  
+  <div class="content">
+    <a href="index.html" class="back-btn">← Back to Portal</a>
+    <img src="assets/dashboard.png" class="dash-img">
+  </div>
+</div>
+</body>
+</html>

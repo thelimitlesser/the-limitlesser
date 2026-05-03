@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURALIS — Future of AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050608;
+      --blue: #00F0FF;
+      --purple: #7000FF;
+      --text: #ffffff;
+      --muted: #6b7280;
+      --border: rgba(0,240,255,0.1);
+      --font-h: 'Syne', sans-serif;
+      --font-m: 'JetBrains+Mono', monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body { background: var(--bg); color: var(--text); font-family: var(--font-h); overflow-x: hidden; cursor: none; }
+    
+    /* Cursor */
+    #cur{position:fixed;width:8px;height:8px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:all .3s;box-shadow:0 0 15px var(--blue)}
+    #cur-r{position:fixed;width:36px;height:36px;border:1px solid rgba(0,240,255,.2);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+    body.ch #cur{width:24px;height:24px;background:transparent;border:2px solid var(--blue);box-shadow:none}
+    body.ch #cur-r{width:60px;height:60px;border-color:var(--purple)}
+
+    /* Grid BG */
+    .grid-bg { position: fixed; inset: 0; background-image: radial-gradient(circle at 2px 2px, rgba(0,240,255,0.05) 1px, transparent 0); background-size: 40px 40px; z-index: -1; }
+    .glow { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(112,0,255,0.08) 0%, transparent 70%); top: -10%; left: -10%; z-index: -1; filter: blur(100px); }
+
+    /* Nav */
+    nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 2rem 5rem; z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-h); font-weight: 800; font-size: 22px; letter-spacing: -1px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .logo span { color: var(--blue); }
+    .n-btn { font-family: var(--font-m); font-size: 11px; letter-spacing: 1px; color: var(--blue); border: 1px solid var(--blue); padding: 0.6rem 1.4rem; border-radius: 4px; text-decoration: none; transition: 0.3s; }
+    .n-btn:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 20px rgba(0,240,255,0.4); }
+
+    /* Hero */
+    .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 5rem; }
+    .h-tag { font-family: var(--font-m); font-size: 11px; color: var(--purple); background: rgba(112,0,255,0.1); border: 1px solid rgba(112,0,255,0.2); padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 2rem; }
+    .h-title { font-size: clamp(48px, 10vw, 130px); font-weight: 800; line-height: 0.9; letter-spacing: -4px; margin-bottom: 2rem; text-transform: uppercase; }
+    .h-title em { font-style: normal; -webkit-text-stroke: 1px #fff; color: transparent; }
+    .h-desc { font-size: 18px; color: var(--muted); max-width: 600px; margin-bottom: 3.5rem; font-weight: 400; }
+
+    /* Tech Grid */
+    .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 5rem 10rem; }
+    .t-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 3rem; border-radius: 12px; transition: 0.4s; position: relative; overflow: hidden; }
+    .t-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--blue), var(--purple)); opacity: 0; transition: 0.4s; }
+    .t-card:hover { transform: translateY(-5px); background: rgba(0,240,255,0.03); }
+    .t-card:hover::before { opacity: 1; }
+    .t-card h3 { font-size: 20px; margin-bottom: 1rem; font-weight: 700; }
+    .t-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* Floating Bar */
+    .back-bar { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: rgba(5,6,8,0.9); backdrop-filter: blur(15px); padding: 0.8rem 1.2rem; border-radius: 12px; display: flex; gap: 1.5rem; z-index: 10000; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+    .bb-b { color: var(--muted); text-decoration: none; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-m); font-weight: 500; transition: color 0.3s; cursor: none; display: flex; align-items: center; padding: 0 1rem; }
+    .bb-b:hover { color: var(--blue); }
+    .bb-c { background: var(--blue); color: var(--bg); text-decoration: none; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-m); font-weight: 700; padding: 0.9rem 1.8rem; border-radius: 4px; transition: all 0.3s; cursor: none; box-shadow: 0 0 15px rgba(0,240,255,0.2); }
+    .bb-c:hover { background: #fff; color: var(--bg); transform: scale(1.05); box-shadow: 0 0 25px rgba(255,255,255,0.4); }
+
+    .rv { opacity: 0; transform: scale(0.95); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .rv.on { opacity: 1; transform: scale(1); }
+
+    @media (max-width: 900px) {
+      nav, .hero, .tech-grid { padding: 2rem; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .back-bar { width: calc(100% - 4rem); border-radius: 100px; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+
+  <nav>
+    <a href="#" class="logo">NEUR<span>ALIS</span></a>
+    <a href="#" class="n-btn">EXPLORE API</a>
+  </nav>
+
+  <section class="hero">
+    <span class="h-tag rv">v.2.0 Hybrid Intelligence</span>
+    <h1 class="h-title rv">Future of <em>Artificial</em> Intelligence</h1>
+    <p class="h-desc rv">Skálázható neurális hálózatok és prediktív algoritmusok a következő generációs digitális ökoszisztémákhoz.</p>
+  </section>
+
+  <div class="tech-grid">
+    <div class="t-card rv">
+      <h3>Neural Engine</h3>
+      <p>Nagy teljesítményű gépi tanulási modellek, amik valós időben alkalmazkodnak a piaci változásokhoz.</p>
+    </div>
+    <div class="t-card rv d1">
+      <h3>Quantum Logic</h3>
+      <p>Hibrid kvantumszámítási algoritmusok, amik a legkomplexebb adathalmazokat is másodpercek alatt elemzik.</p>
+    </div>
+    <div class="t-card rv d2">
+      <h3>Auto-Scale</h3>
+      <p>Felhő-alapú infrastruktúra, ami automatikusan skálázódik a terhelés függvényében.</p>
+    </div>
+  </div>
+
+  <div class="back-bar">
+    <a href="../index.html" class="bb-b">← Vissza</a>
+    <a href="../index.html#quote" class="bb-c">Ezt szeretném →</a>
+  </div>
+
+  <script src="../js/i18n.js"></script>
+  <script>
+    // Cursor
+    const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+    (function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+    });
+
+    // Reveal
+    const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.1});
+    document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapcsolat | The Limitlesser</title>
+  <style>
+    :root {
+      --bg: #050200;
+      --accent: #D97706;
+      --accent2: #FF8A00;
+      --white: #fff;
+      --g1: #888; --g2: #1a1a1a; --g3: #111;
+      --font-d: 'Times New Roman', Times, serif;
+      --font-h: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; }
+    
+    /* Mouse Glow Effect (Flashlight) */
+    #mouse-glow {
+      position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
+      background: radial-gradient(circle, rgba(217,119,6,0.15) 0%, rgba(217,119,6,0.05) 30%, transparent 70%);
+      pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+      filter: blur(80px); opacity: 0; transition: opacity 1s ease;
+    }
+
+    .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; }
+    .b1 { width: 600px; height: 600px; background: var(--accent); top: -10%; right: -5%; }
+
+    /* Nav */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
+    nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.4rem 5rem;border-bottom-color:rgba(217,119,6,0.15)}
+    .n-logo{text-decoration:none;color:var(--white);display: flex; flex-direction: column;}
+    .n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
+    .n-links{display:flex;gap:3rem;list-style:none}
+    .n-links a{font-family:var(--font-h);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
+    .n-links a:hover{color:var(--white)}
+    .n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
+    .n-btn:hover{background:#ccc;transform:translateY(-2px);}
+
+    /* Mobile Toggle */
+    .mob-toggle { display: none; background: none; border: none; cursor: none; flex-direction: column; gap: 5px; padding: 0.5rem; z-index: 1001; }
+    .mob-toggle span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+    .mob-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .mob-toggle.open span:nth-child(2) { opacity: 0; }
+    .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile Menu Overlay */
+    .mob-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050200; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-family: var(--font-d); font-size: 32px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+    .mob-menu a:hover { color: var(--accent); }
+    .mob-menu .n-btn { font-size: 14px; padding: 1.2rem 3rem; margin-top: 2rem; }
+
+    /* Contact Hero */
+    .contact-hero { padding: 18rem 5rem 6rem; text-align: center; }
+    .c-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
+    .c-title { font-family: var(--font-d); font-size: clamp(48px, 8vw, 96px); font-weight: 300; line-height: 1.1; max-width: 1000px; margin: 0 auto; letter-spacing: -2px; }
+
+    /* Contact Grid */
+    .contact-container { max-width: 1300px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8rem; }
+    
+    .c-info-side h2 { font-family: var(--font-d); font-size: 32px; margin-bottom: 3rem; font-weight: 300; color: var(--white); }
+    .c-details { display: grid; gap: 3rem; }
+    .cd-item h4 { font-family: var(--font-h); font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 1rem; }
+    .cd-item p, .cd-item a { font-size: 18px; color: var(--white); text-decoration: none; display: block; font-weight: 300; transition: 0.3s; }
+    .cd-item a:hover { color: var(--accent); }
+
+    /* Form Side */
+    .c-form-side { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 5rem; border-radius: 40px; }
+    .q-form { display: grid; gap: 2rem; }
+    .form-group { position: relative; }
+    .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 0.8rem; font-weight: 700; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 1.2rem 1.5rem; color: #fff; font-family: var(--font-b); font-size: 15px; transition: 0.3s; outline: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); background: rgba(217,119,6,0.05); }
+    .q-btn { background: var(--accent); color: #fff; border: none; padding: 1.5rem 3rem; border-radius: 100px; font-family: var(--font-h); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
+    .q-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(217,119,6,0.3); }
+
+    /* Footer */
+    footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .f-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; }
+    .f-brand .logo-ll { font-size: 20px; margin-bottom: 2rem; display: block; letter-spacing: 4px; font-family: var(--font-d); }
+    .f-brand p { font-size: 14px; color: #888; line-height: 1.8; max-width: 280px; }
+    .f-col h4 { font-family: var(--font-h); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 2rem; font-weight: 700; }
+    .f-col ul { list-style: none; }
+    .f-col ul li { margin-bottom: 1rem; }
+    .f-col ul li a { color: #888; font-size: 14px; text-decoration: none; transition: 0.3s; }
+    .f-col ul li a:hover { color: var(--accent); padding-left: 5px; }
+    .f-bottom { max-width: 1300px; margin: 6rem auto 0; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+    .f-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .f-legal { display: flex; gap: 2rem; }
+    .f-legal a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; }
+
+    /* Reveal */
+    .rv { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .rv.on { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1000px) {
+      .contact-container { grid-template-columns: 1fr; gap: 4rem; padding: 4rem 2rem; }
+      nav { padding: 1.5rem 2rem; }
+      .n-links { display: none; }
+      .n-btn { display: none; }
+      .mob-toggle { display: flex; }
+      .contact-hero { padding: 12rem 2rem 4rem; }
+      .c-form-side { padding: 3rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mesh-bg">
+    <div class="mesh-ball b1"></div>
+  </div>
+  <div id="mouse-glow" style="z-index: -1;"></div>
+
+  <nav id="nav">
+    <a href="index.html" class="n-logo">
+      <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
+    </a>
+    <div class="n-links">
+      <a href="index.html#hero">Kezdőlap</a>
+      <a href="about.html">Rólunk</a>
+      <a href="services.html">Szolgáltatások</a>
+      <a href="index.html#portfolio">Munkáink</a>
+      <a href="contact.html">Kapcsolat</a>
+    </div>
+    <a href="contact.html" class="n-btn">Kezdjük el</a>
+    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mob-menu" id="mob-menu">
+    <a href="index.html#hero" onclick="toggleMob()">Kezdőlap</a>
+    <a href="about.html" onclick="toggleMob()">Rólunk</a>
+    <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
+    <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
+    <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
+    <a href="contact.html" class="n-btn" onclick="toggleMob()">Kezdjük el</a>
+  </div>
+
+  <div style="max-width: 1300px; margin: 0 auto; padding: 12rem 2rem 0;">
+    <div style="font-family: var(--font-h); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--g1); margin-bottom: 4rem;">
+      <a href="index.html" style="color: var(--g1); text-decoration: none;">Kezdőlap</a> <span style="margin: 0 10px; opacity: 0.5;">/</span> <span style="color: var(--white);">Kapcsolat</span>
+    </div>
+
+    <div class="contact-container" style="padding-top: 0;">
+      <!-- Left Side -->
+      <div class="c-info-side rv">
+        <h1 class="c-title" style="margin-bottom: 2rem; font-size: clamp(32px, 5vw, 64px); text-align: left;">Vedd fel velünk a kapcsolatot!</h1>
+        <p style="font-size: 18px; color: var(--g1); line-height: 1.7; margin-bottom: 4rem; max-width: 550px;">Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 450px;">
+          <!-- Email Card -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
+            <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">@</div>
+            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
+            <a href="mailto:hello@thelimitlesser.hu" style="font-family: var(--font-h); font-size: 16px; color: var(--white); text-decoration: none; font-weight: 600;">hello@thelimitlesser.hu</a>
+          </div>
+          <!-- Phone Card -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
+            <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
+            <p style="font-family: var(--font-h); font-size: 16px; color: var(--white); font-weight: 600;">+36 (70) 577 0722</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side (Form) -->
+      <div class="c-form-side rv">
+        <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;">Árajánlat kérelem</h2>
+        <p style="font-size: 14px; color: var(--g1); margin-bottom: 2rem;">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
+        <p style="font-size: 12px; color: var(--accent); margin-bottom: 3rem;">• Jelzésű mezők kitöltése kötelező!</p>
+        
+        <form class="q-form">
+          <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Személyes adatok megadása</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label>Vezetéknév <span style="color: var(--accent);">•</span></label>
+              <input type="text" placeholder="Vezetéknév">
+            </div>
+            <div class="form-group">
+              <label>Keresztnév <span style="color: var(--accent);">•</span></label>
+              <input type="text" placeholder="Keresztnév">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>E-mail cím <span style="color: var(--accent);">•</span></label>
+            <input type="email" placeholder="pelda@email.hu">
+          </div>
+          <div class="form-group">
+            <label>Telefonszám <span style="color: var(--accent);">•</span></label>
+            <input type="tel" placeholder="+36 30 123 4567">
+          </div>
+          
+          <div style="display: grid; gap: 1.5rem; margin-top: 1rem;">
+            <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
+              <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
+              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;">A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href="privacy.html" style="color: var(--white); text-decoration: underline;">Adatvédelmi Nyilatkozat</a>-ban foglaltakat és annak feltételeit.</span>
+            </label>
+            <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
+              <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
+              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;">Hozzájárulok, hogy a The Limitlesser a jövőben e-mailben megkereséseket küldjön számomra.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="q-btn" style="width: 100%; margin-top: 2rem;">Árajánlat kérése →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="f-container rv">
+      <div class="f-brand">
+        <div class="logo-ll">LIMIT<span style="color:var(--accent)">LESSER</span></div>
+        <p>A vállalkozásod teljes potenciálját hozzuk felszínre egyedi digitális megoldásokkal.</p>
+      </div>
+      <div class="f-col">
+        <h4>Navigáció</h4>
+        <ul>
+          <li><a href="index.html">Kezdőlap</a></li>
+          <li><a href="about.html">Rólunk</a></li>
+          <li><a href="services.html">Szolgáltatások</a></li>
+          <li><a href="contact.html">Kapcsolat</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Linkek</h4>
+        <ul>
+          <li><a href="aszf.html">ÁSZF</a></li>
+          <li><a href="privacy.html">Adatkezelés</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
+    </div>
+  </footer>
+
+  <script>
+    const mg = document.getElementById('mouse-glow');
+    document.addEventListener('mousemove', e => {
+      if(mg) {
+        mg.style.left = e.clientX + 'px';
+        mg.style.top = e.clientY + 'px';
+        mg.style.opacity = '1';
+      }
+    });
+
+    const nav=document.getElementById('nav');
+    window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>60));
+
+    // Mobile Menu Toggle
+    function toggleMob() {
+      const btn = document.getElementById('mob-toggle');
+      const menu = document.getElementById('mob-menu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.classList.toggle('loading'); // Disable scroll
+    }
+
+    const revObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
+    },{threshold:.1});
+    document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
+  </script>
+</body>
+</html>

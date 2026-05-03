@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORTIS — Generálkivitelező</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bp:#0A1628;--bp2:#0D1F3C;--bp-line:rgba(60,130,220,.12);--bp-line2:rgba(60,130,220,.06);
+  --white:#F0F4FA;--amber:#E8943A;--amber2:rgba(232,148,58,.15);--cyan:#4FC3F7;
+  --muted:rgba(240,244,250,.35);--muted2:rgba(240,244,250,.55);
+  --font-h:'Syne',sans-serif;--font-m:'Space Mono',monospace;--font-b:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bp);color:var(--white);font-family:var(--font-b);overflow-x:hidden}
+
+/* Blueprint grid overlay - global */
+.bp-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(var(--bp-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bp-line) 1px,transparent 1px),
+    linear-gradient(var(--bp-line2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bp-line2) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px;
+}
+
+/* Preloader */
+#preloader{position:fixed;inset:0;background:var(--bp);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
+#preloader.hidden{opacity:0;visibility:hidden}
+.pl-crosshair{width:60px;height:60px;position:relative;margin-bottom:2rem}
+.pl-crosshair::before,.pl-crosshair::after{content:'';position:absolute;background:var(--amber)}
+.pl-crosshair::before{width:1px;height:100%;left:50%;top:0;animation:pl-grow .6s .2s ease forwards;transform:scaleY(0)}
+.pl-crosshair::after{width:100%;height:1px;top:50%;left:0;animation:pl-grow .6s .4s ease forwards;transform:scaleX(0)}
+@keyframes pl-grow{to{transform:scale(1)}}
+.pl-text{font-family:var(--font-m);font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--amber);opacity:0;animation:plf .5s .6s ease forwards}
+@keyframes plf{to{opacity:1}}
+.pl-coords{font-family:var(--font-m);font-size:10px;color:var(--muted);margin-top:1rem;opacity:0;animation:plf .5s .8s ease forwards;letter-spacing:2px}
+
+.demo-badge {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: var(--amber);
+    color: var(--bp);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    z-index: 99999;
+    font-weight: 800;
+    font-family: var(--font-m);
+}
+
+/* UNIQUE BOTTOM BAR */
+.unique-bottom-bar {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9998;
+}
+.ubb-pill {
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.6rem;
+    border-radius: 100px;
+    display: flex;
+    gap: 0.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+.ubb-btn {
+    padding: 0.8rem 1.8rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-family: var(--font-h);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+.b-vissza {
+    color: var(--white);
+    background: transparent;
+}
+.b-vissza:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+.b-akarom {
+    background: var(--amber);
+    color: var(--bp);
+}
+.b-akarom:hover {
+    background: var(--white);
+    transform: scale(1.05);
+}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;background:rgba(10,22,40,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bp-line);transition:padding .4s}
+nav.compact{padding:1rem 4rem}
+.n-logo{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+.n-mark{font-family:var(--font-m);font-size:20px;font-weight:700;color:var(--amber);border:1.5px solid var(--amber);width:38px;height:38px;display:flex;align-items:center;justify-content:center;position:relative}
+.n-mark::after{content:'';position:absolute;bottom:-3px;right:-3px;width:8px;height:8px;background:var(--amber)}
+.n-text{display:flex;flex-direction:column}
+.n-name{font-family:var(--font-h);font-size:14px;font-weight:800;letter-spacing:4px;color:var(--white);text-transform:uppercase;line-height:1.1}
+.n-sub{font-family:var(--font-m);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.n-links{display:flex;gap:2.5rem;list-style:none}
+.n-links a{font-family:var(--font-m);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.n-links a:hover{color:var(--amber)}
+
+.lang-switch {
+    background: transparent;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    font-family: var(--font-m);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+.lang-switch:hover {
+    background: var(--amber);
+    color: var(--bp);
+}
+
+.mob-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:.4rem}
+.mob-toggle span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .35s}
+.mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.mob-toggle.open span:nth-child(2){opacity:0}
+.mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mob-menu{position:fixed;inset:0;background:var(--bp);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .45s ease}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu a{font-family:var(--font-h);font-size:28px;font-weight:700;color:var(--white);text-decoration:none;text-transform:uppercase;letter-spacing:3px}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem;position:relative;z-index:1}
+.hero-coords{font-family:var(--font-m);font-size:10px;letter-spacing:4px;color:var(--muted);margin-bottom:3rem;display:block}
+.hero-title{font-family:var(--font-h);font-size:clamp(40px, 8.5vw, 115px);font-weight:800;line-height:.88;letter-spacing:-4px;margin-bottom:1.5rem;text-transform:uppercase;position:relative;width: 100%;max-width: 1400px;}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1.5px rgba(240,244,250,.2);display:block}
+.hero-title .solid{display:block;color:var(--white)}
+.hero-title .accent{color:var(--amber);-webkit-text-stroke:0}
+.hero-tagline{font-family:var(--font-m);font-size:13px;letter-spacing:3px;color:var(--muted2);margin-bottom:4rem;max-width:560px;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:5rem}
+
+.btn-amber {
+    background: var(--amber);
+    color: var(--bp);
+    font-family: var(--font-m);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 700;
+    transition: all 0.3s;
+    border-radius: 100px;
+}
+.btn-amber:hover {
+    background: var(--white);
+    transform: translateY(-3px);
+}
+.btn-bp {
+    background: transparent;
+    color: var(--white);
+    font-family: var(--font-m);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border: 1px solid rgba(240, 244, 250, 0.3);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    border-radius: 100px;
+}
+.btn-bp:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    transform: translateY(-3px);
+}
+
+.hero-ticker{display:flex;gap:0;border:1px solid var(--bp-line);max-width:700px;width:100%}
+.ht-item{flex:1;padding:1.4rem 1rem;border-right:1px solid var(--bp-line);text-align:center;position:relative;transition:background .3s}
+.ht-item:last-child{border-right:none}
+.ht-num{font-family:var(--font-h);font-size:clamp(26px,3.5vw,40px);font-weight:800;color:var(--white);display:block;line-height:1;letter-spacing:-1px}
+.ht-num span{color:var(--amber)}
+.ht-label{font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:.4rem;display:block}
+
+/* SCROLL BUILD SECTION */
+#build{position:relative;z-index:1;padding:6rem 0}
+.build-header{text-align:center;padding:0 4rem 4rem}
+.build-header .sec-tag{font-family:var(--font-m);font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:1rem}
+.build-header .sec-title{font-family:var(--font-h);font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-1.5px;margin-bottom:1rem}
+.build-container{display:flex;gap:0;min-height:500px;position:relative;border-top:1px solid var(--bp-line);border-bottom:1px solid var(--bp-line)}
+.build-visual{flex:1;display:flex;align-items:center;justify-content:center;padding:4rem;border-right:1px solid var(--bp-line);position:sticky;top:80px;height:calc(100vh - 80px)}
+#building-svg{max-width:400px;width:100%}
+.bldg-layer{opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}
+.bldg-layer.visible{opacity:1;transform:translateY(0)}
+.build-phases{flex:1;display:flex;flex-direction:column}
+.build-phase{padding:4rem;border-bottom:1px solid var(--bp-line);min-height:50vh;display:flex;flex-direction:column;justify-content:center;position:relative;transition:background .4s}
+.build-phase.active{background:rgba(232,148,58,.03)}
+.build-phase::before{content:attr(data-num);font-family:var(--font-m);font-size:80px;font-weight:700;color:rgba(60,130,220,.06);position:absolute;top:2rem;right:2rem;line-height:1}
+.bp-tag{font-family:var(--font-m);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:1.5rem}
+.bp-title{font-family:var(--font-h);font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-1px;margin-bottom:1.2rem;line-height:1.1}
+.bp-desc{font-size:15px;line-height:1.8;color:var(--muted2);max-width:460px;margin-bottom:2rem}
+.bp-specs{display:flex;gap:2rem;flex-wrap:wrap}
+.bp-spec{display:flex;flex-direction:column;gap:.2rem}
+.bp-spec-val{font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--white);letter-spacing:-1px}
+.bp-spec-val span{color:var(--amber)}
+.bp-spec-lbl{font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* HORIZONTAL PROJECTS */
+#projects{position:relative;z-index:1;padding:6rem 0 0;overflow:hidden}
+.proj-header{padding:0 4rem 3rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.proj-header .sec-tag{font-family:var(--font-m);font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:.8rem}
+.proj-header .sec-title{font-family:var(--font-h);font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-1.5px}
+.proj-scroll-hint{font-family:var(--font-m);font-size:10px;letter-spacing:2px;color:var(--muted);display:flex;align-items:center;gap:.8rem}
+.psh-arrow{width:30px;height:1px;background:var(--amber);position:relative}
+.psh-arrow::after{content:'';position:absolute;right:0;top:-3px;border:3px solid transparent;border-left:5px solid var(--amber)}
+.proj-track-wrap{overflow-x:auto;overflow-y:hidden;cursor:grab;padding-bottom:3rem;scrollbar-width:none;-ms-overflow-style:none}
+.proj-track{display:flex;gap:1.5rem;padding:0 4rem;width:max-content}
+.proj-card{width:420px;flex-shrink:0;border:1px solid var(--bp-line);background:rgba(13,31,60,.6);backdrop-filter:blur(8px);position:relative;overflow:hidden;transition:all .5s;cursor:pointer;border-radius:12px}
+.proj-card:hover{border-color:rgba(232,148,58,.4);background:rgba(232,148,58,.04)}
+.pc-visual{height:260px;overflow:hidden;position:relative;border-bottom:1px solid var(--bp-line)}
+.pc-img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.16, 1, 0.3, 1)}
+.proj-card:hover .pc-img{transform:scale(1.1)}
+.pc-badge{position:absolute;top:1rem;left:1rem;font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;background:var(--amber);color:var(--bp);padding:.2rem .6rem;font-weight:700;border-radius:2px}
+.pc-coords{position:absolute;top:1rem;right:1rem;font-family:var(--font-m);font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.7);z-index:2;background:rgba(0,0,0,0.3);padding:2px 5px;border-radius:2px}
+.pc-crosshair{position:absolute;inset:0;pointer-events:none;opacity:.15;z-index:1}
+.pc-crosshair::before{content:'';position:absolute;width:1px;height:100%;left:50%;background:var(--cyan)}
+.pc-crosshair::after{content:'';position:absolute;height:1px;width:100%;top:50%;background:var(--cyan)}
+.pc-info{padding:1.5rem}
+.pc-cat{font-family:var(--font-m);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:.5rem}
+.pc-name{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--white);letter-spacing:-.5px;margin-bottom:.8rem}
+.pc-meta{display:flex;gap:1.5rem;font-family:var(--font-m);font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:1rem;flex-wrap:wrap}
+.pc-bar{height:2px;background:rgba(240,244,250,.06);overflow:hidden}
+.pc-bar-fill{height:100%;background:linear-gradient(to right,var(--amber),var(--cyan));width:0;transition:width 1s ease}
+.proj-card:hover .pc-bar-fill{width:100%}
+
+/* NUMBERS */
+#numbers{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--bp-line)}
+.num-item{padding:4rem 2.5rem;border-right:1px solid var(--bp-line);text-align:center;position:relative;overflow:hidden;transition:background .3s}
+.num-item:last-child{border-right:none}
+.ni-val{font-family:var(--font-h);font-size:clamp(42px,5vw,72px);font-weight:800;color:var(--white);display:block;line-height:1;letter-spacing:-2px}
+.ni-val span{color:var(--amber)}
+.ni-label{font-family:var(--font-m);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:block;margin-top:.6rem}
+
+/* CONTACT */
+#contact{position:relative;z-index:1;border-top:1px solid var(--bp-line);display:grid;grid-template-columns:1fr 1fr}
+.ct-left{padding:6rem 4rem;border-right:1px solid var(--bp-line)}
+.ct-tag{font-family:var(--font-m);font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:1.5rem}
+.ct-title{font-family:var(--font-h);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-2px;margin-bottom:1.5rem;line-height:1}
+.ct-title span{color:var(--amber)}
+.ct-desc{font-size:15px;line-height:1.8;color:var(--muted2);margin-bottom:3rem;max-width:400px}
+.ct-info{display:flex;flex-direction:column;gap:1.5rem}
+.ci{display:flex;flex-direction:column;gap:.2rem}
+.ci-label{font-family:var(--font-m);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber)}
+.ci-val{font-size:15px;color:var(--white)}
+.ct-right{padding:6rem 4rem}
+.cf-label{font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;display:block}
+.cf-input{background:rgba(240,244,250,.04);border:1px solid var(--bp-line);padding:.85rem 1rem;font-size:14px;color:var(--white);font-family:var(--font-b);outline:none;transition:border-color .3s;width:100%;margin-bottom:1rem;border-radius:6px}
+.cf-input:focus{border-color:var(--amber)}
+.cf-sel{appearance:none;background:rgba(240,244,250,.04) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,244,250,0.3)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right .9rem center;border:1px solid var(--bp-line);padding:.85rem 2.3rem .85rem 1rem;font-size:14px;color:var(--muted2);font-family:var(--font-b);outline:none;width:100%;cursor:pointer;margin-bottom:1rem;border-radius:6px}
+.cf-submit{width:100%;background:var(--amber);color:var(--bp);border:none;padding:1.1rem;font-family:var(--font-m);font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .3s;margin-top:.5rem;border-radius:100px}
+.cf-submit:hover{background:var(--white);transform:translateY(-3px)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--bp-line);padding:3rem 4rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-bottom:8rem}
+.ft-logo{font-family:var(--font-h);font-size:16px;font-weight:800;letter-spacing:4px;text-transform:uppercase}
+.ft-logo span{color:var(--amber)}
+.ft-links{display:flex;gap:2rem}
+.ft-links a{font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.ft-copy{font-family:var(--font-m);font-size:9px;letter-spacing:1px;color:rgba(240,244,250,.15)}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .9s,transform .9s}.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+@media(max-width:900px){
+  nav{padding:1.1rem 2rem}.n-links,.n-cta{display:none}.mob-toggle{display:flex}
+  .build-container{flex-direction:column}.build-visual{position:relative;top:auto;height:auto;min-height:300px;border-right:none;border-bottom:1px solid var(--bp-line)}
+  .proj-card{width:320px}
+  #numbers{grid-template-columns:1fr 1fr}
+  #contact{grid-template-columns:1fr}
+  .hero-title{font-size:clamp(36px,10vw,70px);line-height: 1.1;letter-spacing: -2px;}
+}
+</style>
+</head>
+<body>
+<div class="bp-grid"></div>
+
+<div id="preloader">
+  <div class="pl-crosshair"></div>
+  <span class="pl-text">FORTIS_INIT</span>
+  <span class="pl-coords">47.4979° N, 19.0402° E</span>
+</div>
+
+<div class="demo-badge">Demo</div>
+
+<div class="unique-bottom-bar">
+    <div class="ubb-pill">
+        <a href="../../index.html" class="ubb-btn b-vissza" data-i18n="btn_vissza">← VISSZA</a>
+        <a href="../../index.html#cta" class="ubb-btn b-akarom" data-i18n="btn_akarom">EZT SZERETNÉM →</a>
+    </div>
+</div>
+
+<div class="mob-menu" id="mob-menu">
+  <a href="#build" onclick="closeMob()" data-i18n="nav_build">Építés</a>
+  <a href="#projects" onclick="closeMob()" data-i18n="nav_projects">Projektek</a>
+  <a href="#contact" onclick="closeMob()" data-i18n="nav_contact">Kapcsolat</a>
+</div>
+
+<nav id="mnav">
+  <a href="#" class="n-logo" onclick="window.scrollTo(0,0);return false">
+    <div class="n-mark">F</div>
+    <div class="n-text"><span class="n-name">FORTIS</span><span class="n-sub" data-i18n="nav_sub">GEN.KIVITELEZŐ // 2005</span></div>
+  </a>
+  <ul class="n-links">
+    <li><a href="#build" data-i18n="nav_build">Építés</a></li>
+    <li><a href="#projects" data-i18n="nav_projects">Projektek</a></li>
+    <li><a href="#numbers" data-i18n="nav_stats">Adatok</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Kapcsolat</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <button class="lang-switch" id="langBtn" onclick="toggleLang()">EN</button>
+    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <span class="hero-coords rv">47.4979° N · 19.0402° E · BUDAPEST</span>
+  <h1 class="hero-title rv d1">
+    <span class="outline" data-i18n="hero_t1">Nem csak</span>
+    <span class="solid"><span data-i18n="hero_t2">építünk</span><span class="accent">.</span></span>
+    <span class="outline"><span data-i18n="hero_t3">Bizonyítunk</span><span class="accent">.</span></span>
+  </h1>
+  <p class="hero-tagline rv d2" data-i18n="hero_sub">Generálkivitelezés_a_tervezéstől_a_kulcsátadásig. 320+ projekt. 20 év. 98% határidő-tartás.</p>
+  <div class="hero-btns rv d3">
+    <a href="#contact" class="btn-amber" data-i18n="hero_btn1">Árajánlat kérése</a>
+    <a href="#projects" class="btn-bp" data-i18n="hero_btn2">Projektek →</a>
+  </div>
+  <div class="hero-ticker rv d3">
+    <div class="ht-item"><span class="ht-num" data-target="320"><span>0</span><span>+</span></span><span class="ht-label" data-i18n="stat_projects">ÁTADOTT PROJEKT</span></div>
+    <div class="ht-item"><span class="ht-num" data-target="20"><span>0</span><span>+</span></span><span class="ht-label" data-i18n="stat_years">ÉV TAPASZTALAT</span></div>
+    <div class="ht-item"><span class="ht-num" data-target="98"><span>0</span><span>%</span></span><span class="ht-label" data-i18n="stat_deadline">HATÁRIDŐ</span></div>
+    <div class="ht-item"><span class="ht-num" data-target="48"><span>0</span><span>h</span></span><span class="ht-label" data-i18n="stat_response">VÁLASZIDŐ</span></div>
+  </div>
+</section>
+
+<!-- ═══ SCROLL BUILD ═══ -->
+<section id="build">
+  <div class="build-header rv"><span class="sec-tag">BUILD_SEQUENCE</span><h2 class="sec-title"><span data-i18n="build_t1">Ahogy egy épület</span> <span style="color:var(--amber)" data-i18n="build_t2">megszületik</span></h2></div>
+  <div class="build-container">
+    <div class="build-visual">
+      <svg id="building-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="460" x2="360" y2="460" stroke="rgba(232,148,58,.3)" stroke-width="1"/>
+        <g class="bldg-layer" id="bl-0">
+          <rect x="80" y="430" width="240" height="30" fill="none" stroke="rgba(60,130,220,.4)" stroke-width="1" stroke-dasharray="4,2"/>
+          <rect x="90" y="435" width="220" height="20" fill="rgba(232,148,58,.08)" stroke="rgba(232,148,58,.3)" stroke-width="1"/>
+          <text x="200" y="448" text-anchor="middle" font-family="Space Mono" font-size="8" fill="rgba(232,148,58,.6)" data-i18n-svg="svg_found">ALAPOZÁS</text>
+        </g>
+        <g class="bldg-layer" id="bl-1">
+          <rect x="90" y="280" width="220" height="150" fill="none" stroke="rgba(60,130,220,.3)" stroke-width="1" stroke-dasharray="4,2"/>
+          <line x1="90" y1="280" x2="90" y2="430" stroke="rgba(240,244,250,.25)" stroke-width="2"/>
+          <line x1="310" y1="280" x2="310" y2="430" stroke="rgba(240,244,250,.25)" stroke-width="2"/>
+        </g>
+        <g class="bldg-layer" id="bl-2">
+          <polygon points="70,280 200,180 330,280" fill="none" stroke="rgba(240,244,250,.25)" stroke-width="2"/>
+        </g>
+        <g class="bldg-layer" id="bl-3">
+          <rect x="140" y="395" width="50" height="35" fill="rgba(232,148,58,.08)" stroke="rgba(232,148,58,.4)" stroke-width="1"/>
+          <text x="200" y="490" text-anchor="middle" font-family="Space Mono" font-size="9" fill="rgba(232,148,58,.4)">FORTIS_BUILD_COMPLETE</text>
+        </g>
+      </svg>
+    </div>
+    <div class="build-phases">
+      <div class="build-phase active" data-num="01" data-layer="0" id="phase-0">
+        <span class="bp-tag" data-i18n="p1_tag">Fázis_01 // Alapozás</span>
+        <h3 class="bp-title" data-i18n="p1_title">Az alap mindent meghatároz</h3>
+        <p class="bp-desc" data-i18n="p1_desc">Talajmechanikai vizsgálat, tereprendezés, vízszigetelés és monolit vasbeton alaplemez.</p>
+      </div>
+      <div class="build-phase" data-num="02" data-layer="1" id="phase-1">
+        <span class="bp-tag" data-i18n="p2_tag">Fázis_02 // Szerkezet</span>
+        <h3 class="bp-title" data-i18n="p2_title">Falak, födémek, nyílászárók</h3>
+        <p class="bp-desc" data-i18n="p2_desc">Teherhordó falazat, vasbeton födém, tetőszerkezet felépítése.</p>
+      </div>
+      <div class="build-phase" data-num="03" data-layer="2" id="phase-2">
+        <span class="bp-tag" data-i18n="p3_tag">Fázis_03 // Tető & Burkolat</span>
+        <h3 class="bp-title" data-i18n="p3_title">A szerkezet lezárul</h3>
+        <p class="bp-desc" data-i18n="p3_desc">Tetőfedés, homlokzati hőszigetelés, külső burkolás.</p>
+      </div>
+      <div class="build-phase" data-num="04" data-layer="3" id="phase-3">
+        <span class="bp-tag" data-i18n="p4_tag">Fázis_04 // Belső & Átadás</span>
+        <h3 class="bp-title" data-i18n="p4_title">Kulcsrakész állapot</h3>
+        <p class="bp-desc" data-i18n="p4_desc">Belső gépészet, villanyszerelés, burkolás, festés, műszaki átadás.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HORIZONTAL PROJECTS ═══ -->
+<section id="projects">
+  <div class="proj-header rv">
+    <div><span class="sec-tag">REF_DATABASE</span><h2 class="sec-title"><span data-i18n="gal_t1">Válogatott</span> <span style="color:var(--amber)" data-i18n="gal_t2">projektek</span></h2></div>
+    <div class="proj-scroll-hint"><span data-i18n="gal_hint">Húzd oldalra</span> <div class="psh-arrow"></div></div>
+  </div>
+  <div class="proj-track-wrap" id="proj-track-wrap">
+    <div class="proj-track" id="proj-track"></div>
+  </div>
+</section>
+
+<!-- ═══ NUMBERS ═══ -->
+<section id="numbers">
+  <div class="num-item rv"><span class="ni-val" data-target="320"><span>0</span><span>+</span></span><span class="ni-label" data-i18n="stat_projects">ÁTADOTT PROJEKT</span></div>
+  <div class="num-item rv d1"><span class="ni-val" data-target="46000"><span>0</span><span> m²</span></span><span class="ni-label" data-i18n="stat_area">BEÉPÍTETT TERÜLET</span></div>
+  <div class="num-item rv d2"><span class="ni-val" data-target="98"><span>0</span><span>%</span></span><span class="ni-label" data-i18n="stat_deadline">HATÁRIDŐ-TARTÁS</span></div>
+  <div class="num-item rv d3"><span class="ni-val" data-target="5"><span>0</span><span> év</span></span><span class="ni-label" data-i18n="stat_warranty">GARANCIA</span></div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="ct-left rv">
+    <span class="ct-tag">CONTACT_INIT</span>
+    <h2 class="ct-title" data-i18n="con_title">Építsünk együtt.</h2>
+    <p class="ct-desc" data-i18n="con_sub">Ingyenes helyszíni felmérés és tételes árajánlat — 48 órán belül.</p>
+    <div class="ct-info">
+      <div class="ci"><span class="ci-label" data-i18n="con_loc">TELEPHELY</span><span class="ci-val">1134 Budapest, Váci út 45.</span></div>
+      <div class="ci"><span class="ci-label" data-i18n="con_tel">TELEFON</span><span class="ci-val">+36 1 234 5678</span></div>
+      <div class="ci"><span class="ci-label">EMAIL</span><span class="ci-val">info@fortis.hu</span></div>
+    </div>
+  </div>
+  <div class="ct-right rv d2">
+    <form id="ct-form" onsubmit="submitForm(event)">
+      <div class="cf-grid">
+        <div><label class="cf-label" data-i18n="con_name">NÉV</label><input class="cf-input" type="text" placeholder="Kovács Péter" required></div>
+        <div><label class="cf-label" data-i18n="con_phone">TELEFON</label><input class="cf-input" type="tel" placeholder="+36 30 123 4567" required></div>
+      </div>
+      <label class="cf-label">EMAIL</label><input class="cf-input" type="email" placeholder="peter@email.hu">
+      <label class="cf-label" data-i18n="con_type">PROJEKT TÍPUS</label>
+      <select class="cf-sel" id="conType">
+        <option data-hu="Családi ház / Villa" data-en="Family House / Villa">Családi ház / Villa</option>
+        <option data-hu="Irodaépület" data-en="Office Building">Irodaépület</option>
+        <option data-hu="Lakópark" data-en="Residential Complex">Lakópark</option>
+        <option data-hu="Hotel" data-en="Hotel">Hotel</option>
+        <option data-hu="Felújítás" data-en="Renovation">Felújítás</option>
+      </select>
+      <button type="submit" class="cf-submit" data-i18n="con_btn">ÁRAJÁNLAT_KÉRÉSE →</button>
+    </form>
+    <div class="form-ok" id="form-ok"><span class="fok-ico">⬡</span><div class="fok-title">FOGADVA_</div><p class="fok-sub" data-i18n="con_ok">48 órán belül visszahívjuk.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-logo">FOR<span>TIS</span></div>
+  <div class="ft-links"><a href="#build" data-i18n="nav_build">Építés</a><a href="#projects" data-i18n="nav_projects">Projektek</a><a href="#contact" data-i18n="nav_contact">Kapcsolat</a></div>
+  <span class="ft-copy">© 2025 FORTIS Kft. · Demo — The Limitlesser</span>
+</footer>
+
+<script>
+const i18n = {
+  hu: {
+    btn_vissza: "← VISSZA",
+    btn_akarom: "EZT SZERETNÉM →",
+    nav_build: "Építés",
+    nav_projects: "Projektek",
+    nav_stats: "Adatok",
+    nav_contact: "Kapcsolat",
+    nav_sub: "GEN.KIVITELEZŐ // 2005",
+    hero_t1: "Nem csak",
+    hero_t2: "építünk",
+    hero_t3: "Bizonyítunk",
+    hero_sub: "Generálkivitelezés_a_tervezéstől_a_kulcsátadásig. 320+ projekt. 20 év. 98% határidő-tartás.",
+    hero_btn1: "Árajánlat kérése",
+    hero_btn2: "Projektek →",
+    stat_projects: "ÁTADOTT PROJEKT",
+    stat_years: "ÉV TAPASZTALAT",
+    stat_deadline: "HATÁRIDŐ",
+    stat_response: "VÁLASZIDŐ",
+    stat_area: "BEÉPÍTETT TERÜLET",
+    stat_warranty: "GARANCIA",
+    build_t1: "Ahogy egy épület",
+    build_t2: "megszületik",
+    p1_tag: "Fázis_01 // Alapozás",
+    p1_title: "Az alap mindent meghatároz",
+    p1_desc: "Talajmechanikai vizsgálat, tereprendezés, vízszigetelés és monolit vasbeton alaplemez.",
+    p2_tag: "Fázis_02 // Szerkezet",
+    p2_title: "Falak, födémek, nyílászárók",
+    p2_desc: "Teherhordó falazat, vasbeton födém, tetőszerkezet felépítése.",
+    p3_tag: "Fázis_03 // Tető & Burkolat",
+    p3_title: "A szerkezet lezárul",
+    p3_desc: "Tetőfedés, homlokzati hőszigetelés, külső burkolás.",
+    p4_tag: "Fázis_04 // Belső & Átadás",
+    p4_title: "Kulcsrakész állapot",
+    p4_desc: "Belső gépészet, villanyszerelés, burkolás, festés, műszaki átadás.",
+    svg_found: "ALAPOZÁS",
+    gal_t1: "Válogatott",
+    gal_t2: "projektek",
+    gal_hint: "Húzd oldalra",
+    con_title: "Építsünk együtt.",
+    con_sub: "Ingyenes helyszíni felmérés és tételes árajánlat — 48 órán belül.",
+    con_loc: "TELEPHELY",
+    con_tel: "TELEFON",
+    con_name: "NÉV",
+    con_phone: "TELEFON",
+    con_type: "PROJEKT TÍPUS",
+    con_btn: "ÁRAJÁNLAT_KÉRÉSE →",
+    con_ok: "48 órán belül visszahívjuk."
+  },
+  en: {
+    btn_vissza: "← BACK",
+    btn_akarom: "I WANT THIS →",
+    nav_build: "Build",
+    nav_projects: "Projects",
+    nav_stats: "Stats",
+    nav_contact: "Contact",
+    nav_sub: "GEN. CONTRACTOR // 2005",
+    hero_t1: "We don't",
+    hero_t2: "just build",
+    hero_t3: "We prove",
+    hero_sub: "General contracting from design to key handover. 320+ projects. 20 years. 98% deadline accuracy.",
+    hero_btn1: "Request Quote",
+    hero_btn2: "Projects →",
+    stat_projects: "COMPLETED PROJECTS",
+    stat_years: "YEARS EXPERIENCE",
+    stat_deadline: "DEADLINE",
+    stat_response: "RESPONSE TIME",
+    stat_area: "BUILT AREA",
+    stat_warranty: "WARRANTY",
+    build_t1: "How a building",
+    build_t2: "is born",
+    p1_tag: "Phase_01 // Foundation",
+    p1_title: "The base defines everything",
+    p1_desc: "Geotechnical survey, landscaping, waterproofing and monolithic reinforced concrete base.",
+    p2_tag: "Phase_02 // Structure",
+    p2_title: "Walls, slabs, windows",
+    p2_desc: "Load-bearing masonry, concrete slabs, and roof structure construction.",
+    p3_tag: "Phase_03 // Roof & Shell",
+    p3_title: "Closing the structure",
+    p3_desc: "Roofing, facade insulation, exterior cladding and window installation.",
+    p4_tag: "Phase_04 // Interior & Handover",
+    p4_title: "Turnkey readiness",
+    p4_desc: "Interior engineering, electrical, flooring, painting and technical handover.",
+    svg_found: "FOUNDATION",
+    gal_t1: "Selected",
+    gal_t2: "projects",
+    gal_hint: "Drag to scroll",
+    con_title: "Build together.",
+    con_sub: "Free onsite survey and itemized quote — within 48 hours.",
+    con_loc: "LOCATION",
+    con_tel: "PHONE",
+    con_name: "NAME",
+    con_phone: "PHONE",
+    con_type: "PROJECT TYPE",
+    con_btn: "REQUEST_QUOTE →",
+    con_ok: "We will call you within 48 hours."
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'hu';
+
+function updateContent() {
+  const lang = i18n[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.innerHTML = lang[el.getAttribute('data-i18n')];
+  });
+  document.querySelectorAll('[data-i18n-svg]').forEach(el => {
+    el.textContent = lang[el.getAttribute('data-i18n-svg')];
+  });
+  document.querySelectorAll('#conType option').forEach(opt => {
+    opt.textContent = opt.getAttribute(`data-${currentLang}`);
+  });
+  document.getElementById('langBtn').textContent = currentLang.toUpperCase();
+  document.documentElement.lang = currentLang;
+  renderProjects();
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'hu' ? 'en' : 'hu';
+  localStorage.setItem('lang', currentLang);
+  updateContent();
+}
+
+async function detectLang() {
+  if (!localStorage.getItem('lang')) {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      currentLang = data.country_code === 'HU' ? 'hu' : 'en';
+    } catch (e) { currentLang = 'en'; }
+    localStorage.setItem('lang', currentLang);
+  }
+  updateContent();
+}
+
+// Projects Data with Generated Images
+const projectsData = [
+  {hu:{name:'Horizon Office Tower',cat:'Irodakomplexum',badge:'Díjnyertes'},en:{name:'Horizon Office Tower',cat:'Office Complex',badge:'Award Winning'},img:'/Users/erdelyipeter/.gemini/antigravity/brain/b1570b7f-3dab-49ee-9aae-9f08193c96ec/fortis_office_project_1777806667888.png',area:'12 400 m²',time:'18 hó',coord:'47.52°N 19.08°E'},
+  {hu:{name:'Lakeside Residence',cat:'Lakópark',badge:'Új'},en:{name:'Lakeside Residence',cat:'Residential',badge:'New'},img:'/Users/erdelyipeter/.gemini/antigravity/brain/b1570b7f-3dab-49ee-9aae-9f08193c96ec/fortis_residential_project_1777806699840.png',area:'8 200 m²',time:'14 hó',coord:'47.51°N 18.98°E'},
+  {hu:{name:'The Belvedere Hotel',cat:'Hotel',badge:'Felújítás'},en:{name:'The Belvedere Hotel',cat:'Hotel',badge:'Renovation'},img:'/Users/erdelyipeter/.gemini/antigravity/brain/b1570b7f-3dab-49ee-9aae-9f08193c96ec/fortis_hotel_project_1777806714211.png',area:'3 800 m²',time:'10 hó',coord:'46.95°N 17.89°E'},
+  {hu:{name:'Industrial Loft',cat:'Felújítás',badge:''},en:{name:'Industrial Loft',cat:'Renovation',badge:''},img:'/Users/erdelyipeter/.gemini/antigravity/brain/b1570b7f-3dab-49ee-9aae-9f08193c96ec/fortis_loft_project_1777806728838.png',area:'280 m²',time:'8 hét',coord:'47.49°N 19.05°E'},
+];
+
+function renderProjects() {
+  const track = document.getElementById('proj-track');
+  track.innerHTML = '';
+  projectsData.forEach(p => {
+    const d = p[currentLang];
+    const c = document.createElement('div'); c.className = 'proj-card';
+    c.innerHTML = `
+      <div class="pc-visual">
+        <img src="${p.img}" class="pc-img" alt="${d.name}">
+        ${d.badge ? `<span class="pc-badge">${d.badge}</span>` : ''}
+        <span class="pc-coords">${p.coord}</span>
+        <div class="pc-crosshair"></div>
+      </div>
+      <div class="pc-info">
+        <span class="pc-cat">${d.cat}</span>
+        <div class="pc-name">${d.name}</div>
+        <div class="pc-meta"><span>${p.area}</span><span>${p.time}</span></div>
+        <div class="pc-bar"><div class="pc-bar-fill"></div></div>
+      </div>`;
+    track.appendChild(c);
+  });
+}
+
+window.addEventListener('load', () => setTimeout(() => {
+  document.getElementById('preloader').classList.add('hidden');
+  document.body.style.overflow = '';
+}, 1600));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('mnav').classList.toggle('compact', scrollY > 70);
+  updateBuildPhase();
+});
+
+function toggleMob() {
+  const m = document.getElementById('mob-menu'), t = document.getElementById('mob-toggle');
+  m.classList.toggle('open'); t.classList.toggle('open');
+}
+function closeMob() {
+  document.getElementById('mob-menu').classList.remove('open');
+  document.getElementById('mob-toggle').classList.remove('open');
+}
+
+const cObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.target;
+    if (!target) return;
+    const span = el.querySelector('span');
+    let v = 0; const step = Math.ceil(target / 60);
+    const t = setInterval(() => {
+      v = Math.min(v + step, target);
+      span.textContent = v.toLocaleString(currentLang === 'hu' ? 'hu-HU' : 'en-US');
+      if (v >= target) clearInterval(t);
+    }, 25);
+    cObs.unobserve(el);
+  });
+}, { threshold: .5 });
+document.querySelectorAll('[data-target]').forEach(el => cObs.observe(el));
+
+function updateBuildPhase() {
+  const phases = document.querySelectorAll('.build-phase');
+  const layers = ['bl-0', 'bl-1', 'bl-2', 'bl-3'];
+  let activeIdx = 0;
+  phases.forEach((phase, i) => {
+    const rect = phase.getBoundingClientRect();
+    const mid = window.innerHeight / 2;
+    if (rect.top < mid && rect.bottom > mid) activeIdx = i;
+  });
+  phases.forEach((p, i) => p.classList.toggle('active', i === activeIdx));
+  layers.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('visible', i <= activeIdx);
+  });
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('ct-form').style.display = 'none';
+  document.getElementById('form-ok').style.display = 'block';
+}
+
+const revealObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on'); revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: .07 });
+document.querySelectorAll('.rv').forEach(el => revealObs.observe(el));
+
+detectLang();
+</script>
+</body>
+</html>

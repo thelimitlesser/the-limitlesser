@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXIOM — Creative Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000000;
+  --text: #FFFFFF;
+  --accent: #FF3E00;
+  --muted: #333333;
+  --font-h: 'Syne', sans-serif;
+  --font-b: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body { background: var(--bg); color: var(--text); font-family: var(--font-b); overflow-x: hidden; cursor: none; }
+
+/* Cursor */
+#cur{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .3s,background .3s}
+#cur-r{position:fixed;width:48px;height:48px;border:1px solid rgba(255,62,0,.3);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+body.ch #cur{transform:translate(-50%,-50%) scale(4);background:rgba(255,62,0,0.5)}
+body.ch #cur-r{width:80px;height:80px;border-color:var(--accent)}
+
+/* Nav */
+nav { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 3rem 5rem; z-index: 1000; mix-blend-mode: difference; }
+.logo { font-family: var(--font-h); font-weight: 800; font-size: 28px; letter-spacing: -2px; color: var(--text); text-decoration: none; text-transform: uppercase; }
+
+/* Hero */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 10rem 5rem; position: relative; }
+.h-tag { font-family: var(--font-h); font-size: 14px; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; display: block; }
+h1 { font-family: var(--font-h); font-size: clamp(80px, 18vw, 320px); font-weight: 800; line-height: 0.75; letter-spacing: -12px; text-transform: uppercase; }
+h1 span { display: block; color: var(--muted); }
+
+/* Grid */
+.work-grid { padding: 10rem 5rem; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10rem; }
+.work-item { position: relative; width: 100%; }
+.work-item.alt { margin-top: 20rem; }
+.work-img { width: 100%; aspect-ratio: 4/5; background: #111; overflow: hidden; position: relative; }
+.work-img img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); filter: grayscale(100%) contrast(1.2); }
+.work-item:hover .work-img img { transform: scale(1.05); filter: grayscale(0%) contrast(1); }
+.work-info { margin-top: 3rem; }
+.work-title { font-family: var(--font-h); font-size: 48px; letter-spacing: -2px; text-transform: uppercase; margin-bottom: 1rem; }
+.work-cat { font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 700; }
+
+/* Back Bar */
+.back-bar { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #FFFFFF; padding: 0.8rem 1.2rem; border-radius: 100px; display: flex; gap: 1.5rem; z-index: 10000; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+.bb-b { color: #888; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; transition: color 0.3s; cursor: none; display: flex; align-items: center; padding: 0 1rem; }
+.bb-b:hover { color: #000; }
+.bb-c { background: #000; color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; padding: 1rem 2.2rem; border-radius: 100px; transition: all 0.3s; cursor: none; }
+.bb-c:hover { background: var(--accent); transform: translateY(-3px); }
+
+.rv { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.rv.on { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .hero { padding: 5rem 2rem; }
+  .work-grid { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 8rem; }
+  .work-item.alt { margin-top: 0; }
+  nav { padding: 2rem; }
+  .back-bar { width: calc(100% - 4rem); bottom: 1.5rem; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<nav>
+  <a href="#" class="logo">AXIOM</a>
+  <div style="font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;" id="nav-tag">FOLIO 2025</div>
+</nav>
+
+<section class="hero">
+  <span class="h-tag rv" id="h-eyebrow">Creative Direction & Design</span>
+  <h1 class="rv d1" id="h-title">Digital <span>Souls.</span></h1>
+</section>
+
+<div class="work-grid">
+  <div class="work-item rv">
+    <div class="work-img"><img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1000" alt=""></div>
+    <div class="work-info">
+      <h3 class="work-title">Villa Nomad</h3>
+      <span class="work-cat" id="c1">Architecture</span>
+    </div>
+  </div>
+  <div class="work-item alt rv d1">
+    <div class="work-img"><img src="https://images.unsplash.com/photo-1518005020453-6ca271aa0a29?auto=format&fit=crop&q=80&w=1000" alt=""></div>
+    <div class="work-info">
+      <h3 class="work-title">Urban Core</h3>
+      <span class="work-cat" id="c2">Concept Space</span>
+    </div>
+  </div>
+  <div class="work-item rv">
+    <div class="work-img"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1000" alt=""></div>
+    <div class="work-info">
+      <h3 class="work-title">Tech Noir</h3>
+      <span class="work-cat" id="c3">UI / UX System</span>
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="../index.html" class="bb-b" id="bb-back">← Vissza</a>
+  <a href="../index.html#quote" class="bb-c" id="bb-want">Ezt akarom →</a>
+</div>
+
+<script>
+const translations = {
+  hu: {
+    eyebrow: "Kreatív Irányítás & Design",
+    title: "Digitális <span>Lelkek.</span>",
+    c1: "Építészet", c2: "Koncepcionális Tér", c3: "UI / UX Rendszer",
+    bb_back: "← Vissza", bb_want: "Ezt akarom →"
+  },
+  en: {
+    eyebrow: "Creative Direction & Design",
+    title: "Digital <span>Souls.</span>",
+    c1: "Architecture", c2: "Concept Space", c3: "UI / UX System",
+    bb_back: "← Back", bb_want: "Get Started →"
+  }
+};
+
+function syncLanguage() {
+  const savedLang = localStorage.getItem('limitlesser_lang') || 'hu';
+  const t = translations[savedLang];
+  document.getElementById('h-eyebrow').textContent = t.eyebrow;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('c1').textContent = t.c1;
+  document.getElementById('c2').textContent = t.c2;
+  document.getElementById('c3').textContent = t.c3;
+  document.getElementById('bb-back').textContent = t.bb_back;
+  document.getElementById('bb-want').textContent = t.bb_want;
+}
+
+// Cursor
+const mc=document.getElementById('cur'),rc=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;mc.style.left=mx+'px';mc.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;rc.style.left=rx+'px';rc.style.top=ry+'px';requestAnimationFrame(a)})();
+
+// Reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('a,button,.work-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+
+window.onload = syncLanguage;
+</script>
+</body>
+</html>

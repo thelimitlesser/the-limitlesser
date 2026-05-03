@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURELIA — Luxury Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FAFAF7;--surface:#fff;--border:#E8E4DC;--accent:#C5A059;--accent2:rgba(197,160,89,.12);--fg:#1A1A1A;--muted:#888;--subtle:#F5F2EC;--font-d:'Cormorant Garamond',serif;--font-b:'DM Sans',sans-serif}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);font-family:var(--font-b);overflow-x:hidden;cursor:none}
+#cur{position:fixed;width:8px;height:8px;background:var(--fg);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,background .3s}
+#cur-r{position:fixed;width:36px;height:36px;border:1px solid rgba(26,26,26,.2);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease-out}
+body.ch #cur{width:18px;background:var(--accent)}
+body.ch #cur-r{width:58px;border-color:rgba(197,160,89,.5)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:1.6rem 4rem;background:rgba(250,250,247,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:padding .4s}
+nav.c{padding:1.1rem 4rem}
+.nl,.nr{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nr{justify-content:flex-end}
+.nla{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;font-family:var(--font-b);cursor:none}
+.nla:hover,.nla.act{color:var(--fg)}
+.n-logo{font-family:var(--font-d);font-size:28px;font-weight:300;letter-spacing:12px;color:var(--fg);text-decoration:none;text-align:center;cursor:none}
+.n-cart{position:relative;background:none;border:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--font-b);cursor:none;display:flex;align-items:center;gap:.5rem;transition:color .3s}
+.n-cart:hover{color:var(--fg)}
+.cc{position:absolute;top:-8px;right:-10px;width:18px;height:18px;background:var(--accent);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* MOBILE TOGGLE */
+.mob-toggle{display:none;background:none;border:none;cursor:none;flex-direction:column;gap:5px;padding:.4rem;z-index:1001}
+.mob-toggle span{display:block;width:22px;height:1.5px;background:var(--fg);transition:all .35s}
+.mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.mob-toggle.open span:nth-child(2){opacity:0}
+.mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+.mob-menu{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu a{font-family:var(--font-d);font-size:32px;font-weight:300;color:var(--fg);text-decoration:none;text-transform:uppercase;letter-spacing:4px}
+
+/* Lang Switcher */
+.lang-switcher { display: flex; gap: 0.3rem; background: rgba(0,0,0,0.05); padding: 4px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.1); margin-left: 2rem; }
+.lang-btn { background: transparent; border: none; color: rgba(0,0,0,0.4); font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 1px; padding: 6px 12px; cursor: pointer; transition: 0.3s; border-radius: 100px; }
+.lang-btn.active { background: var(--accent); color: white; box-shadow: 0 2px 10px rgba(197,160,89,0.3); }
+.lang-btn:hover:not(.active) { color: var(--fg); background: rgba(0,0,0,0.05); }
+
+.view{display:none}.view.on{display:block}
+
+/* ── HOME ── */
+.hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(197,160,89,.07),transparent);pointer-events:none}
+.h-lbl{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;display:block}
+.h-title{font-family:var(--font-d);font-size:clamp(68px,14vw,185px);font-weight:300;line-height:.84;letter-spacing:-3px;margin-bottom:1.5rem}
+.h-title em{font-style:italic}
+.h-sub{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:4rem}
+.h-btn{display:inline-block;padding:1.1rem 3.5rem;border:1px solid var(--fg);color:var(--fg);text-decoration:none;font-size:11px;letter-spacing:4px;text-transform:uppercase;transition:all .4s;cursor:none;border-radius:100px;font-family:var(--font-b)}
+.h-btn:hover{background:var(--fg);color:var(--bg)}
+.h-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.h-scroll-l{width:1px;height:30px;background:linear-gradient(to bottom,var(--muted),transparent)}
+
+.trust{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ti{display:flex;align-items:center;justify-content:center;gap:.8rem;padding:1.2rem;border-right:1px solid var(--border);font-size:12px;color:var(--muted)}
+.ti:last-child{border-right:none}
+.ti span{font-size:17px}
+
+.cats{padding:3.5rem 4rem 2rem;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.cb{padding:.6rem 1.8rem;border:1px solid var(--border);border-radius:100px;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);background:var(--surface);cursor:none;transition:all .3s;font-family:var(--font-b)}
+.cb:hover,.cb.act{border-color:var(--accent);color:var(--accent);background:var(--accent2)}
+
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;padding:1.5rem 4rem 7rem;max-width:1400px;margin:0 auto}
+.pc{cursor:none;background:var(--surface);border:1px solid var(--border);position:relative;transition:box-shadow .4s;border-radius:24px;overflow:hidden;}
+.pc:hover{box-shadow:0 16px 50px rgba(0,0,0,.08)}
+.pc:hover .pci{transform:scale(1.06) translateY(-8px)}
+.pib{overflow:hidden;aspect-ratio:3/4;background:var(--subtle);display:flex;align-items:center;justify-content:center;position:relative}
+.pci{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.pbadge{position:absolute;top:.9rem;left:.9rem;background:var(--fg);color:var(--bg);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:.25rem .7rem;font-weight:600;border-radius:100px;}
+.pw{position:absolute;top:.9rem;right:.9rem;background:var(--surface);border:1px solid var(--border);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;font-size:15px;color:var(--muted);transition:all .3s}
+.pw:hover{border-color:var(--accent);color:var(--accent)}
+.pi{padding:1.2rem 1.4rem 1.6rem;border-top:1px solid var(--border)}
+.pcat{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+.pn{font-family:var(--font-d);font-size:20px;font-weight:400;margin-bottom:.5rem}
+.pb{display:flex;align-items:center;justify-content:space-between}
+.pp{font-size:14px;font-weight:600}
+.pstars{color:var(--accent);font-size:11px}
+
+.qs{background:var(--fg);color:var(--bg);padding:8rem 4rem;text-align:center}
+.qm{font-family:var(--font-d);font-size:88px;font-weight:300;line-height:.5;color:rgba(255,255,255,.12);display:block;margin-bottom:.5rem}
+.qt{font-family:var(--font-d);font-size:clamp(22px,3.5vw,44px);font-weight:300;font-style:italic;max-width:800px;margin:0 auto 2rem;color:rgba(255,255,255,.86);line-height:1.35}
+.qa{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.38)}
+
+.ns{padding:7rem 4rem;text-align:center;background:var(--subtle);border-top:1px solid var(--border)}
+.nlbl{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.2rem}
+.nt{font-family:var(--font-d);font-size:clamp(34px,5vw,60px);font-weight:300;margin-bottom:1.2rem;letter-spacing:-1px}
+.nt em{font-style:italic}
+.np{font-size:15px;line-height:1.75;color:var(--muted);max-width:400px;margin:0 auto 3rem}
+.nf{display:flex;max-width:440px;margin:0 auto;border:1px solid var(--border);background:var(--surface);overflow:hidden;border-radius:100px;}
+.ni{flex:1;background:transparent;border:none;padding:.95rem 1.1rem;font-size:14px;color:var(--fg);font-family:var(--font-b);outline:none}
+.ni::placeholder{color:var(--muted)}
+.nb{background:var(--fg);color:var(--bg);border:none;padding:.95rem 1.8rem;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:none;font-family:var(--font-b);font-weight:600;transition:background .3s;white-space:nowrap}
+.nb:hover{background:var(--accent);color:#fff}
+
+footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.fbr{font-family:var(--font-d);font-size:26px;font-weight:300;letter-spacing:8px;color:#fff;margin-bottom:.8rem}
+.fbs{font-size:13px;line-height:1.7;color:rgba(255,255,255,.38);max-width:260px}
+.fct{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1.3rem;display:block}
+.fls{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.fls a{color:rgba(255,255,255,.38);text-decoration:none;font-size:13px;transition:color .3s}
+.fls a:hover{color:#fff}
+.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:2.2rem;border-top:1px solid rgba(255,255,255,.07);font-size:11px;letter-spacing:1px}
+
+/* ── PRODUCT DETAIL ── */
+.pdv{display:none;padding-top:80px}.pdv.on{display:block}
+.pdb{padding:1.4rem 4rem;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:.7rem;align-items:center}
+.pdb a{color:var(--muted);text-decoration:none;cursor:none;transition:color .3s}
+.pdb a:hover{color:var(--fg)}
+.pdi{display:grid;grid-template-columns:1.1fr 1fr;min-height:calc(100vh - 80px)}
+.pdg{position:sticky;top:80px;height:calc(100vh - 80px);display:flex;gap:1rem;padding:2rem 2rem 2rem 4rem;background:var(--subtle)}
+.pdt-wrap{display:flex;flex-direction:column;gap:.7rem}
+.pdt{width:66px;height:86px;border:2px solid transparent;background:var(--surface);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:none;transition:all .3s;flex-shrink:0;border-radius:12px;}
+.pdt img{width:100%;height:100%;object-fit:cover;}
+.pdt.a,.pdt:hover{border-color:var(--fg)}
+.pdm{flex:1;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;border-radius:32px;overflow:hidden;}
+.pdm img{width:100%;height:100%;object-fit:cover;}
+.pdm .zh{position:absolute;bottom:1rem;right:1rem;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.85);padding:.35rem .7rem;border-radius:100px;}
+.pdf{padding:2.8rem 4rem 3rem 3rem;overflow-y:auto}
+.pdct{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:block}
+.pdn{font-family:var(--font-d);font-size:clamp(34px,4vw,54px);font-weight:300;line-height:1;letter-spacing:-1px;margin-bottom:.7rem}
+.rrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem}
+.rst{color:var(--accent);font-size:13px;display:flex;gap:.1rem}
+.rct{font-size:12px;color:var(--muted)}
+.pdpr{font-size:clamp(22px,2.5vw,32px);font-weight:600;margin-bottom:.3rem}
+.pdtx{font-size:12px;color:var(--muted);margin-bottom:1.8rem}
+.div{height:1px;background:var(--border);margin:1.8rem 0}
+.ol{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--fg);display:block;margin-bottom:.7rem;font-weight:600}
+.cols{display:flex;gap:.5rem;margin-bottom:1.6rem}
+.co{width:30px;height:30px;border-radius:50%;cursor:none;border:3px solid transparent;transition:all .3s;outline:2px solid transparent;outline-offset:2px}
+.co.a,.co:hover{outline-color:var(--fg)}
+.szs{display:flex;gap:.4rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.so{padding:.55rem 1rem;border:1px solid var(--border);background:var(--surface);font-size:12px;cursor:none;transition:all .3s;font-family:var(--font-b);border-radius:100px;}
+.so:hover{border-color:var(--fg)}
+.so.a{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.qr{display:flex;gap:.8rem;align-items:center;margin-bottom:1.6rem}
+.qc{display:flex;align-items:center;border:1px solid var(--border);border-radius:100px;overflow:hidden;}
+.qb{width:38px;height:38px;background:none;border:none;font-size:17px;cursor:none;color:var(--fg);transition:background .2s;font-family:var(--font-b)}
+.qb:hover{background:var(--subtle)}
+.qn{width:46px;text-align:center;font-size:14px;font-weight:500;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);background:none;color:var(--fg);font-family:var(--font-b)}
+.acb{flex:1;background:var(--fg);color:var(--bg);border:none;padding:1rem 1.5rem;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:none;font-family:var(--font-b);font-weight:600;transition:all .35s;border-radius:100px;}
+.acb:hover{background:var(--accent);color:#fff}
+.wb{width:48px;height:48px;background:none;border:1px solid var(--border);font-size:19px;cursor:none;transition:all .3s;border-radius:50%;}
+.wb:hover{border-color:var(--accent);background:var(--accent2)}
+.pship{display:flex;gap:1rem;font-size:11px;color:var(--muted);margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.acc-wrap{margin-top:1.5rem}
+.ai{border-top:1px solid var(--border)}
+.ah{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;cursor:none;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.aa{font-size:17px;transition:transform .3s;color:var(--muted)}
+.ai.op .aa{transform:rotate(45deg)}
+.ab{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.25,.46,.45,.94)}
+.ai.op .ab{max-height:200px}
+.abi{padding-bottom:1.1rem;font-size:14px;line-height:1.75;color:var(--muted)}
+
+.rvs{padding:5rem 4rem;border-top:1px solid var(--border);background:var(--subtle)}
+.rvh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem}
+.rvt{font-family:var(--font-d);font-size:34px;font-weight:300}
+.rvo{display:flex;align-items:center;gap:.7rem;font-size:15px;font-weight:600}
+.rvg{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.rvc{background:var(--surface);border:1px solid var(--border);padding:1.8rem;border-radius:24px;}
+.rss{color:var(--accent);font-size:12px;margin-bottom:.7rem}
+.rtx{font-size:14px;line-height:1.7;color:var(--fg);margin-bottom:.9rem;font-style:italic}
+.ran{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.rdt{font-size:11px;color:var(--muted)}
+
+.reld{padding:4rem 4rem 5rem;border-top:1px solid var(--border)}
+.relt{font-family:var(--font-d);font-size:32px;font-weight:300;margin-bottom:2rem}
+.relg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+
+/* ── CART SIDEBAR ── */
+.co-ov{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:2000;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(3px)}
+.co-ov.on{opacity:1;pointer-events:all}
+.cp{position:fixed;top:0;right:0;bottom:0;width:460px;background:var(--surface);z-index:2001;transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;border-left:1px solid var(--border)}
+.cp.on{transform:translateX(0)}
+.cph{padding:1.8rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.cph-t{font-family:var(--font-d);font-size:24px;font-weight:300}
+.cpx{background:none;border:none;font-size:22px;cursor:none;color:var(--fg);line-height:1;transition:opacity .3s}
+.cpx:hover{opacity:.4}
+.cil{flex:1;overflow-y:auto;padding:1.4rem 2rem}
+.ce{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1.2rem;text-align:center}
+.ce-ic{font-size:48px;opacity:.25}
+.ce-t{font-family:var(--font-d);font-size:20px;font-weight:300;color:var(--muted)}
+.ce-s{font-size:13px;color:var(--muted)}
+.cit{display:grid;grid-template-columns:76px 1fr auto;gap:.9rem;padding:1.1rem 0;border-bottom:1px solid var(--border);align-items:start}
+.cim{width:76px;height:96px;background:var(--subtle);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;flex-shrink:0}
+.cim img{width:100%;height:100%;object-fit:cover;}
+.cin{font-family:var(--font-d);font-size:17px;font-weight:400;margin-bottom:.2rem}
+.cim2{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:.7rem}
+.ciq{display:flex;align-items:center;border:1px solid var(--border);width:fit-content;border-radius:100px;overflow:hidden;}
+.cqb{width:28px;height:28px;background:none;border:none;cursor:none;font-size:15px;transition:background .2s;font-family:var(--font-b)}
+.cqb:hover{background:var(--subtle)}
+.cqn{width:30px;text-align:center;font-size:12px;border-left:1px solid var(--border);border-right:1px solid var(--border);line-height:28px}
+.cirm{display:block;font-size:10px;letter-spacing:1px;text-decoration:underline;color:var(--muted);cursor:none;margin-top:.5rem;background:none;border:none;font-family:var(--font-b);transition:color .3s}
+.cirm:hover{color:#c0392b}
+.cip{font-size:14px;font-weight:600;white-space:nowrap;text-align:right}
+.csb{padding:1.1rem 2rem;background:var(--subtle);border-top:1px solid var(--border)}
+.csbt{font-size:12px;color:var(--muted);margin-bottom:.5rem}
+.csbt strong{color:var(--accent);font-weight:600}
+.csbtr{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.csbf{height:100%;background:var(--accent);border-radius:2px;transition:width .5s}
+.cft{padding:1.4rem 2rem;border-top:1px solid var(--border)}
+.cst{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:.5rem}
+.cgt{display:flex;justify-content:space-between;font-size:16px;font-weight:600;margin-bottom:1.4rem;padding-top:.7rem;border-top:1px solid var(--border)}
+.chbtn{width:100%;background:var(--fg);color:var(--bg);border:none;padding:1rem;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:none;font-family:var(--font-b);font-weight:600;transition:background .3s;margin-bottom:.7rem;border-radius:100px;}
+.chbtn:hover{background:var(--accent);color:#fff}
+.ccbtn{width:100%;background:none;color:var(--muted);border:1px solid var(--border);padding:.85rem;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:none;font-family:var(--font-b);transition:all .3s;border-radius:100px;}
+.ccbtn:hover{border-color:var(--fg);color:var(--fg)}
+
+/* ── CHECKOUT ── */
+.cov{display:none;padding-top:80px;min-height:100vh;background:var(--bg)}.cov.on{display:block}
+.coi{display:grid;grid-template-columns:1fr 390px;min-height:calc(100vh - 80px)}
+.col{padding:3rem 5rem;border-right:1px solid var(--border)}
+.cor{padding:2.8rem 3rem;background:var(--subtle);position:sticky;top:80px;max-height:calc(100vh - 80px);overflow-y:auto}
+.cos{display:flex;gap:0;margin-bottom:3rem;border-bottom:1px solid var(--border)}
+.cost{padding:.75rem 0;margin-right:2.5rem;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;transition:all .3s;font-family:var(--font-b)}
+.cost.a{color:var(--fg);border-bottom-color:var(--fg)}
+.cost.d{color:var(--accent)}
+.cop{display:none}.cop.a{display:block;animation:fu .4s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cot{font-family:var(--font-d);font-size:26px;font-weight:300;margin-bottom:1.8rem}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem}
+.ff{grid-column:1/-1}
+.fgr{display:flex;flex-direction:column;gap:.35rem}
+.fl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:500}
+.fi{background:var(--surface);border:1px solid var(--border);padding:.8rem .95rem;font-size:14px;color:var(--fg);font-family:var(--font-b);outline:none;transition:border-color .3s;width:100%;border-radius:12px;}
+.fi:focus{border-color:var(--fg)}
+.fsel{appearance:none;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right .9rem center;border:1px solid var(--border);padding:.8rem 2.3rem .8rem .95rem;font-size:14px;color:var(--fg);font-family:var(--font-b);outline:none;width:100%;cursor:none;border-radius:12px;}
+.fsel:focus{border-color:var(--fg)}
+.cnbtn{background:var(--fg);color:var(--bg);border:none;padding:1rem 2.5rem;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:none;font-family:var(--font-b);font-weight:600;transition:background .3s;margin-top:1.8rem;border-radius:100px;}
+.cnbtn:hover{background:var(--accent);color:#fff}
+.cblnk{background:none;border:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:none;font-family:var(--font-b);margin-top:.8rem;padding:.4rem 0;text-decoration:underline;display:block;transition:color .3s}
+.cblnk:hover{color:var(--fg)}
+
+.cardv{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);border-radius:16px;padding:1.8rem;color:#fff;margin-bottom:1.8rem;position:relative;overflow:hidden}
+.cardv::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:rgba(197,160,89,.12);border-radius:50%}
+.cvc{width:34px;height:26px;background:linear-gradient(135deg,#d4a843,#f5cc6a);border-radius:3px;margin-bottom:1.8rem;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px}
+.cvc div{background:rgba(0,0,0,.2)}
+.cvn{font-size:20px;letter-spacing:4px;font-weight:300;margin-bottom:1.2rem;font-family:monospace}
+.cvb{display:flex;justify-content:space-between;font-size:11px;letter-spacing:2px}
+.cvlb{font-size:8px;letter-spacing:2px;opacity:.5;margin-bottom:.15rem}
+
+.sse{margin:1.5rem 0;padding:.9rem;background:var(--subtle);border:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:.7rem;line-height:1.5;border-radius:12px;}
+
+.ori{display:flex;gap:.9rem;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.ori-img{width:58px;height:72px;background:var(--subtle);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:8px;}
+.ori-img img{width:100%;height:100%;object-fit:cover;}
+.ori-n{font-family:var(--font-d);font-size:16px;font-weight:400}
+.ori-m{font-size:11px;color:var(--muted)}
+.ori-p{font-weight:600;font-size:14px;margin-left:auto}
+
+.csum-t{font-family:var(--font-d);font-size:20px;font-weight:300;margin-bottom:1.4rem;padding-bottom:.9rem;border-bottom:1px solid var(--border)}
+.csi{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+.cs-im{width:50px;height:62px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:8px;position:relative;flex-shrink:0}
+.cs-im img{width:100%;height:100%;object-fit:cover;}
+.csqb{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:var(--fg);color:var(--bg);border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cs-nm{font-size:12px;font-weight:500;flex:1;line-height:1.4}
+.cs-pr{font-size:12px;font-weight:600}
+.cstt{margin-top:1.4rem;border-top:1px solid var(--border);padding-top:1.4rem}
+.csr{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:.6rem}
+.csr.tot{font-size:15px;color:var(--fg);font-weight:700;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--border)}
+
+.prow{display:flex;gap:.5rem;margin-top:1.4rem}
+.proi{flex:1;border:1px solid var(--border);background:var(--surface);padding:.6rem .8rem;font-size:13px;font-family:var(--font-b);color:var(--fg);outline:none;border-radius:100px;}
+.proi:focus{border-color:var(--fg)}
+.prob{background:var(--fg);color:var(--bg);border:none;padding:.6rem 1.1rem;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:none;font-family:var(--font-b);transition:background .3s;border-radius:100px;}
+.prob:hover{background:var(--accent);color:#fff}
+
+/* ── SUCCESS ── */
+.sv{display:none;padding-top:80px;min-height:100vh;align-items:center;justify-content:center;background:var(--bg)}.sv.on{display:flex}
+.si{text-align:center;padding:4rem 2rem;max-width:580px}
+.sck{width:76px;height:76px;border-radius:50%;background:var(--accent2);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;font-size:32px}
+.stit{font-family:var(--font-d);font-size:clamp(38px,6vw,68px);font-weight:300;line-height:.95;letter-spacing:-1px;margin-bottom:1.2rem}
+.stit em{font-style:italic}
+.ssub{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:1rem}
+.sord{font-size:13px;font-weight:600;margin-bottom:2.5rem;padding:1rem 2rem;background:var(--subtle);border:1px solid var(--border);display:inline-block;border-radius:100px;}
+.sdel{margin-bottom:3.5rem;padding:1.5rem 2rem;border:1px solid var(--border);background:var(--surface);text-align:left;display:inline-block;min-width:320px;border-radius:24px;}
+.sdlb{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.3rem}
+.sdv{font-family:var(--font-d);font-size:20px;font-weight:300}
+.sbtn{display:inline-block;background:var(--fg);color:var(--bg);padding:.95rem 2.8rem;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;font-family:var(--font-b);font-weight:600;transition:background .3s;border-radius:100px;}
+.sbtn:hover{background:var(--accent);color:#fff}
+
+.demo-badge{position:fixed;top:0;right:0;background:var(--accent);color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:.32rem .9rem;z-index:99999;font-weight:700;font-family:var(--font-b)}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .85s,transform .85s}.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+.back-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;gap:1.5rem;align-items:center;padding:8px 12px;padding-left:30px;background:#222;border-radius:100px;box-shadow:0 20px 40px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1)}
+.bb-b{color:#aaa;font-size:12px;letter-spacing:2px;text-decoration:none;font-family:var(--font-b);font-weight:600;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
+.bb-b:hover{color:#fff}
+.bb-c{background:var(--accent);color:#fff;font-size:12px;letter-spacing:2px;text-decoration:none;font-weight:700;font-family:var(--font-b);padding:14px 35px;border-radius:100px;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
+.bb-c:hover{opacity:0.9;transform:scale(1.02)}
+
+@media(max-width:900px){
+  nav{padding:1.1rem 2rem;grid-template-columns:1fr auto 1fr}
+  .nl{display:none}
+  .nr .nla, .nr .lang-switcher {display:none}
+  .mob-toggle{display:flex}
+  .pdi{grid-template-columns:1fr}
+  .pdg{position:relative;height:50vh;top:0}
+  .coi{grid-template-columns:1fr}
+  .cor{display:none}
+  .col{padding:2rem}
+  .pgrid{grid-template-columns:1fr 1fr;gap:1.5rem;padding:1.5rem 2rem 5rem}
+  .cats{padding:2.5rem 2rem 1.5rem}
+  .hero{padding:0 1.5rem}
+  .fg{grid-template-columns:1fr 1fr}
+  .rvg,.relg{grid-template-columns:1fr}
+  .cp{width:100%}
+  .rvs,.reld,.qs,.ns{padding-left:2rem;padding-right:2rem}
+  .back-bar{width:calc(100% - 2rem);bottom:1rem;justify-content:space-between;gap:0}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+<div class="demo-badge">Demo</div>
+
+<nav id="mnav">
+  <ul class="nl">
+    <li><a href="#" class="nla" onclick="showV('home');return false" data-i18n="retail_nav_coll">Kollekció</a></li>
+    <li><a href="#" class="nla" onclick="filt('watch',null);showV('home');return false" data-i18n="retail_nav_watches">Órák</a></li>
+    <li><a href="#" class="nla" onclick="filt('leather',null);showV('home');return false" data-i18n="retail_nav_leather">Bőráru</a></li>
+  </ul>
+  <a href="#" class="n-logo" onclick="showV('home');return false">AURELIA</a>
+  <ul class="nr">
+    <li><a href="#" class="nla" data-i18n="retail_nav_about">Rólunk</a></li>
+    <li><button class="n-cart" onclick="openCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg><span class="cc" id="cc">0</span></button></li>
+    <div class="lang-switcher">
+      <button class="lang-btn" onclick="setLanguage('hu')" data-lang="hu">HU</button>
+      <button class="lang-btn" onclick="setLanguage('en')" data-lang="en">EN</button>
+    </div>
+    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </ul>
+</nav>
+
+<div class="mob-menu" id="mob-menu">
+  <a href="#" onclick="showV('home');toggleMob();return false">KOLLEKCIÓ</a>
+  <a href="#" onclick="filt('watch',null);showV('home');toggleMob();return false">ÓRÁK</a>
+  <a href="#" onclick="filt('leather',null);showV('home');toggleMob();return false">BŐRÁRU</a>
+  <a href="#" onclick="showV('home');toggleMob();return false">VISSZA</a>
+</div>
+
+<!-- Cart overlay -->
+<div class="co-ov" id="cov" onclick="closeCart()"></div>
+<div class="cp" id="cpanel">
+  <div class="cph"><span class="cph-t" data-i18n="retail_nav_cart">Kosár</span><button class="cpx" onclick="closeCart()">×</button></div>
+  <div class="cil" id="citems">
+    <div class="ce"><div class="ce-ic"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.3"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg></div><div class="ce-t" data-i18n="retail_cart_empty">A kosár üres</div><div class="ce-s" data-i18n="retail_cart_add_hint">Adj hozzá termékeket</div></div>
+  </div>
+  <div class="csb" id="cship" style="display:none">
+    <div class="csbt" id="csbt">Még <strong>50 000 Ft</strong> az ingyenes szállításhoz</div>
+    <div class="csbtr"><div class="csbf" id="csbf" style="width:0%"></div></div>
+  </div>
+  <div class="cft" id="cfoot" style="display:none">
+    <div class="cst"><span>Részösszeg</span><span id="csub">0 Ft</span></div>
+    <div class="cst"><span>Szállítás</span><span id="cship2">Ingyenes</span></div>
+    <div class="cgt"><span>Összesen</span><span id="cgrand">0 Ft</span></div>
+    <button class="chbtn" onclick="goCO()" data-i18n="retail_checkout_title">Fizetés →</button>
+    <button class="ccbtn" onclick="closeCart()">Vásárlás folytatása</button>
+  </div>
+</div>
+
+<!-- HOME VIEW -->
+<div id="view-home" class="view on">
+  <section class="hero">
+    <span class="h-lbl" data-i18n="retail_hero_lbl">2025 Téli Kollekció</span>
+    <h1 class="h-title" data-i18n="retail_hero_title">Prémium<br><em>Kollekció</em></h1>
+    <p class="h-sub" data-i18n="retail_hero_sub">Korlátozott darabszámú luxus kiegészítők</p>
+    <a href="#pgrid" class="h-btn" data-i18n="retail_hero_cta">Kollekció felfedezése</a>
+    <div class="h-scroll"><div class="h-scroll-l"></div>Görgess</div>
+  </section>
+  <div class="trust">
+    <div class="ti"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span data-i18n="retail_trust_ship">Ingyenes szállítás 50 000 Ft felett</span></div>
+    <div class="ti"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg><span data-i18n="retail_trust_ret">30 napos visszaküldés</span></div>
+    <div class="ti"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-i18n="retail_trust_guar">Lifetime garancia</span></div>
+    <div class="ti"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-i18n="retail_trust_sec">Biztonságos fizetés</span></div>
+  </div>
+  <div class="cats" id="col">
+    <button class="cb act" onclick="filt('all',this)" data-i18n="retail_cat_all">Összes</button>
+    <button class="cb" onclick="filt('watch',this)" data-i18n="retail_nav_watches">Órák</button>
+    <button class="cb" onclick="filt('fragrance',this)" data-i18n="retail_cat_frag">Illatszerek</button>
+    <button class="cb" onclick="filt('leather',this)" data-i18n="retail_nav_leather">Bőráru</button>
+    <button class="cb" onclick="filt('jewel',this)" data-i18n="retail_cat_jewel">Ékszerek</button>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+
+  <div class="qs">
+    <span class="qm">"</span>
+    <p class="qt rv">"Az ízlés nem véletlen. Minden AURELIA darab egy életre szóló döntés megnyilvánulása."</p>
+    <span class="qa rv">— Vogue Luxury Review, 2025</span>
+  </div>
+  <div class="ns">
+    <span class="nlbl" data-i18n="retail_newsletter_lbl">The Circle</span>
+    <h2 class="nt rv" data-i18n="retail_newsletter_title">Exkluzív<br><em>tagság</em></h2>
+    <p class="np rv" data-i18n="retail_newsletter_sub">Elsőként értesülj új kollekciókról és limitált darabokról.</p>
+    <div class="nf rv d2"><input type="email" class="ni" placeholder="Email cím"><button class="nb" data-i18n="retail_newsletter_cta">Csatlakozás</button></div>
+  </div>
+  <footer>
+    <div class="fg">
+      <div><div class="fbr">AURELIA</div><p class="fbs" data-i18n="retail_footer_tag">Prémium limitált kollekciók azoknak, akik értékeket képviselnek — nem csak tárgyakat vásárolnak.</p></div>
+      <div><span class="fct" data-i18n="retail_footer_c1">Kollekció</span><ul class="fls"><li><a href="#">Új érkezők</a></li><li><a href="#" data-i18n="retail_nav_watches">Órák</a></li><li><a href="#" data-i18n="retail_cat_frag">Illatszerek</a></li><li><a href="#" data-i18n="retail_nav_leather">Bőráru</a></li></ul></div>
+      <div><span class="fct" data-i18n="retail_footer_c2">Vásárlás</span><ul class="fls"><li><a href="#">Szállítás</a></li><li><a href="#">Visszaküldés</a></li><li><a href="#">Garancia</a></li><li><a href="#">GYIK</a></li></ul></div>
+      <div><span class="fct" data-i18n="retail_footer_c3">Kapcsolat</span><ul class="fls"><li><a href="#">hello@aurelia.hu</a></li><li><a href="#">+36 1 234 5678</a></li><li><a href="#">Instagram</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2025 AURELIA</span><div style="display:flex;gap:2rem"><a href="#" style="color:inherit;text-decoration:none">Adatvédelem</a><a href="#" style="color:inherit;text-decoration:none">ÁSZF</a></div></div>
+  </footer>
+</div>
+
+<!-- PRODUCT VIEW -->
+<div id="view-product" class="view pdv">
+  <div class="pdb"><a href="#" onclick="showV('home');return false">Főoldal</a><span>›</span><a href="#" onclick="showV('home');return false" data-i18n="retail_nav_coll">Kollekció</a><span>›</span><span id="pdbname">Termék</span></div>
+  <div class="pdi">
+    <div class="pdg">
+      <div class="pdt-wrap" id="pdtw"></div>
+      <div class="pdm"><img id="pdmain" src="" alt=""><span class="zh">⊕ Nagyítás</span></div>
+    </div>
+    <div class="pdf">
+      <span class="pdct" id="pdcat"></span>
+      <h1 class="pdn" id="pdname"></h1>
+      <div class="rrow"><div class="rst" id="pdstars"></div><span class="rct" id="pdrct"></span></div>
+      <div class="pdpr" id="pdprice"></div>
+      <div class="pdtx">ÁFÁ-val és szállítással</div>
+      <div class="div"></div>
+      <p style="font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:1.8rem" id="pddesc"></p>
+      <div><span class="ol">Szín: <span id="selcol" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><div class="cols" id="pdcols"></div></div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem"><span class="ol" style="margin:0" data-i18n="retail_product_size">Méret: <span id="selsz" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><a href="#" style="font-size:11px;text-decoration:underline;color:var(--muted);cursor:none">Mérettáblázat</a></div>
+        <div class="szs" id="pdsizes"></div>
+      </div>
+      <div><span class="ol" data-i18n="retail_product_qty">Mennyiség</span>
+        <div class="qr">
+          <div class="qc"><button class="qb" onclick="chQty(-1)">−</button><div class="qn" id="qdis">1</div><button class="qb" onclick="chQty(1)">+</button></div>
+          <button class="acb" onclick="addFromPD()" data-i18n="retail_product_add">Kosárba →</button>
+          <button class="wb" id="wbtn" onclick="toggleW(this)">♡</button>
+        </div>
+      </div>
+      <div class="pship"><span>🚀 Ingyenes szállítás</span><span>🔄 30 napos visszaküldés</span><span>🛡️ Lifetime garancia</span></div>
+      <div class="acc-wrap">
+        <div class="ai">
+          <div class="ah" onclick="toggleAcc(this)"><span>Termékleírás</span><span class="aa">+</span></div>
+          <div class="ab"><div class="abi" id="acc-desc"></div></div>
+        </div>
+        <div class="ai">
+          <div class="ah" onclick="toggleAcc(this)"><span>Anyag & Gondozás</span><span class="aa">+</span></div>
+          <div class="ab"><div class="abi" id="acc-mat"></div></div>
+        </div>
+        <div class="ai op">
+          <div class="ah" onclick="toggleAcc(this)"><span>Szállítás & Visszaküldés</span><span class="aa">+</span></div>
+          <div class="ab"><div class="abi">50 000 Ft feletti rendelésekhez ingyenes futárszállítás 1–3 munkanap alatt. Visszaküldés 30 napon belül. Az eredeti csomagolásban kérjük visszaküldeni.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rvs">
+    <div class="rvh"><h2 class="rvt">Vásárlói vélemények</h2><div class="rvo"><span style="color:var(--accent);font-size:15px">★★★★★</span> 4.9 / 5</div></div>
+    <div class="rvg" id="pdrevs"></div>
+  </div>
+  <div class="reld"><h2 class="relt">Kapcsolódó termékek</h2><div class="relg" id="pdrel"></div></div>
+</div>
+
+<!-- CHECKOUT VIEW -->
+<div id="view-checkout" class="view cov">
+  <div class="coi">
+    <div class="col">
+      <div class="cos">
+        <div class="cost a" id="st0" onclick="goSt(0)">1. Szállítás</div>
+        <div class="cost" id="st1" onclick="goSt(1)">2. Fizetés</div>
+        <div class="cost" id="st2" onclick="goSt(2)">3. Összefoglalás</div>
+      </div>
+      <!-- Step 0 -->
+      <div class="cop a" id="cs0">
+        <h2 class="cot">Kapcsolattartási adatok</h2>
+        <div class="fg2">
+          <div class="fgr"><label class="fl">Keresztnév</label><input class="fi" type="text" placeholder="Anna"></div>
+          <div class="fgr"><label class="fl">Vezetéknév</label><input class="fi" type="text" placeholder="Kovács"></div>
+          <div class="fgr ff"><label class="fl">Email cím</label><input class="fi" type="email" placeholder="anna@example.hu"></div>
+          <div class="fgr ff"><label class="fl">Telefonszám</label><input class="fi" type="tel" placeholder="+36 30 123 4567"></div>
+        </div>
+        <h3 style="font-family:var(--font-d);font-size:20px;font-weight:300;margin:1.5rem 0 1.2rem">Szállítási cím</h3>
+        <div class="fg2">
+          <div class="fgr ff"><label class="fl">Ország</label><select class="fsel"><option>Magyarország</option><option>Ausztria</option><option>Németország</option></select></div>
+          <div class="fgr" style="grid-column:1/-1"><label class="fl">Irányítószám & Város</label><div style="display:grid;grid-template-columns:110px 1fr;gap:.8rem"><input class="fi" type="text" placeholder="1051"><input class="fi" type="text" placeholder="Budapest"></div></div>
+          <div class="fgr ff"><label class="fl">Utca, házszám</label><input class="fi" type="text" placeholder="Váci utca 12. II/4."></div>
+        </div>
+        <div style="margin-top:1.2rem"><label style="display:flex;align-items:center;gap:.7rem;cursor:none;font-size:13px;color:var(--muted)"><input type="checkbox" style="accent-color:var(--accent)"> Számlázási cím = szállítási cím</label></div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <button class="cnbtn" onclick="goSt(1)">Tovább a fizetéshez →</button>
+          <button class="cblnk" onclick="showV('home')">← Vissza a kollekciókhoz</button>
+        </div>
+      </div>
+      <!-- Step 1 -->
+      <div class="cop" id="cs1">
+        <h2 class="cot">Fizetési adatok</h2>
+        <div class="cardv">
+          <div class="cvc"><div></div><div></div><div></div><div></div></div>
+          <div class="cvn" id="cvn">•••• •••• •••• ••••</div>
+          <div class="cvb"><div><div class="cvlb">Kártyabirtokos</div><div id="cvnm">AURELIA GUEST</div></div><div><div class="cvlb">Lejárat</div><div id="cvex">HH/ÉÉ</div></div></div>
+        </div>
+        <div class="fg2">
+          <div class="fgr ff"><label class="fl">Kártyaszám</label><input class="fi" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCrd(this)"></div>
+          <div class="fgr ff"><label class="fl">Kártyabirtokos neve</label><input class="fi" type="text" placeholder="KOVÁCS ANNA" oninput="document.getElementById('cvnm').textContent=this.value||'AURELIA GUEST'"></div>
+          <div class="fgr"><label class="fl">Lejárat</label><input class="fi" type="text" placeholder="HH / ÉÉ" maxlength="7" oninput="fmtExp(this)"></div>
+          <div class="fgr"><label class="fl">CVV</label><input class="fi" type="password" placeholder="•••" maxlength="3"></div>
+        </div>
+        <div class="sse">🔒 256-bites SSL titkosítás. Ez egy demo — ne add meg valódi bankkártya adataidat.</div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <button class="cnbtn" onclick="goSt(2)">Rendelés áttekintése →</button>
+          <button class="cblnk" onclick="goSt(0)">← Szállítási adatok</button>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="cop" id="cs2">
+        <h2 class="cot">Rendelés összefoglalása</h2>
+        <div id="orits"></div>
+        <div style="margin-top:1.4rem;padding:1.4rem;background:var(--subtle);border:1px solid var(--border);border-radius:16px;">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Szállítási cím</div>
+          <div style="font-size:14px;line-height:1.7">Kovács Anna<br>1051 Budapest, Váci utca 12.<br>+36 30 123 4567</div>
+        </div>
+        <div style="margin-top:.8rem;padding:1.4rem;background:var(--subtle);border:1px solid var(--border);border-radius:16px;">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Fizetési mód</div>
+          <div style="font-size:14px">💳 Bankkártya — •••• •••• •••• 3456</div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:2rem">
+          <button class="cnbtn" style="background:var(--accent);color:#fff" onclick="placeOrd()">Rendelés leadása ✓</button>
+          <button class="cblnk" onclick="goSt(1)">← Fizetési adatok</button>
+        </div>
+      </div>
+    </div>
+    <div class="cor">
+      <div class="csum-t">Rendelés összegzése</div>
+      <div id="cosum"></div>
+      <div class="cstt" id="costt"></div>
+      <div class="prow"><input class="proi" type="text" placeholder="Kedvezmény kód"><button class="prob">Alkalmaz</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS VIEW -->
+<div id="view-success" class="view sv">
+  <div class="si">
+    <div class="sck"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+    <h1 class="stit" data-i18n="retail_success_title">Köszönjük<br><em>rendelésed!</em></h1>
+    <p class="ssub">Visszaigazolást küldtünk az email címedre.<br>Hamarosan feldolgozzuk a rendelésed.</p>
+    <div class="sord">Rendelésszám: <strong>AU-2025-4821</strong></div><br><br>
+    <div class="sdel"><span class="sdlb">Várható kézbesítés</span><span class="sdv">2025. május 2–4.</span></div><br>
+    <a href="#" class="sbtn" onclick="resetS();return false">Vissza a kollekciókhoz</a>
+  </div>
+</div>
+
+<script src="../js/i18n.js"></script>
+<script>
+// Cursor
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button,.pc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+window.addEventListener('scroll',()=>document.getElementById('mnav').classList.toggle('c',scrollY>60));
+
+const PRODS=[
+  {id:1,name:'Aether Chronograph',cat:'watch',catL:'Órák',price:1250000,em:'⌚',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000',badge:'Limitált',rat:4.9,rct:128,
+   cols:[{n:'Arany/Fekete',c:'#1a1a1a'},{n:'Ezüst/Fehér',c:'#b0b0b0'},{n:'Rose Gold',c:'#b5746d'}],
+   szs:['XS','S','M','L','XL'],
+   desc:'Svájci mozgású, szafírüveges kronográf. A kézzel csiszolt tok 316L nemesacélból készül, a szíj prémium bőrből.',
+   mat:'316L nemesacél tok, szafír kristályüveg, valódi bőr szíj. Svájci ETA mozgás.',imgs:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000']},
+  {id:2,name:'Essence du Noir',cat:'fragrance',catL:'Illatszerek',price:85000,em:'🧴',img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000',rat:4.8,rct:89,
+   cols:[{n:'50ml',c:'#c5a059'},{n:'100ml',c:'#8a6d3b'},{n:'200ml',c:'#5a4525'}],
+   szs:['50ml','100ml','200ml'],
+   desc:'Fekete rózsa, oud és mocha alapjegyek — egy parfüm, ami az emlékezetbe vésődik. Exkluzív, 500 palackos szériában.',
+   mat:'Alkohol, Aqua, Parfum. Vegan formula, állatokon nem tesztelve. Francia eredet.',imgs:['https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000']},
+  {id:3,name:'Nocturne Leather Bag',cat:'leather',catL:'Bőráru',price:480000,em:'👜',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000',badge:'Bestseller',rat:5.0,rct:64,
+   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Cognac',c:'#8b4513'},{n:'Krém',c:'#e8e0d0'}],
+   szs:['Mini','Standard','Maxi'],
+   desc:'Olasz full-grain bőrből kézzel varrott tote. A patinás réz hardver and a dupla varrat évtizedekre szóló tartósságot garantál.',
+   mat:'Full-grain olasz bőr, réz hardver. Kézzel varrott. Made in Italy.',imgs:['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000']},
+  {id:4,name:'Eclipse Sunglasses',cat:'jewel',catL:'Kiegészítők',price:65000,em:'🕶️',img:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000',badge:'Új',rat:4.7,rct:41,
+   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Arany',c:'#c5a059'},{n:'Ezüst',c:'#c0c0c0'}],
+   szs:['Egységes'],
+   desc:'Acetát and titánium keretek, polarizált UV400 lencsékkel. Olasz tervező darab, limitált szériában.',
+   mat:'Olasz acetát and titánium keret, polarizált CR-39 lencse.',imgs:['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000']},
+  {id:5,name:'Velvet Clutch',cat:'leather',catL:'Bőráru',price:125000,em:'💼',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000',rat:4.9,rct:37,
+   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Bordó',c:'#7b2d45'},{n:'Éjkék',c:'#1a237e'}],
+   szs:['Egységes'],
+   desc:'Bársony and bőr kombinációja arany láncos vállpánttal. Az esti rendezvények tökéletes kísérője.',
+   mat:'Olasz bársony and kordován bőr, aranyozott réz hardver. Belső irha bélés.',imgs:['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000']},
+  {id:6,name:'Obsidian Ring Set',cat:'jewel',catL:'Ékszerek',price:290000,em:'💍',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000',badge:'Limitált',rat:4.8,rct:52,
+   cols:[{n:'Fehér Arany',c:'#e0e0e0'},{n:'Sárga Arany',c:'#c5a059'},{n:'Rozé Arany',c:'#b5746d'}],
+   szs:['48','50','52','54','56','58'],
+   desc:'18 karátos arany kézzel metszett obsidián kővel. Minden követ egyedi mintázata tesz megismételhetetlenné.',
+   mat:'18 karátos arany, természetes obsidián kő. Kézzel metszett and polírozva.',imgs:['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000']},
+];
+
+const cart=[];
+let curProd=null,curQty=1;
+const FREE=50000;
+
+function renderProds(f='all'){
+  const g=document.getElementById('pgrid');g.innerHTML='';
+  const ps=f==='all'?PRODS:PRODS.filter(p=>p.cat===f);
+  ps.forEach(p=>{
+    const d=document.createElement('div');d.className='pc rv';
+    d.innerHTML=`<div class="pib">${p.badge?`<span class="pbadge">${p.badge}</span>`:''}<button class="pw" onclick="event.stopPropagation()">♡</button><img class="pci" src="${p.img}"></div><div class="pi"><span class="pcat">${p.catL}</span><div class="pn">${p.name}</div><div class="pb"><span class="pp">${p.price.toLocaleString('hu-HU')} Ft</span><div class="pstars">${'★'.repeat(Math.round(p.rat))}<span style="font-size:10px;color:var(--muted);margin-left:.2rem">(${p.rct})</span></div></div></div>`;
+    d.addEventListener('click',()=>openProd(p));
+    g.appendChild(d);
+  });
+  requestAnimationFrame(()=>document.querySelectorAll('.rv').forEach(el=>obs.observe(el)));
+}
+
+function filt(cat,btn){
+  document.querySelectorAll('.cb').forEach(b=>b.classList.remove('act'));
+  if(btn)btn.classList.add('act');
+  renderProds(cat);
+}
+
+function openProd(p){
+  curProd=p;curQty=1;
+  document.getElementById('pdbname').textContent=p.name;
+  document.getElementById('pdcat').textContent=p.catL;
+  document.getElementById('pdname').textContent=p.name;
+  document.getElementById('pdprice').textContent=p.price.toLocaleString('hu-HU')+' Ft';
+  document.getElementById('pddesc').textContent=p.desc;
+  document.getElementById('pdstars').innerHTML='★'.repeat(Math.round(p.rat))+'☆'.repeat(5-Math.round(p.rat));
+  document.getElementById('pdrct').textContent=`${p.rat}/5 (${p.rct} vélemény)`;
+  document.getElementById('qdis').textContent='1';
+  document.getElementById('acc-desc').textContent=p.desc;
+  document.getElementById('acc-mat').textContent=p.mat;
+  // thumbs
+  const tw=document.getElementById('pdtw');tw.innerHTML='';
+  p.imgs.forEach((img,i)=>{
+    const t=document.createElement('div');t.className='pdt'+(i===0?' a':'');
+    t.innerHTML=`<img src="${img}">`;t.onclick=()=>{
+      document.querySelectorAll('.pdt').forEach(x=>x.classList.remove('a'));t.classList.add('a');
+      document.getElementById('pdmain').src=img;
+    };tw.appendChild(t);
+  });
+  document.getElementById('pdmain').src=p.imgs[0];
+  // colors
+  const cd=document.getElementById('pdcols');cd.innerHTML='';
+  p.cols.forEach((c,i)=>{
+    const b=document.createElement('div');b.className='co'+(i===0?' a':'');
+    b.style.background=c.c;b.title=c.n;
+    b.onclick=()=>{document.querySelectorAll('.co').forEach(x=>x.classList.remove('a'));b.classList.add('a');document.getElementById('selcol').textContent=c.n};
+    cd.appendChild(b);
+  });
+  document.getElementById('selcol').textContent=p.cols[0].n;
+  // sizes
+  const sd=document.getElementById('pdsizes');sd.innerHTML='';
+  p.szs.forEach((s,i)=>{
+    const b=document.createElement('div');b.className='so'+(i===0?' a':'');b.textContent=s;
+    b.onclick=()=>{document.querySelectorAll('.so').forEach(x=>x.classList.remove('a'));b.classList.add('a');document.getElementById('selsz').textContent=s};
+    sd.appendChild(b);
+  });
+  document.getElementById('selsz').textContent=p.szs[0];
+  // reviews
+  const revs=[
+    {n:'K. Ágnes',d:'2025. ápr. 12.',t:'Gyönyörű darab, pontosan olyan mint a fotókon. A csomagolás is luxus volt. Biztosan visszatérek.',s:5},
+    {n:'M. Balázs',d:'2025. már. 28.',t:'Megérte minden forintot. Kézzel fogható a minőség. Szállítás is gyors, 2 nap alatt megérkezett.',s:5},
+    {n:'T. Réka',d:'2025. feb. 15.',t:'Elegáns, időtlen design. Már több AURELIA darabom van és ez sem okozott csalódást.',s:5},
+  ];
+  document.getElementById('pdrevs').innerHTML=revs.map(r=>`<div class="rvc"><div class="rss">${'★'.repeat(r.s)}</div><p class="rtx">"${r.t}"</p><div style="display:flex;justify-content:space-between"><span class="ran">${r.n}</span><span class="rdt">${r.d}</span></div></div>`).join('');
+  // related
+  const rel=PRODS.filter(x=>x.id!==p.id).slice(0,3);
+  document.getElementById('pdrel').innerHTML=rel.map(r=>`<div class="pc" onclick='openProd(${JSON.stringify(r)})' style="cursor:none"><div class="pib"><img class="pci" src="${r.img}"></div><div class="pi"><span class="pcat">${r.catL}</span><div class="pn">${r.name}</div><div class="pp">${r.price.toLocaleString('hu-HU')} Ft</div></div></div>`).join('');
+  showV('product');window.scrollTo(0,0);
+}
+
+function chQty(d){curQty=Math.max(1,curQty+d);document.getElementById('qdis').textContent=curQty}
+function addFromPD(){
+  if(!curProd)return;
+  const sz=document.querySelector('.so.a')?.textContent||curProd.szs[0];
+  const col=document.getElementById('selcol').textContent;
+  addToCart(curProd,sz,col,curQty);
+  openCart();
+}
+function toggleW(btn){btn.textContent=btn.textContent==='♡'?'♥':'♡';btn.style.color=btn.textContent==='♥'?'var(--accent)':''}
+function toggleAcc(h){h.parentElement.classList.toggle('op')}
+
+function addToCart(p,sz,col,qty=1){
+  const ex=cart.find(i=>i.id===p.id&&i.sz===sz&&i.col===col);
+  if(ex)ex.qty+=qty;else cart.push({id:p.id,name:p.name,img:p.img,price:p.price,sz,col,qty});
+  updateCart();
+}
+function updateCart(){
+  const tot=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cc').textContent=tot;
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const ship=sub>=FREE?0:2990;
+  const grand=sub+ship;
+  const list=document.getElementById('citems');
+  const foot=document.getElementById('cfoot');
+  const shipEl=document.getElementById('cship');
+  if(!cart.length){list.innerHTML='<div class="ce"><div class="ce-ic">🛒</div><div class="ce-t">A kosár üres</div><div class="ce-s">Adj hozzá termékeket</div></div>';foot.style.display='none';shipEl.style.display='none';return}
+  list.innerHTML=cart.map((it,i)=>`<div class="cit"><div class="cim"><img src="${it.img}"></div><div><div class="cin">${it.name}</div><div class="cim2">${it.sz} · ${it.col}</div><div class="ciq"><button class="cqb" onclick="updQ(${i},-1)">−</button><div class="cqn">${it.qty}</div><button class="cqb" onclick="updQ(${i},1)">+</button></div><button class="cirm" onclick="remCart(${i})">Eltávolítás</button></div><div class="cip">${(it.price*it.qty).toLocaleString('hu-HU')} Ft</div></div>`).join('');
+  foot.style.display='block';shipEl.style.display='block';
+  document.getElementById('csub').textContent=sub.toLocaleString('hu-HU')+' Ft';
+  document.getElementById('cship2').textContent=ship===0?'Ingyenes':'2 990 Ft';
+  document.getElementById('cgrand').textContent=grand.toLocaleString('hu-HU')+' Ft';
+  const pct=Math.min(sub/FREE*100,100);
+  document.getElementById('csbf').style.width=pct+'%';
+  const rem=FREE-sub;
+  document.getElementById('csbt').innerHTML=rem>0?`Még <strong>${rem.toLocaleString('hu-HU')} Ft</strong> az ingyenes szállításhoz`:`<strong style="color:var(--accent)">✓ Ingyenes szállítás!</strong>`;
+  buildCoSum();
+}
+function updQ(i,d){cart[i].qty=Math.max(1,cart[i].qty+d);updateCart()}
+function remCart(i){cart.splice(i,1);updateCart()}
+function openCart(){document.getElementById('cov').classList.add('on');document.getElementById('cpanel').classList.add('on')}
+function closeCart(){document.getElementById('cov').classList.remove('on');document.getElementById('cpanel').classList.remove('on')}
+
+let curSt=0;
+function goCO(){closeCart();buildCoSum();goSt(0);showV('checkout');window.scrollTo(0,0)}
+function goSt(n){
+  curSt=n;
+  document.querySelectorAll('.cop').forEach((p,i)=>p.classList.toggle('a',i===n));
+  document.querySelectorAll('.cost').forEach((s,i)=>{s.classList.toggle('a',i===n);s.classList.toggle('d',i<n)});
+  if(n===2)buildOrRev();
+}
+function buildCoSum(){
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const ship=sub>=FREE?0:2990;
+  const grand=sub+ship;
+  document.getElementById('cosum').innerHTML=cart.map(i=>`<div class="csi"><div class="cs-im"><img src="${i.img}"><span class="csqb">${i.qty}</span></div><span class="cs-nm">${i.name}<br><span style="color:var(--muted);font-size:11px">${i.sz} · ${i.col}</span></span><span class="cs-pr">${(i.price*i.qty).toLocaleString('hu-HU')} Ft</span></div>`).join('');
+  document.getElementById('costt').innerHTML=`<div class="csr"><span>Részösszeg</span><span>${sub.toLocaleString('hu-HU')} Ft</span></div><div class="csr"><span>Szállítás</span><span>${ship===0?'Ingyenes':'2 990 Ft'}</span></div><div class="csr tot"><span>Összesen</span><span>${grand.toLocaleString('hu-HU')} Ft</span></div>`;
+}
+function buildOrRev(){
+  document.getElementById('orits').innerHTML=cart.map(i=>`<div class="ori"><div class="ori-img"><img src="${i.img}"></div><div class="ori-n" style="flex:1"><div class="ori-n">${i.name}</div><div class="ori-m">${i.sz} · ${i.col} · ${i.qty} db</div></div><div class="ori-p">${(i.price*i.qty).toLocaleString('hu-HU')} Ft</div></div>`).join('');
+}
+function placeOrd(){cart.length=0;updateCart();showV('success');window.scrollTo(0,0)}
+function fmtCrd(el){let v=el.value.replace(/\D/g,'').slice(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();document.getElementById('cvn').textContent=(v+'•'.repeat(16-v.length)).replace(/(.{4})/g,'$1 ').trim()}
+function fmtExp(el){let v=el.value.replace(/\D/g,'');if(v.length>2)el.value=v.slice(0,2)+' / '+v.slice(2,4);document.getElementById('cvex').textContent=el.value||'HH/ÉÉ'}
+function showV(n){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));document.getElementById('view-'+n).classList.add('on');window.scrollTo(0,0)}
+function resetS(){showV('home');curSt=0}
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+function toggleMob(){
+  const m=document.getElementById('mob-menu'), t=document.getElementById('mob-toggle');
+  m.classList.toggle('open'); t.classList.toggle('open');
+}
+renderProds('all');
+</script>
+<div class="back-bar">
+  <a href="../../index.html#templates" class="bb-b">← VISSZA</a>
+  <a href="../../contact.html" class="bb-c">EZT SZERETNÉM →</a>
+</div>
+</body>
+</html>

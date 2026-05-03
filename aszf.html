@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Általános Szerződési Feltételek | The Limitlesser</title>
+  <style>
+    :root { 
+      --bg: #050200; 
+      --white: #fff; 
+      --g1: #a1a1a1; 
+      --accent: #D97706; 
+      --font-d: 'Times New Roman', Times, serif;
+      --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-b); line-height: 1.8; padding: 10rem 2rem 5rem; max-width: 900px; margin: 0 auto; overflow-x: hidden; }
+    
+    /* Mouse Glow Effect */
+    #mouse-glow {
+      position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
+      background: radial-gradient(circle, rgba(217,119,6,0.12) 0%, rgba(217,119,6,0.05) 30%, transparent 70%);
+      pointer-events: none; z-index: -1; transform: translate(-50%, -50%);
+      filter: blur(80px); opacity: 0; transition: opacity 1s ease;
+    }
+
+    h1 { font-family: var(--font-d); font-size: 42px; margin-bottom: 3rem; color: var(--accent); font-weight: 300; }
+    h2 { font-family: var(--font-d); font-size: 24px; margin: 3.5rem 0 1.5rem; color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; font-weight: 300; }
+    p, li { color: var(--g1); font-size: 16px; margin-bottom: 1.2rem; font-weight: 300; }
+    ul { margin-left: 1.5rem; margin-bottom: 2rem; }
+    .nav-back { position: fixed; top: 2.2rem; left: 5rem; color: var(--white); text-decoration: none; font-size: 11px; border: 1px solid rgba(255,255,255,0.1); padding: 10px 22px; border-radius: 100px; background: rgba(0,0,0,0.5); backdrop-filter: blur(24px); z-index: 1000; letter-spacing: 2px; font-weight: 600; transition: 0.3s; }
+    .nav-back:hover { background: var(--white); color: #000; border-color: var(--white); transform: translateY(-2px); }
+    .company-box { background: rgba(217,119,6,0.03); padding: 2.5rem; border-radius: 24px; margin-bottom: 4rem; border: 1px solid rgba(217,119,6,0.1); }
+    
+    @media (max-width: 768px) {
+      .nav-back { left: 2rem; top: 1.5rem; }
+      body { padding-top: 8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="mouse-glow"></div>
+  <a href="index.html" class="nav-back">← VISSZA A FŐOLDALRA</a>
+  
+  <h1>Általános Szerződési Feltételek</h1>
+  
+  <div class="company-box">
+    <p><strong>Szolgáltató adatai:</strong></p>
+    <p>Név: Végtelen Folyamat Kft.<br>
+    Székhely: 1135 Budapest, Szent László út 34-38. C. ép. 60. ajtó<br>
+    Cégjegyzékszám: [CÉGJEGYZÉKSZÁM]<br>
+    Adószám: [ADÓSZÁM]<br>
+    Képviselő: [KÉPVISELŐ]<br>
+    E-mail: info@thelimitlesser.hu</p>
+  </div>
+
+  <h2>1. A Szolgáltatás tárgya</h2>
+  <p>A Szolgáltató digitális ügynökségi szolgáltatásokat nyújt, beleértve weboldal- és webshop fejlesztést, arculattervezést, marketing stratégiát és automatizációs megoldásokat.</p>
+
+  <h2>2. A Megrendelés folyamata</h2>
+  <p>A felek a szolgáltatás igénybevételéről egyedi megbízási szerződést kötnek, amely rögzíti a pontos feladatokat, határidőket és a díjazást. A weboldalon keresztül történő kapcsolatfelvétel nem minősül automatikus szerződéskötésnek.</p>
+
+  <h2>3. Díjazás és fizetési feltételek</h2>
+  <ul>
+    <li>A szolgáltatások díja egyedi árajánlat alapján kerül meghatározásra.</li>
+    <li>A fizetés történhet banki átutalással vagy a Szolgáltató által biztosított online fizetési felületen keresztül.</li>
+    <li>Szolgáltató jogosult előleg bekérésére a munka megkezdése előtt.</li>
+  </ul>
+
+  <h2>4. Szerzői jogok</h2>
+  <p>Az elkészített weboldalak és grafikai tervek szerzői joga a teljes kifizetést követően száll át a Megrendelőre, a Szolgáltató pedig jogosult a referenciaként való feltüntetésre, hacsak a felek másként nem állapodnak meg.</p>
+
+  <h2>5. Adatvédelem</h2>
+  <p>A Szolgáltató a Megrendelő adatait az érvényben lévő Adatkezelési Tájékoztatóban rögzítettek szerint, a GDPR előírásainak megfelelően kezeli.</p>
+
+  <h2>6. Panaszkezelés és jogviták</h2>
+  <p>A felek törekszenek a vitás kérdések békés úton történő rendezésére. Amennyiben ez nem vezet eredményre, úgy a Szolgáltató székhelye szerinti illetékes bíróság dönt.</p>
+
+  <p style="margin-top: 5rem; font-size: 12px; opacity: 0.5;">Utolsó frissítés: 2024. április 30.</p>
+
+  <script>
+    const mg = document.getElementById('mouse-glow');
+    document.addEventListener('mousemove', e => {
+      if(mg) {
+        mg.style.left = e.clientX + 'px';
+        mg.style.top = e.clientY + 'px';
+        mg.style.opacity = '1';
+      }
+    });
+  </script>
+</body>
+</html>
