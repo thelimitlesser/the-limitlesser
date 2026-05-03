@@ -268,48 +268,42 @@ section{position:relative;z-index:5}
 #cta{padding:12rem 5rem 20rem;text-align:center;}
 .cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
-/* Absolute Pro Neural Map */
-#results { background: #050200; overflow: hidden; position: relative; }
-.nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.1) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.3; pointer-events: none; }
+/* Stable Pro Neural Map */
+#results { background: #050200; overflow: hidden; position: relative; padding: 12rem 5rem; }
+.nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; pointer-events: none; }
 
-.nm-wrapper { position: relative; max-width: 1400px; margin: 8rem auto; min-height: 700px; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
-.nm-container-3d { position: relative; width: 100%; height: 100%; transform: rotateX(15deg) rotateY(-5deg); transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; }
+.nm-grid { display: grid; grid-template-columns: 1fr 200px 1fr; align-items: center; gap: 4rem; max-width: 1300px; margin: 4rem auto; position: relative; z-index: 5; }
 
-.nm-core-wrap { position: relative; z-index: 10; transform: translateZ(50px); }
-.nm-core { width: 140px; height: 140px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 80px rgba(217,119,6,0.6); position: relative; }
-.nm-core::before { content: 'AI'; font-family: var(--font-d); font-size: 32px; font-weight: 700; color: #fff; font-style: italic; z-index: 2; }
+.nm-col { display: flex; flex-direction: column; gap: 3rem; }
+.nm-col.left { text-align: right; align-items: flex-end; }
+.nm-col.right { text-align: left; align-items: flex-start; }
 
-.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.2); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; }
-.nm-orbit-1 { width: 220px; height: 220px; transform: rotateX(60deg) rotateY(20deg); }
-.nm-orbit-2 { width: 300px; height: 300px; transform: rotateX(-40deg) rotateY(40deg); animation-duration: 25s; border-style: dashed; }
+.nm-core-col { display: flex; justify-content: center; position: relative; }
+.nm-core { width: 120px; height: 120px; background: radial-gradient(circle, var(--accent) 0%, transparent 75%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(217,119,6,0.5); position: relative; z-index: 10; }
+.nm-core::after { content: 'AI'; font-family: var(--font-d); font-size: 26px; font-weight: 700; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 15px #fff; }
 
-.nm-nodes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; pointer-events: none; transform-style: preserve-3d; }
-.nm-node { pointer-events: auto; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 2.5rem; backdrop-filter: blur(20px); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; display: flex; align-items: center; gap: 2rem; width: 420px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); overflow: hidden; }
-.nm-node::after { content: ''; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transition: 0.8s; pointer-events: none; }
-.nm-node:hover { transform: translateZ(30px) scale(1.05); border-color: var(--accent); background: rgba(255,255,255,0.05); }
-.nm-node:hover::after { top: 0; left: 0; }
+.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.15); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; pointer-events: none; }
+.nm-orbit-1 { width: 180px; height: 180px; border-style: solid; }
+.nm-orbit-2 { width: 240px; height: 240px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; }
 
-.n-tl { justify-self: end; align-self: end; margin: 0 8rem 4rem 0; }
-.n-tr { justify-self: start; align-self: end; margin: 0 0 4rem 8rem; }
-.n-bl { justify-self: end; align-self: start; margin: 4rem 8rem 0 0; }
-.n-br { justify-self: start; align-self: start; margin: 4rem 0 0 8rem; }
+.nm-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; backdrop-filter: blur(15px); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 1.5rem; width: 100%; max-width: 400px; position: relative; z-index: 20; }
+.nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-.nm-node-icon { width: 56px; height: 56px; background: rgba(217,119,6,0.15); border: 1px solid rgba(217,119,6,0.3); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; box-shadow: 0 0 20px rgba(217,119,6,0.2); }
-.nm-node-text { font-family: 'Inter', sans-serif; font-size: 17px; color: var(--white); font-weight: 500; line-height: 1.5; }
+.nm-node-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
+.nm-node-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--white); font-weight: 400; line-height: 1.5; }
 
-.nm-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-.nm-line-path { stroke: rgba(217,119,6,0.2); stroke-width: 1.5; fill: none; }
-.nm-bullet { stroke: var(--accent); stroke-width: 2.5; fill: none; stroke-dasharray: 20, 300; stroke-linecap: round; animation: nm-shoot 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.nm-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.nm-line-path { stroke: rgba(217,119,6,0.1); stroke-width: 1; fill: none; }
+.nm-bullet { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 10, 200; stroke-linecap: round; animation: nm-shoot 3s linear infinite; }
 
 @keyframes nm-orbit-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes nm-shoot { from { stroke-dashoffset: 320; } to { stroke-dashoffset: -320; } }
+@keyframes nm-shoot { from { stroke-dashoffset: 210; } to { stroke-dashoffset: 0; } }
 
-@media(max-width:1150px) {
-  .nm-wrapper { perspective: none; min-height: auto; }
-  .nm-container-3d { transform: none; flex-direction: column; gap: 4rem; }
-  .nm-nodes { position: static; display: flex; flex-direction: column; gap: 2rem; width: 100%; }
-  .nm-node { width: 100%; margin: 0 !important; }
+@media(max-width:1050px) {
+  .nm-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .nm-col { align-items: center !important; text-align: center !important; }
   .nm-lines, .nm-orbit { display: none; }
+  .nm-core-col { order: -1; margin-bottom: 2rem; }
 }
 
 /* Challenges Section (Redesigned) */
@@ -727,75 +721,67 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
-<section id="results" style="padding: 14rem 5rem; overflow: hidden;">
+<section id="results" style="padding: 12rem 5rem; overflow: hidden;">
   <div class="nm-bg-grid"></div>
   
   <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2;">
     <span class="s-tag">Eredmények</span>
     <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
     
-    <div class="nm-wrapper">
-      <div class="nm-container-3d">
-        <!-- AI Core Complex -->
-        <div class="nm-core-wrap rv">
-          <div class="nm-orbit nm-orbit-1"></div>
-          <div class="nm-orbit nm-orbit-2"></div>
-          <div class="nm-core"></div>
+    <div class="nm-grid">
+      <!-- Left Column -->
+      <div class="nm-col left">
+        <div class="nm-node rv">
+          <div class="nm-node-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="nm-node-text">Kevesebb manuális feladat a csapatod számára</div>
         </div>
-        
-        <!-- Nodes -->
-        <div class="nm-nodes">
-          <div class="nm-node n-tl rv">
-            <div class="nm-node-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            </div>
-            <div class="nm-node-text">Kevesebb manuális feladat a csapatod számára</div>
+        <div class="nm-node rv">
+          <div class="nm-node-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          
-          <div class="nm-node n-tr rv">
-            <div class="nm-node-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div class="nm-node-text">Gyorsabb és átláthatóbb folyamatok</div>
-          </div>
-          
-          <div class="nm-node n-bl rv">
-            <div class="nm-node-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="nm-node-text">Jobb kontroll a működés felett</div>
-          </div>
-          
-          <div class="nm-node n-br rv">
-            <div class="nm-node-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="nm-node-text">Stabilabb alap a növekedéshez</div>
-          </div>
+          <div class="nm-node-text">Gyorsabb és átláthatóbb folyamatok</div>
         </div>
-        
-        <!-- Advanced Data Lines (Desktop only) -->
-        <svg class="nm-lines" viewBox="0 0 1400 700">
-          <defs>
-            <filter id="nm-glow">
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-            </filter>
-          </defs>
-          
-          <!-- Static Background Lines -->
-          <path class="nm-line-path" d="M700,350 L400,200" />
-          <path class="nm-line-path" d="M700,350 L1000,200" />
-          <path class="nm-line-path" d="M700,350 L400,500" />
-          <path class="nm-line-path" d="M700,350 L1000,500" />
-          
-          <!-- Animated Light Bullets -->
-          <path class="nm-bullet" filter="url(#nm-glow)" d="M700,350 L400,200" />
-          <path class="nm-bullet" filter="url(#nm-glow)" d="M700,350 L1000,200" style="animation-delay: 1s;" />
-          <path class="nm-bullet" filter="url(#nm-glow)" d="M700,350 L400,500" style="animation-delay: 2s;" />
-          <path class="nm-bullet" filter="url(#nm-glow)" d="M700,350 L1000,500" style="animation-delay: 3s;" />
-        </svg>
       </div>
+      
+      <!-- Center Column (Core) -->
+      <div class="nm-core-col">
+        <div class="nm-orbit nm-orbit-1"></div>
+        <div class="nm-orbit nm-orbit-2"></div>
+        <div class="nm-core rv"></div>
+      </div>
+      
+      <!-- Right Column -->
+      <div class="nm-col right">
+        <div class="nm-node rv">
+          <div class="nm-node-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="nm-node-text">Jobb kontroll a működés felett</div>
+        </div>
+        <div class="nm-node rv">
+          <div class="nm-node-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="nm-node-text">Stabilabb alap a növekedéshez</div>
+        </div>
+      </div>
+      
+      <!-- SVG Lines Background -->
+      <svg class="nm-lines" viewBox="0 0 1300 500" preserveAspectRatio="none">
+        <!-- Lines from core to nodes -->
+        <!-- Paths are simplified for stable grid alignment -->
+        <path class="nm-line-path" d="M650,250 L400,100" />
+        <path class="nm-line-path" d="M650,250 L400,400" />
+        <path class="nm-line-path" d="M650,250 L900,100" />
+        <path class="nm-line-path" d="M650,250 L900,400" />
+        
+        <path class="nm-bullet" d="M650,250 L400,100" />
+        <path class="nm-bullet" d="M650,250 L400,400" style="animation-delay: 1.5s;" />
+        <path class="nm-bullet" d="M650,250 L900,100" style="animation-delay: 0.7s;" />
+        <path class="nm-bullet" d="M650,250 L900,400" style="animation-delay: 2.2s;" />
+      </svg>
     </div>
   </div>
 </section>
