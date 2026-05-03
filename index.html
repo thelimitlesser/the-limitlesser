@@ -268,6 +268,17 @@ section{position:relative;z-index:5}
 #cta{padding:12rem 5rem 20rem;text-align:center;}
 .cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
+/* Results Section (Redesigned) */
+.res-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 1100px; margin: 4rem auto 0; }
+.res-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 3rem; text-align: left; transition: 0.4s; backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 1.5rem; }
+.res-card:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(217,119,6,0.1); }
+.res-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); }
+.res-text { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; color: var(--white); line-height: 1.4; }
+
+@media(max-width:800px) {
+  .res-grid { grid-template-columns: 1fr; }
+}
+
 /* Challenges Section (Redesigned) */
 .ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; }
 .ch-intro { font-family: 'Inter', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; }
@@ -683,6 +694,43 @@ body.loading { overflow: hidden; }
   </div>
 </section>
 
+<section id="results" style="padding: 10rem 5rem; background: rgba(255,255,255,0.02);">
+  <div class="section-wrap rv" style="text-align: center;">
+    <span class="s-tag">Eredmények</span>
+    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
+    
+    <div class="res-grid">
+      <div class="res-card rv">
+        <div class="res-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="res-text">Kevesebb manuális feladat a csapatod számára</div>
+      </div>
+      
+      <div class="res-card rv">
+        <div class="res-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="res-text">Gyorsabb és átláthatóbb folyamatok</div>
+      </div>
+      
+      <div class="res-card rv">
+        <div class="res-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="res-text">Jobb kontroll a működés felett</div>
+      </div>
+      
+      <div class="res-card rv">
+        <div class="res-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="res-text">Stabilabb alap a növekedéshez</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Portfolio (Mac Slider) -->
 <section id="portfolio">
   <div class="p-header rv" style="text-align: center;">
@@ -725,19 +773,6 @@ body.loading { overflow: hidden; }
         <p class="p-desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
         <a href="https://hu.folyamat.com" target="_blank" class="p-btn">Megnézem az oldalt</a>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="results">
-  <div class="section-wrap rv" style="text-align: center; padding: 10rem 5rem;">
-    <span class="s-tag">Eredmények</span>
-    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
-    <div class="st-grid" style="margin-top: 4rem;">
-      <div class="rv"><span class="st-n">01</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Kevesebb manuális feladat</p></div>
-      <div class="rv"><span class="st-n">02</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Gyorsabb folyamatok</p></div>
-      <div class="rv"><span class="st-n">03</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Jobb kontroll</p></div>
-      <div class="rv"><span class="st-n">04</span><p class="v-text" style="text-align: center; margin-top: 1rem;">Stabilabb alap</p></div>
     </div>
   </div>
 </section>
