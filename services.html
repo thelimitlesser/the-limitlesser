@@ -36,9 +36,9 @@
     /* Nav */
     nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:0.4s;}
     nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.4rem 5rem;border-bottom:1px solid rgba(217,119,6,0.15)}
-    .n-logo{text-decoration:none;color:var(--white);display:flex;flex-direction:column;}
+    .n-logo{text-decoration:none;color:var(--white);display:flex;flex-direction:column;z-index:1100;position:relative;}
     .n-ll{font-family:var(--font-d);font-size:12px;letter-spacing:8px;text-transform:uppercase;color:rgba(255,255,255,.8);}
-    .n-links{display:flex;gap:3rem;list-style:none}
+    .n-links{display:flex;gap:3rem;list-style:none;flex:1;justify-content:center;}
     .n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:0.3s;font-weight:500;}
     .n-links a:hover{color:var(--white)}
     .n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;text-decoration:none;border-radius:100px;font-weight:600;transition:0.3s;}
@@ -52,11 +52,13 @@
     .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* Mobile Menu Overlay */
-    .mob-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050200; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px); }
+    .mob-menu-overlay.open { opacity: 1; visibility: visible; }
+    .mob-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 320px; height: 100%; background: rgba(5, 2, 0, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.1); }
     .mob-menu.open { transform: translateX(0); }
-    .mob-menu a { font-family: var(--font-d); font-size: 32px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+    .mob-menu a { font-family: var(--font-d); font-size: 24px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; letter-spacing: 1px; }
     .mob-menu a:hover { color: var(--accent); }
-    .mob-menu .n-btn { font-size: 14px; padding: 1.2rem 3rem; margin-top: 2rem; }
+    .mob-menu .n-btn { font-size: 13px; padding: 1.1rem 2.5rem; margin-top: 1rem; width: 100%; text-align: center; justify-content: center; }
 
     /* Hero */
     .s-hero { padding: 18rem 2rem 10rem; text-align: center; }
@@ -127,17 +129,16 @@
     .rv { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
     .rv.on { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 1100px) {
-      .pillars { grid-template-columns: 1fr; padding: 0 2rem; }
+    @media(max-width:1050px){
+      nav{padding:1.5rem 2rem}
+      .n-links{display:none}
+      .n-btn.nav-cta-btn{display:none}
+      .mob-toggle{display:flex}
+      .s-hero { padding-top: 10rem; }
+      .pillars { grid-template-columns: 1fr; padding: 0 1.5rem; }
       .cl-grid { grid-template-columns: 1fr; }
-      .quote-wrap { grid-template-columns: 1fr; padding: 4rem 2rem; gap: 4rem; }
-      nav { padding: 1.5rem 2rem; }
-      .n-links { display: none; }
-      .n-btn { display: none; }
-      .mob-toggle { display: flex; }
-      .pillar-card { padding: 3rem 2rem; border-radius: 30px; }
-      .p-title { font-size: 28px; }
-      #custom-layer { padding: 6rem 2rem; }
+    }
+  #custom-layer { padding: 6rem 2rem; }
       .cl-item { padding: 2.5rem; }
       #quote { padding: 6rem 2rem; }
     }
@@ -151,8 +152,9 @@
   </div>
   <div id="mouse-glow" style="z-index: -1;"></div>
 
+  <div class="mob-menu-overlay" id="mob-overlay" onclick="toggleMob()"></div>
   <nav id="nav">
-    <a href="index.html" class="n-logo">
+    <a href="index.html#hero" class="n-logo">
       <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
     </a>
     <div class="n-links">
@@ -160,10 +162,11 @@
       <a href="about.html">Rólunk</a>
       <a href="services.html">Szolgáltatások</a>
       <a href="index.html#portfolio">Munkáink</a>
-      <a href="contact.html">Kapcsolat</a>
     </div>
-    <a href="contact.html" class="n-btn">Kezdjük el</a>
-    <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+    <div style="display: flex; align-items: center;">
+      <a href="contact.html" class="n-btn nav-cta-btn">Kezdjük el</a>
+      <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
+    </div>
   </nav>
 
   <div class="mob-menu" id="mob-menu">
@@ -172,7 +175,7 @@
     <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
     <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
     <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
-    <a href="contact.html" class="n-btn" onclick="toggleMob()">Kezdjük el</a>
+    <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()">Kezdjük el</a>
   </div>
 
   <section style="padding: 18rem 5rem 6rem; text-align: center;">
@@ -428,8 +431,10 @@
     function toggleMob() {
       const btn = document.getElementById('mob-toggle');
       const menu = document.getElementById('mob-menu');
+      const overlay = document.getElementById('mob-overlay');
       btn.classList.toggle('open');
       menu.classList.toggle('open');
+      overlay.classList.toggle('open');
       document.body.classList.toggle('loading'); // Disable scroll
     }
 

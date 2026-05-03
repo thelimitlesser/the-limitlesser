@@ -72,12 +72,12 @@ body.link-hover #cur-r{width:54px;height:54px;border-color:rgba(0,85,255,.6)}
 /* ─── Nav ─────────────────────────────────────── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
 nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.4rem 5rem;border-bottom-color:rgba(217,119,6,0.15)}
-.n-logo{text-decoration:none;color:var(--white);cursor:none; display: flex; flex-direction: column;}
+.n-logo{text-decoration:none;color:var(--white);display:flex;flex-direction:column;z-index:1100;position:relative;}
 .n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
-.n-links{display:flex;gap:3rem;list-style:none}
-.n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;cursor:none;line-height:1.2;font-weight:500;}
+.n-links{display:flex;gap:3rem;list-style:none;flex:1;justify-content:center;}
+.n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
 .n-links a:hover{color:var(--white)}
-.n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;cursor:none;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
+.n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
 .n-btn:hover{background:#ccc;transform:translateY(-2px);}
 
 /* Mobile Toggle */
@@ -88,11 +88,13 @@ nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop
 .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* Mobile Menu Overlay */
-.mob-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050200; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px); }
+.mob-menu-overlay.open { opacity: 1; visibility: visible; }
+.mob-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 320px; height: 100%; background: rgba(5, 2, 0, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.1); }
 .mob-menu.open { transform: translateX(0); }
-.mob-menu a { font-family: var(--font-d); font-size: 32px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+.mob-menu a { font-family: var(--font-d); font-size: 24px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; letter-spacing: 1px; }
 .mob-menu a:hover { color: var(--accent); }
-.mob-menu .n-btn { font-size: 14px; padding: 1.2rem 3rem; margin-top: 2rem; }
+.mob-menu .n-btn { font-size: 13px; padding: 1.1rem 2.5rem; margin-top: 1rem; width: 100%; text-align: center; justify-content: center; }
 
 /* ─── Hero ─────────────────────────────────────── */
 #hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;overflow:hidden; text-align: center; padding-top: 12rem;}
@@ -179,6 +181,8 @@ section{position:relative;z-index:5}
 .tr-left-v{font-family:var(--font-d);font-size:clamp(18px,2.2vw,28px);font-weight:300;color:rgba(255,255,255,.4)}
 .tr-right-v{font-family:var(--font-d);font-size:clamp(17px,1.8vw,24px);font-weight:300;color:var(--white);text-align:right;}
 .tr-arrow svg{width:24px;height:24px;color:var(--accent)}
+
+.tr-mobile-list { display: none; }
 
 /* Templates (Interactive) */
 #templates { padding: 10rem 5rem; }
@@ -271,7 +275,7 @@ section{position:relative;z-index:5}
 @media(max-width:1050px){
   nav{padding:1.5rem 2rem}
   .n-links{display:none}
-  .n-btn{display:none}
+  .n-btn.nav-cta-btn{display:none}
   .mob-toggle{display:flex}
   .p-grid { grid-template-columns: 1fr; }
   .t-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
@@ -280,11 +284,15 @@ section{position:relative;z-index:5}
   .pr-steps::before{display:none}
   .st-grid{grid-template-columns:1fr 1fr}
   #hero { padding-top: 10rem; }
-  #manifesto, #portfolio, #transform, #templates, #services, #process, #cta { padding-left: 2rem; padding-right: 2rem; }
-  .tr-cols { grid-template-columns: 1fr; }
-  .tr-mid-head, .tr-row-mid { display: none; }
-  .tr-col-head.right, .tr-row-right { text-align: left; justify-content: flex-start; }
-  .tr-row-left, .tr-row-right { padding: 1.5rem 0; }
+  #manifesto, #portfolio, #transform, #templates, #services, #process, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  
+  .tr-cols { display: none; }
+  .tr-mobile-list { display: block; max-width: 600px; margin: 0 auto; }
+  .tr-m-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 2rem; margin-bottom: 2rem; }
+  .tr-m-before { font-family: var(--font-h); font-size: 10px; color: var(--g1); text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 0.5rem; }
+  .tr-m-before-v { font-family: var(--font-d); font-size: 18px; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; display: block; }
+  .tr-m-after { font-family: var(--font-h); font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 0.5rem; }
+  .tr-m-after-v { font-family: var(--font-d); font-size: 20px; color: var(--white); display: block; }
 }
 
 @media(max-width: 600px) {
@@ -433,7 +441,8 @@ footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgb
 
 @media (max-width: 768px) {
   .p-nav { position: relative; width: 100%; left: 0; top: 0; justify-content: center; gap: 2rem; margin-top: 2rem; }
-  .mac-base { width: 100%; margin-left: 0; }
+  .mac-screen { border-width: 6px; border-radius: 8px 8px 0 0; }
+  .mac-base { width: 104%; margin-left: -2%; height: 12px; border-radius: 0 0 12px 12px; }
 }
 /* Preloader */
 #preloader {
@@ -478,8 +487,9 @@ body.loading { overflow: hidden; }
 
 <div id="streaks" style="display:none;"></div>
 
+<div class="mob-menu-overlay" id="mob-overlay" onclick="toggleMob()"></div>
 <nav id="nav">
-  <a href="#" class="n-logo">
+  <a href="index.html#hero" class="n-logo">
     <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
   </a>
   <div class="n-links">
@@ -508,7 +518,7 @@ body.loading { overflow: hidden; }
         </div>
       </div>
     </div>
-    <a href="contact.html" class="n-btn" data-i18n="nav-cta">Kezdjük el</a>
+    <a href="contact.html" class="n-btn nav-cta-btn" data-i18n="nav-cta">Kezdjük el</a>
     <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -519,7 +529,7 @@ body.loading { overflow: hidden; }
   <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
   <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
   <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
-  <a href="contact.html" class="n-btn" onclick="toggleMob()">Kezdjük el</a>
+  <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()">Kezdjük el</a>
 </div>
 
 <section id="hero">
@@ -588,14 +598,14 @@ body.loading { overflow: hidden; }
         <span class="p-cat">WEBÁRUHÁZ / AUTÓ</span>
         <h3 class="p-name">Bontoaruhaz.hu</h3>
         <p class="p-desc" data-i18n="portfolio_bonto_desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
-        <a href="https://www.bontoaruhaz.hu" target="_blank" class="n-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
+        <a href="https://www.bontoaruhaz.hu" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
       </div>
       <!-- Item 2 -->
       <div class="p-item-info">
         <span class="p-cat">MEMBERSHIP / COMMUNITY</span>
         <h3 class="p-name">Folyamat.hu</h3>
         <p class="p-desc" data-i18n="portfolio_folyamat_desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
-        <a href="https://hu.folyamat.com" target="_blank" class="n-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
+        <a href="https://hu.folyamat.com" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
       </div>
     </div>
   </div>
@@ -627,6 +637,33 @@ body.loading { overflow: hidden; }
     <div class="tr-row-left rv"><span class="tr-left-v" data-i18n="transform_item_4_left">Lokális megoldások</span></div>
     <div class="tr-row-mid rv"><div class="tr-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
     <div class="tr-row-right rv"><span class="tr-right-v" data-i18n="transform_item_4_right">Határok nélküli globális expanzió</span></div>
+  </div>
+
+  <div class="tr-mobile-list">
+    <div class="tr-m-item rv">
+      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
+      <span class="tr-m-before-v" data-i18n="transform_item_1_left">Csak egy a sok közül (Árverseny)</span>
+      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
+      <span class="tr-m-after-v" data-i18n="transform_item_1_right">A kategória egyetlen és megkerülhetetlen szereplője</span>
+    </div>
+    <div class="tr-m-item rv">
+      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
+      <span class="tr-m-before-v" data-i18n="transform_item_2_left">Digitális jelenlét (Weboldal)</span>
+      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
+      <span class="tr-m-after-v" data-i18n="transform_item_2_right">Digitális dominancia és automatizált növekedés</span>
+    </div>
+    <div class="tr-m-item rv">
+      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
+      <span class="tr-m-before-v" data-i18n="transform_item_3_left">Üzleti kiadás és költség</span>
+      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
+      <span class="tr-m-after-v" data-i18n="transform_item_3_right">Hosszútávú értékteremtés és profit-gépezet</span>
+    </div>
+    <div class="tr-m-item rv">
+      <span class="tr-m-before" data-i18n="transform_market_sees">A PIAC SZEMÉBEN</span>
+      <span class="tr-m-before-v" data-i18n="transform_item_4_left">Lokális megoldások</span>
+      <span class="tr-m-after" data-i18n="transform_we_see">A LIMITLESSER VÍZIÓ</span>
+      <span class="tr-m-after-v" data-i18n="transform_item_4_right">Határok nélküli globális expanzió</span>
+    </div>
   </div>
 </section>
 
@@ -832,8 +869,10 @@ window.addEventListener('scroll', () => {
 function toggleMob() {
   const btn = document.getElementById('mob-toggle');
   const menu = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
   btn.classList.toggle('open');
   menu.classList.toggle('open');
+  overlay.classList.toggle('open');
   document.body.classList.toggle('loading'); // Disable scroll
 }
 
