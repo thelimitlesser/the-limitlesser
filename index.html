@@ -278,14 +278,13 @@ section{position:relative;z-index:5}
 .nm-col.left { align-items: flex-end; }
 .nm-col.right { align-items: flex-start; }
 
-.nm-core-col { display: flex; justify-content: center; align-items: center; position: relative; }
-.nm-core-container { position: relative; width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; }
-.nm-core { width: 100px; height: 100px; background: radial-gradient(circle, var(--accent) 0%, transparent 75%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(217,119,6,0.5); position: relative; z-index: 10; }
-.nm-core::after { content: 'AI'; font-family: var(--font-d); font-size: 22px; font-weight: 700; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 10px #fff; }
+.nm-core-container { position: relative; width: 140px; height: 140px; display: grid; place-items: center; }
+.nm-core { width: 100px; height: 100px; background: radial-gradient(circle at 30% 30%, #D97706 0%, #78350f 50%, #000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(217,119,6,0.5), inset -10px -10px 30px rgba(0,0,0,0.8); position: relative; z-index: 10; border: 1px solid rgba(255,255,255,0.1); }
+.nm-core::after { content: 'L.L.'; font-family: var(--font-d); font-size: 20px; font-weight: 800; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 10px rgba(255,255,255,0.8); letter-spacing: 1px; }
 
-.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.15); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; pointer-events: none; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.nm-orbit-1 { width: 160px; height: 160px; }
-.nm-orbit-2 { width: 220px; height: 220px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; }
+.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.2); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; pointer-events: none; }
+.nm-orbit-1 { width: 180px; height: 180px; border-style: solid; opacity: 0.4; }
+.nm-orbit-2 { width: 260px; height: 260px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; opacity: 0.2; }
 
 .nm-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 1.8rem; backdrop-filter: blur(15px); transition: 0.4s; display: flex; align-items: center; gap: 1.5rem; width: 100%; max-width: 380px; position: relative; z-index: 20; text-align: left; }
 .nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
