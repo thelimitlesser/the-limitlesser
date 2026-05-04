@@ -135,10 +135,14 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
 
     /* About Sections */
     .hero-about { position:relative; min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 12rem 2rem 5rem; text-align: center; }
-    .hero-title { font-family: var(--font-d); font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.2; max-width: 1000px; margin: 0 auto 3rem; letter-spacing: -1px; color: var(--white); }
+    .hero-title { font-family: var(--font-d); font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.2; max-width: 1000px; margin: 0 auto 5rem; letter-spacing: -1px; color: var(--white); }
     .hero-title em { font-style: italic; color: var(--accent); }
     .hero-sub { font-size: clamp(18px, 2vw, 24px); color: var(--white); line-height: 1.6; max-width: 800px; margin: 0 auto; font-weight: 300; font-family: var(--font-b); }
     .hero-sub p { margin-bottom: 1.5rem; }
+    .hero-sub em { font-style: normal; color: var(--accent); }
+    
+    .rv-delayed { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .rv-delayed.on { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
 
     .section-wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
     .content-block { margin-bottom: 12rem; }
@@ -349,14 +353,14 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     </section>
 
     <div class="section-wrap">
-      <div class="founders-wrap rv">
+      <div class="founders-wrap rv-delayed">
         <div class="founder-image-container">
           <div class="founder-frame">
             <img src="assets/founders.jpg" alt="Erdélyi Péter & Gürtler Gábor" class="founder-img">
           </div>
         </div>
         <div class="founder-names">
-          <h3>Erdélyi Péter <span class="amp">&</span> Gürtler Gábor</h3>
+          <h3 class="rv-delayed" style="transition-delay: 0.5s;">Erdélyi Péter <span class="amp">&</span> Gürtler Gábor</h3>
         </div>
       </div>
 
@@ -451,7 +455,7 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     const revObs=new IntersectionObserver(entries=>{
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
     },{threshold:.1});
-    document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
+    document.querySelectorAll('.rv, .rv-delayed').forEach(el=>revObs.observe(el));
   </script>
 </body>
 </html>
