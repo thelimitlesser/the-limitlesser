@@ -338,7 +338,10 @@ section{position:relative;z-index:5}
 
 /* Challenges Section (Redesigned) */
 #why-now { position: relative; overflow: hidden; padding: 12rem 5rem; }
-.ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; position: relative; z-index: 2; }
+.ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; grid-template-areas: "intro cards" "details cards"; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: start; position: relative; z-index: 2; }
+.ch-left-intro { grid-area: intro; }
+.ch-left-details { grid-area: details; }
+.ch-cards { grid-area: cards; }
 .ch-intro { font-family: 'Inter', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; }
 .ch-cards { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 .ch-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: center; transition: 0.4s; backdrop-filter: blur(10px); }
@@ -347,7 +350,7 @@ section{position:relative;z-index:5}
 .ch-card-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--white); font-weight: 400; }
 
 @media(max-width:1050px) {
-  .ch-grid { grid-template-columns: 1fr; gap: 4rem; }
+  .ch-grid { grid-template-columns: 1fr; grid-template-areas: "intro" "cards" "details"; gap: 3rem; }
 }
 
 /* Solution Section (Redesigned) */
@@ -404,10 +407,11 @@ section{position:relative;z-index:5}
   .pr-steps::before{display:none}
   .st-grid{grid-template-columns:1fr 1fr}
   #hero { padding-top: 10rem; }
-  #context, #portfolio, #solution, #templates, #results, #offer, #why-now, #faq, #cta { padding-left: 1rem; padding-right: 1rem; }
+  #context, #portfolio, #solution, #templates, #results, #offer, #why-now, #faq, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
   .offer-block { padding: 3rem 1.5rem; border-radius: 24px; }
   .sv-card, .v-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
   .p-card, .t-card { padding: 2rem 1.2rem; }
+  .mf-text, .wn-text, .offer-sub, .ch-intro, .v-list, .s-title, .h-tagline, [data-i18n="results_strong_sentence"], [data-i18n="audit_strong_sentence"], [data-i18n="strategy_sub_original"], [data-i18n="cta_main_sub_new"], [data-i18n="cta_main_quote_new"] { max-width: 100% !important; }
   .v-text { font-size: 15px; }
   .sv-title { font-size: 24px; }
   
@@ -694,19 +698,12 @@ body.loading { overflow: hidden; }
 
 <section id="context" style="padding: 12rem 5rem;">
   <div class="ch-grid rv">
-    <div class="ch-left">
+    <div class="ch-left-intro">
       <span class="s-tag" data-i18n="context_tag">Kihívások</span>
       <h2 class="s-title" data-i18n="context_title_new">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
       <p class="ch-intro" data-i18n="context_intro_new" style="color: rgba(255,255,255,0.9); font-size: 19px;">
         Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. 
         A folyamatok, amelyek korábban működtek, elkezdenek lassítani.
-      </p>
-      <p data-i18n="context_strong_sentence" style="color: rgba(255,255,255,0.95); font-size: 20px; font-weight: 300; margin-top: 2rem;">
-        Mi segítünk növekvő cégeknek újratervezni és automatizálni a <span style="color: var(--white); font-weight: 600;">sales</span>, <span style="color: var(--white); font-weight: 600;">ügyfélszolgálati</span> és <span style="color: var(--white); font-weight: 600;">operációs</span> folyamataikat <span style="color: var(--accent)">AI-alapú</span> rendszerekkel.
-      </p>
-      <div style="width: 60px; height: 2px; background: var(--accent); margin: 3rem 0;"></div>
-      <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;" data-i18n="context_footer_note">
-        Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.
       </p>
     </div>
     
@@ -736,6 +733,16 @@ body.loading { overflow: hidden; }
         <div class="ch-card-text" data-i18n="context_card_4">A növekedés egyre inkább szervezési kérdéssé válik</div>
       </div>
     </div>
+
+    <div class="ch-left-details">
+      <p data-i18n="context_strong_sentence" style="color: rgba(255,255,255,0.95); font-size: 20px; font-weight: 300; margin-top: 1rem;">
+        Mi segítünk növekvő cégeknek újratervezni és automatizálni a <span style="color: var(--white); font-weight: 600;">sales</span>, <span style="color: var(--white); font-weight: 600;">ügyfélszolgálati</span> és <span style="color: var(--white); font-weight: 600;">operációs</span> folyamataikat <span style="color: var(--accent)">AI-alapú</span> rendszerekkel.
+      </p>
+      <div style="width: 60px; height: 2px; background: var(--accent); margin: 2.5rem 0;"></div>
+      <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;" data-i18n="context_footer_note">
+        Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -743,7 +750,7 @@ body.loading { overflow: hidden; }
   <div class="section-wrap rv" style="text-align: center;">
     <span class="s-tag" data-i18n="solution_tag">A Megoldás</span>
     <h2 class="s-title" data-i18n="solution_title_new">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
-    <p class="ch-intro" data-i18n="solution_intro_para" style="margin: 0 auto 4rem; max-width: 850px;">
+    <p class="ch-intro" data-i18n="solution_intro_para" style="margin: 0 auto 4rem; max-width: 1000px;">
       Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét — és strukturáltabbá teszik a működést.
     </p>
     
