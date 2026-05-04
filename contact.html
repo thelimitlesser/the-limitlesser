@@ -31,9 +31,24 @@
     }
 
     .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
-    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; }
-    .b1 { width: 800px; height: 800px; background: var(--accent); top: -20%; right: -10%; }
-    .b2 { width: 600px; height: 600px; background: #2200cc; bottom: -10%; left: -10%; opacity: 0; }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; transition: transform 0.2s ease-out; }
+    .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
+    .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
+    .b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
+
+    /* Global Bottom-Up Lighting */
+    .global-light {
+      position: fixed;
+      bottom: -20vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150vw;
+      height: 80vh;
+      background: radial-gradient(ellipse at 50% 100%, rgba(255,138,0,0.15) 0%, transparent 75%);
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(80px);
+    }
 
     /* Nav */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
@@ -143,10 +158,13 @@
   </style>
 </head>
 <body>
-  <div class="mesh-bg">
-    <div class="mesh-ball b1"></div>
+  <div class="mesh-bg" style="z-index: -2;">
+    <div class="mesh-ball b1" id="pb1"></div>
+    <div class="mesh-ball b2" id="pb2"></div>
+    <div class="mesh-ball b3" id="pb3"></div>
   </div>
   <div id="mouse-glow" style="z-index: -1;"></div>
+  <div class="global-light" id="gLight"></div>
 
   <div class="mob-menu-overlay" id="mob-overlay" onclick="toggleMob()"></div>
   <div class="mob-menu" id="mob-menu">
@@ -314,8 +332,20 @@
       }
     });
 
-    const nav=document.getElementById('nav');
-    window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>60));
+    // Nav & Parallax
+    window.addEventListener('scroll', () => {
+      const s = window.scrollY;
+      const b1 = document.getElementById('pb1');
+      const b2 = document.getElementById('pb2');
+      const b3 = document.getElementById('pb3');
+      
+      if(b1) b1.style.transform = `translateX(-50%) translateY(${-s * 0.4}px)`;
+      if(b2) b2.style.transform = `translateY(${-s * 0.2}px)`;
+      if(b3) b3.style.transform = `translateY(${-s * 0.15}px)`;
+      
+      const nav = document.getElementById('nav');
+      if(nav) nav.classList.toggle('stuck', s > 60);
+    });
 
     // Mobile Menu Toggle
     function toggleMob() {
