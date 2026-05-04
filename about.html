@@ -237,25 +237,29 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     <a href="services.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_services_page">Szolgáltatások</span><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></a>
     <a href="index.html#portfolio" class="m-link" onclick="toggleMob()"><span data-i18n="nav_portfolio">Munkáink</span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a>
     <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
-            <span style="font-size: 14px; font-weight: 500; color: var(--white);">Language / Nyelv</span>
-          </div>
-          <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+    
+    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="margin-top: 1rem; width: 100%; text-align: center;">Kezdjük el</a>
+    
+    <div class="mob-lang-wrap" style="margin-top: 3rem; width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+      <div class="lang-dropdown" style="margin: 0; width: 100%;">
+        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="justify-content: center; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag">
+          <span data-i18n="nav_lang_label" style="font-size: 14px; font-weight: 500; color: white; margin-left: 10px;">Nyelvválasztás</span>
         </div>
-        <div class="lang-options" style="bottom: 100%; top: auto; left: 0; transform: translateX(0) translateY(-10px); width: 100%; margin-bottom: 10px;">
-          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')">
+        <div class="lang-options" style="position: relative; width: 100%; top: 10px; margin-top: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: white; padding: 1rem; justify-content: center;">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag">
             <span>Magyar (HU)</span>
-            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')">
+          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')" style="color: white; padding: 1rem; justify-content: center;">
             <img src="https://flagcdn.com/w80/gb.png" class="lang-flag">
             <span>English (EN)</span>
-            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <nav id="nav">
     <a href="index.html#hero" class="n-logo">
       <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
@@ -413,7 +417,7 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     });
 
     // Nav & Parallax
-    window.addEventListener('scroll', () => {
+    const updateParallax = () => {
       const s = window.scrollY;
       const b1 = document.getElementById('pb1');
       const b2 = document.getElementById('pb2');
@@ -423,12 +427,16 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
       if(b2) b2.style.transform = `translateY(${-s * 0.2}px)`;
       if(b3) b3.style.transform = `translateY(${-s * 0.15}px)`;
       
-      const scrollPercent = (s / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      document.body.style.setProperty('--scroll-pos', `${50 + scrollPercent * 0.2}%`);
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollMax > 0 ? (s / scrollMax) * 100 : 0;
+      document.body.style.setProperty('--scroll-pos', `${45 + scrollPercent * 0.1}%`);
 
       const nav = document.getElementById('nav');
       if(nav) nav.classList.toggle('stuck', s > 60);
-    });
+    };
+
+    window.addEventListener('scroll', updateParallax);
+    updateParallax(); // Initial call to set background correctly on load
 
     // Mobile Menu Toggle
     function toggleMob() {
