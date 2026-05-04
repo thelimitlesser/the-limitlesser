@@ -4,19 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kapcsolat | The Limitlesser</title>
+  <!-- No external fonts needed for system font stack -->
   <style>
     :root {
       --bg: #050200;
-      --accent: #D97706;
-      --accent2: #FF8A00;
+      --accent: #FF8A00;
+      --accent2: #FFD600;
+      --accent3: rgba(255, 138, 0, 0.15);
       --white: #fff;
       --g1: #888; --g2: #1a1a1a; --g3: #111;
       --font-d: 'Times New Roman', Times, serif;
       --font-h: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; }
+    html{scroll-behavior:smooth; overflow-x: hidden; max-width: 100vw;}
+    body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; max-width: 100vw; }
     
     /* Mouse Glow Effect (Flashlight) */
     #mouse-glow {
@@ -28,7 +32,8 @@
 
     .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
     .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; }
-    .b1 { width: 600px; height: 600px; background: var(--accent); top: -10%; right: -5%; }
+    .b1 { width: 800px; height: 800px; background: var(--accent); top: -20%; right: -10%; }
+    .b2 { width: 600px; height: 600px; background: #2200cc; bottom: -10%; left: -10%; opacity: 0; }
 
     /* Nav */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2.2rem 5rem;transition:padding .4s,background .4s;border-bottom:1px solid transparent}
@@ -36,7 +41,7 @@
     .n-logo{text-decoration:none;color:var(--white);display:flex;flex-direction:column;z-index:1100;position:relative;}
     .n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
     .n-links{display:flex;gap:3rem;list-style:none;flex:1;justify-content:center;}
-    .n-links a{font-family:var(--font-h);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
+    .n-links a{font-family:var(--font-b);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
     .n-links a:hover{color:var(--white)}
     .n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
     .n-btn:hover{background:#ccc;transform:translateY(-2px);}
@@ -49,16 +54,23 @@
     .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* Mobile Menu Overlay */
-    .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px); }
+    .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-    .mob-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 320px; height: 100%; background: rgba(5, 2, 0, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.1); }
+    .mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 380px; height: 100%; background: rgba(10, 5, 0, 0.35); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 5rem 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; }
     .mob-menu.open { transform: translateX(0); }
-    .mob-menu a { font-family: var(--font-d); font-size: 24px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; letter-spacing: 1px; }
+    .mob-menu a { font-family: 'Inter', sans-serif; font-size: 26px; color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: -0.5px; line-height: 1.2; text-transform: none; }
     .mob-menu a:hover { color: var(--accent); }
-    .mob-menu .n-btn { font-size: 13px; padding: 1.1rem 2.5rem; margin-top: 1rem; width: 100%; text-align: center; justify-content: center; }
+    .mob-menu .n-btn { font-size: 14px; padding: 1.2rem 2.5rem; margin-top: 2rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+    @media(max-width:1050px){
+      nav{padding:1.5rem 2rem}
+      nav.stuck { padding: 1.2rem 2rem; }
+      .n-links{display:none}
+      .mob-toggle{display:flex}
+    }
 
     /* Contact Hero */
-    .contact-hero { padding: 18rem 5rem 6rem; text-align: center; }
+    .contact-hero { padding: 12rem 5rem 6rem; text-align: center; }
     .c-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
     .c-title { font-family: var(--font-d); font-size: clamp(48px, 8vw, 96px); font-weight: 300; line-height: 1.1; max-width: 1000px; margin: 0 auto; letter-spacing: -2px; }
 
@@ -96,19 +108,31 @@
     .f-legal { display: flex; gap: 2rem; }
     .f-legal a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; }
 
-    /* Reveal */
-    .rv { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
     .rv.on { opacity: 1; transform: translateY(0); }
 
-    @media(max-width:1050px){
-      nav{padding:1.5rem 2rem}
-      .n-links{display:none}
-      .n-btn.nav-cta-btn{display:none}
-      .mob-toggle{display:flex}
-      .contact-hero { padding-top: 10rem; }
-      .contact-container { grid-template-columns: 1fr; gap: 4rem; }
-      .c-form-side { padding: 3rem 2rem; border-radius: 30px; }
+    /* Page Transitions */
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    html.unresolved body { opacity: 0; }
+    .page-content { opacity: 0; }
+    html:not(.unresolved) .page-content { animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Language Dropdown */
+    .lang-dropdown { position: relative; margin-right: 2rem; z-index: 1000; }
+    .lang-selected { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); cursor: none; transition: 0.3s; }
+    .lang-selected:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .lang-flag { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); }
+    .lang-chevron { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform 0.3s; opacity: 0.6; }
+    .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+    .lang-options { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(10px); background: #FFFFFF; border-radius: 16px; padding: 8px; width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1001; }
+    .lang-dropdown.open .lang-options { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .lang-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; cursor: none; transition: 0.2s; color: #1a1a1a; font-family: var(--font-b); font-size: 13px; font-weight: 500; text-align: left; }
+    .lang-option:hover { background: #f5f5f5; }
+    .lang-option .lang-flag { width: 24px; height: 24px; border: 1px solid rgba(0,0,0,0.05); }
+    .lang-option-check { margin-left: auto; width: 14px; height: 14px; color: #1a1a1a; opacity: 0; transition: 0.2s; }
+    .lang-option.active .lang-option-check { opacity: 1; }
   </style>
 </head>
 <body>
@@ -123,43 +147,64 @@
       <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
     </a>
     <div class="n-links">
-      <a href="index.html#hero">Kezdőlap</a>
-      <a href="about.html">Rólunk</a>
-      <a href="services.html">Szolgáltatások</a>
-      <a href="index.html#portfolio">Munkáink</a>
-      <a href="contact.html">Kapcsolat</a>
+      <a href="index.html#hero" data-i18n="nav_home">Kezdőlap</a>
+      <a href="about.html" data-i18n="nav_about">Rólunk</a>
+      <a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a>
+      <a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a>
+      <a href="contact.html" data-i18n="nav_contact">Kapcsolat</a>
     </div>
     <div style="display: flex; align-items: center;">
-      <a href="contact.html" class="n-btn nav-cta-btn">Kezdjük el</a>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-selected" onclick="toggleLangDropdown()">
+          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" id="currentFlag">
+          <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+        </div>
+        <div class="lang-options">
+          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')">
+            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag">
+            <span>Magyar (HU)</span>
+            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')">
+            <img src="https://flagcdn.com/w80/gb.png" class="lang-flag">
+            <span>English (EN)</span>
+            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <a href="contact.html" class="n-btn nav-cta-btn" data-i18n="nav_cta">Kezdjük el</a>
       <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
+  <div class="page-content">
+
   <div class="mob-menu" id="mob-menu">
-    <a href="index.html#hero" onclick="toggleMob()">Kezdőlap</a>
-    <a href="about.html" onclick="toggleMob()">Rólunk</a>
-    <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
-    <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
-    <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
-    <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()">Kezdjük el</a>
+    <a href="index.html#hero" onclick="toggleMob()" data-i18n="nav_home">Kezdőlap</a>
+    <a href="about.html" onclick="toggleMob()" data-i18n="nav_about">Rólunk</a>
+    <a href="services.html" onclick="toggleMob()" data-i18n="nav_services_page">Szolgáltatások</a>
+    <a href="index.html#portfolio" onclick="toggleMob()" data-i18n="nav_portfolio">Munkáink</a>
+    <a href="contact.html" onclick="toggleMob()" data-i18n="nav_contact">Kapcsolat</a>
+    <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()" data-i18n="nav_cta">Kezdjük el</a>
   </div>
 
-  <div style="max-width: 1300px; margin: 0 auto; padding: 12rem 2rem 0;">
+  <div class="page-content">
+    <div style="max-width: 1300px; margin: 0 auto; padding: 12rem 2rem 0;">
     <div style="font-family: var(--font-h); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--g1); margin-bottom: 4rem;">
-      <a href="index.html" style="color: var(--g1); text-decoration: none;">Kezdőlap</a> <span style="margin: 0 10px; opacity: 0.5;">/</span> <span style="color: var(--white);">Kapcsolat</span>
+      <a href="index.html" style="color: var(--g1); text-decoration: none;" data-i18n="nav_home">Kezdőlap</a> <span style="margin: 0 10px; opacity: 0.5;">/</span> <span style="color: var(--white);" data-i18n="nav_contact">Kapcsolat</span>
     </div>
 
     <div class="contact-container" style="padding-top: 0;">
       <!-- Left Side -->
       <div class="c-info-side rv">
-        <h1 class="c-title" style="margin-bottom: 2rem; font-size: clamp(32px, 5vw, 64px); text-align: left;">Vedd fel velünk a kapcsolatot!</h1>
-        <p style="font-size: 18px; color: var(--g1); line-height: 1.7; margin-bottom: 4rem; max-width: 550px;">Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.</p>
+        <h1 class="c-title" style="margin-bottom: 2rem; font-size: clamp(32px, 5vw, 64px); text-align: left;" data-i18n="cont_hero_title">Vedd fel velünk a kapcsolatot!</h1>
+        <p style="font-size: 18px; color: var(--g1); line-height: 1.7; margin-bottom: 4rem; max-width: 550px;" data-i18n="cont_hero_sub">Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.</p>
         
         <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 450px;">
           <!-- Email Card -->
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
             <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">@</div>
-            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
+            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_email_hint">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
             <a href="mailto:hello@thelimitlesser.hu" style="font-family: var(--font-h); font-size: 16px; color: var(--white); text-decoration: none; font-weight: 600;">hello@thelimitlesser.hu</a>
           </div>
           <!-- Phone Card -->
@@ -167,7 +212,7 @@
             <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             </div>
-            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
+            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_phone_hint">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
             <p style="font-family: var(--font-h); font-size: 16px; color: var(--white); font-weight: 600;">+36 (70) 577 0722</p>
           </div>
         </div>
@@ -175,43 +220,43 @@
 
       <!-- Right Side (Form) -->
       <div class="c-form-side rv">
-        <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;">Árajánlat kérelem</h2>
-        <p style="font-size: 14px; color: var(--g1); margin-bottom: 2rem;">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
-        <p style="font-size: 12px; color: var(--accent); margin-bottom: 3rem;">• Jelzésű mezők kitöltése kötelező!</p>
+        <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_form_title">Árajánlat kérelem</h2>
+        <p style="font-size: 14px; color: var(--g1); margin-bottom: 2rem;" data-i18n="cont_form_sub">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
+        <p style="font-size: 12px; color: var(--accent); margin-bottom: 3rem;" data-i18n="cont_form_req">• Jelzésű mezők kitöltése kötelező!</p>
         
         <form class="q-form">
-          <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Személyes adatok megadása</p>
+          <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;" data-i18n="cont_form_sec_1">Személyes adatok megadása</p>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
             <div class="form-group">
-              <label>Vezetéknév <span style="color: var(--accent);">•</span></label>
-              <input type="text" placeholder="Vezetéknév">
+              <label><span data-i18n="cont_label_lname">Vezetéknév</span> <span style="color: var(--accent);">•</span></label>
+              <input type="text" data-i18n-placeholder="cont_ph_lname" placeholder="Vezetéknév">
             </div>
             <div class="form-group">
-              <label>Keresztnév <span style="color: var(--accent);">•</span></label>
-              <input type="text" placeholder="Keresztnév">
+              <label><span data-i18n="cont_label_fname">Keresztnév</span> <span style="color: var(--accent);">•</span></label>
+              <input type="text" data-i18n-placeholder="cont_ph_fname" placeholder="Keresztnév">
             </div>
           </div>
           <div class="form-group">
-            <label>E-mail cím <span style="color: var(--accent);">•</span></label>
-            <input type="email" placeholder="pelda@email.hu">
+            <label><span data-i18n="cont_label_email">E-mail cím</span> <span style="color: var(--accent);">•</span></label>
+            <input type="email" data-i18n-placeholder="cont_ph_email" placeholder="pelda@email.hu">
           </div>
           <div class="form-group">
-            <label>Telefonszám <span style="color: var(--accent);">•</span></label>
-            <input type="tel" placeholder="+36 30 123 4567">
+            <label><span data-i18n="cont_label_phone">Telefonszám</span> <span style="color: var(--accent);">•</span></label>
+            <input type="tel" data-i18n-placeholder="cont_ph_phone" placeholder="+36 30 123 4567">
           </div>
           
           <div style="display: grid; gap: 1.5rem; margin-top: 1rem;">
             <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
               <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
-              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;">A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href="privacy.html" style="color: var(--white); text-decoration: underline;">Adatvédelmi Nyilatkozat</a>-ban foglaltakat és annak feltételeit.</span>
+              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_privacy">A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href="privacy.html" style="color: var(--white); text-decoration: underline;">Adatvédelmi Nyilatkozat</a>-ban foglaltakat és annak feltételeit.</span>
             </label>
             <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
               <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
-              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;">Hozzájárulok, hogy a The Limitlesser a jövőben e-mailben megkereséseket küldjön számomra.</span>
+              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_newsletter">Hozzájárulok, hogy a The Limitlesser a jövőben e-mailben megkereséseket küldjön számomra.</span>
             </label>
           </div>
 
-          <button type="submit" class="q-btn" style="width: 100%; margin-top: 2rem;">Árajánlat kérése →</button>
+          <button type="submit" class="q-btn" style="width: 100%; margin-top: 2rem;" data-i18n="cont_btn_submit">Árajánlat kérése →</button>
         </form>
       </div>
     </div>
@@ -241,9 +286,13 @@
       </div>
     </div>
     <div class="f-bottom">
-      <p>&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
+      <p data-i18n="footer_copy">&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
     </div>
   </footer>
+</div>
+
+  </div><!-- End page-content -->
+  <script src="js/i18n.js"></script>
 
   <script>
     const mg = document.getElementById('mouse-glow');

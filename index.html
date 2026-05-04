@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Limitlesser — Határok nélküli növekedés</title>
+<title data-i18n="page_title">The Limitlesser — Határok nélküli növekedés</title>
 <!-- No external fonts needed for system font stack -->
 <style>
 /* ─── Variables (Original) ────────────────────────── */
@@ -19,9 +19,10 @@
   --font-b: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; }
+html{scroll-behavior:smooth; overflow-x: hidden; max-width: 100vw;}
+body { background: var(--bg); color: var(--white); font-family: var(--font-b); overflow-x: hidden; max-width: 100vw; }
 
 /* ─── Background Effects ───────────────────────────── */
 body::after {
@@ -29,7 +30,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/svg%3E");
   opacity: 0.04; pointer-events: none; z-index: 9999;
 }
-.mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; background: #050200; }
+.mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
 .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; transition: transform 0.2s ease-out; }
 .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
 .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
@@ -75,10 +76,19 @@ nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop
 .n-logo{text-decoration:none;color:var(--white);display:flex;flex-direction:column;z-index:1100;position:relative;}
 .n-ll{display:block;font-family:var(--font-d);font-size:12px;letter-spacing:8px;font-weight:300;color:rgba(255,255,255,.8);text-transform:uppercase;line-height:1}
 .n-links{display:flex;gap:3rem;list-style:none;flex:1;justify-content:center;}
-.n-links a{font-family:'Inter', sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
+.n-links a{font-family:var(--font-b);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;line-height:1.2;font-weight:500;}
 .n-links a:hover{color:var(--white)}
 .n-btn{font-family:var(--font-h);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--white);color:#000;border:none;padding:1rem 2.2rem;transition:all .3s;text-decoration:none;border-radius:100px;line-height:1;display:inline-flex;align-items:center;font-weight:600;}
 .n-btn:hover{background:#ccc;transform:translateY(-2px);}
+
+/* Page Transitions */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+html.unresolved body { opacity: 0; }
+.page-content { opacity: 0; }
+html:not(.unresolved) .page-content { animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
 /* Mobile Toggle */
 .mob-toggle { display: none; background: none; border: none; cursor: none; flex-direction: column; gap: 5px; padding: 0.5rem; z-index: 1001; }
@@ -88,13 +98,13 @@ nav.stuck{background:rgba(5,2,0,0.6);backdrop-filter:blur(20px);-webkit-backdrop
 .mob-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* Mobile Menu Overlay */
-.mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px); }
+.mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-.mob-menu { position: fixed; top: 0; right: 0; width: 85%; max-width: 320px; height: 100%; background: rgba(5, 2, 0, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.1); }
+.mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 380px; height: 100%; background: rgba(10, 5, 0, 0.35); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 5rem 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; }
 .mob-menu.open { transform: translateX(0); }
-.mob-menu a { font-family: var(--font-d); font-size: 24px; color: var(--white); text-decoration: none; font-weight: 300; transition: color 0.3s; letter-spacing: 1px; }
+.mob-menu a { font-family: 'Inter', sans-serif; font-size: 26px; color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: -0.5px; line-height: 1.2; text-transform: none; }
 .mob-menu a:hover { color: var(--accent); }
-.mob-menu .n-btn { font-size: 13px; padding: 1.1rem 2.5rem; margin-top: 1rem; width: 100%; text-align: center; justify-content: center; }
+.mob-menu .n-btn { font-size: 14px; padding: 1.2rem 2.5rem; margin-top: 2rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
 
 /* ─── Hero ─────────────────────────────────────── */
 #hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;overflow:hidden; text-align: center; padding-top: 12rem;}
@@ -290,7 +300,7 @@ section{position:relative;z-index:5}
 .nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
 .nm-node-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
-.nm-node-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--white); font-weight: 400; line-height: 1.5; }
+.nm-node-text { font-family: var(--font-b); font-size: 16px; color: var(--white); font-weight: 400; line-height: 1.5; }
 
 .nm-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 .nm-line-path { stroke: rgba(217,119,6,0.1); stroke-width: 1; fill: none; }
@@ -376,6 +386,7 @@ section{position:relative;z-index:5}
 
 @media(max-width:1050px){
   nav{padding:1.5rem 2rem}
+  nav.stuck { padding: 1.2rem 2rem; }
   .n-links{display:none}
   .n-btn.nav-cta-btn{display:none}
   .mob-toggle{display:flex}
@@ -415,10 +426,10 @@ section{position:relative;z-index:5}
 .lang-chevron { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform 0.3s; opacity: 0.6; }
 .lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
 
-.lang-options { position: absolute; top: calc(100% + 10px); right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; transform: translateY(10px); pointer-events: none; transition: 0.3s; }
-.lang-dropdown.open .lang-options { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.lang-options { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(10px); background: #FFFFFF; border-radius: 16px; padding: 8px; width: 180px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: 0.3s; }
+.lang-dropdown.open .lang-options { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
-.lang-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; cursor: none; transition: 0.2s; color: #1a1a1a; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; }
+.lang-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; cursor: none; transition: 0.2s; color: #1a1a1a; font-family: var(--font-b); font-size: 13px; font-weight: 500; }
 .lang-option:hover { background: #f5f5f5; }
 .lang-option .lang-flag { width: 24px; height: 24px; border: 1px solid rgba(0,0,0,0.05); }
 .lang-option-check { margin-left: auto; width: 14px; height: 14px; color: #1a1a1a; opacity: 0; transition: 0.2s; }
@@ -577,7 +588,7 @@ body.loading { overflow: hidden; }
   <div class="pl-bar-wrap">
     <div class="pl-bar" id="pl-bar"></div>
   </div>
-  <div class="pl-tagline">Digital Transformation Agency</div>
+  <div class="pl-tagline" data-i18n="pl_tagline">Digital Transformation Agency</div>
 </div>
 
 
@@ -601,7 +612,7 @@ body.loading { overflow: hidden; }
     <a href="about.html" data-i18n="nav_about">Rólunk</a>
     <a href="services.html" data-i18n="nav_services_page">Szolgáltatások</a>
     <a href="index.html#portfolio" data-i18n="nav_portfolio">Munkáink</a>
-    <a href="contact.html">Kapcsolat</a>
+    <a href="contact.html" data-i18n="nav_contact">Kapcsolat</a>
   </div>
   <div style="display: flex; align-items: center;">
     <div class="lang-dropdown" id="langDropdown">
@@ -622,42 +633,44 @@ body.loading { overflow: hidden; }
         </div>
       </div>
     </div>
-    <a href="contact.html" class="n-btn nav-cta-btn" data-i18n="nav-cta">Kezdjük el</a>
+    <a href="contact.html" class="n-btn nav-cta-btn" data-i18n="nav_cta">Kezdjük el</a>
     <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
+<div class="page-content">
+
 <div class="mob-menu" id="mob-menu">
-  <a href="index.html#hero" onclick="toggleMob()">Kezdőlap</a>
-  <a href="about.html" onclick="toggleMob()">Rólunk</a>
-  <a href="services.html" onclick="toggleMob()">Szolgáltatások</a>
-  <a href="index.html#portfolio" onclick="toggleMob()">Munkáink</a>
-  <a href="contact.html" onclick="toggleMob()">Kapcsolat</a>
-  <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()">Kezdjük el</a>
+  <a href="index.html#hero" onclick="toggleMob()" data-i18n="nav_home">Kezdőlap</a>
+  <a href="about.html" onclick="toggleMob()" data-i18n="nav_about">Rólunk</a>
+  <a href="services.html" onclick="toggleMob()" data-i18n="nav_services_page">Szolgáltatások</a>
+  <a href="index.html#portfolio" onclick="toggleMob()" data-i18n="nav_portfolio">Munkáink</a>
+  <a href="contact.html" onclick="toggleMob()" data-i18n="nav_contact">Kapcsolat</a>
+  <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()" data-i18n="nav_cta">Kezdjük el</a>
 </div>
 
 <section id="hero">
   <div class="h-bg-glow"></div>
   <div class="h-content">
-    <span class="h-eyebrow rv" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 14px; letter-spacing: 2px; text-transform: none;">Ha a céged már növekszik, de a folyamataid kezdenek lemaradni:</span>
+    <span class="h-eyebrow rv" data-i18n="hero_eyebrow_new" style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; font-size: 14px; letter-spacing: 2px; text-transform: none;">Ha a céged már növekszik, de a folyamataid kezdenek lemaradni:</span>
     <div class="logo-block rv">
-      <h1 class="logo-ll">Hatékonyabb működés <em>egyedi AI</em> rendszerekkel</h1>
+      <h1 class="logo-ll" data-i18n="hero_main_title_new">Hatékonyabb működés <em>egyedi AI</em> rendszerekkel</h1>
     </div>
     <div class="h-rule rv"></div>
-    <p class="h-tagline rv">Segítünk automatizálni a folyamataidat, hogy kevesebb manuális munkával, nagyobb átláthatóság mellett működj.</p>
+    <p class="h-tagline rv" data-i18n="hero_tagline_new">Segítünk automatizálni a folyamataidat, hogy kevesebb manuális munkával, nagyobb átláthatóság mellett működj.</p>
     <div class="h-btns rv">
-      <a href="contact.html" class="btn-p">Foglalj időpontot</a>
-      <a href="#portfolio" class="btn-g">Munkáink</a>
+      <a href="contact.html" class="btn-p" data-i18n="hero_btn_book">Foglalj időpontot</a>
+      <a href="#portfolio" class="btn-g" data-i18n="hero_btn_work">Munkáink</a>
     </div>
     
     <div class="offer-block rv" style="margin-top: 8rem;">
-      <h2 class="offer-h"><em style="font-style: normal; color: var(--accent);">Derítsd ki</em>, hol lassítják a rendszereid a céged növekedését</h2>
-      <p class="offer-sub" style="color: var(--white); opacity: 0.9;">Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.</p>
-      <a href="contact.html" class="btn-p">Discovery Call foglalása</a>
+      <h2 class="offer-h" data-i18n="hero_offer_title"><em style="font-style: normal; color: var(--accent);">Derítsd ki,</em> hol lassítják a rendszereid a céged növekedését</h2>
+      <p class="offer-sub" data-i18n="hero_offer_sub" style="color: var(--white); opacity: 0.9;">Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.</p>
+      <a href="contact.html" class="btn-p" data-i18n="hero_offer_btn">Discovery Call foglalása</a>
     </div>
 
     <div class="scroll-indicator" style="position: static; margin-top: 4rem; transform: none;">
-      <span class="si-text">Görgess</span>
+      <span class="si-text" data-i18n="hero_scroll">Görgess</span>
       <div class="si-line"></div>
     </div>
   </div>
@@ -666,13 +679,17 @@ body.loading { overflow: hidden; }
 <section id="context" style="padding: 12rem 5rem;">
   <div class="ch-grid rv">
     <div class="ch-left">
-      <span class="s-tag">Kihívások</span>
-      <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
-      <p class="ch-intro" style="color: rgba(255,255,255,0.95); font-size: 20px; font-weight: 300;">
-        Segítünk növekvő cégeknek újratervezni és automatizálni a <span style="color: var(--white); font-weight: 600;">sales</span>, <span style="color: var(--white); font-weight: 600;">ügyfélszolgálati</span> és <span style="color: var(--white); font-weight: 600;">operációs</span> folyamataikat <span style="color: var(--accent)">AI-alapú</span> rendszerekkel.
+      <span class="s-tag" data-i18n="context_tag">Kihívások</span>
+      <h2 class="s-title" data-i18n="context_title_new">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
+      <p class="ch-intro" data-i18n="context_intro_new" style="color: rgba(255,255,255,0.9); font-size: 19px;">
+        Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. 
+        A folyamatok, amelyek korábban működtek, elkezdenek lassítani.
+      </p>
+      <p data-i18n="context_strong_sentence" style="color: rgba(255,255,255,0.95); font-size: 20px; font-weight: 300; margin-top: 2rem;">
+        Mi segítünk növekvő cégeknek újratervezni és automatizálni a <span style="color: var(--white); font-weight: 600;">sales</span>, <span style="color: var(--white); font-weight: 600;">ügyfélszolgálati</span> és <span style="color: var(--white); font-weight: 600;">operációs</span> folyamataikat <span style="color: var(--accent)">AI-alapú</span> rendszerekkel.
       </p>
       <div style="width: 60px; height: 2px; background: var(--accent); margin: 3rem 0;"></div>
-      <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;">
+      <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;" data-i18n="context_footer_note">
         Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.
       </p>
     </div>
@@ -682,25 +699,25 @@ body.loading { overflow: hidden; }
         <div class="ch-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <div class="ch-card-text">A sales és operáció egyre több manuális munkát igényel</div>
+        <div class="ch-card-text" data-i18n="context_card_1">A sales és operáció egyre több manuális munkát igényel</div>
       </div>
       <div class="ch-card rv">
         <div class="ch-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
-        <div class="ch-card-text">A csapat ideje ismétlődő feladatokra megy el</div>
+        <div class="ch-card-text" data-i18n="context_card_2">A csapat ideje ismétlődő feladatokra megy el</div>
       </div>
       <div class="ch-card rv">
         <div class="ch-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         </div>
-        <div class="ch-card-text">Nehezebb átlátni, mi történik a folyamatokban</div>
+        <div class="ch-card-text" data-i18n="context_card_3">Nehezebb átlátni, mi történik a folyamatokban</div>
       </div>
       <div class="ch-card rv">
         <div class="ch-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
         </div>
-        <div class="ch-card-text">A növekedés egyre inkább szervezési kérdéssé válik</div>
+        <div class="ch-card-text" data-i18n="context_card_4">A növekedés egyre inkább szervezési kérdéssé válik</div>
       </div>
     </div>
   </div>
@@ -708,33 +725,28 @@ body.loading { overflow: hidden; }
 
 <section id="solution" style="padding: 10rem 5rem;">
   <div class="section-wrap rv" style="text-align: center;">
-    <span class="s-tag">A Megoldás</span>
-    <h2 class="s-title">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
-    <p class="ch-intro" style="margin: 0 auto 4rem; max-width: 850px;">
+    <span class="s-tag" data-i18n="solution_tag">A Megoldás</span>
+    <h2 class="s-title" data-i18n="solution_title_new">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
+    <p class="ch-intro" data-i18n="solution_intro_para" style="margin: 0 auto 4rem; max-width: 850px;">
       Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét — és strukturáltabbá teszik a működést.
     </p>
     
-    <div style="max-width: 850px; margin: 0 auto 6rem; border-left: 2px solid var(--accent); padding: 1rem 0 1rem 3rem; text-align: left;">
-      <p style="font-family: var(--font-d); font-size: 26px; color: var(--white); line-height: 1.4; font-style: italic; font-weight: 300;">
-        "A legjobban teljesítő cégek nem csak “ráteszik” az AI-t a régi rendszerre, hanem újraalkotják a munkafolyamatokat."
-      </p>
-    </div>
     
     <div class="pr-steps">
       <div class="pr-step rv">
         <div class="pr-num">01</div>
-        <div class="pr-step-title">Feltérképezés</div>
-        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket.</p>
+        <div class="pr-step-title" data-i18n="sol_step_1_title">Feltérképezés</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;" data-i18n="sol_step_1_desc">Megértjük a jelenlegi folyamataidat és azonosítjuk a szűk keresztmetszeteket.</p>
       </div>
       <div class="pr-step rv">
         <div class="pr-num">02</div>
-        <div class="pr-step-title">Tervezés</div>
-        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez.</p>
+        <div class="pr-step-title" data-i18n="sol_step_2_title">Tervezés</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;" data-i18n="sol_step_2_desc">Olyan megoldásokat tervezünk, amelyek illeszkednek a működésedhez.</p>
       </div>
       <div class="pr-step rv">
         <div class="pr-num">03</div>
-        <div class="pr-step-title">Implementáció</div>
-        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül.</p>
+        <div class="pr-step-title" data-i18n="sol_step_3_title">Implementáció</div>
+        <p class="pr-step-desc" style="font-family: 'Inter', sans-serif;" data-i18n="sol_step_3_desc">Lépésről lépésre bevezetjük az automatizációt, megszakítás nélkül.</p>
       </div>
     </div>
   </div>
@@ -744,62 +756,77 @@ body.loading { overflow: hidden; }
   <div class="nm-bg-grid"></div>
   
   <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2;">
-    <span class="s-tag">Eredmények</span>
-    <h2 class="s-title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
+    <span class="s-tag" data-i18n="results_tag">Eredmények</span>
+    <h2 class="s-title" data-i18n="results_main_title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
     
     <div class="nm-grid">
-      <!-- Left Column -->
+      <!-- Left Column Nodes -->
       <div class="nm-col left">
         <div class="nm-node rv">
           <div class="nm-node-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <div class="nm-node-text">Kevesebb manuális feladat a csapatod számára</div>
+          <div class="nm-node-content">
+            <p data-i18n="results_node_1">Kevesebb manuális feladat a csapatod számára</p>
+          </div>
         </div>
         <div class="nm-node rv">
           <div class="nm-node-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          <div class="nm-node-text">Gyorsabb és átláthatóbb folyamatok</div>
+          <div class="nm-node-content">
+            <p data-i18n="results_node_2">Gyorsabb és átláthatóbb folyamatok</p>
+          </div>
         </div>
       </div>
-      
-      <div class="nm-core-col">
-        <div class="nm-core-container rv">
-          <div class="nm-orbit nm-orbit-1"></div>
-          <div class="nm-orbit nm-orbit-2"></div>
-          <div class="nm-core"></div>
-        </div>
+
+      <!-- Center Core -->
+      <div class="nm-core-container">
+        <div class="nm-orbit nm-orbit-1"></div>
+        <div class="nm-orbit nm-orbit-2"></div>
+        <div class="nm-core rv"></div>
       </div>
-      
-      <!-- Right Column -->
+
+      <!-- Right Column Nodes -->
       <div class="nm-col right">
         <div class="nm-node rv">
           <div class="nm-node-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <div class="nm-node-text">Jobb kontroll a működés felett</div>
+          <div class="nm-node-content">
+            <p data-i18n="results_node_3">Jobb kontroll a működés felett</p>
+          </div>
         </div>
         <div class="nm-node rv">
           <div class="nm-node-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
-          <div class="nm-node-text">Stabilabb alap a növekedéshez</div>
+          <div class="nm-node-content">
+            <p data-i18n="results_node_4">Stabilabb alap a növekedéshez</p>
+          </div>
         </div>
       </div>
       
       <!-- SVG Lines Background -->
       <svg class="nm-lines" viewBox="0 0 1200 500" preserveAspectRatio="none">
-        <path class="nm-line-path" d="M600,250 L380,120" />
-        <path class="nm-line-path" d="M600,250 L380,380" />
-        <path class="nm-line-path" d="M600,250 L820,120" />
-        <path class="nm-line-path" d="M600,250 L820,380" />
+        <path class="nm-line-path" d="M600,250 L466,171" />
+        <path class="nm-line-path" d="M600,250 L466,329" />
+        <path class="nm-line-path" d="M600,250 L734,171" />
+        <path class="nm-line-path" d="M600,250 L734,329" />
         
-        <path class="nm-bullet" d="M600,250 L380,120" />
-        <path class="nm-bullet" d="M600,250 L380,380" style="animation-delay: 1.5s;" />
-        <path class="nm-bullet" d="M600,250 L820,120" style="animation-delay: 0.7s;" />
-        <path class="nm-bullet" d="M600,250 L820,380" style="animation-delay: 2.2s;" />
+        <path class="nm-bullet" d="M600,250 L466,171" />
+        <path class="nm-bullet" d="M600,250 L466,329" style="animation-delay: 1.5s;" />
+        <path class="nm-bullet" d="M600,250 L734,171" style="animation-delay: 0.7s;" />
+        <path class="nm-bullet" d="M600,250 L734,329" style="animation-delay: 2.2s;" />
       </svg>
+    </div>
+
+    <!-- Added High-Impact Sentence -->
+    <div style="margin-top: 8rem; text-align: center; position: relative; z-index: 10;">
+      <div style="width: 40px; height: 1px; background: var(--accent); margin: 0 auto 3rem; opacity: 0.5;"></div>
+      <p data-i18n="results_strong_sentence" style="font-family: var(--font-d); font-size: 32px; color: var(--white); line-height: 1.4; font-style: italic; font-weight: 300; max-width: 850px; margin: 0 auto; text-shadow: 0 0 30px rgba(217,119,6,0.2);">
+        A legjobban teljesítő cégek nem csak “ráteszik” az AI-t a régi rendszerre, hanem <span style="color: var(--accent)">újraalkotják</span> a munkafolyamatokat.
+      </p>
     </div>
   </div>
 </section>
@@ -807,8 +834,8 @@ body.loading { overflow: hidden; }
 <!-- Portfolio (Mac Slider) -->
 <section id="portfolio">
   <div class="p-header rv" style="text-align: center;">
-    <span class="s-tag">Esettanulmányok</span>
-    <h2 class="s-title">Amire <em>büszkék</em> vagyunk</h2>
+    <span class="s-tag" data-i18n="portfolio_tag">Esettanulmányok</span>
+    <h2 class="s-title" data-i18n="portfolio_title">Amire <em>büszkék</em> vagyunk</h2>
   </div>
 
   <div class="p-slider-wrap rv">
@@ -834,17 +861,17 @@ body.loading { overflow: hidden; }
     <div class="p-info" id="pInfo">
       <!-- Item 1 -->
       <div class="p-item-info active">
-        <span class="p-cat">WEBÁRUHÁZ / AUTÓ</span>
+        <span class="p-cat" data-i18n="p_cat_1">WEBÁRUHÁZ / AUTÓ</span>
         <h3 class="p-name">Bontoaruhaz.hu</h3>
-        <p class="p-desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
-        <a href="https://www.bontoaruhaz.hu" target="_blank" class="p-btn">Megnézem az oldalt</a>
+        <p class="p-desc" data-i18n="portfolio_bonto_desc">Komplex autóalkatrész webáruház egyedi keresési logikával és szállítási automatizációval.</p>
+        <a href="https://www.bontoaruhaz.hu" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
       </div>
       <!-- Item 2 -->
       <div class="p-item-info">
-        <span class="p-cat">MEMBERSHIP / COMMUNITY</span>
+        <span class="p-cat" data-i18n="p_cat_2">MEMBERSHIP / COMMUNITY</span>
         <h3 class="p-name">Folyamat.hu</h3>
-        <p class="p-desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
-        <a href="https://hu.folyamat.com" target="_blank" class="p-btn">Megnézem az oldalt</a>
+        <p class="p-desc" data-i18n="portfolio_folyamat_desc">Online tudatossági platform előfizetéses rendszerrel és videótár funkcióval.</p>
+        <a href="https://hu.folyamat.com" target="_blank" class="p-btn" data-i18n="portfolio_view">Megnézem az oldalt</a>
       </div>
     </div>
   </div>
@@ -883,85 +910,93 @@ body.loading { overflow: hidden; }
 <section id="offer">
   <div class="offer-block rv">
     <span class="s-tag">Ingyenes Audit</span>
-    <h2 class="offer-h">Nézd meg, hol lehet <span style="color: var(--accent)">hatékonyabb</span> a működésed</h2>
-    <p class="offer-sub" style="color: rgba(255,255,255,0.9); max-width: 800px; margin: 2rem auto 4rem; font-size: 19px;">
+    <h2 class="offer-h" data-i18n="audit_title_new">Nézd meg, hol lehet <span style="color: var(--accent)">hatékonyabb</span> a működésed</h2>
+    <p class="offer-sub" data-i18n="audit_sub_original" style="color: rgba(255,255,255,0.95); font-size: 18px;">Egy rövid audit során feltárjuk, mely folyamatok automatizálhatók, és milyen lehetőségek vannak a működésed fejlesztésére.</p>
+    <p data-i18n="audit_strong_sentence" style="color: rgba(255,255,255,0.9); max-width: 800px; margin: 2rem auto 4rem; font-size: 19px; font-style: italic;">
       A cégek nem csak szoftvert fognak keresni, hanem olyan megoldásokat, amelyek segítenek, hogy az embereik <span style="color: var(--white)">ne égjenek ki</span> az új rendszerben.
     </p>
     
     <div class="offer-grid">
       <div class="offer-card rv">
-        <h3>Mit kapsz:</h3>
+        <h3 data-i18n="audit_card_1_title">Mit kapsz:</h3>
         <ul class="offer-list">
-          <li>Áttekintést a jelenlegi működésedről</li>
-          <li>Azonosított fejlesztési lehetőségeket</li>
-          <li>Javaslatokat automatizációra</li>
-          <li>Egy konkrét irányt a következő lépésekhez</li>
+          <li data-i18n="audit_card_1_li_1">Áttekintést a jelenlegi működésedről</li>
+          <li data-i18n="audit_card_1_li_2">Azonosított fejlesztési lehetőségeket</li>
+          <li data-i18n="audit_card_1_li_3">Javaslatokat automatizációra</li>
+          <li data-i18n="audit_card_1_li_4">Egy konkrét irányt a következő lépésekhez</li>
         </ul>
       </div>
       
       <div class="offer-card rv">
-        <h3>Kinek szól:</h3>
+        <h3 data-i18n="audit_card_2_title">Kinek szól:</h3>
         <ul class="offer-list">
-          <li>Már működő, bevétellel rendelkező cégeknek</li>
-          <li>Akik hatékonyabbá tennék a működésüket</li>
-          <li>Akik nyitottak új rendszerek bevezetésére</li>
+          <li data-i18n="audit_card_2_li_1">Már működő, bevétellel rendelkező cégeknek</li>
+          <li data-i18n="audit_card_2_li_2">Akik hatékonyabbá tennék a működésüket</li>
+          <li data-i18n="audit_card_2_li_3">Akik nyitottak új rendszerek bevezetésére</li>
         </ul>
       </div>
     </div>
     
     <div style="margin-top: 2rem;">
-      <a href="contact.html" class="btn-p">Foglalj időpontot a Discovery Callra</a>
-      <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1); font-family: 'Inter', sans-serif;">Ingyenes beszélgetés. Nincs kötelezettség.</p>
+      <a href="contact.html" class="btn-p" data-i18n="audit_btn_book">Foglalj időpontot a Discovery Callra</a>
+      <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1); font-family: 'Inter', sans-serif;" data-i18n="audit_hint_no_ob">Ingyenes beszélgetés. Nincs kötelezettség.</p>
     </div>
   </div>
 </section>
 
 <section id="why-now">
   <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2;">
-    <span class="s-tag">Stratégia</span>
-    <h2 class="wn-text">Tisztán működni — <span style="color: var(--accent)">emberileg</span> és technológiailag is</h2>
-    <p style="max-width: 850px; margin: 4rem auto; font-size: 24px; color: rgba(255,255,255,0.9); line-height: 1.6; font-family: var(--font-d); font-style: italic; font-weight: 300;">
-      "A jövőben nem azok a cégek nyernek, akik több eszközt használnak, hanem akik tisztábban működnek."
+    <span class="s-tag" data-i18n="strategy_tag">Stratégia</span>
+    <h2 class="wn-text" data-i18n="strategy_title_new">A működés minősége határozza meg a <span style="color: var(--accent)">növekedés</span> tempóját</h2>
+    <p data-i18n="strategy_sub_original" style="max-width: 800px; margin: 2rem auto; font-size: 20px; color: rgba(255,255,255,0.9); line-height: 1.6; font-family: 'Inter', sans-serif;">
+      Minél komplexebb egy cég működése, annál fontosabbá válik, hogy a folyamatok jól legyenek felépítve.
+      Az automatizáció nem csak időt spórol — hanem lehetővé teszi a kiszámíthatóbb növekedést is.
     </p>
+    <div style="max-width: 850px; margin: 4rem auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem;">
+      <p data-i18n="strategy_strong_sentence" style="font-size: 24px; color: rgba(255,255,255,0.9); line-height: 1.6; font-family: var(--font-d); font-style: italic; font-weight: 300;">
+        "A jövőben nem those a cégek nyernek, akik több eszközt használnak, hanem akik tisztábban működnek — emberileg és technológiailag is."
+      </p>
+    </div>
   </div>
 </section>
 
 <section id="faq">
   <div class="rv" style="text-align: center;">
-    <span class="s-tag">GYIK</span>
-    <h2 class="s-title">Gyakori <em>kérdések</em></h2>
+    <span class="s-tag" data-i18n="faq_tag">GYIK</span>
+    <h2 class="s-title" data-i18n="faq_title">Gyakori <em>kérdések</em></h2>
   </div>
   <div class="faq-grid">
     <div class="faq-item rv">
-      <span class="faq-q">Mennyire egyedi a megoldás?</span>
-      <p class="faq-a">Minden rendszer a konkrét működésedre épül — nincs sablon.</p>
+      <span class="faq-q" data-i18n="faq_q1">Mennyire egyedi a megoldás?</span>
+      <p class="faq-a" data-i18n="faq_a1">Minden rendszer a konkrét működésedre épül — nincs sablon.</p>
     </div>
     <div class="faq-item rv">
-      <span class="faq-q">Mennyi idő alatt valósul meg?</span>
-      <p class="faq-a">Az első működő megoldások általában 30 napon belül elkészülnek.</p>
+      <span class="faq-q" data-i18n="faq_q2">Mennyi idő alatt valósul meg?</span>
+      <p class="faq-a" data-i18n="faq_a2">Az első működő megoldások általában 30 napon belül elkészülnek.</p>
     </div>
     <div class="faq-item rv">
-      <span class="faq-q">Milyen árakkal dolgoztok?</span>
-      <p class="faq-a">Projekttől függően jellemzően 5–20k USD között.</p>
+      <span class="faq-q" data-i18n="faq_q3">Milyen árakkal dolgoztok?</span>
+      <p class="faq-a" data-i18n="faq_a3">Projekttől függően jellemzően 5–20k USD között.</p>
     </div>
     <div class="faq-item rv">
-      <span class="faq-q">Milyen cégeknek érdemes belevágni?</span>
-      <p class="faq-a">Olyanoknak, ahol már van működés — és van mit optimalizálni.</p>
+      <span class="faq-q" data-i18n="faq_q4">Milyen cégeknek érdemes belevágni?</span>
+      <p class="faq-a" data-i18n="faq_a4">Olyanoknak, ahol már van működés — és van mit optimalizálni.</p>
+    </div>
     </div>
   </div>
 </section>
 
 <section id="cta">
   <div class="rv" style="text-align: center;">
-    <h2 class="cta-title">Érdemes nálatok automatizálni?<br><span style="color: var(--accent)">Nézzük meg.</span></h2>
-    <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 20px; color: rgba(255,255,255,0.95); line-height: 1.6; font-family: 'Inter', sans-serif;">
+    <h2 class="cta-title" data-i18n="cta_main_title_new">Érdemes nálatok automatizálni?<br><span style="color: var(--accent)">Nézzük meg.</span></h2>
+    <p data-i18n="cta_main_sub_new" style="max-width: 600px; margin: 0 auto 3rem; font-size: 20px; color: rgba(255,255,255,0.95); line-height: 1.6; font-family: 'Inter', sans-serif;">
       Egy rövid beszélgetés során segítünk felmérni, hol vannak a szűk keresztmetszetek — és hogy van-e valódi üzleti értelme automatizálni.
     </p>
-    <a href="contact.html" class="btn-p" style="padding: 1.5rem 4rem; font-size: 14px;">Discovery Call foglalása</a>
-    <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);">Ingyenes. Nincs kötelezettség.</p>
+    <a href="contact.html" class="btn-p" data-i18n="cta_main_btn_new" style="padding: 1.5rem 4rem; font-size: 14px;">Discovery Call foglalása</a>
+    <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);" data-i18n="cta_main_hint_new">Ingyenes. Nincs kötelezettség.</p>
     
     <div style="margin-top: 8rem; opacity: 0.9;">
-      <p style="font-family: var(--font-d); font-size: 30px; font-style: italic; max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.95); line-height: 1.4;">
+      <p data-i18n="cta_main_quote_new" style="font-family: var(--font-d); font-size: 30px; font-style: italic; max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.95); line-height: 1.4;">
         "Nem minden cégnek van szüksége automatizációra — de ahol igen, ott jelentős különbséget tud hozni."
       </p>
     </div>
@@ -996,13 +1031,14 @@ body.loading { overflow: hidden; }
   </div>
   
   <div class="f-bottom">
-    <p>&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
+    <p data-i18n="footer_copy">&copy; 2024 Limitlesser. Minden jog fenntartva.</p>
     <div class="f-legal">
       <a href="aszf.html" data-i18n="footer_aszf">ÁSZF</a>
       <a href="privacy.html" data-i18n="footer_privacy">Adatkezelés</a>
     </div>
   </div>
 </footer>
+</div><!-- End page-content -->
 
 <script>
 // Preloader Logic
