@@ -276,16 +276,19 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     <a href="services.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_services_page">Szolgáltatások</span><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></a>
     <a href="index.html#portfolio" class="m-link" onclick="toggleMob()"><span data-i18n="nav_portfolio">Munkáink</span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a>
     
-    <div class="mob-lang-wrap" style="width: 100%; margin: 0.5rem 0;">
+    <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 0.5rem; border-radius: 100px; padding: 1.1rem;">Kezdjük el</a>
+
+    <div class="mob-lang-wrap" style="width: 100%; margin-top: 1rem;">
       <div class="lang-dropdown" style="margin: 0; width: 100%;">
-        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.06); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; width: 100%; box-sizing: border-box;">
+        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: rgba(255,255,255,0.05); border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; width: 100%; box-sizing: border-box;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag" style="width: 22px; height: 22px; border-radius: 50%;">
-            <span style="color: white; font-size: 13px; font-weight: 500;">Magyar (HU)</span>
+            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag" style="width: 20px; height: 20px; border-radius: 50%;">
+            <span style="color: white; font-size: 12px; font-weight: 500;">Nyelv / Language</span>
           </div>
-          <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 10px; fill: none; stroke: white; stroke-width: 2;"><path d="M1 1l4 4 4-4"/></svg>
+          <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 8px; fill: none; stroke: white; stroke-width: 2;"><path d="M1 1l4 4 4-4"/></svg>
         </div>
-        <div class="lang-options" style="position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
+        <div class="lang-options" style="position: absolute; bottom: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
           <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" style="width: 24px; height: 24px; border-radius: 50%;">
             <span style="font-size: 14px; font-weight: 500;">Magyar (HU)</span>
@@ -297,9 +300,6 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
         </div>
       </div>
     </div>
-
-    <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
-    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 0.5rem; border-radius: 16px; padding: 1rem;">Kezdjük el</a>
   </div>
 
   <nav id="nav">
