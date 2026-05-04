@@ -649,18 +649,18 @@ function updateContent(lang) {
   });
 
   // Update Dropdown UI if it exists
-  const currentFlag = document.getElementById('currentFlag');
-  if (currentFlag) {
-    const flagMap = {
-      hu: 'https://flagcdn.com/w80/hu.png',
-      en: 'https://flagcdn.com/w80/gb.png'
-    };
-    currentFlag.src = flagMap[lang];
-    
-    document.querySelectorAll('.lang-option').forEach(opt => {
-      opt.classList.toggle('active', opt.dataset.langOpt === lang);
-    });
-  }
+  const flagMap = {
+    hu: 'https://flagcdn.com/w80/hu.png',
+    en: 'https://flagcdn.com/w80/gb.png'
+  };
+
+  document.querySelectorAll('.currentFlag').forEach(img => {
+    img.src = flagMap[lang];
+  });
+
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.langOpt === lang);
+  });
 
   // Special handling for floating words if they exist in the DOM
   const lwElements = document.querySelectorAll('.lw');
@@ -683,23 +683,26 @@ async function initI18n() {
 }
 
 // Global toggle functions for dropdown
-window.toggleLangDropdown = () => {
-  const dd = document.getElementById('langDropdown');
-  if (dd) dd.classList.toggle('open');
+window.toggleLangDropdown = (e) => {
+  if (e) {
+    const dd = e.currentTarget.closest('.lang-dropdown');
+    if (dd) dd.classList.toggle('open');
+    e.stopPropagation();
+  }
 };
 
 window.selectLanguage = (lang) => {
   updateContent(lang);
-  const dd = document.getElementById('langDropdown');
-  if (dd) dd.classList.remove('open');
+  document.querySelectorAll('.lang-dropdown').forEach(dd => dd.classList.remove('open'));
 };
 
 // Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
-  const dd = document.getElementById('langDropdown');
-  if (dd && !dd.contains(e.target)) {
-    dd.classList.remove('open');
-  }
+  document.querySelectorAll('.lang-dropdown').forEach(dd => {
+    if (!dd.contains(e.target)) {
+      dd.classList.remove('open');
+    }
+  });
 });
 
 window.setLanguage = (lang) => {
