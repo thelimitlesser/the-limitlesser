@@ -158,12 +158,24 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     .rv.on { opacity: 1; transform: translateY(0); }
 
     @media(max-width:1050px){
-      nav{padding:1.5rem 2rem}
-      nav.stuck { padding: 1.2rem 2rem; }
+      nav { 
+        top: 1rem; 
+        left: 1rem; 
+        right: 1rem; 
+        width: auto; 
+        padding: 1.2rem 1.8rem; 
+        border-radius: 20px; 
+        background: rgba(10,5,0,0.7); 
+        backdrop-filter: blur(20px); 
+        -webkit-backdrop-filter: blur(20px); 
+        border: 1px solid rgba(255,255,255,0.08); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+      nav.stuck { padding: 1rem 1.8rem; top: 0.8rem; border-color: rgba(217,119,6,0.2); }
       .n-links{display:none}
       .n-btn.nav-cta-btn{display:none}
       .mob-toggle{display:flex}
-      .hero-about { padding-top: 10rem; }
+      .hero-about { padding: 10rem 2rem 5rem; }
       .hero-title { font-size: 48px; }
     }
     @media (max-width: 1000px) {

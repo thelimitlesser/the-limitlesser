@@ -84,15 +84,25 @@
     .mob-menu .n-btn { margin-top: auto; font-size: 13px; padding: 1.2rem 2rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
 
     @media(max-width:1050px){
-      nav{padding:1.5rem 2rem}
-      nav.stuck { padding: 1.2rem 2rem; }
+      nav { 
+        top: 1rem; 
+        left: 1rem; 
+        right: 1rem; 
+        width: auto; 
+        padding: 1.2rem 1.8rem; 
+        border-radius: 20px; 
+        background: rgba(10,5,0,0.7); 
+        backdrop-filter: blur(20px); 
+        -webkit-backdrop-filter: blur(20px); 
+        border: 1px solid rgba(255,255,255,0.08); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+      nav.stuck { padding: 1rem 1.8rem; top: 0.8rem; border-color: rgba(217,119,6,0.2); }
       .n-links{display:none}
-      .n-btn.nav-cta-btn{display:none}
+      .n-btn.nav-cta-btn { display: none; }
       .mob-toggle{display:flex}
-    }
-
-    /* Contact Hero */
-    .contact-hero { padding: 12rem 5rem 6rem; text-align: center; }
+      .hero-contact { padding: 10rem 2rem 5rem; }
+    }.contact-hero { padding: 12rem 5rem 6rem; text-align: center; }
     .c-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
     .c-title { font-family: var(--font-d); font-size: clamp(48px, 8vw, 96px); font-weight: 300; line-height: 1.1; max-width: 1000px; margin: 0 auto; letter-spacing: -2px; }
 
