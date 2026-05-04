@@ -136,10 +136,13 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     /* About Sections */
     .hero-about { position:relative; min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 12rem 2rem 5rem; text-align: center; }
     .hero-title { font-family: var(--font-d); font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.2; max-width: 1000px; margin: 0 auto 5rem; letter-spacing: -1px; color: var(--white); }
-    .hero-title em, .hero-title i { font-style: italic !important; color: #FF8A00 !important; }
+    .hero-title em, .hero-title i { font-style: italic !important; color: #FF8A00 !important; display: inline !important; }
     .hero-sub { font-size: clamp(20px, 2.5vw, 26px); color: var(--white); line-height: 1.6; max-width: 900px; margin: 0 auto; font-weight: 300; font-family: var(--font-b); }
     .hero-sub p { margin-bottom: 2rem; }
-    .hero-sub em, .hero-sub i { font-style: normal !important; color: #FF8A00 !important; }
+    .hero-sub em, .hero-sub i { font-style: normal !important; color: #FF8A00 !important; display: inline !important; }
+    
+    html { scroll-behavior: smooth; }
+    header { transition: transform 0.3s ease, background 0.3s ease; }
     
     .rv-delayed { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .rv-delayed.on { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
@@ -435,7 +438,7 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
 </div>
 
   </div><!-- End page-content -->
-  <script src="js/i18n.js?v=3.0"></script>
+  <script src="js/i18n.js"></script>
   <script>
     // Mouse Glow
     const mg = document.getElementById('mouse-glow');
@@ -448,6 +451,7 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     });
 
     // Nav & Parallax
+    let ticking = false;
     const updateParallax = () => {
       const s = window.scrollY;
       const b1 = document.getElementById('pb1');
@@ -460,10 +464,16 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
       
       const nav = document.getElementById('nav');
       if(nav) nav.classList.toggle('stuck', s > 60);
+      ticking = false;
     };
 
-    window.addEventListener('scroll', updateParallax);
-    updateParallax();
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+    window.requestAnimationFrame(updateParallax);
 
     // Mobile Menu Toggle
     function toggleMob() {

@@ -673,7 +673,9 @@ function updateContent(lang) {
   if (lwElements.length > 0) {
     lwElements.forEach((el, index) => {
       const key = `word_${(index % 6) + 1}`;
-      el.textContent = translations[lang][key];
+      if (translations[lang][key]) {
+        el.innerHTML = translations[lang][key];
+      }
     });
   }
 }
@@ -683,7 +685,10 @@ document.documentElement.classList.add('unresolved');
 
 async function initI18n() {
   const lang = await detectLanguage();
+  console.log('Limitlesser i18n Initializing...', lang);
   updateContent(lang);
+  // Re-run update after a short delay to ensure DOM is fully ready and CSS is applied
+  setTimeout(() => updateContent(lang), 100);
   document.documentElement.classList.remove('unresolved');
   document.dispatchEvent(new Event('i18nReady'));
 }
