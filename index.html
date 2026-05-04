@@ -322,46 +322,56 @@ section{position:relative;z-index:5}
 @keyframes nm-shoot { from { stroke-dashoffset: 210; } to { stroke-dashoffset: 0; } }
 
 @media(max-width:1050px) {
-  .nm-grid { grid-template-columns: 1fr; gap: 3rem; position: relative; padding-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
+  .nm-grid { display: flex; flex-direction: column; align-items: center; gap: 4rem; position: relative; padding: 4rem 0; }
+  
+  /* Central vertical line */
   .nm-grid::before { 
-    content: ''; 
-    position: absolute; 
-    top: 70px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 2px; 
-    height: calc(100% - 70px); 
-    background: linear-gradient(to bottom, 
-      rgba(217,119,6,0.8) 0%, 
-      rgba(217,119,6,0.1) 100%
-    ); 
-    z-index: 1;
+    content: ''; position: absolute; top: 15%; left: 50%; transform: translateX(-50%); 
+    width: 2px; height: 70%; background: linear-gradient(to bottom, rgba(217,119,6,0), rgba(217,119,6,0.5) 20%, rgba(217,119,6,0.5) 80%, rgba(217,119,6,0)); z-index: 1; 
   }
-  /* Data flow animation */
+  
+  /* Upward flow */
   .nm-grid::after {
-    content: '';
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 150px;
-    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-    z-index: 2;
-    filter: blur(2px);
-    animation: nm-data-flow 3s infinite linear;
-    opacity: 0.6;
+    content: ''; position: absolute; top: 50%; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 100px; background: linear-gradient(to top, transparent, var(--accent), transparent);
+    z-index: 2; filter: blur(2px); animation: nm-flow-up 4s infinite linear;
   }
-  .nm-col { width: 100%; align-items: center !important; text-align: center !important; z-index: 5; }
-  .nm-node { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2.5rem 1.5rem; background: rgba(5,2,0,0.9); border-color: rgba(217,119,6,0.3); margin: 0 auto; width: 90%; }
+  
+  /* Downward flow (new element) */
+  .nm-flow-down {
+    content: ''; position: absolute; top: 50%; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 100px; background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    z-index: 2; filter: blur(2px); animation: nm-flow-down 4s infinite linear; pointer-events: none;
+  }
+
+  .nm-col { display: flex; flex-direction: column; gap: 6rem; width: 100%; align-items: center !important; z-index: 5; }
+  .nm-col.left { order: 1; }
+  .nm-col.right { order: 3; }
+  .nm-core-col { order: 2; margin: 0; z-index: 10; transform: scale(0.9); }
+
+  .nm-node { position: relative; padding: 2.5rem 1.5rem; background: rgba(10,5,0,0.9); border: 1px solid rgba(217,119,6,0.15); width: 85%; margin: 0 auto; text-align: center; }
+  
+  /* Top-floating icons */
+  .nm-node[data-node="top"] .nm-node-icon { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); margin: 0; background: #1a0f00; border-color: var(--accent); }
+  
+  /* Bottom-floating icons */
+  .nm-node[data-node="bottom"] .nm-node-icon { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); margin: 0; background: #1a0f00; border-color: var(--accent); }
+  
   .nm-lines, .nm-orbit { display: none; }
-  .nm-core-col { order: -1; margin-bottom: 1rem; z-index: 10; display: flex; justify-content: center; }
 }
-@keyframes nm-data-flow {
-  0% { top: 70px; opacity: 0; }
+
+@keyframes nm-flow-up {
+  0% { transform: translate(-50%, 0); opacity: 0; }
   20% { opacity: 1; }
   80% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+  100% { transform: translate(-50%, -250px); opacity: 0; }
+}
+
+@keyframes nm-flow-down {
+  0% { transform: translate(-50%, 0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(-50%, 250px); opacity: 0; }
 }
 
 /* Offer Section Redesign */
@@ -856,10 +866,11 @@ body.loading { overflow: hidden; }
     <span class="s-tag" data-i18n="results_tag">Eredmények</span>
     <h2 class="s-title" data-i18n="results_main_title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
     
-    <div class="nm-grid">
+    <div class="nm-grid" id="nmGrid">
+      <div class="nm-flow-down"></div>
       <!-- Left Column Nodes -->
       <div class="nm-col left">
-        <div class="nm-node rv">
+        <div class="nm-node rv" data-node="top">
           <div class="nm-node-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
@@ -867,7 +878,7 @@ body.loading { overflow: hidden; }
             <p data-i18n="results_node_1">Kevesebb manuális feladat a csapatod számára</p>
           </div>
         </div>
-        <div class="nm-node rv">
+        <div class="nm-node rv" data-node="top">
           <div class="nm-node-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
@@ -878,15 +889,17 @@ body.loading { overflow: hidden; }
       </div>
 
       <!-- Center Core -->
-      <div class="nm-core-container">
-        <div class="nm-orbit nm-orbit-1"></div>
-        <div class="nm-orbit nm-orbit-2"></div>
-        <div class="nm-core rv"></div>
+      <div class="nm-core-col">
+        <div class="nm-core-container">
+          <div class="nm-orbit nm-orbit-1"></div>
+          <div class="nm-orbit nm-orbit-2"></div>
+          <div class="nm-core rv"></div>
+        </div>
       </div>
 
       <!-- Right Column Nodes -->
       <div class="nm-col right">
-        <div class="nm-node rv">
+        <div class="nm-node rv" data-node="bottom">
           <div class="nm-node-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
@@ -894,7 +907,7 @@ body.loading { overflow: hidden; }
             <p data-i18n="results_node_3">Jobb kontroll a működés felett</p>
           </div>
         </div>
-        <div class="nm-node rv">
+        <div class="nm-node rv" data-node="bottom">
           <div class="nm-node-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
