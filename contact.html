@@ -33,10 +33,11 @@
     .mesh-bg { 
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; 
       background: #050200;
-      background: radial-gradient(circle at var(--bg-x, 50%) var(--bg-y, 50%), rgba(217,119,6,0.15) 0%, rgba(10,5,0,1) 70%);
-      transition: background 0.3s ease-out;
+      background: linear-gradient(135deg, #050200 0%, #1a0f00 25%, #2a1a00 50%, #1a0f00 75%, #050200 100%);
+      background-size: 100% 400%;
+      background-attachment: fixed;
     }
-    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.08; transition: transform 0.3s ease-out; }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.08; }
     .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
     .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
     .b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
@@ -76,7 +77,7 @@
     /* Mobile Menu Overlay */
     .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-    .mob-menu { position: fixed; top: 1rem; right: 1rem; bottom: 1rem; width: 280px; background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1.2rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 32px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+    .mob-menu { position: fixed; top: 1rem; right: 1rem; width: 260px; max-height: calc(100dvh - 2rem); background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
 .mob-menu.open { transform: translateX(0); }
     .mob-menu-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
     .mob-menu-top .n-ll { font-family: var(--font-d); font-size: 13px; letter-spacing: 5px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1; }
@@ -195,19 +196,17 @@
     <a href="about.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_about">Rólunk</span><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
     <a href="services.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_services_page">Szolgáltatások</span><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></a>
     <a href="index.html#portfolio" class="m-link" onclick="toggleMob()"><span data-i18n="nav_portfolio">Munkáink</span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a>
-    <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
-    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 1rem; border-radius: 16px;">Kezdjük el</a>
-
-    <div class="mob-lang-wrap" style="margin-top: auto; width: 100%; padding-top: 1rem;">
+    
+    <div class="mob-lang-wrap" style="width: 100%; margin: 0.5rem 0;">
       <div class="lang-dropdown" style="margin: 0; width: 100%;">
-        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; width: 100%; box-sizing: border-box;">
+        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.06); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; width: 100%; box-sizing: border-box;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag" style="width: 22px; height: 22px; border-radius: 50%;">
-            <span style="color: white; font-size: 14px; font-weight: 500;">Nyelv / Language</span>
+            <span style="color: white; font-size: 13px; font-weight: 500;">Magyar (HU)</span>
           </div>
           <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 10px; fill: none; stroke: white; stroke-width: 2;"><path d="M1 1l4 4 4-4"/></svg>
         </div>
-        <div class="lang-options" style="position: absolute; bottom: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
+        <div class="lang-options" style="position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
           <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" style="width: 24px; height: 24px; border-radius: 50%;">
             <span style="font-size: 14px; font-weight: 500;">Magyar (HU)</span>
@@ -219,6 +218,9 @@
         </div>
       </div>
     </div>
+
+    <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 0.5rem; border-radius: 16px; padding: 1rem;">Kezdjük el</a>
   </div>
   <nav id="nav">
     <a href="index.html#hero" class="n-logo">
@@ -382,17 +384,6 @@
       if(b2) b2.style.transform = `translateY(${-s * 0.2}px)`;
       if(b3) b3.style.transform = `translateY(${-s * 0.15}px)`;
       
-      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = scrollMax > 0 ? (s / scrollMax) * 100 : 0;
-      
-      const bg = document.querySelector('.mesh-bg');
-      if(bg) {
-        const bgX = 50 + Math.sin(s * 0.002) * 10;
-        const bgY = 40 + (scrollPercent * 0.4);
-        bg.style.setProperty('--bg-x', `${bgX}%`);
-        bg.style.setProperty('--bg-y', `${bgY}%`);
-      }
-
       const nav = document.getElementById('nav');
       if(nav) nav.classList.toggle('stuck', s > 60);
     };
