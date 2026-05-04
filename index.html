@@ -30,8 +30,13 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/svg%3E");
   opacity: 0.04; pointer-events: none; z-index: 9999;
 }
-.mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #050200; }
-.mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.03; transition: transform 0.2s ease-out; }
+    .mesh-bg { 
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; 
+      background: #050200;
+      background: radial-gradient(circle at 50% var(--scroll-pos, 50%), #1a0f00 0%, #050200 70%);
+      transition: background 0.1s linear;
+    }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.04; transition: transform 0.2s ease-out; }
 .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
 .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
 .b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
@@ -682,27 +687,20 @@ body.loading { overflow: hidden; }
     <a href="services.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_services_page">Szolgáltatások</span><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></a>
     <a href="index.html#portfolio" class="m-link" onclick="toggleMob()"><span data-i18n="nav_portfolio">Munkáink</span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a>
     <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
-    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta">Kezdjük el</a>
-    
-    <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); width: 100%;">
-      <div class="lang-dropdown" style="display: block; position: static;">
-        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="justify-content: space-between; padding: 1rem 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag">
-            <span style="font-size: 14px; font-weight: 500; color: var(--white);">Language / Nyelv</span>
-          </div>
-          <svg class="lang-chevron" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>
+    <div class="mob-lang-wrap" style="margin-top:2rem; width:100%">
+      <div class="lang-dropdown" style="margin:0; width:100%">
+        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="justify-content:center">
+          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag">
+          <span data-i18n="nav_lang_label">Nyelvválasztás</span>
         </div>
-        <div class="lang-options" style="bottom: 100%; top: auto; left: 0; transform: translateX(0) translateY(-10px); width: 100%; margin-bottom: 10px;">
-          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')">
+        <div class="lang-options" style="position:relative; width:100%; top:10px; margin-top:0.5rem; background:rgba(255,255,255,0.05)">
+          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color:white">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag">
             <span>Magyar (HU)</span>
-            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')">
+          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')" style="color:white">
             <img src="https://flagcdn.com/w80/gb.png" class="lang-flag">
             <span>English (EN)</span>
-            <svg class="lang-option-check" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
       </div>
