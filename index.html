@@ -100,11 +100,11 @@ html:not(.unresolved) .page-content { animation: pageFadeIn 1.2s cubic-bezier(0.
 /* Mobile Menu Overlay */
 .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-.mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 380px; height: 100%; background: rgba(10, 5, 0, 0.35); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 5rem 4rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; }
+.mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 320px; height: 100%; background: rgba(10, 5, 0, 0.4); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4rem 2.5rem; gap: 2.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; }
 .mob-menu.open { transform: translateX(0); }
 .mob-menu a { font-family: 'Inter', sans-serif; font-size: 26px; color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: -0.5px; line-height: 1.2; text-transform: none; }
 .mob-menu a:hover { color: var(--accent); }
-.mob-menu .n-btn { font-size: 14px; padding: 1.2rem 2.5rem; margin-top: 2rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+.mob-menu .n-btn { font-size: 13px; padding: 1rem 2rem; margin-top: 1rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
 
 /* ─── Hero ─────────────────────────────────────── */
 #hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;overflow:hidden; text-align: center; padding-top: 12rem;}
@@ -602,7 +602,15 @@ body.loading { overflow: hidden; }
 
 <div id="streaks" style="display:none;"></div>
 
-<div class="mob-menu-overlay" id="mob-overlay" onclick="toggleMob()"></div>
+  <div class="mob-menu-overlay" id="mob-overlay" onclick="toggleMob()"></div>
+  <div class="mob-menu" id="mob-menu">
+    <a href="index.html#hero" onclick="toggleMob()" data-i18n="nav_home">Kezdőlap</a>
+    <a href="about.html" onclick="toggleMob()" data-i18n="nav_about">Rólunk</a>
+    <a href="services.html" onclick="toggleMob()" data-i18n="nav_services_page">Szolgáltatások</a>
+    <a href="index.html#portfolio" onclick="toggleMob()" data-i18n="nav_portfolio">Munkáink</a>
+    <a href="contact.html" onclick="toggleMob()" data-i18n="nav_contact">Kapcsolat</a>
+    <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()" data-i18n="nav_cta">Kezdjük el</a>
+  </div>
 <nav id="nav">
   <a href="index.html#hero" class="n-logo">
     <span class="n-ll">Limit<span style="color:var(--accent)">lesser</span></span>
@@ -639,15 +647,6 @@ body.loading { overflow: hidden; }
 </nav>
 
 <div class="page-content">
-
-<div class="mob-menu" id="mob-menu">
-  <a href="index.html#hero" onclick="toggleMob()" data-i18n="nav_home">Kezdőlap</a>
-  <a href="about.html" onclick="toggleMob()" data-i18n="nav_about">Rólunk</a>
-  <a href="services.html" onclick="toggleMob()" data-i18n="nav_services_page">Szolgáltatások</a>
-  <a href="index.html#portfolio" onclick="toggleMob()" data-i18n="nav_portfolio">Munkáink</a>
-  <a href="contact.html" onclick="toggleMob()" data-i18n="nav_contact">Kapcsolat</a>
-  <a href="contact.html" class="n-btn nav-cta-btn" onclick="toggleMob()" data-i18n="nav_cta">Kezdjük el</a>
-</div>
 
 <section id="hero">
   <div class="h-bg-glow"></div>
