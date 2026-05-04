@@ -447,8 +447,15 @@ section{position:relative;z-index:5}
 .wn-text { font-family: var(--font-d); font-size: clamp(28px, 3.5vw, 48px); line-height: 1.3; font-weight: 300; max-width: 900px; margin: 0 auto; color: var(--white); }
 
 /* Reveal */
-.rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(0.16, 1, 0.3, 1)}
-.rv.on{opacity:1;transform:translateY(0)}
+.rv { 
+  opacity: 0; 
+  transform: translate3d(0, 30px, 0); 
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
+  will-change: transform, opacity; 
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rv.on { opacity: 1; transform: translate3d(0, 0, 0); }
 
 @media(max-width:1050px){
   nav { 
@@ -1198,22 +1205,22 @@ document.addEventListener('mousemove', e => {
 });
 
 // Nav & Parallax
+let ticking = false;
 const updateParallax = () => {
   const s = window.scrollY;
   const b1 = document.getElementById('pb1');
   const b2 = document.getElementById('pb2');
   const b3 = document.getElementById('pb3');
   
-  if(b1) b1.style.transform = `translateX(-50%) translateY(${-s * 0.4}px)`;
-  if(b2) b2.style.transform = `translateY(${-s * 0.2}px)`;
-  if(b3) b3.style.transform = `translateY(${-s * 0.15}px)`;
+  if(b1) b1.style.transform = `translate3d(-50%, ${-s * 0.4}px, 0)`;
+  if(b2) b2.style.transform = `translate3d(0, ${-s * 0.2}px, 0)`;
+  if(b3) b3.style.transform = `translate3d(0, ${-s * 0.15}px, 0)`;
   
   const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercent = scrollMax > 0 ? (s / scrollMax) * 100 : 0;
   
   const bg = document.querySelector('.mesh-bg');
   if(bg) {
-    // Dramatic radial movement
     const bgX = 50 + Math.sin(s * 0.002) * 10;
     const bgY = 40 + (scrollPercent * 0.4);
     bg.style.setProperty('--bg-x', `${bgX}%`);
@@ -1222,10 +1229,16 @@ const updateParallax = () => {
 
   const nav = document.getElementById('nav');
   if(nav) nav.classList.toggle('stuck', s > 60);
+  ticking = false;
 };
 
-window.addEventListener('scroll', updateParallax);
-updateParallax();
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(updateParallax);
+    ticking = true;
+  }
+});
+window.requestAnimationFrame(updateParallax);
 
 // Mobile Menu Toggle
 function toggleMob() {
@@ -1240,8 +1253,13 @@ function toggleMob() {
 
 // Reveal
 const revObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
-},{threshold:.1});
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('on');
+      revObs.unobserve(e.target);
+    }
+  });
+},{threshold:.05, rootMargin: "0px 0px -50px 0px"});
 document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
 // Streaks
 const sc=document.getElementById('streaks');
