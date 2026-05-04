@@ -351,7 +351,9 @@ section{position:relative;z-index:5}
 
 @media(max-width:1050px) {
   .ch-grid { grid-template-columns: 1fr; grid-template-areas: "intro" "cards" "details"; gap: 3rem; }
-  .ch-card { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 2.2rem 1.8rem; }
+  .ch-cards { gap: 3rem; margin-top: 2.5rem; }
+  .ch-card { position: relative; flex-direction: column; align-items: flex-start; padding: 2.5rem 1.5rem 1.5rem; }
+  .ch-card-icon { position: absolute; top: 0; transform: translateY(-50%); background: var(--bg); border: 1px solid var(--accent); z-index: 5; }
 }
 
 /* Solution Section (Redesigned) */
@@ -408,7 +410,7 @@ section{position:relative;z-index:5}
   .pr-steps::before{display:none}
   .st-grid{grid-template-columns:1fr 1fr}
   #hero { padding-top: 10rem; }
-  #context, #portfolio, #solution, #templates, #results, #offer, #why-now, #faq, #cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  #context, #portfolio, #solution, #templates, #results, #offer, #why-now, #faq, #cta { padding: 5rem 1.5rem !important; }
   .offer-block { padding: 3rem 1.5rem; border-radius: 24px; }
   .sv-card, .v-card { padding: 2.5rem 1.5rem; border-radius: 24px; }
   .p-card, .t-card { padding: 2rem 1.2rem; }
