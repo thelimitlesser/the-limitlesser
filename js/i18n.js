@@ -217,7 +217,7 @@ const translations = {
     faq_a4: "Olyanoknak, ahol már van működés — és van mit optimalizálni.",
     // About Page HU
     about_hero_tag: "Küldetésünk",
-    about_hero_title: "<em>Letisztult</em>, <em>egyszerű</em>, <em>működő</em> rendszereket építünk — <br> és <em>szeretjük az életet</em>. :)",
+    about_hero_title: "<em>Letisztult, egyszerű, működő</em> rendszereket építünk — <br> és szeretjük az életet. :)",
     about_sub_1: "A <em>személyes transzformáció</em> mellett a <em>digitális transzformáció</em> hívei is vagyunk — évek óta tudatos célunk, hogy segítsünk másoknak <em>jobban és hatékonyabban</em> működni.",
     about_sub_2: "Hisszük, hogy a jó folyamatok és eredmények alapja a <em>működő rendszer</em>.",
     about_sub_3: "Ezért alapítottuk a Limitlessert, amely abban segít üzleti partnereinek, hogy <em>modern eszközökkel</em> tudjanak <em>örökséget alkotni</em>.",
@@ -526,7 +526,7 @@ const translations = {
     faq_a4: "Companies that already have active operations — and have something to optimize.",
     // About Page EN
     about_hero_tag: "Our Mission",
-    about_hero_title: "<em>Clean</em>, <em>simple</em>, <em>working</em> systems we build — <br> and we <em>love life</em>. :)",
+    about_hero_title: "<em>Clean, simple, working</em> systems we build — <br> and we love life. :)",
     about_sub_1: "Beside <em>personal transformation</em>, we are believers in <em>digital transformation</em> — for years, our conscious goal has been to help others operate <em>better and more efficiently</em>.",
     about_sub_2: "We believe that the foundation of good processes and results is a <em>working system</em>.",
     about_sub_3: "That's why we founded Limitlesser, which helps its business partners create a <em>legacy</em> with <em>modern tools</em>.",
