@@ -83,7 +83,8 @@
     .mob-toggle.open span:nth-child(2) { opacity: 0; }
     .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-    .mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 280px; height: 100dvh; background: rgba(10, 5, 0, 0.95); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: max(4rem, env(safe-area-inset-top)) 2rem max(3rem, env(safe-area-inset-bottom)); gap: 1.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+    .mob-menu { position: fixed; top: 1rem; right: 1rem; bottom: 1rem; width: 280px; background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1.2rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 32px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+.mob-menu.open { transform: translateX(0); }
     .mob-menu-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
     .mob-menu-top .n-ll { font-family: var(--font-d); font-size: 13px; letter-spacing: 5px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1; }
     .mob-close { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: 0.3s; padding: 0; }
@@ -230,22 +231,25 @@
     <a href="services.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_services_page">Szolgáltatások</span><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></a>
     <a href="index.html#portfolio" class="m-link" onclick="toggleMob()"><span data-i18n="nav_portfolio">Munkáink</span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a>
     <a href="contact.html" class="m-link" onclick="toggleMob()"><span data-i18n="nav_contact">Kapcsolat</span><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
-    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 1rem;">Kezdjük el</a>
+    <a href="contact.html" class="n-btn" onclick="toggleMob()" data-i18n="nav_cta" style="width: 100%; text-align: center; margin-top: 1rem; border-radius: 16px;">Kezdjük el</a>
 
-    <div class="mob-lang-wrap" style="margin-top: 1rem; width: auto;">
-      <div class="lang-dropdown" style="margin: 0;">
-        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border-radius: 100px; border: 1px solid rgba(255,255,255,0.1);">
-          <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag" style="width: 20px; height: 20px;">
-          <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 8px; margin-left: 8px;"><path d="M1 1l4 4 4-4" stroke="white" stroke-width="2" fill="none"/></svg>
-        </div>
-        <div class="lang-options" style="position: absolute; bottom: calc(100% + 10px); right: 0; top: auto; background: #FFFFFF; border-radius: 12px; padding: 5px; width: 160px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10002;">
-          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: #1a1a1a; padding: 8px 12px;">
-            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" style="width: 20px; height: 20px;">
-            <span style="font-size: 13px;">Magyar (HU)</span>
+    <div class="mob-lang-wrap" style="margin-top: auto; width: 100%; padding-top: 1rem;">
+      <div class="lang-dropdown" style="margin: 0; width: 100%;">
+        <div class="lang-selected" onclick="toggleLangDropdown(event)" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; width: 100%; box-sizing: border-box;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag currentFlag" style="width: 22px; height: 22px; border-radius: 50%;">
+            <span style="color: white; font-size: 14px; font-weight: 500;">Nyelv / Language</span>
           </div>
-          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')" style="color: #1a1a1a; padding: 8px 12px;">
-            <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" style="width: 20px; height: 20px;">
-            <span style="font-size: 13px;">English (EN)</span>
+          <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 10px; fill: none; stroke: white; stroke-width: 2;"><path d="M1 1l4 4 4-4"/></svg>
+        </div>
+        <div class="lang-options" style="position: absolute; bottom: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
+          <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
+            <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" style="width: 24px; height: 24px; border-radius: 50%;">
+            <span style="font-size: 14px; font-weight: 500;">Magyar (HU)</span>
+          </div>
+          <div class="lang-option" data-lang-opt="en" onclick="selectLanguage('en')" style="color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
+            <img src="https://flagcdn.com/w80/gb.png" class="lang-flag" style="width: 24px; height: 24px; border-radius: 50%;">
+            <span style="font-size: 14px; font-weight: 500;">English (EN)</span>
           </div>
         </div>
       </div>
