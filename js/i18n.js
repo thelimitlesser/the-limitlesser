@@ -217,7 +217,7 @@ const translations = {
     faq_a4: "Olyanoknak, ahol már van működés — és van mit optimalizálni.",
     // About Page HU
     about_hero_tag: "Küldetésünk",
-    about_hero_title_v2: "<i>Letisztult, egyszerű, működő</i> rendszereket építünk — <br> és szeretjük az életet. :)",
+    about_hero_title_v2: "<i style='color:#FF8A00; font-style:italic;'>Letisztult,</i> <i style='color:#FF8A00; font-style:italic;'>egyszerű,</i> <i style='color:#FF8A00; font-style:italic;'>működő</i> rendszereket építünk — <br> és szeretjük az életet. :)",
     about_sub_1: "A <i>személyes transzformáció</i> mellett a <i>digitális transzformáció</i> hívei is vagyunk — évek óta tudatos célunk, hogy segítsünk másoknak <i>jobban és hatékonyabban</i> működni.",
     about_sub_2: "Hisszük, hogy a jó folyamatok és eredmények alapja a <i>működő rendszer</i>.",
     about_sub_3_v2: "Ezért alapítottuk a Limitlessert, amely abban segít üzleti partnereinek, hogy <i>modern eszközökkel</i> tudjanak <i>örökséget alkotni</i>.",
@@ -526,7 +526,7 @@ const translations = {
     faq_a4: "Companies that already have active operations — and have something to optimize.",
     // About Page EN
     about_hero_tag: "Our Mission",
-    about_hero_title: "<em>Clean, simple, working</em> systems we build — <br> and we love life. :)",
+    about_hero_title_v2: "<i style='color:#FF8A00; font-style:italic;'>Clean,</i> <i style='color:#FF8A00; font-style:italic;'>simple,</i> <i style='color:#FF8A00; font-style:italic;'>working</i> systems we build — <br> and we love life. :)",
     about_sub_1: "Beside <em>personal transformation</em>, we are believers in <em>digital transformation</em> — for years, our conscious goal has been to help others operate <em>better and more efficiently</em>.",
     about_sub_2: "We believe that the foundation of good processes and results is a <em>working system</em>.",
     about_sub_3: "That's why we founded Limitlesser, which helps its business partners create a <em>legacy</em> with <em>modern tools</em>.",
