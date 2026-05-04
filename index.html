@@ -106,7 +106,7 @@ html:not(.unresolved) .page-content { animation: pageFadeIn 1.2s cubic-bezier(0.
 /* Mobile Menu Overlay */
 .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-.mob-menu { position: fixed; top: 1rem; right: 1rem; width: 260px; max-height: calc(100dvh - 2rem); background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+.mob-menu { position: fixed; top: 1rem; right: 1rem; bottom: 1.5rem; width: 280px; background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
 .mob-menu.open { transform: translateX(0); }
 .mob-menu-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
 .mob-menu-top .n-ll { font-family: var(--font-d); font-size: 13px; letter-spacing: 5px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1; }
@@ -463,9 +463,10 @@ section{position:relative;z-index:5}
     -webkit-backdrop-filter: blur(20px); 
     border: 1px solid rgba(255,255,255,0.08); 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    height: auto;
   }
   nav.stuck { padding: 0.8rem 1.4rem; top: 0.6rem; border-color: rgba(217,119,6,0.2); }
-  .lang-dropdown { display: none; } /* Hide in header on mobile */
+  .lang-dropdown:not(.mob-lang-wrap .lang-dropdown) { display: none; } /* Hide in header on mobile */
   .n-links{display:none}
   .n-btn.nav-cta-btn{display:none}
   .mob-toggle{display:flex}
