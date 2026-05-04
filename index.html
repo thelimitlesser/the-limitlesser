@@ -266,7 +266,7 @@ section{position:relative;z-index:5}
 
 /* CTA (Rounded) */
 #cta{padding:12rem 5rem 20rem;text-align:center;}
-.cta-title{font-family:var(--font-d);font-size:clamp(44px,6vw,100px);font-weight:300;line-height:1.1;margin-bottom:3rem}
+.cta-title{font-family:var(--font-d);font-size:clamp(40px,5.5vw,85px);font-weight:300;line-height:1.1;margin-bottom:3rem}
 
 /* Stable Pro Neural Map */
 #results { background: #050200; overflow: hidden; position: relative; padding: 12rem 5rem; }
@@ -320,7 +320,8 @@ section{position:relative;z-index:5}
 }
 
 /* Challenges Section (Redesigned) */
-.ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; }
+#why-now { position: relative; overflow: hidden; padding: 12rem 5rem; }
+.ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; position: relative; z-index: 2; }
 .ch-intro { font-family: 'Inter', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; }
 .ch-cards { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 .ch-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; display: flex; gap: 1.5rem; align-items: center; transition: 0.4s; backdrop-filter: blur(10px); }
@@ -667,9 +668,8 @@ body.loading { overflow: hidden; }
     <div class="ch-left">
       <span class="s-tag">Kihívások</span>
       <h2 class="s-title">Amikor a növekedés <em>utoléri</em> a rendszereidet</h2>
-      <p class="ch-intro">
-        Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. 
-        A folyamatok, amelyek korábban működtek, elkezdenek lassítani.
+      <p class="ch-intro" style="color: rgba(255,255,255,0.95); font-size: 20px; font-weight: 300;">
+        Segítünk növekvő cégeknek újratervezni és automatizálni a <span style="color: var(--white); font-weight: 600;">sales</span>, <span style="color: var(--white); font-weight: 600;">ügyfélszolgálati</span> és <span style="color: var(--white); font-weight: 600;">operációs</span> folyamataikat <span style="color: var(--accent)">AI-alapú</span> rendszerekkel.
       </p>
       <div style="width: 60px; height: 2px; background: var(--accent); margin: 3rem 0;"></div>
       <p style="font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 1px; color: var(--accent); opacity: 0.8;">
@@ -710,9 +710,15 @@ body.loading { overflow: hidden; }
   <div class="section-wrap rv" style="text-align: center;">
     <span class="s-tag">A Megoldás</span>
     <h2 class="s-title">Itt jön képbe az <em>AI-alapú</em> automatizáció</h2>
-    <p class="ch-intro" style="margin: 0 auto 6rem; max-width: 850px;">
+    <p class="ch-intro" style="margin: 0 auto 4rem; max-width: 850px;">
       Nem “még egy szoftvert” vezetünk be. A meglévő működésedre építve tervezünk olyan rendszereket, amelyek leveszik a manuális terhek nagy részét — és strukturáltabbá teszik a működést.
     </p>
+    
+    <div style="max-width: 850px; margin: 0 auto 6rem; border-left: 2px solid var(--accent); padding: 1rem 0 1rem 3rem; text-align: left;">
+      <p style="font-family: var(--font-d); font-size: 26px; color: var(--white); line-height: 1.4; font-style: italic; font-weight: 300;">
+        "A legjobban teljesítő cégek nem csak “ráteszik” az AI-t a régi rendszerre, hanem újraalkotják a munkafolyamatokat."
+      </p>
+    </div>
     
     <div class="pr-steps">
       <div class="pr-step rv">
@@ -877,8 +883,10 @@ body.loading { overflow: hidden; }
 <section id="offer">
   <div class="offer-block rv">
     <span class="s-tag">Ingyenes Audit</span>
-    <h2 class="offer-h">Nézd meg, hol lehet hatékonyabb a működésed</h2>
-    <p class="offer-sub" style="color: rgba(255,255,255,0.9);">Egy rövid audit során feltárjuk, mely folyamatok automatizálhatók, és milyen lehetőségek vannak a működésed fejlesztésére.</p>
+    <h2 class="offer-h">Nézd meg, hol lehet <span style="color: var(--accent)">hatékonyabb</span> a működésed</h2>
+    <p class="offer-sub" style="color: rgba(255,255,255,0.9); max-width: 800px; margin: 2rem auto 4rem; font-size: 19px;">
+      A cégek nem csak szoftvert fognak keresni, hanem olyan megoldásokat, amelyek segítenek, hogy az embereik <span style="color: var(--white)">ne égjenek ki</span> az új rendszerben.
+    </p>
     
     <div class="offer-grid">
       <div class="offer-card rv">
@@ -909,12 +917,11 @@ body.loading { overflow: hidden; }
 </section>
 
 <section id="why-now">
-  <div class="rv">
+  <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2;">
     <span class="s-tag">Stratégia</span>
-    <h2 class="wn-text">A működés minősége határozza meg a <span style="color: var(--accent)">növekedés</span> tempóját</h2>
-    <p style="max-width: 800px; margin: 4rem auto; font-size: 22px; color: rgba(255,255,255,0.85); line-height: 1.6; font-family: 'Inter', sans-serif;">
-      Minél komplexebb egy cég működése, annál fontosabbá válik, hogy a folyamatok jól legyenek felépítve.
-      Az automatizáció nem csak időt spórol — hanem lehetővé teszi a kiszámíthatóbb <span style="color: var(--accent)">növekedést</span> is.
+    <h2 class="wn-text">Tisztán működni — <span style="color: var(--accent)">emberileg</span> és technológiailag is</h2>
+    <p style="max-width: 850px; margin: 4rem auto; font-size: 24px; color: rgba(255,255,255,0.9); line-height: 1.6; font-family: var(--font-d); font-style: italic; font-weight: 300;">
+      "A jövőben nem azok a cégek nyernek, akik több eszközt használnak, hanem akik tisztábban működnek."
     </p>
   </div>
 </section>
@@ -946,15 +953,15 @@ body.loading { overflow: hidden; }
 
 <section id="cta">
   <div class="rv" style="text-align: center;">
-    <h2 class="cta-title">Érdemes nálatok automatizálni? Nézzük meg.</h2>
-    <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 20px; color: var(--g1); line-height: 1.6;">
+    <h2 class="cta-title">Érdemes nálatok automatizálni?<br><span style="color: var(--accent)">Nézzük meg.</span></h2>
+    <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 20px; color: rgba(255,255,255,0.95); line-height: 1.6; font-family: 'Inter', sans-serif;">
       Egy rövid beszélgetés során segítünk felmérni, hol vannak a szűk keresztmetszetek — és hogy van-e valódi üzleti értelme automatizálni.
     </p>
     <a href="contact.html" class="btn-p" style="padding: 1.5rem 4rem; font-size: 14px;">Discovery Call foglalása</a>
     <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);">Ingyenes. Nincs kötelezettség.</p>
     
-    <div style="margin-top: 8rem; opacity: 0.6;">
-      <p style="font-family: var(--font-d); font-size: 24px; font-style: italic; max-width: 600px; margin: 0 auto;">
+    <div style="margin-top: 8rem; opacity: 0.9;">
+      <p style="font-family: var(--font-d); font-size: 30px; font-style: italic; max-width: 800px; margin: 0 auto; color: rgba(255,255,255,0.95); line-height: 1.4;">
         "Nem minden cégnek van szüksége automatizációra — de ahol igen, ott jelentős különbséget tud hozni."
       </p>
     </div>
