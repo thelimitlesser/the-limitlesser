@@ -154,11 +154,48 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     .vision-box h3 { font-family: var(--font-d); font-size: 36px; font-weight: 300; margin-bottom: 2rem; color: var(--white); }
     .vision-box p { font-size: 18px; color: var(--g1); max-width: 700px; margin: 0 auto; line-height: 1.8; }
 
-    .val-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-bottom: 10rem; }
-    .val-card { padding: 4rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 30px; background: rgba(217,119,6,0.02); transition: 0.4s; }
-    .val-card:hover { border-color: var(--accent); background: rgba(217,119,6,0.05); }
     .val-card h3 { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.5rem; color: var(--white); }
     .val-card p { font-size: 15px; color: var(--g1); }
+
+    /* Founder Section Styles */
+    .founders-wrap { text-align: center; margin: 8rem 0 12rem; position: relative; }
+    .founder-image-container {
+      position: relative;
+      display: inline-block;
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 42px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .founder-image-container:hover { transform: translateY(-10px); border-color: rgba(217,119,6,0.3); }
+    .founder-frame {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(217,119,6,0.15);
+      line-height: 0;
+    }
+    .founder-img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      display: block;
+      transition: 0.6s;
+    }
+    .founder-image-container:hover .founder-img { transform: scale(1.03); }
+    .founder-names { margin-top: 3rem; }
+    .founder-names h3 { 
+      font-family: var(--font-d); 
+      font-size: clamp(24px, 4vw, 32px); 
+      font-weight: 300; 
+      color: var(--white); 
+      letter-spacing: 1px;
+    }
+    .founder-names .amp { color: var(--accent); margin: 0 12px; font-style: italic; opacity: 0.8; }
 
     /* Reveal */
     .rv { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -336,6 +373,17 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
       <span class="s-tag" data-i18n="about_view_tag">Szemléletmód</span>
       <h3 data-i18n="about_view_title">Eszköz, nem cél</h3>
       <p data-i18n="about_view_para">A Limitlesser egy olyan szemléletre épül, ahol a weboldal nem a végállomás, hanem a motor. Letisztult rendszerekben és olyan struktúrákban gondolkodunk, amelyek nem csak jól néznek ki — hanem működnek is.</p>
+    </div>
+
+    <div class="founders-wrap rv">
+      <div class="founder-image-container">
+        <div class="founder-frame">
+          <img src="assets/founders.jpg" alt="Erdélyi Péter & Gürtler Gábor" class="founder-img">
+        </div>
+      </div>
+      <div class="founder-names">
+        <h3>Erdélyi Péter <span class="amp">&</span> Gürtler Gábor</h3>
+      </div>
     </div>
 
     <div class="content-block rv">
