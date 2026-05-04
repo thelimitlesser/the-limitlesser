@@ -33,10 +33,12 @@
     .mesh-bg { 
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; 
       background: #050200;
-      background: radial-gradient(circle at 50% var(--scroll-pos, 50%), #1a0f00 0%, #050200 70%);
-      transition: background 0.1s linear;
+      background: linear-gradient(135deg, #050200 0%, #1a0f00 40%, #2a1a00 60%, #050200 100%);
+      background-size: 200% 200%;
+      background-attachment: fixed;
+      transition: background-position 0.2s ease-out;
     }
-    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.04; transition: transform 0.2s ease-out; }
+    .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.05; transition: transform 0.2s ease-out; }
     .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
     .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
     .b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
@@ -76,7 +78,7 @@
     /* Mobile Menu Overlay */
     .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-    .mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 280px; height: 100dvh; background: rgba(10, 5, 0, 0.5); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1050; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: max(4rem, env(safe-area-inset-top)) 2rem max(3rem, env(safe-area-inset-bottom)); gap: 1.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+    .mob-menu { position: fixed; top: 0; right: 0; width: 100%; max-width: 320px; height: 100dvh; background: rgba(10, 5, 0, 0.95); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: max(4rem, env(safe-area-inset-top)) 2rem max(3rem, env(safe-area-inset-bottom)); gap: 1.5rem; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid rgba(255, 255, 255, 0.08); box-shadow: -20px 0 50px rgba(0,0,0,0.5); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
     .mob-menu-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
     .mob-menu-top .n-ll { font-family: var(--font-d); font-size: 13px; letter-spacing: 5px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1; }
     .mob-close { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: 0.3s; padding: 0; }
@@ -380,14 +382,18 @@
       
       const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = scrollMax > 0 ? (s / scrollMax) * 100 : 0;
-      document.body.style.setProperty('--scroll-pos', `${45 + scrollPercent * 0.1}%`);
+      
+      const bg = document.querySelector('.mesh-bg');
+      if(bg) {
+        bg.style.backgroundPosition = `${scrollPercent * 0.5}% ${scrollPercent * 0.5}%`;
+      }
 
       const nav = document.getElementById('nav');
       if(nav) nav.classList.toggle('stuck', s > 60);
     };
 
     window.addEventListener('scroll', updateParallax);
-    updateParallax(); // Initial call to set background correctly on load
+    updateParallax();
 
     // Mobile Menu Toggle
     function toggleMob() {
