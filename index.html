@@ -306,6 +306,19 @@ section{position:relative;z-index:5}
   .nm-core-col { order: -1; margin-bottom: 2rem; }
 }
 
+/* Offer Section Redesign */
+.offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1100px; margin: 4rem auto; }
+.offer-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 3rem; backdrop-filter: blur(20px); text-align: left; transition: 0.4s; }
+.offer-card:hover { background: rgba(255,255,255,0.04); border-color: var(--accent); transform: translateY(-5px); }
+.offer-card h3 { font-family: var(--font-h); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; }
+.offer-list { list-style: none; padding: 0; }
+.offer-list li { font-family: 'Inter', sans-serif; font-size: 17px; color: rgba(255,255,255,0.9); line-height: 1.6; margin-bottom: 1.2rem; display: flex; gap: 1rem; align-items: flex-start; }
+.offer-list li::before { content: '•'; color: var(--accent); font-weight: bold; }
+
+@media(max-width:850px) {
+  .offer-grid { grid-template-columns: 1fr; }
+}
+
 /* Challenges Section (Redesigned) */
 .ch-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; max-width: 1300px; margin: 0 auto; align-items: center; }
 .ch-intro { font-family: 'Inter', sans-serif; font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 2rem; }
@@ -865,30 +878,33 @@ body.loading { overflow: hidden; }
   <div class="offer-block rv">
     <span class="s-tag">Ingyenes Audit</span>
     <h2 class="offer-h">Nézd meg, hol lehet hatékonyabb a működésed</h2>
-    <p class="offer-sub">Egy rövid audit során feltárjuk, mely folyamatok automatizálhatók, és milyen lehetőségek vannak a működésed fejlesztésére.</p>
+    <p class="offer-sub" style="color: rgba(255,255,255,0.9);">Egy rövid audit során feltárjuk, mely folyamatok automatizálhatók, és milyen lehetőségek vannak a működésed fejlesztésére.</p>
     
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; text-align: left; max-width: 900px; margin: 0 auto 4rem;">
-      <div>
-        <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Mit kapsz:</h4>
-        <ul style="list-style: none; font-size: 14px; line-height: 2;">
-          <li>• Áttekintést a jelenlegi működésedről</li>
-          <li>• Azonosított fejlesztési lehetőségeket</li>
-          <li>• Javaslatokat automatizációra</li>
-          <li>• Egy konkrét irányt a következő lépésekhez</li>
+    <div class="offer-grid">
+      <div class="offer-card rv">
+        <h3>Mit kapsz:</h3>
+        <ul class="offer-list">
+          <li>Áttekintést a jelenlegi működésedről</li>
+          <li>Azonosított fejlesztési lehetőségeket</li>
+          <li>Javaslatokat automatizációra</li>
+          <li>Egy konkrét irányt a következő lépésekhez</li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Kinek szól:</h4>
-        <ul style="list-style: none; font-size: 14px; line-height: 2;">
-          <li>• Már működő, bevétellel rendelkező cégeknek</li>
-          <li>• Akik hatékonyabbá tennék a működésüket</li>
-          <li>• Akik nyitottak új rendszerek bevezetésére</li>
+      
+      <div class="offer-card rv">
+        <h3>Kinek szól:</h3>
+        <ul class="offer-list">
+          <li>Már működő, bevétellel rendelkező cégeknek</li>
+          <li>Akik hatékonyabbá tennék a működésüket</li>
+          <li>Akik nyitottak új rendszerek bevezetésére</li>
         </ul>
       </div>
     </div>
     
-    <a href="contact.html" class="btn-p">Foglalj időpontot a Discovery Callra</a>
-    <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1);">Ingyenes beszélgetés. Nincs kötelezettség.</p>
+    <div style="margin-top: 2rem;">
+      <a href="contact.html" class="btn-p">Foglalj időpontot a Discovery Callra</a>
+      <p style="margin-top: 1.5rem; font-size: 12px; color: var(--g1); font-family: 'Inter', sans-serif;">Ingyenes beszélgetés. Nincs kötelezettség.</p>
+    </div>
   </div>
 </section>
 
