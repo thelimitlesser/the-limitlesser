@@ -134,10 +134,11 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
     .f-legal a:hover { color: #fff; }
 
     /* About Sections */
-    .hero-about { position:relative; min-height:40vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 12rem 2rem 10rem; text-align: center; }
-    .s-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
-    .hero-title { font-family: var(--font-d); font-size: clamp(44px, 8vw, 84px); font-weight: 300; line-height: 1.15; max-width: 1200px; margin: 0 auto; letter-spacing: -2px; }
+    .hero-about { position:relative; min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 12rem 2rem 5rem; text-align: center; }
+    .hero-title { font-family: var(--font-d); font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.2; max-width: 1000px; margin: 0 auto 3rem; letter-spacing: -1px; color: var(--white); }
     .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: clamp(18px, 2vw, 24px); color: var(--white); line-height: 1.6; max-width: 800px; margin: 0 auto; font-weight: 300; font-family: var(--font-b); }
+    .hero-sub p { margin-bottom: 1.5rem; }
 
     .section-wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
     .content-block { margin-bottom: 12rem; }
@@ -339,85 +340,33 @@ body { background: var(--bg); color: var(--white); font-family: var(--font-b); o
 
   <div class="page-content">
     <section class="hero-about">
-    <span class="s-tag rv" data-i18n="about_hero_tag">Küldetésünk</span>
-    <h1 class="hero-title rv" data-i18n="about_hero_title">
-      Minden vállalkozásban van érték. Mi azért vagyunk, hogy ezt <em>láthatóvá tegyük</em> a világ számára.
-    </h1>
-  </section>
+      <h1 class="hero-title rv" data-i18n="about_hero_title">Letisztult, egyszerű, működő rendszereket építünk — és szeretjük az életet. :)</h1>
+      <div class="hero-sub rv">
+        <p data-i18n="about_sub_1">A személyes transzformáció mellett a digitális transzformáció hívei is vagyunk — évek óta tudatos célunk, hogy segítsünk másoknak jobban és hatékonyabban működni.</p>
+        <p data-i18n="about_sub_2">Hisszük, hogy a jó folyamatok és eredmények alapja a működő rendszer.</p>
+        <p data-i18n="about_sub_3">Ezért alapítottuk a Limitlessert, amely abban segít üzleti partnereinek, hogy modern eszközökkel tudjanak örökséget alkotni.</p>
+      </div>
+    </section>
 
-  <div class="section-wrap">
-    <div class="content-block rv">
-      <p data-i18n="about_para_1">Sokszor több érték rejlik egy üzletben, mint amit a piac elsőre lát belőle. A mi célunk, hogy ezeket a <b>rejtett kincseket</b> felszínre hozzuk, és láthatóvá tegyük azok számára, akiknek valóban szükségük van rá.</p>
-      <p data-i18n="about_para_2">Olyan digitális felületeket építünk, amelyek nem csak jelen vannak, hanem közvetítenek, kiemelnek és irányt adnak. Segítünk tisztán megmutatni, miben vagy erős — és ezt eljuttatjuk a megfelelő emberekhez.</p>
-      <p data-i18n="about_para_3">Mert amikor az érték láthatóvá válik, a <b>növekedés nem erőltetett</b> — hanem természetes következmény.</p>
-    </div>
-
-    <div class="content-block rv">
-      <h2 data-i18n="about_doing_title">Amit valójában csinálunk</h2>
-      <p data-i18n="about_doing_para">Nem csak kódokat írunk és pixeleket mozgatunk. Segítünk abban, hogy többen értsék meg, amit képviselsz, könnyebb legyen dönteni melletted, és nagyobb hatással legyél a piacodon.</p>
-      
-      <div class="highlights">
-        <div class="h-item">
-          <h3 data-i18n="about_highlight_1_t">Értés</h3>
-          <p data-i18n="about_highlight_1_d">Hogy a célközönséged azonnal felfogja az üzenetedet.</p>
+    <div class="section-wrap">
+      <div class="founders-wrap rv">
+        <div class="founder-image-container">
+          <div class="founder-frame">
+            <img src="assets/founders.jpg" alt="Erdélyi Péter & Gürtler Gábor" class="founder-img">
+          </div>
         </div>
-        <div class="h-item">
-          <h3 data-i18n="about_highlight_2_t">Bizalom</h3>
-          <p data-i18n="about_highlight_2_d">Hogy a választás egyértelmű legyen az irányodba.</p>
-        </div>
-        <div class="h-item">
-          <h3 data-i18n="about_highlight_3_t">Hatás</h3>
-          <p data-i18n="about_highlight_3_d">Hogy a növekedésed mérhető és fenntartható legyen.</p>
+        <div class="founder-names">
+          <h3>Erdélyi Péter <span class="amp">&</span> Gürtler Gábor</h3>
         </div>
       </div>
-    </div>
 
-    <div class="vision-box rv">
-      <span class="s-tag" data-i18n="about_view_tag">Szemléletmód</span>
-      <h3 data-i18n="about_view_title">Eszköz, nem cél</h3>
-      <p data-i18n="about_view_para">A Limitlesser egy olyan szemléletre épül, ahol a weboldal nem a végállomás, hanem a motor. Letisztult rendszerekben és olyan struktúrákban gondolkodunk, amelyek nem csak jól néznek ki — hanem működnek is.</p>
-    </div>
-
-    <div class="founders-wrap rv">
-      <div class="founder-image-container">
-        <div class="founder-frame">
-          <img src="assets/founders.jpg" alt="Erdélyi Péter & Gürtler Gábor" class="founder-img">
-        </div>
-      </div>
-      <div class="founder-names">
-        <h3>Erdélyi Péter <span class="amp">&</span> Gürtler Gábor</h3>
+      <div class="vision-box rv" style="margin-top: 8rem;">
+        <span class="s-tag" data-i18n="about_ready_tag" style="font-family: var(--font-h); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700;">Készen állsz?</span>
+        <h3 data-i18n="about_ready_title" style="font-family: var(--font-d); font-size: 36px; font-weight: 300; margin-bottom: 2rem; color: var(--white);">Vágjunk bele a közös munkába.</h3>
+        <p style="margin-bottom: 3rem; font-size: 18px; color: var(--g1); max-width: 700px; margin: 0 auto 3rem; line-height: 1.8;" data-i18n="about_ready_para">Ha úgy érzed, hogy a te vállalkozásodban is több van, mint amit jelenleg mutatsz, vedd fel velünk a kapcsolatot.</p>
+        <a href="contact.html" class="n-btn" style="background: var(--accent); color: #fff; padding: 1.5rem 3.5rem; border-radius: 100px;" data-i18n="about_ready_btn">AJÁNLATKÉRÉS INDÍTÁSA →</a>
       </div>
     </div>
-
-    <div class="content-block rv">
-      <h2 data-i18n="about_vals_title">Értékeink</h2>
-      <div class="val-grid">
-        <div class="val-card">
-          <h3 data-i18n="about_val_1_t">Határtalanság</h3>
-          <p data-i18n="about_val_1_d">Nem ismerünk lehetetlent a technológia és a kreativitás területén. Ott kezdjük, ahol mások megállnak.</p>
-        </div>
-        <div class="val-card">
-          <h3 data-i18n="about_val_2_t">Precizitás</h3>
-          <p data-i18n="about_val_2_d">Minden pixelnek és minden kódsornak célja van. A luxus a részletekben rejlik.</p>
-        </div>
-        <div class="val-card">
-          <h3 data-i18n="about_val_3_t">Eredményfókusz</h3>
-          <p data-i18n="about_val_3_d">A szép design nálunk csak az alap. A valódi siker a konverzióban és a profitban mérhető.</p>
-        </div>
-        <div class="val-card">
-          <h3 data-i18n="about_val_4_t">Automatizáció</h3>
-          <p data-i18n="about_val_4_d">Hiszünk abban, hogy a technológiának az embert kell szolgálnia, nem fordítva.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="vision-box rv" style="margin-top: 8rem;">
-      <span class="s-tag" data-i18n="about_ready_tag">Készen állsz?</span>
-      <h3 data-i18n="about_ready_title">Vágjunk bele a közös munkába.</h3>
-      <p style="margin-bottom: 3rem;" data-i18n="about_ready_para">Ha úgy érzed, hogy a te vállalkozásodban is több van, mint amit jelenleg mutatsz, vedd fel velünk a kapcsolatot.</p>
-      <a href="contact.html" class="n-btn" style="background: var(--accent); color: #fff; padding: 1.5rem 3.5rem;" data-i18n="about_ready_btn">AJÁNLATKÉRÉS INDÍTÁSA →</a>
-    </div>
-  </div>
 
   <footer id="footer">
     <div class="f-container rv">

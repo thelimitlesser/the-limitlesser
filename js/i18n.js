@@ -217,7 +217,10 @@ const translations = {
     faq_a4: "Olyanoknak, ahol már van működés — és van mit optimalizálni.",
     // About Page HU
     about_hero_tag: "Küldetésünk",
-    about_hero_title: "Minden vállalkozásban van érték. Mi azért vagyunk, hogy ezt <em>láthatóvá tegyük</em> a világ számára.",
+    about_hero_title: "Letisztult, egyszerű, működő rendszereket építünk — és szeretjük az életet. :)",
+    about_sub_1: "A személyes transzformáció mellett a digitális transzformáció hívei is vagyunk — évek óta tudatos célunk, hogy segítsünk másoknak jobban és hatékonyabban működni.",
+    about_sub_2: "Hisszük, hogy a jó folyamatok és eredmények alapja a működő rendszer.",
+    about_sub_3: "Ezért alapítottuk a Limitlessert, amely abban segít üzleti partnereinek, hogy modern eszközökkel tudjanak örökséget alkotni.",
     about_para_1: "Sokszor több érték rejlik egy üzletben, mint amit a piac elsőre lát belőle. A mi célunk, hogy ezeket a <b>rejtett kincseket</b> felszínre hozzuk, és láthatóvá tegyük azok számára, akiknek valóban szükségük van rá.",
     about_para_2: "Olyan digitális felületeket építünk, amelyek nem csak jelen vannak, hanem közvetítenek, kiemelnek és irányt adnak. Segítünk tisztán megmutatni, miben vagy erős — és ezt eljuttatjuk a megfelelő emberekhez.",
     about_para_3: "Mert amikor az érték láthatóvá válik, a <b>növekedés nem erőltetett</b> — hanem természetes következmény.",
@@ -523,7 +526,10 @@ const translations = {
     faq_a4: "Companies that already have active operations — and have something to optimize.",
     // About Page EN
     about_hero_tag: "Our Mission",
-    about_hero_title: "Every business has value. We are here to <em>make it visible</em> to the world.",
+    about_hero_title: "We build clean, simple, working systems — and we love life. :)",
+    about_sub_1: "Beside personal transformation, we are believers in digital transformation — for years, our conscious goal has been to help others operate better and more efficiently.",
+    about_sub_2: "We believe that the foundation of good processes and results is a working system.",
+    about_sub_3: "That's why we founded Limitlesser, which helps its business partners create a legacy with modern tools.",
     about_para_1: "Often, there is more value in a business than the market initially sees. Our goal is to bring these <b>hidden treasures</b> to the surface and make them visible to those who truly need them.",
     about_para_2: "We build digital platforms that don't just exist but communicate, highlight, and provide direction. We help clearly show what you're strong in — and deliver it to the right people.",
     about_para_3: "Because when value becomes visible, <b>growth isn't forced</b> — it's a natural consequence.",
