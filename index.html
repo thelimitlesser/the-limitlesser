@@ -316,12 +316,20 @@ section{position:relative;z-index:5}
 .nm-node-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
 .nm-node-text { font-family: var(--font-b); font-size: 16px; color: var(--white); font-weight: 400; line-height: 1.5; }
 
-.nm-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-.nm-line-path { stroke: rgba(217,119,6,0.1); stroke-width: 1; fill: none; }
-.nm-bullet { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 10, 200; stroke-linecap: round; animation: nm-shoot 3s linear infinite; }
+.nm-lines { 
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  z-index: 1; 
+  pointer-events: none; 
+  opacity: 0.3;
+}
+.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.2; }
+.nm-bullet { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 8, 100; stroke-linecap: round; animation: nm-shoot 4s linear infinite; }
 
 @keyframes nm-orbit-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes nm-shoot { from { stroke-dashoffset: 210; } to { stroke-dashoffset: 0; } }
+@keyframes nm-shoot { from { stroke-dashoffset: 108; } to { stroke-dashoffset: 0; } }
 
 @media(max-width:1050px) {
   .nm-grid { display: flex; flex-direction: column; align-items: center; gap: 4rem; position: relative; padding: 4rem 0; }
