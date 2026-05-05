@@ -301,11 +301,10 @@ section{position:relative;z-index:5}
   justify-content: center;
   align-items: center;
   gap: 4rem;
-  max-width: 1250px; 
+  width: 1048px; /* Pixel-perfect width of all columns + gaps */
   margin: 6rem auto; 
   position: relative; 
   z-index: 5;
-  padding: 0 20px;
 }
 
 .nm-col { 
@@ -989,27 +988,27 @@ body.loading { overflow: hidden; }
         </div>
       </div>
       
-      <!-- SVG Lines Background (Recalculated for Flex layout) -->
-      <svg class="nm-lines" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid meet">
-        <!-- Lines to Left (Inner Edge around 430) -->
-        <path class="nm-line-path" d="M600,250 L420,160" />
-        <path class="nm-line-path" d="M600,250 L420,340" />
-        <!-- Lines to Right (Inner Edge around 770) -->
-        <path class="nm-line-path" d="M600,250 L780,160" />
-        <path class="nm-line-path" d="M600,250 L780,340" />
+      <!-- SVG Lines Background (Pixel-Perfect for 1048px layout) -->
+      <svg class="nm-lines" viewBox="0 0 1048 500" preserveAspectRatio="none">
+        <!-- Lines from Center (524, 250) to Edges -->
+        <!-- Left inner edge is at 380. Right inner edge is at 668. -->
+        <path class="nm-line-path" d="M524,250 L380,160" />
+        <path class="nm-line-path" d="M524,250 L380,340" />
+        <path class="nm-line-path" d="M524,250 L668,160" />
+        <path class="nm-line-path" d="M524,250 L668,340" />
         
-        <!-- Animated Bullets (Multiple for more energy) -->
-        <path class="nm-bullet" d="M600,250 L420,160" style="animation-delay: 0s; animation-duration: 2s;" />
-        <path class="nm-bullet" d="M600,250 L420,160" style="animation-delay: 1s; animation-duration: 2s;" />
+        <!-- Animated Bullets -->
+        <path class="nm-bullet" d="M524,250 L380,160" style="animation-delay: 0s; animation-duration: 2s;" />
+        <path class="nm-bullet" d="M524,250 L380,160" style="animation-delay: 1s; animation-duration: 2s;" />
         
-        <path class="nm-bullet" d="M600,250 L420,340" style="animation-delay: 1.5s; animation-duration: 2.5s;" />
-        <path class="nm-bullet" d="M600,250 L420,340" style="animation-delay: 0.5s; animation-duration: 2.5s;" />
+        <path class="nm-bullet" d="M524,250 L380,340" style="animation-delay: 1.5s; animation-duration: 2.5s;" />
+        <path class="nm-bullet" d="M524,250 L380,340" style="animation-delay: 0.5s; animation-duration: 2.5s;" />
         
-        <path class="nm-bullet" d="M600,250 L780,160" style="animation-delay: 0.7s; animation-duration: 2.2s;" />
-        <path class="nm-bullet" d="M600,250 L780,160" style="animation-delay: 1.7s; animation-duration: 2.2s;" />
+        <path class="nm-bullet" d="M524,250 L668,160" style="animation-delay: 0.7s; animation-duration: 2.2s;" />
+        <path class="nm-bullet" d="M524,250 L668,160" style="animation-delay: 1.7s; animation-duration: 2.2s;" />
         
-        <path class="nm-bullet" d="M600,250 L780,340" style="animation-delay: 2.2s; animation-duration: 2.8s;" />
-        <path class="nm-bullet" d="M600,250 L780,340" style="animation-delay: 1.2s; animation-duration: 2.8s;" />
+        <path class="nm-bullet" d="M524,250 L668,340" style="animation-delay: 2.2s; animation-duration: 2.8s;" />
+        <path class="nm-bullet" d="M524,250 L668,340" style="animation-delay: 1.2s; animation-duration: 2.8s;" />
       </svg>
     </div>
 
