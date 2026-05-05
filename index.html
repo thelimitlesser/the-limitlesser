@@ -933,7 +933,7 @@ body.loading { overflow: hidden; }
 <section id="results" style="padding: 12rem 5rem; overflow: hidden;">
   <div class="nm-bg-grid"></div>
   
-  <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2;">
+  <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2; max-width: 1300px;">
     <span class="s-tag" data-i18n="results_tag">Eredmények</span>
     <h2 class="s-title" data-i18n="results_main_title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
     
@@ -992,23 +992,24 @@ body.loading { overflow: hidden; }
       <svg class="nm-lines" viewBox="0 0 1048 500" preserveAspectRatio="none">
         <!-- Lines from Center (524, 250) to Edges -->
         <!-- Left inner edge is at 380. Right inner edge is at 668. -->
-        <path class="nm-line-path" d="M524,250 L380,160" />
-        <path class="nm-line-path" d="M524,250 L380,340" />
-        <path class="nm-line-path" d="M524,250 L668,160" />
-        <path class="nm-line-path" d="M524,250 L668,340" />
+        <!-- We use L382 and L666 to ensure they overlap slightly with the cards -->
+        <path class="nm-line-path" d="M524,250 L382,160" />
+        <path class="nm-line-path" d="M524,250 L382,340" />
+        <path class="nm-line-path" d="M524,250 L666,160" />
+        <path class="nm-line-path" d="M524,250 L666,340" />
         
         <!-- Animated Bullets -->
-        <path class="nm-bullet" d="M524,250 L380,160" style="animation-delay: 0s; animation-duration: 2s;" />
-        <path class="nm-bullet" d="M524,250 L380,160" style="animation-delay: 1s; animation-duration: 2s;" />
+        <path class="nm-bullet" d="M524,250 L382,160" style="animation-delay: 0s; animation-duration: 2s;" />
+        <path class="nm-bullet" d="M524,250 L382,160" style="animation-delay: 1s; animation-duration: 2s;" />
         
-        <path class="nm-bullet" d="M524,250 L380,340" style="animation-delay: 1.5s; animation-duration: 2.5s;" />
-        <path class="nm-bullet" d="M524,250 L380,340" style="animation-delay: 0.5s; animation-duration: 2.5s;" />
+        <path class="nm-bullet" d="M524,250 L382,340" style="animation-delay: 1.5s; animation-duration: 2.5s;" />
+        <path class="nm-bullet" d="M524,250 L382,340" style="animation-delay: 0.5s; animation-duration: 2.5s;" />
         
-        <path class="nm-bullet" d="M524,250 L668,160" style="animation-delay: 0.7s; animation-duration: 2.2s;" />
-        <path class="nm-bullet" d="M524,250 L668,160" style="animation-delay: 1.7s; animation-duration: 2.2s;" />
+        <path class="nm-bullet" d="M524,250 L666,160" style="animation-delay: 0.7s; animation-duration: 2.2s;" />
+        <path class="nm-bullet" d="M524,250 L666,160" style="animation-delay: 1.7s; animation-duration: 2.2s;" />
         
-        <path class="nm-bullet" d="M524,250 L668,340" style="animation-delay: 2.2s; animation-duration: 2.8s;" />
-        <path class="nm-bullet" d="M524,250 L668,340" style="animation-delay: 1.2s; animation-duration: 2.8s;" />
+        <path class="nm-bullet" d="M524,250 L666,340" style="animation-delay: 2.2s; animation-duration: 2.8s;" />
+        <path class="nm-bullet" d="M524,250 L666,340" style="animation-delay: 1.2s; animation-duration: 2.8s;" />
       </svg>
     </div>
 
