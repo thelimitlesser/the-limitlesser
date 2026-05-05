@@ -297,31 +297,21 @@ section{position:relative;z-index:5}
 .nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; pointer-events: none; }
 
 .nm-grid { 
-  display: grid;
-  grid-template-columns: 380px 160px 380px;
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 70px; /* Precise gap to fill 1200px total (380+70+160+70+380 = 1060... wait) */
-  /* Let's use 1200px container and space-between for gaps */
-  width: 1200px;
+  width: 100%;
+  max-width: 1100px;
   margin: 6rem auto; 
   position: relative; 
   z-index: 5;
 }
 
-/* Adjusting to 1200px: (1200 - 920) / 2 = 140px gaps */
-.nm-grid { 
-  display: grid;
-  grid-template-columns: 380px 160px 380px;
-  justify-content: space-between;
-  width: 1200px;
-}
-
 .nm-col { 
   display: flex; 
   flex-direction: column; 
-  gap: 6rem; 
-  width: 380px; 
+  gap: 5rem; 
+  width: 350px; 
   flex-shrink: 0;
 }
 
@@ -998,23 +988,22 @@ body.loading { overflow: hidden; }
         </div>
       </div>
       
-      <!-- SVG Lines Background (Aligned with 1200px Grid) -->
-      <svg class="nm-lines" viewBox="0 0 1200 500" preserveAspectRatio="none">
-        <!-- Center is 600, 250. Left edge of cards is 380. Right edge of cards is 820. -->
-        <path class="nm-line-path" d="M600,250 L380,160" />
-        <path class="nm-line-path" d="M600,250 L380,340" />
-        <path class="nm-line-path" d="M600,250 L820,160" />
-        <path class="nm-line-path" d="M600,250 L820,340" />
+      <!-- SVG Lines Background (Recalculated for 1100px Flex/Space-Between) -->
+      <svg class="nm-lines" viewBox="0 0 1100 500" preserveAspectRatio="none">
+        <!-- Center point: 1100/2 = 550, 250 -->
+        <!-- Left edge of columns: 350 -->
+        <!-- Right edge of columns: 1100 - 350 = 750 -->
         
-        <!-- Animated Bullets (Hitting the edges perfectly) -->
-        <path class="nm-bullet" d="M600,250 L380,160" style="animation-delay: 0s; animation-duration: 2s;" />
-        <path class="nm-bullet" d="M600,250 L380,340" style="animation-delay: 1s; animation-duration: 2.2s;" />
-        <path class="nm-bullet" d="M600,250 L820,160" style="animation-delay: 0.5s; animation-duration: 2.1s;" />
-        <path class="nm-bullet" d="M600,250 L820,340" style="animation-delay: 1.5s; animation-duration: 2.3s;" />
+        <path class="nm-line-path" d="M550,250 L350,160" />
+        <path class="nm-line-path" d="M550,250 L350,340" />
+        <path class="nm-line-path" d="M550,250 L750,160" />
+        <path class="nm-line-path" d="M550,250 L750,340" />
         
-        <!-- Second layer for more energy -->
-        <path class="nm-bullet" d="M600,250 L380,160" style="animation-delay: 1s; animation-duration: 2s;" />
-        <path class="nm-bullet" d="M600,250 L820,340" style="animation-delay: 0.2s; animation-duration: 2.3s;" />
+        <!-- Animated Bullets -->
+        <path class="nm-bullet" d="M550,250 L350,160" style="animation-delay: 0s; animation-duration: 2s;" />
+        <path class="nm-bullet" d="M550,250 L350,340" style="animation-delay: 1s; animation-duration: 2.2s;" />
+        <path class="nm-bullet" d="M550,250 L750,160" style="animation-delay: 0.5s; animation-duration: 2.1s;" />
+        <path class="nm-bullet" d="M550,250 L750,340" style="animation-delay: 1.5s; animation-duration: 2.3s;" />
       </svg>
     </div>
 
