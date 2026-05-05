@@ -302,11 +302,16 @@ section{position:relative;z-index:5}
   margin: 0 auto;
 }
 
+.nm-visual-wrap {
+  position: relative;
+  width: 100%;
+}
+
 .nm-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: 120px 300px; /* Vertical gap 120px, Horizontal gap 300px to fit core */
+  gap: 120px 300px; /* Vertical gap 120px, Horizontal gap 300px */
   position: relative;
   z-index: 5;
 }
@@ -329,8 +334,22 @@ section{position:relative;z-index:5}
 }
 
 /* Alignments for 2x2 */
-.nm-node.tl, .nm-node.bl { justify-self: end; text-align: right; flex-direction: row-reverse; }
-.nm-node.tr, .nm-node.br { justify-self: start; text-align: left; }
+.nm-node.tl, .nm-node.bl { justify-self: end; flex-direction: row-reverse; }
+.nm-node.tr, .nm-node.br { justify-self: start; }
+
+.nm-node-content {
+  text-align: center;
+  flex: 1;
+}
+
+.nm-node-content p { 
+  font-size: 16px; 
+  font-weight: 400; 
+  line-height: 1.5; 
+  color: rgba(255,255,255,0.9); 
+  margin: 0;
+  text-align: center; 
+}
 
 .nm-node:hover {
   background: rgba(255,255,255,0.06);
@@ -907,9 +926,16 @@ body.loading { overflow: hidden; }
 
 <section id="results" style="padding: 12rem 5rem; overflow: hidden;">
   <div class="nm-bg-grid"></div>
-    <div class="nm-container">
+  
+  <div class="nm-container">
+    <div style="text-align: center; margin-bottom: 6rem;" class="rv">
+      <span class="s-tag" data-i18n="results_tag">Eredmények</span>
+      <h2 class="s-title" data-i18n="results_main_title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
+    </div>
+
+    <div class="nm-visual-wrap">
       <div class="nm-grid" id="nmGrid">
-        <!-- Top Left -->
+        <!-- Nodes -->
         <div class="nm-node tl rv">
           <div class="nm-node-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -919,7 +945,6 @@ body.loading { overflow: hidden; }
           </div>
         </div>
 
-        <!-- Top Right -->
         <div class="nm-node tr rv">
           <div class="nm-node-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -929,7 +954,6 @@ body.loading { overflow: hidden; }
           </div>
         </div>
 
-        <!-- Bottom Left -->
         <div class="nm-node bl rv">
           <div class="nm-node-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -939,7 +963,6 @@ body.loading { overflow: hidden; }
           </div>
         </div>
 
-        <!-- Bottom Right -->
         <div class="nm-node br rv">
           <div class="nm-node-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -950,30 +973,89 @@ body.loading { overflow: hidden; }
         </div>
       </div>
 
-      <!-- Core - Absolute Centered -->
+      <!-- Core - Centered ONLY relative to nm-visual-wrap -->
       <div class="nm-core-wrap">
         <div class="nm-orbit nm-orbit-1"></div>
         <div class="nm-orbit nm-orbit-2"></div>
         <div class="nm-core rv"></div>
       </div>
 
-      <!-- SVG Curved Lines - Covering the whole nm-container -->
+      <!-- Lines - Managed by JS for Pixel-Perfect Connection -->
       <div class="nm-lines-wrap">
-        <svg viewBox="0 0 1000 600" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-          <!-- Quadratic Bezier Curves: M [Center] Q [Control] [Target] -->
-          <path class="nm-line-path" d="M500,300 Q 400,200 250,150" />
-          <path class="nm-line-path" d="M500,300 Q 600,200 750,150" />
-          <path class="nm-line-path" d="M500,300 Q 400,400 250,450" />
-          <path class="nm-line-path" d="M500,300 Q 600,400 750,450" />
-
-          <!-- Animated Bullets -->
-          <path class="nm-bullet" d="M500,300 Q 400,200 250,150" style="animation-delay: 0s;" />
-          <path class="nm-bullet" d="M500,300 Q 600,200 750,150" style="animation-delay: 1s;" />
-          <path class="nm-bullet" d="M500,300 Q 400,400 250,450" style="animation-delay: 2s;" />
-          <path class="nm-bullet" d="M500,300 Q 600,400 750,450" style="animation-delay: 3s;" />
+        <svg id="nmSvg" style="width: 100%; height: 100%; overflow: visible;">
+          <path id="path_tl" class="nm-line-path" />
+          <path id="bullet_tl" class="nm-bullet" />
+          
+          <path id="path_tr" class="nm-line-path" />
+          <path id="bullet_tr" class="nm-bullet" />
+          
+          <path id="path_bl" class="nm-line-path" />
+          <path id="bullet_bl" class="nm-bullet" />
+          
+          <path id="path_br" class="nm-line-path" />
+          <path id="bullet_br" class="nm-bullet" />
         </svg>
       </div>
     </div>
+    </div>
+
+    <script>
+      function updateNMLines() {
+        const container = document.querySelector('.nm-visual-wrap');
+        const core = document.querySelector('.nm-core');
+        const svg = document.getElementById('nmSvg');
+        if (!container || !core || !svg) return;
+
+        const cRect = container.getBoundingClientRect();
+        const coreRect = core.getBoundingClientRect();
+        
+        const cx = (coreRect.left + coreRect.width / 2) - cRect.left;
+        const cy = (coreRect.top + coreRect.height / 2) - cRect.top;
+
+        const nodes = {
+          tl: document.querySelector('.nm-node.tl'),
+          tr: document.querySelector('.nm-node.tr'),
+          bl: document.querySelector('.nm-node.bl'),
+          br: document.querySelector('.nm-node.br')
+        };
+
+        for (let key in nodes) {
+          const node = nodes[key];
+          const path = document.getElementById('path_' + key);
+          const bullet = document.getElementById('bullet_' + key);
+          if (!node || !path) continue;
+
+          const nRect = node.getBoundingClientRect();
+          let tx, ty;
+
+          if (key.includes('l')) {
+            tx = nRect.right - cRect.left;
+          } else {
+            tx = nRect.left - cRect.left;
+          }
+          ty = (nRect.top + nRect.height / 2) - cRect.top;
+
+          // Create a nice curve
+          // Control point is between center and target but slightly offset
+          const midX = (cx + tx) / 2;
+          const d = `M ${cx},${cy} Q ${midX},${cy} ${tx},${ty}`;
+          
+          path.setAttribute('d', d);
+          bullet.setAttribute('d', d);
+        }
+      }
+
+      window.addEventListener('resize', updateNMLines);
+      window.addEventListener('load', updateNMLines);
+      // Trigger once after a small delay to ensure layout is ready
+      setTimeout(updateNMLines, 500);
+      
+      // Also trigger on intersection to ensure it's right when revealed
+      const nmObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) updateNMLines();
+      }, { threshold: 0.1 });
+      nmObserver.observe(document.querySelector('#results'));
+    </script>
 
     <!-- Added High-Impact Sentence -->
     <div style="margin-top: 8rem; text-align: center; position: relative; z-index: 10;">

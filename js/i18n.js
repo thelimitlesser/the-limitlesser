@@ -288,6 +288,8 @@ const translations = {
     serv_quote_btn: "AJÁNLATKÉRÉS INDÍTÁSA →",
     // Contact Page HU
     cont_hero_title: "Vedd fel velünk a kapcsolatot!",
+    cont_calendly_title: "Foglalj időpontot egy Discovery Call-ra!",
+    cont_calendly_sub: "Válassz egy szabad időpontot egy kötetlen, 30 perces beszélgetéshez, ahol átnézzük a folyamataidat.",
     cont_hero_sub: "Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.",
     cont_email_hint: "Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.",
     cont_phone_hint: "Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.",
@@ -597,6 +599,8 @@ const translations = {
     serv_quote_btn: "START REQUESTING A QUOTE →",
     // Contact Page EN
     cont_hero_title: "Get in touch with us!",
+    cont_calendly_title: "Book a Discovery Call!",
+    cont_calendly_sub: "Choose a free slot for an informal, 30-minute conversation where we review your processes.",
     cont_hero_sub: "Have a question, interested in our services, or just want to know more about us? Don't hesitate – contact us through one of our channels! Whether by email or phone call, we're happy to help and will respond as quickly as possible.",
     cont_email_hint: "If you'd like to contact us manually, please write an email to the address below.",
     cont_phone_hint: "If you'd prefer to call us, you can reach us on the following number during business hours on workdays.",

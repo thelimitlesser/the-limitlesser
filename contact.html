@@ -110,28 +110,78 @@
       .n-btn.nav-cta-btn { display: none; }
       .mob-toggle{display:flex}
       .hero-contact { padding: 10rem 2rem 5rem; }
-    }.contact-hero { padding: 12rem 5rem 6rem; text-align: center; }
-    .c-tag { font-family: var(--font-h); font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2rem; font-weight: 700; }
-    .c-title { font-family: var(--font-d); font-size: clamp(48px, 8vw, 96px); font-weight: 300; line-height: 1.1; max-width: 1000px; margin: 0 auto; letter-spacing: -2px; }
-
-    /* Contact Grid */
-    .contact-container { max-width: 1300px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8rem; }
+    }    /* Layout Refactor: Centered Header, 2-Column Body, Centered Footer Cards */
+    .c-header-centered { text-align: center; max-width: 900px; margin: 0 auto 6rem; padding-top: 5rem; }
+    .c-title { font-family: var(--font-d); font-size: clamp(32px, 5vw, 64px); font-weight: 300; line-height: 1.1; letter-spacing: -2px; }
     
-    .c-info-side h2 { font-family: var(--font-d); font-size: 32px; margin-bottom: 3rem; font-weight: 300; color: var(--white); }
-    .c-details { display: grid; gap: 3rem; }
-    .cd-item h4 { font-family: var(--font-h); font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 1rem; }
-    .cd-item p, .cd-item a { font-size: 18px; color: var(--white); text-decoration: none; display: block; font-weight: 300; transition: 0.3s; }
-    .cd-item a:hover { color: var(--accent); }
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      align-items: start;
+    }
 
-    /* Form Side */
-    .c-form-side { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 5rem; border-radius: 40px; }
-    .q-form { display: grid; gap: 2rem; }
-    .form-group { position: relative; }
-    .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 0.8rem; font-weight: 700; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 1.2rem 1.5rem; color: #fff; font-family: var(--font-b); font-size: 15px; transition: 0.3s; outline: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); background: rgba(217,119,6,0.05); }
-    .q-btn { background: var(--accent); color: #fff; border: none; padding: 1.5rem 3rem; border-radius: 100px; font-family: var(--font-h); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
-    .q-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(217,119,6,0.3); }
+    .c-cards-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 8rem auto 10rem;
+    }
+
+    .q-form { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 4rem; border-radius: 32px; backdrop-filter: blur(20px); position: relative; overflow: hidden; min-height: 600px; display: flex; flex-direction: column; }
+    .form-step { display: none; width: 100%; animation: stepFadeIn 0.5s forwards; flex: 1; }
+    .form-step.active { display: block; }
+
+    @keyframes stepFadeIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-group { margin-bottom: 2rem; position: relative; }
+    .form-group label { display: block; font-family: var(--font-h); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; font-weight: 600; }
+    
+    .input-wrap { position: relative; }
+    .input-wrap input, .input-wrap textarea { 
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; 
+      padding: 1.4rem 3.5rem 1.4rem 1.5rem; color: var(--white); font-family: 'Inter', sans-serif; font-size: 15px; transition: 0.3s; box-sizing: border-box; 
+    }
+    .input-wrap .input-icon { position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 18px; pointer-events: none; }
+    .input-wrap input:focus, .input-wrap textarea:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(217,119,6,0.1); }
+    
+    .q-nav-btns { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .q-btn { width: 100%; background: var(--accent); color: var(--white); border: none; border-radius: 16px; padding: 1.4rem; font-family: var(--font-h); font-size: 15px; font-weight: 600; cursor: none; transition: 0.4s; letter-spacing: 0.5px; }
+    .q-btn:hover { background: #e67c00; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,138,0,0.3); }
+    .q-btn-back { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1); }
+    .q-btn-back:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+
+    .step-indicator { display: flex; gap: 0.8rem; margin-bottom: 3rem; }
+    .step-dot { width: 30px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; transition: 0.4s; }
+    .step-dot.active { background: var(--accent); width: 60px; }
+
+    /* Custom Select */
+    .custom-select { position: relative; width: 100%; }
+    .select-trigger {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; 
+      padding: 1.4rem 1.5rem; color: var(--white); cursor: none; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;
+    }
+    .select-trigger:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+    .select-options {
+      position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: #111; border: 1px solid rgba(255,255,255,0.1); 
+      border-radius: 16px; overflow: hidden; z-index: 100; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(20px);
+    }
+    .select-options.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .option { padding: 1.2rem 1.5rem; color: rgba(255,255,255,0.7); transition: 0.3s; cursor: none; font-size: 14px; }
+    .option:hover { background: rgba(255,138,0,0.1); color: var(--accent); }
+    .option.selected { background: rgba(255,138,0,0.2); color: var(--white); font-weight: 600; }
+
+    @media(max-width: 1050px) {
+      .contact-container { grid-template-columns: 1fr; gap: 6rem; }
+      .c-cards-bottom { grid-template-columns: 1fr; }
+    }
 
     /* Footer */
     footer { background: #050505; padding: 8rem 2rem 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -259,75 +309,186 @@
 
   <div class="page-content">
     <div style="max-width: 1300px; margin: 0 auto; padding: 12rem 2rem 0;">
-    <div style="font-family: var(--font-h); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--g1); margin-bottom: 4rem;">
-      <a href="index.html" style="color: var(--g1); text-decoration: none;" data-i18n="nav_home">Kezdőlap</a> <span style="margin: 0 10px; opacity: 0.5;">/</span> <span style="color: var(--white);" data-i18n="nav_contact">Kapcsolat</span>
-    </div>
-
-    <div class="contact-container" style="padding-top: 0;">
-      <!-- Left Side -->
-      <div class="c-info-side rv">
-        <h1 class="c-title" style="margin-bottom: 2rem; font-size: clamp(32px, 5vw, 64px); text-align: left;" data-i18n="cont_hero_title">Vedd fel velünk a kapcsolatot!</h1>
-        <p style="font-size: 18px; color: var(--g1); line-height: 1.7; margin-bottom: 4rem; max-width: 550px;" data-i18n="cont_hero_sub">Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.</p>
-        
-        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 450px;">
-          <!-- Email Card -->
-          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
-            <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">@</div>
-            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_email_hint">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
-            <a href="mailto:hello@thelimitlesser.hu" style="font-family: var(--font-h); font-size: 16px; color: var(--white); text-decoration: none; font-weight: 600;">hello@thelimitlesser.hu</a>
-          </div>
-          <!-- Phone Card -->
-          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
-            <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            </div>
-            <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_phone_hint">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
-            <p style="font-family: var(--font-h); font-size: 16px; color: var(--white); font-weight: 600;">+36 (70) 577 0722</p>
-          </div>
-        </div>
+      <div style="font-family: var(--font-h); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--g1); margin-bottom: 4rem;">
+        <a href="index.html" style="color: var(--g1); text-decoration: none;" data-i18n="nav_home">Kezdőlap</a> <span style="margin: 0 10px; opacity: 0.5;">/</span> <span style="color: var(--white);" data-i18n="nav_contact">Kapcsolat</span>
       </div>
 
-      <!-- Right Side (Form) -->
-      <div class="c-form-side rv">
-        <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_form_title">Árajánlat kérelem</h2>
-        <p style="font-size: 14px; color: var(--g1); margin-bottom: 2rem;" data-i18n="cont_form_sub">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
-        <p style="font-size: 12px; color: var(--accent); margin-bottom: 3rem;" data-i18n="cont_form_req">• Jelzésű mezők kitöltése kötelező!</p>
+      <!-- Centered Header -->
+      <div class="c-header-centered rv">
+        <h1 class="c-title" style="margin-bottom: 2rem;" data-i18n="cont_hero_title">Vedd fel velünk a kapcsolatot!</h1>
+        <p style="font-size: 18px; color: var(--g1); line-height: 1.7; margin: 0 auto;" data-i18n="cont_hero_sub">Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén!</p>
+      </div>
+
+      <div class="contact-container">
+      <!-- Left Column: Form -->
+      <div class="c-form-col rv">
+        <div style="margin-bottom: 3rem;">
+          <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_form_title">Árajánlat kérelem</h2>
+          <p style="font-size: 14px; color: var(--g1);" data-i18n="cont_form_sub">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
+        </div>
         
-        <form class="q-form">
-          <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;" data-i18n="cont_form_sec_1">Személyes adatok megadása</p>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-            <div class="form-group">
-              <label><span data-i18n="cont_label_lname">Vezetéknév</span> <span style="color: var(--accent);">•</span></label>
-              <input type="text" data-i18n-placeholder="cont_ph_lname" placeholder="Vezetéknév">
-            </div>
-            <div class="form-group">
-              <label><span data-i18n="cont_label_fname">Keresztnév</span> <span style="color: var(--accent);">•</span></label>
-              <input type="text" data-i18n-placeholder="cont_ph_fname" placeholder="Keresztnév">
-            </div>
-          </div>
-          <div class="form-group">
-            <label><span data-i18n="cont_label_email">E-mail cím</span> <span style="color: var(--accent);">•</span></label>
-            <input type="email" data-i18n-placeholder="cont_ph_email" placeholder="pelda@email.hu">
-          </div>
-          <div class="form-group">
-            <label><span data-i18n="cont_label_phone">Telefonszám</span> <span style="color: var(--accent);">•</span></label>
-            <input type="tel" data-i18n-placeholder="cont_ph_phone" placeholder="+36 30 123 4567">
-          </div>
-          
-          <div style="display: grid; gap: 1.5rem; margin-top: 1rem;">
-            <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
-              <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
-              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_privacy">A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href="privacy.html" style="color: var(--white); text-decoration: underline;">Adatvédelmi Nyilatkozat</a>-ban foglaltakat és annak feltételeit.</span>
-            </label>
-            <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
-              <input type="checkbox" style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer;">
-              <span style="font-size: 13px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_newsletter">Hozzájárulok, hogy a The Limitlesser a jövőben e-mailben megkereséseket küldjön számomra.</span>
-            </label>
+        <form class="q-form" id="quoteForm">
+          <!-- Progress -->
+          <div class="step-indicator">
+            <div class="step-dot active" id="dot1"></div>
+            <div class="step-dot" id="dot2"></div>
+            <div class="step-dot" id="dot3"></div>
           </div>
 
-          <button type="submit" class="q-btn" style="width: 100%; margin-top: 2rem;" data-i18n="cont_btn_submit">Árajánlat kérése →</button>
+          <p style="font-size: 11px; color: var(--accent); margin-bottom: 2rem; letter-spacing: 1px; text-transform: uppercase;" data-i18n="cont_form_req">• Jelzésű mezők kitöltése kötelező!</p>
+          
+          <!-- Step 1: Personal -->
+          <div class="form-step active" id="step1">
+            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;" data-i18n="cont_form_sec_1">Személyes adatok megadása</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+              <div class="form-group">
+                <label><span data-i18n="cont_label_lname">Vezetéknév</span> •</label>
+                <div class="input-wrap">
+                  <input type="text" data-i18n-placeholder="cont_ph_lname" placeholder="Vezetéknév">
+                </div>
+              </div>
+              <div class="form-group">
+                <label><span data-i18n="cont_label_fname">Keresztnév</span> •</label>
+                <div class="input-wrap">
+                  <input type="text" data-i18n-placeholder="cont_ph_fname" placeholder="Keresztnév">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label><span data-i18n="cont_label_email">E-mail cím</span> •</label>
+              <div class="input-wrap">
+                <input type="email" data-i18n-placeholder="cont_ph_email" placeholder="pelda@email.hu">
+              </div>
+            </div>
+            <div class="form-group">
+              <label><span data-i18n="cont_label_phone">Telefonszám</span> •</label>
+              <div class="input-wrap">
+                <input type="tel" data-i18n-placeholder="cont_ph_phone" placeholder="+36 30 123 4567">
+              </div>
+            </div>
+            <div class="q-nav-btns">
+              <button type="button" class="q-btn" onclick="nextStep(2)">Tovább</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Brand/Company -->
+          <div class="form-step" id="step2">
+            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;">Brand adatainak megadása</p>
+            <div class="form-group">
+              <label>Brand neve •</label>
+              <div class="input-wrap">
+                <input type="text" placeholder="Brand neve">
+                <div class="input-icon">©</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Weboldal •</label>
+              <div class="input-wrap">
+                <input type="text" placeholder="Weboldal">
+                <div class="input-icon">🌐</div>
+              </div>
+            </div>
+            <p style="font-size: 13px; color: var(--g1); line-height: 1.5; margin-bottom: 2rem;">Kérjük add meg vállalkozásod hivatalos adatait, hogy már az első konzultációra felkészülten érkezhessünk! Ha még magánszemélyként építkezel, a saját nevedet írd be.</p>
+            <div class="form-group">
+              <label>Cég neve •</label>
+              <div class="input-wrap">
+                <input type="text" placeholder="Cég neve">
+                <div class="input-icon">©</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Cég adószáma</label>
+              <div class="input-wrap">
+                <input type="text" placeholder="Cég adószáma">
+                <div class="input-icon">📄</div>
+              </div>
+            </div>
+            <div class="q-nav-btns">
+              <button type="button" class="q-btn" onclick="nextStep(3)">Tovább</button>
+              <button type="button" class="q-btn q-btn-back" onclick="nextStep(1)">Vissza</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Project Details -->
+          <div class="form-step" id="step3">
+            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;">Projekt részletei</p>
+            <div class="form-group">
+              <label>Miben segíthetünk? •</label>
+              <div class="input-wrap">
+                <textarea rows="6" placeholder="Írd le röviden a céljaidat..."></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Várható költségkeret</label>
+              <div class="custom-select" id="budgetSelect">
+                <div class="select-trigger" onclick="toggleSelect()">
+                  <span id="selectedValue">Válassz összeget...</span>
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="select-options" id="selectOptions">
+                  <div class="option" onclick="selectOption('2.500€ - 5.000€')">2.500€ - 5.000€</div>
+                  <div class="option" onclick="selectOption('5.000€ - 15.000€')">5.000€ - 15.000€</div>
+                  <div class="option" onclick="selectOption('15.000€ - 30.000€')">15.000€ - 30.000€</div>
+                  <div class="option" onclick="selectOption('30.000€+')">30.000€+</div>
+                  <div class="option" onclick="selectOption('Egyedi összeg...')">Egyedi összeg...</div>
+                </div>
+              </div>
+              <div id="customPriceWrap" style="display: none; margin-top: 1rem; animation: stepFadeIn 0.3s forwards;">
+                <div class="input-wrap">
+                  <input type="text" id="customPriceInput" placeholder="Add meg az összeget (EUR)" oninput="updateCustomValue(this.value)">
+                  <div class="input-icon">€</div>
+                </div>
+              </div>
+              <input type="hidden" name="budget" id="budgetInput">
+            </div>
+            <div style="margin-top: 1rem;">
+              <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
+                <input type="checkbox" style="width: 18px; height: 18px; margin-top: 3px; cursor: pointer;">
+                <span style="font-size: 12px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_privacy">Elfogadom az Adatvédelmi Nyilatkozatot.</span>
+              </label>
+            </div>
+            <div class="q-nav-btns">
+              <button type="submit" class="q-btn" data-i18n="cont_btn_submit">Árajánlat kérése →</button>
+              <button type="button" class="q-btn q-btn-back" onclick="nextStep(2)">Vissza</button>
+            </div>
+          </div>
         </form>
       </div>
+
+      <!-- Right Column: Calendly -->
+      <div class="c-calendly-col rv">
+        <div style="margin-bottom: 3rem;">
+          <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_calendly_title">Discovery Call</h2>
+          <p style="font-size: 14px; color: var(--g1);" data-i18n="cont_calendly_sub">Foglalj le egy 30 perces konzultációt közvetlenül a naptáramba.</p>
+        </div>
+
+        <div class="calendly-premium-card" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; overflow: hidden; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);">
+          <!-- Calendly inline widget begin -->
+          <div class="calendly-inline-widget" data-url="https://calendly.com/folyamat/egyeni-folyamat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=050200&text_color=ffffff&primary_color=FF8A00" style="min-width:320px;height:650px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <!-- Calendly inline widget end -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Center Cards -->
+    <div class="c-cards-bottom rv">
+      <!-- Email Card -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
+        <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">@</div>
+        <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_email_hint">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
+        <a href="mailto:hello@thelimitlesser.hu" style="font-family: var(--font-h); font-size: 18px; color: var(--white); text-decoration: none; font-weight: 600;">hello@thelimitlesser.hu</a>
+      </div>
+      <!-- Phone Card -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
+        <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </div>
+        <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_phone_hint">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
+        <p style="font-family: var(--font-h); font-size: 18px; color: var(--white); font-weight: 600;">+36 (70) 577 0722</p>
+      </div>
+    </div>
+  </div>
     </div>
   </div>
 
@@ -401,6 +562,118 @@
       overlay.classList.toggle('open');
       document.body.classList.toggle('loading'); // Disable scroll
     }
+
+    // Multi-step form logic
+    function nextStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.step-dot').forEach(d => d.classList.remove('active'));
+      
+      // Show target step
+      document.getElementById('step' + step).classList.add('active');
+      document.getElementById('dot' + step).classList.add('active');
+      
+      // Scroll to top of form if needed
+      document.getElementById('quoteForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Custom Select Logic
+    function toggleSelect() {
+      document.getElementById('selectOptions').classList.toggle('open');
+    }
+
+    function selectOption(val) {
+      document.getElementById('selectedValue').innerText = val;
+      document.getElementById('budgetInput').value = val;
+      document.getElementById('selectOptions').classList.remove('open');
+      
+      // Handle custom price input visibility
+      const customWrap = document.getElementById('customPriceWrap');
+      if (val === 'Egyedi összeg...') {
+        customWrap.style.display = 'block';
+        document.getElementById('customPriceInput').focus();
+      } else {
+        customWrap.style.display = 'none';
+      }
+
+      // Visual feedback
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.toggle('selected', opt.innerText === val);
+      });
+    }
+
+    function updateCustomValue(val) {
+      document.getElementById('budgetInput').value = val + ' €';
+    }
+
+    // Close select on outside click
+    window.addEventListener('click', (e) => {
+      if (!document.getElementById('budgetSelect').contains(e.target)) {
+        document.getElementById('selectOptions').classList.remove('open');
+      }
+    });
+
+    // Form Submission Handling
+    document.getElementById('quoteForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      
+      // Collect data
+      const formData = {
+        lastName: form.querySelector('[data-i18n-placeholder="cont_ph_lname"]')?.value,
+        firstName: form.querySelector('[data-i18n-placeholder="cont_ph_fname"]')?.value,
+        email: form.querySelector('[data-i18n-placeholder="cont_ph_email"]')?.value,
+        phone: form.querySelector('[data-i18n-placeholder="cont_ph_phone"]')?.value,
+        brandName: form.querySelectorAll('input[placeholder="Brand neve"]')[0]?.value,
+        website: form.querySelectorAll('input[placeholder="Weboldal"]')[0]?.value,
+        companyName: form.querySelectorAll('input[placeholder="Cég neve"]')[0]?.value,
+        taxId: form.querySelectorAll('input[placeholder="Cég adószáma"]')[0]?.value,
+        message: form.querySelector('textarea')?.value,
+        budget: document.getElementById('budgetInput').value || 'Nincs megadva'
+      };
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="loading-spinner"></span> Küldés...';
+      submitBtn.style.opacity = '0.7';
+
+      try {
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Success
+          submitBtn.innerHTML = '✓ Sikeresen elküldve!';
+          submitBtn.style.background = '#059669'; // Green
+          form.reset();
+          setTimeout(() => {
+            nextStep(1); // Reset to first step
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.style.background = 'var(--accent)';
+          }, 3000);
+        } else {
+          throw new Error(result.error || 'Hiba történt');
+        }
+      } catch (err) {
+        console.error(err);
+        submitBtn.innerHTML = '✕ Hiba történt. Újra?';
+        submitBtn.style.background = '#dc2626'; // Red
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.style.background = 'var(--accent)';
+        }, 3000);
+      }
+    });
 
     const revObs=new IntersectionObserver(entries=>{
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');revObs.unobserve(e.target)}});
