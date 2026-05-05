@@ -115,19 +115,14 @@
     .c-title { font-family: var(--font-d); font-size: clamp(32px, 5vw, 64px); font-weight: 300; line-height: 1.1; letter-spacing: -2px; }
     
     .contact-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      max-width: 1300px;
+      max-width: 900px;
       margin: 0 auto;
-      align-items: start;
     }
 
     .c-cards-bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      max-width: 900px;
+      display: flex;
+      justify-content: center;
+      max-width: 500px;
       margin: 8rem auto 10rem;
     }
 
@@ -320,172 +315,32 @@
       </div>
 
       <div class="contact-container">
-      <!-- Left Column: Form -->
-      <div class="c-form-col rv">
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_form_title">Árajánlat kérelem</h2>
-          <p style="font-size: 14px; color: var(--g1);" data-i18n="cont_form_sub">Minél pontosabb adatokat adsz meg, annál gyorsabban tudjuk elkészíteni az árajánlatodat.</p>
-        </div>
-        
-        <form class="q-form" id="quoteForm">
-          <!-- Progress -->
-          <div class="step-indicator">
-            <div class="step-dot active" id="dot1"></div>
-            <div class="step-dot" id="dot2"></div>
-            <div class="step-dot" id="dot3"></div>
+        <!-- Centered Calendly -->
+        <div class="c-calendly-col rv" style="width: 100%;">
+          <div style="margin-bottom: 3rem; text-align: center;">
+            <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_calendly_title">Discovery Call</h2>
+            <p style="font-size: 14px; color: var(--g1);" data-i18n="cont_calendly_sub">Foglalj le egy 30 perces konzultációt közvetlenül a naptáramba.</p>
           </div>
 
-          <p style="font-size: 11px; color: var(--accent); margin-bottom: 2rem; letter-spacing: 1px; text-transform: uppercase;" data-i18n="cont_form_req">• Jelzésű mezők kitöltése kötelező!</p>
-          
-          <!-- Step 1: Personal -->
-          <div class="form-step active" id="step1">
-            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;" data-i18n="cont_form_sec_1">Személyes adatok megadása</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-              <div class="form-group">
-                <label><span data-i18n="cont_label_lname">Vezetéknév</span> •</label>
-                <div class="input-wrap">
-                  <input type="text" data-i18n-placeholder="cont_ph_lname" placeholder="Vezetéknév">
-                </div>
-              </div>
-              <div class="form-group">
-                <label><span data-i18n="cont_label_fname">Keresztnév</span> •</label>
-                <div class="input-wrap">
-                  <input type="text" data-i18n-placeholder="cont_ph_fname" placeholder="Keresztnév">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label><span data-i18n="cont_label_email">E-mail cím</span> •</label>
-              <div class="input-wrap">
-                <input type="email" data-i18n-placeholder="cont_ph_email" placeholder="pelda@email.hu">
-              </div>
-            </div>
-            <div class="form-group">
-              <label><span data-i18n="cont_label_phone">Telefonszám</span> •</label>
-              <div class="input-wrap">
-                <input type="tel" data-i18n-placeholder="cont_ph_phone" placeholder="+36 30 123 4567">
-              </div>
-            </div>
-            <div class="q-nav-btns">
-              <button type="button" class="q-btn" onclick="nextStep(2)">Tovább</button>
-            </div>
+          <div class="calendly-premium-card" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; overflow: hidden; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);">
+            <!-- Calendly inline widget begin -->
+            <div class="calendly-inline-widget" data-url="https://calendly.com/folyamat/egyeni-folyamat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=050200&text_color=ffffff&primary_color=FF8A00" style="min-width:320px;height:650px;"></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            <!-- Calendly inline widget end -->
           </div>
-
-          <!-- Step 2: Brand/Company -->
-          <div class="form-step" id="step2">
-            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;">Brand adatainak megadása</p>
-            <div class="form-group">
-              <label>Brand neve •</label>
-              <div class="input-wrap">
-                <input type="text" placeholder="Brand neve">
-                <div class="input-icon">©</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Weboldal •</label>
-              <div class="input-wrap">
-                <input type="text" placeholder="Weboldal">
-                <div class="input-icon">🌐</div>
-              </div>
-            </div>
-            <p style="font-size: 13px; color: var(--g1); line-height: 1.5; margin-bottom: 2rem;">Kérjük add meg vállalkozásod hivatalos adatait, hogy már az első konzultációra felkészülten érkezhessünk! Ha még magánszemélyként építkezel, a saját nevedet írd be.</p>
-            <div class="form-group">
-              <label>Cég neve •</label>
-              <div class="input-wrap">
-                <input type="text" placeholder="Cég neve">
-                <div class="input-icon">©</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Cég adószáma</label>
-              <div class="input-wrap">
-                <input type="text" placeholder="Cég adószáma">
-                <div class="input-icon">📄</div>
-              </div>
-            </div>
-            <div class="q-nav-btns">
-              <button type="button" class="q-btn" onclick="nextStep(3)">Tovább</button>
-              <button type="button" class="q-btn q-btn-back" onclick="nextStep(1)">Vissza</button>
-            </div>
-          </div>
-
-          <!-- Step 3: Project Details -->
-          <div class="form-step" id="step3">
-            <p style="font-size: 13px; color: var(--white); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem;">Projekt részletei</p>
-            <div class="form-group">
-              <label>Miben segíthetünk? •</label>
-              <div class="input-wrap">
-                <textarea rows="6" placeholder="Írd le röviden a céljaidat..."></textarea>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Várható költségkeret</label>
-              <div class="custom-select" id="budgetSelect">
-                <div class="select-trigger" onclick="toggleSelect()">
-                  <span id="selectedValue">Válassz összeget...</span>
-                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="select-options" id="selectOptions">
-                  <div class="option" onclick="selectOption('2.500€ - 5.000€')">2.500€ - 5.000€</div>
-                  <div class="option" onclick="selectOption('5.000€ - 15.000€')">5.000€ - 15.000€</div>
-                  <div class="option" onclick="selectOption('15.000€ - 30.000€')">15.000€ - 30.000€</div>
-                  <div class="option" onclick="selectOption('30.000€+')">30.000€+</div>
-                  <div class="option" onclick="selectOption('Egyedi összeg...')">Egyedi összeg...</div>
-                </div>
-              </div>
-              <div id="customPriceWrap" style="display: none; margin-top: 1rem; animation: stepFadeIn 0.3s forwards;">
-                <div class="input-wrap">
-                  <input type="text" id="customPriceInput" placeholder="Add meg az összeget (EUR)" oninput="updateCustomValue(this.value)">
-                  <div class="input-icon">€</div>
-                </div>
-              </div>
-              <input type="hidden" name="budget" id="budgetInput">
-            </div>
-            <div style="margin-top: 1rem;">
-              <label style="display: flex; gap: 1rem; cursor: pointer; align-items: flex-start;">
-                <input type="checkbox" style="width: 18px; height: 18px; margin-top: 3px; cursor: pointer;">
-                <span style="font-size: 12px; color: var(--g1); line-height: 1.5;" data-i18n="cont_label_privacy">Elfogadom az Adatvédelmi Nyilatkozatot.</span>
-              </label>
-            </div>
-            <div class="q-nav-btns">
-              <button type="submit" class="q-btn" data-i18n="cont_btn_submit">Árajánlat kérése →</button>
-              <button type="button" class="q-btn q-btn-back" onclick="nextStep(2)">Vissza</button>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <!-- Right Column: Calendly -->
-      <div class="c-calendly-col rv">
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: var(--font-d); font-size: 32px; margin-bottom: 1rem; font-weight: 300;" data-i18n="cont_calendly_title">Discovery Call</h2>
-          <p style="font-size: 14px; color: var(--g1);" data-i18n="cont_calendly_sub">Foglalj le egy 30 perces konzultációt közvetlenül a naptáramba.</p>
-        </div>
-
-        <div class="calendly-premium-card" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; overflow: hidden; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);">
-          <!-- Calendly inline widget begin -->
-          <div class="calendly-inline-widget" data-url="https://calendly.com/folyamat/egyeni-folyamat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=050200&text_color=ffffff&primary_color=FF8A00" style="min-width:320px;height:650px;"></div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-          <!-- Calendly inline widget end -->
         </div>
       </div>
     </div>
 
     <!-- Bottom Center Cards -->
     <div class="c-cards-bottom rv">
-      <!-- Email Card -->
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
-        <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">@</div>
-        <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_email_hint">Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.</p>
-        <a href="mailto:hello@thelimitlesser.hu" style="font-family: var(--font-h); font-size: 18px; color: var(--white); text-decoration: none; font-weight: 600;">hello@thelimitlesser.hu</a>
-      </div>
       <!-- Phone Card -->
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center;">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center; width: 100%;">
         <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         </div>
         <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_phone_hint">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
-        <p style="font-family: var(--font-h); font-size: 18px; color: var(--white); font-weight: 600;">+36 (70) 577 0722</p>
+        <p style="font-family: var(--font-h); font-size: 18px; color: var(--white); font-weight: 600;">+36 1 901 0771</p>
       </div>
     </div>
   </div>
