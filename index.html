@@ -296,139 +296,114 @@ section{position:relative;z-index:5}
 #results { background: #050200; overflow: hidden; position: relative; padding: 12rem 5rem; }
 .nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; pointer-events: none; }
 
-.nm-grid { 
+.nm-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nm-grid {
   display: grid;
-  grid-template-columns: 1fr 150px 1fr;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px;
-  margin: 6rem auto; 
-  position: relative; 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 120px 300px; /* Vertical gap 120px, Horizontal gap 300px to fit core */
+  position: relative;
   z-index: 5;
 }
 
-.nm-col { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 5rem; 
-  width: 100%; 
-}
-
-.nm-col.left { align-items: flex-end; }
-.nm-col.right { align-items: flex-start; }
-
-.nm-node { 
-  background: rgba(255,255,255,0.03); 
-  border: 1px solid rgba(255,255,255,0.08); 
-  border-radius: 24px; 
-  padding: 1.8rem; 
-  backdrop-filter: blur(20px); 
+.nm-node {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 2.2rem;
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
-  display: flex; 
-  align-items: center; 
-  gap: 1.5rem; 
-  width: 350px; /* Fixed card width */
-  position: relative; 
-  z-index: 20; 
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 400px;
 }
 
-.nm-col.left .nm-node { flex-direction: row-reverse; text-align: right; }
-.nm-col.right .nm-node { text-align: left; }
+/* Alignments for 2x2 */
+.nm-node.tl, .nm-node.bl { justify-self: end; text-align: right; flex-direction: row-reverse; }
+.nm-node.tr, .nm-node.br { justify-self: start; text-align: left; }
 
 .nm-node:hover {
   background: rgba(255,255,255,0.06);
   border-color: var(--accent);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-.nm-node-icon { 
-  width: 48px; height: 48px; 
-  background: rgba(217,119,6,0.1); 
-  border: 1px solid rgba(217,119,6,0.2); 
-  border-radius: 12px; 
-  display: flex; align-items: center; justify-content: center; 
-  color: var(--accent); flex-shrink: 0; 
+.nm-node-icon {
+  width: 54px; height: 54px;
+  background: rgba(217,119,6,0.1);
+  border: 1px solid rgba(217,119,6,0.2);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); flex-shrink: 0;
 }
 
-.nm-core-col { flex-shrink: 0; width: 160px; display: flex; justify-content: center; position: relative; }
-.nm-core-container { position: relative; width: 140px; height: 140px; display: grid; place-items: center; }
-.nm-core { width: 100px; height: 100px; background: radial-gradient(circle at 30% 30%, #D97706 0%, #78350f 50%, #000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(217,119,6,0.5), inset -10px -10px 30px rgba(0,0,0,0.8); position: relative; z-index: 10; border: 1px solid rgba(255,255,255,0.1); }
-.nm-core::after { content: 'L\00B7L'; font-family: var(--font-d); font-size: 22px; font-weight: 800; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 10px rgba(255,255,255,0.8); letter-spacing: 2px; }
-
-.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.2); border-radius: 50%; animation: nm-orbit-rot 15s linear infinite; pointer-events: none; }
-.nm-orbit-1 { width: 180px; height: 180px; border-style: solid; opacity: 0.4; }
-.nm-orbit-2 { width: 260px; height: 260px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; opacity: 0.2; }
-
-.nm-lines { 
-  position: absolute; 
-  inset: 0; 
-  width: 100%; 
-  height: 100%; 
-  z-index: 1; 
-  pointer-events: none; 
-  opacity: 0.5;
+/* Central Core - Absolute Positioned */
+.nm-core-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
 }
 
-.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.15; }
-.nm-bullet { stroke: var(--accent); stroke-width: 2.5; fill: none; stroke-dasharray: 4, 100; stroke-linecap: round; animation: nm-shoot 3s linear infinite; filter: drop-shadow(0 0 5px var(--accent)); }
+.nm-core {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 30% 30%, #D97706 0%, #78350f 50%, #000 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 80px rgba(217,119,6,0.4), inset -10px -10px 30px rgba(0,0,0,0.8);
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.15);
+  pointer-events: auto;
+}
+
+.nm-core::after { content: 'L\00B7L'; font-family: var(--font-d); font-size: 26px; font-weight: 800; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+
+.nm-orbit { position: absolute; border: 1px solid rgba(217,119,6,0.15); border-radius: 50%; animation: nm-orbit-rot 20s linear infinite; pointer-events: none; }
+.nm-orbit-1 { width: 220px; height: 220px; opacity: 0.3; }
+.nm-orbit-2 { width: 300px; height: 300px; border-style: dashed; animation-duration: 35s; animation-direction: reverse; opacity: 0.15; }
+
+/* SVG Lines - Covering the grid */
+.nm-lines-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.1; }
+.nm-bullet { stroke: var(--accent); stroke-width: 3; fill: none; stroke-dasharray: 6, 150; stroke-linecap: round; animation: nm-shoot 4s linear infinite; filter: drop-shadow(0 0 8px var(--accent)); }
 
 @keyframes nm-orbit-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes nm-shoot { from { stroke-dashoffset: 108; } to { stroke-dashoffset: 0; } }
+@keyframes nm-shoot { from { stroke-dashoffset: 156; } to { stroke-dashoffset: 0; } }
 
 @media(max-width:1050px) {
-  .nm-grid { display: flex; flex-direction: column; align-items: center; gap: 4rem; position: relative; padding: 4rem 0; }
-  
-  /* Central vertical line */
-  .nm-grid::before { 
-    content: ''; position: absolute; top: 15%; left: 50%; transform: translateX(-50%); 
-    width: 2px; height: 70%; background: linear-gradient(to bottom, rgba(217,119,6,0), rgba(217,119,6,0.5) 20%, rgba(217,119,6,0.5) 80%, rgba(217,119,6,0)); z-index: 1; 
-  }
-  
-  /* Upward flow */
-  .nm-grid::after {
-    content: ''; position: absolute; top: 50%; left: 50%; transform: translateX(-50%);
-    width: 4px; height: 100px; background: linear-gradient(to top, transparent, var(--accent), transparent);
-    z-index: 2; filter: blur(2px); animation: nm-flow-up 4s infinite linear;
-  }
-  
-  /* Downward flow (new element) */
-  .nm-flow-down {
-    content: ''; position: absolute; top: 50%; left: 50%; transform: translateX(-50%);
-    width: 4px; height: 100px; background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-    z-index: 2; filter: blur(2px); animation: nm-flow-down 4s infinite linear; pointer-events: none;
-  }
-
-  .nm-col { display: flex; flex-direction: column; gap: 6rem; width: 100%; align-items: center !important; z-index: 5; }
-  .nm-col.left { order: 1; }
-  .nm-col.right { order: 3; }
-  .nm-core-col { order: 2; margin: 0; z-index: 10; transform: scale(0.9); }
-
-  .nm-node { position: relative; padding: 2.5rem 1.5rem; background: rgba(10,5,0,0.9); border: 1px solid rgba(217,119,6,0.15); width: 85%; margin: 0 auto; text-align: center; }
-  
-  /* Top-floating icons */
-  .nm-node[data-node="top"] .nm-node-icon { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); margin: 0; background: #1a0f00; border-color: var(--accent); }
-  
-  /* Bottom-floating icons */
-  .nm-node[data-node="bottom"] .nm-node-icon { position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); margin: 0; background: #1a0f00; border-color: var(--accent); }
-  
-  .nm-lines, .nm-orbit { display: none; }
-}
-
-@keyframes nm-flow-up {
-  0% { transform: translate(-50%, 0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translate(-50%, -250px); opacity: 0; }
-}
-
-@keyframes nm-flow-down {
-  0% { transform: translate(-50%, 0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translate(-50%, 250px); opacity: 0; }
+  .nm-grid { grid-template-columns: 1fr; gap: 4rem; padding: 4rem 0; }
+  .nm-node { max-width: 100%; justify-self: center !important; text-align: center !important; flex-direction: column !important; }
+  .nm-core-wrap, .nm-lines-wrap, .nm-orbit { display: none; }
 }
 
 /* Offer Section Redesign */
@@ -932,78 +907,72 @@ body.loading { overflow: hidden; }
 
 <section id="results" style="padding: 12rem 5rem; overflow: hidden;">
   <div class="nm-bg-grid"></div>
-  
-  <div class="section-wrap rv" style="text-align: center; position: relative; z-index: 2; max-width: 1300px;">
-    <span class="s-tag" data-i18n="results_tag">Eredmények</span>
-    <h2 class="s-title" data-i18n="results_main_title">Mit jelent ez a <em>gyakorlatban</em>?</h2>
-    
-    <div class="nm-grid" id="nmGrid">
-      <div class="nm-flow-down"></div>
-      <!-- Left Column Nodes -->
-      <div class="nm-col left">
-        <div class="nm-node rv" data-node="top">
+    <div class="nm-container">
+      <div class="nm-grid" id="nmGrid">
+        <!-- Top Left -->
+        <div class="nm-node tl rv">
           <div class="nm-node-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div class="nm-node-content">
             <p data-i18n="results_node_1">Kevesebb manuális feladat a csapatod számára</p>
           </div>
         </div>
-        <div class="nm-node rv" data-node="top">
+
+        <!-- Top Right -->
+        <div class="nm-node tr rv">
           <div class="nm-node-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
           <div class="nm-node-content">
             <p data-i18n="results_node_2">Gyorsabb és átláthatóbb folyamatok</p>
           </div>
         </div>
-      </div>
 
-      <!-- Center Core -->
-      <div class="nm-core-col">
-        <div class="nm-core-container">
-          <div class="nm-orbit nm-orbit-1"></div>
-          <div class="nm-orbit nm-orbit-2"></div>
-          <div class="nm-core rv"></div>
-        </div>
-      </div>
-
-      <!-- Right Column Nodes -->
-      <div class="nm-col right">
-        <div class="nm-node rv" data-node="bottom">
+        <!-- Bottom Left -->
+        <div class="nm-node bl rv">
           <div class="nm-node-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <div class="nm-node-content">
             <p data-i18n="results_node_3">Jobb kontroll a működés felett</p>
           </div>
         </div>
-        <div class="nm-node rv" data-node="bottom">
+
+        <!-- Bottom Right -->
+        <div class="nm-node br rv">
           <div class="nm-node-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
           <div class="nm-node-content">
             <p data-i18n="results_node_4">Stabilabb alap a növekedéshez</p>
           </div>
         </div>
       </div>
-      
-      <!-- SVG Lines Background (Recalculated for 1100px 3-Column Grid) -->
-      <svg class="nm-lines" viewBox="0 0 1100 500" preserveAspectRatio="none">
-        <!-- Center point: 1100/2 = 550, 250 -->
-        <!-- Inner Edge of side columns: (1100-150)/2 = 475 and 625 -->
-        
-        <path class="nm-line-path" d="M550,250 L475,160" />
-        <path class="nm-line-path" d="M550,250 L475,340" />
-        <path class="nm-line-path" d="M550,250 L625,160" />
-        <path class="nm-line-path" d="M550,250 L625,340" />
-        
-        <!-- Animated Bullets -->
-        <path class="nm-bullet" d="M550,250 L475,160" style="animation-delay: 0s; animation-duration: 2s;" />
-        <path class="nm-bullet" d="M550,250 L475,340" style="animation-delay: 1s; animation-duration: 2.2s;" />
-        <path class="nm-bullet" d="M550,250 L625,160" style="animation-delay: 0.5s; animation-duration: 2.1s;" />
-        <path class="nm-bullet" d="M550,250 L625,340" style="animation-delay: 1.5s; animation-duration: 2.3s;" />
-      </svg>
+
+      <!-- Core - Absolute Centered -->
+      <div class="nm-core-wrap">
+        <div class="nm-orbit nm-orbit-1"></div>
+        <div class="nm-orbit nm-orbit-2"></div>
+        <div class="nm-core rv"></div>
+      </div>
+
+      <!-- SVG Curved Lines - Covering the whole nm-container -->
+      <div class="nm-lines-wrap">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+          <!-- Quadratic Bezier Curves: M [Center] Q [Control] [Target] -->
+          <path class="nm-line-path" d="M500,300 Q 400,200 250,150" />
+          <path class="nm-line-path" d="M500,300 Q 600,200 750,150" />
+          <path class="nm-line-path" d="M500,300 Q 400,400 250,450" />
+          <path class="nm-line-path" d="M500,300 Q 600,400 750,450" />
+
+          <!-- Animated Bullets -->
+          <path class="nm-bullet" d="M500,300 Q 400,200 250,150" style="animation-delay: 0s;" />
+          <path class="nm-bullet" d="M500,300 Q 600,200 750,150" style="animation-delay: 1s;" />
+          <path class="nm-bullet" d="M500,300 Q 400,400 250,450" style="animation-delay: 2s;" />
+          <path class="nm-bullet" d="M500,300 Q 600,400 750,450" style="animation-delay: 3s;" />
+        </svg>
+      </div>
     </div>
 
     <!-- Added High-Impact Sentence -->
