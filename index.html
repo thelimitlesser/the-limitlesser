@@ -296,12 +296,64 @@ section{position:relative;z-index:5}
 #results { background: #050200; overflow: hidden; position: relative; padding: 12rem 5rem; }
 .nm-bg-grid { position: absolute; inset: 0; background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; pointer-events: none; }
 
-.nm-grid { display: grid; grid-template-columns: 1fr 140px 1fr; align-items: center; gap: 4rem; max-width: 1200px; margin: 4rem auto; position: relative; z-index: 5; }
+.nm-grid { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 6rem auto;
+  position: relative;
+  z-index: 5;
+}
 
-.nm-col { display: flex; flex-direction: column; gap: 4rem; }
+.nm-col { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 6rem; 
+  width: 380px; 
+  flex-shrink: 0;
+}
+
 .nm-col.left { align-items: flex-end; }
 .nm-col.right { align-items: flex-start; }
 
+.nm-node { 
+  background: rgba(255,255,255,0.03); 
+  border: 1px solid rgba(255,255,255,0.08); 
+  border-radius: 24px; 
+  padding: 1.8rem; 
+  backdrop-filter: blur(20px); 
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+  display: flex; 
+  align-items: center; 
+  gap: 1.5rem; 
+  width: 100%; 
+  position: relative; 
+  z-index: 20; 
+}
+
+.nm-col.left .nm-node { flex-direction: row-reverse; text-align: right; }
+.nm-col.right .nm-node { text-align: left; }
+
+.nm-node:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.nm-node-icon { 
+  width: 48px; height: 48px; 
+  background: rgba(217,119,6,0.1); 
+  border: 1px solid rgba(217,119,6,0.2); 
+  border-radius: 12px; 
+  display: flex; align-items: center; justify-content: center; 
+  color: var(--accent); flex-shrink: 0; 
+}
+
+.nm-core-col { flex-shrink: 0; width: 160px; display: flex; justify-content: center; position: relative; }
 .nm-core-container { position: relative; width: 140px; height: 140px; display: grid; place-items: center; }
 .nm-core { width: 100px; height: 100px; background: radial-gradient(circle at 30% 30%, #D97706 0%, #78350f 50%, #000 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(217,119,6,0.5), inset -10px -10px 30px rgba(0,0,0,0.8); position: relative; z-index: 10; border: 1px solid rgba(255,255,255,0.1); }
 .nm-core::after { content: 'L\00B7L'; font-family: var(--font-d); font-size: 22px; font-weight: 800; color: #fff; font-style: italic; z-index: 2; text-shadow: 0 0 10px rgba(255,255,255,0.8); letter-spacing: 2px; }
@@ -310,12 +362,6 @@ section{position:relative;z-index:5}
 .nm-orbit-1 { width: 180px; height: 180px; border-style: solid; opacity: 0.4; }
 .nm-orbit-2 { width: 260px; height: 260px; border-style: dashed; animation-duration: 25s; animation-direction: reverse; opacity: 0.2; }
 
-.nm-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 1.8rem; backdrop-filter: blur(15px); transition: 0.4s; display: flex; align-items: center; gap: 1.5rem; width: 100%; max-width: 380px; position: relative; z-index: 20; text-align: left; }
-.nm-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
-.nm-node-icon { width: 48px; height: 48px; background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; }
-.nm-node-text { font-family: var(--font-b); font-size: 16px; color: var(--white); font-weight: 400; line-height: 1.5; }
-
 .nm-lines { 
   position: absolute; 
   inset: 0; 
@@ -323,9 +369,10 @@ section{position:relative;z-index:5}
   height: 100%; 
   z-index: 1; 
   pointer-events: none; 
-  opacity: 0.3;
+  opacity: 0.2;
 }
-.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.2; }
+
+.nm-line-path { stroke: var(--accent); stroke-width: 1; fill: none; }
 .nm-bullet { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 8, 100; stroke-linecap: round; animation: nm-shoot 4s linear infinite; }
 
 @keyframes nm-orbit-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
