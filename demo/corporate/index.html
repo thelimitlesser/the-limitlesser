@@ -490,21 +490,79 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding
 .demo-badge{position:fixed;top:0;right:0;background:var(--blue);color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:.32rem .9rem;z-index:99999;font-weight:700;font-family:var(--font-h)}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .9s,transform .9s}.rv.on{opacity:1;transform:none}
 .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
-@media(max-width:1100px){.sim-grid{grid-template-columns:1fr}.sim-controls{flex-direction:column}}
+@media(max-width:1000px){
+  /* Hero section grid correction */
+  .hero { grid-template-columns: 1fr !important; min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+  .hero-left { padding: 4rem 1.5rem !important; text-align: center; align-items: center; }
+  .hero-left::after { display: none !important; }
+  .h-kicker { justify-content: center; }
+  .h-tagline { margin-left: auto; margin-right: auto; }
+  .h-btns { justify-content: center; width: 100%; }
+  .hero-right { padding: 4rem 1.5rem !important; min-height: auto; }
+  .dashboard { width: 100% !important; max-width: 460px; margin: 0 auto; }
+}
+
 @media(max-width:900px){
-  nav{padding:1.1rem 2rem}.n-links{display:none}.n-cta{display:none}.mob-toggle{display:flex}
-  #solutions,#impact,#cases,#industries,#team,#testimonials,#process,#insights,#faq,#contact,footer,#awards,#simulator,#report{padding-left:2rem;padding-right:2rem}
+  /* Hide custom cursor on mobile touch screens */
+  #cur, #cur-r { display: none !important; }
+  body, a, button, .tab-btn, .tp-feat, .cc, .ind-card, .tcard, .tn-dot, .ps-num, .dm-close, .rep-select, .roi-chip, .cf-submit, .dts-btn { cursor: default !important; }
+
+  /* Mobile Nav */
+  nav{padding:1.1rem 1.5rem}.n-links{display:none}.n-cta{display:none}.mob-toggle{display:flex}
+
+  /* Padding standardizations */
+  #solutions,#impact,#cases,#industries,#team,#testimonials,#process,#insights,#faq,#contact,footer,#awards,#simulator,#report{padding-left:1.5rem;padding-right:1.5rem}
+
+  /* Awards bar mobile */
+  #awards { flex-direction: column !important; align-items: center !important; text-align: center !important; padding: 3rem 1.5rem !important; }
+  .aw-sep { display: none !important; }
+  .aw-list { justify-content: center !important; width: 100% !important; gap: 1.5rem !important; }
+  .aw-score { margin-left: 0 !important; width: 100% !important; justify-content: center !important; margin-top: 1.5rem; }
+
+  /* Solutions tab panel */
+  .tab-panel.active { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+  .tp-stats { justify-content: space-around; width: 100%; }
+  .tp-right { grid-template-columns: 1fr 1fr !important; gap: 0.8rem; }
+
+  /* Other layout grids */
   .impact-grid{grid-template-columns:1fr 1fr}.ind-grid{grid-template-columns:1fr 1fr}.cases-grid{grid-template-columns:1fr}.ins-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}.proc-steps{grid-template-columns:1fr 1fr}.ft-top{grid-template-columns:1fr 1fr}
   #sticky-cta{bottom:5rem;right:1rem}
-  #roi{padding-left:2rem;padding-right:2rem}
+
+  /* ROI box mobile */
+  #roi{padding-left:1.5rem;padding-right:1.5rem}
   .roi-box{grid-template-columns:1fr}
+  .roi-left, .roi-right { padding: 2rem 1.2rem !important; }
+
+  /* Diagnosis modal */
   .diag-trigger-strip{flex-direction:column;text-align:center;padding:3rem 2rem}
+  .dm-box { max-height: 95vh !important; }
+  .dm-step { padding: 1.5rem !important; }
   .dm-options{grid-template-columns:1fr}
+
+  /* Growth Simulator */
   .sim-controls{flex-direction:column}
   .sim-outcomes{grid-template-columns:1fr}
+  #sim-canvas { height: 280px !important; }
+
+  /* Reports & Docs */
   .rep-form{grid-template-columns:1fr}
   .db-grid{grid-template-columns:1fr}
+  .doc-header { padding: 2.5rem 1.5rem !important; }
+  .doc-body { padding: 3rem 1.5rem !important; }
   .doc-header,.doc-body{padding-left:1.5rem;padding-right:1.5rem}
+}
+
+@media(max-width:480px) {
+  .h-metrics { grid-template-columns: 1fr !important; gap: 0.5rem; }
+  .tp-right { grid-template-columns: 1fr !important; }
+  .impact-grid { grid-template-columns: 1fr !important; }
+  .ind-grid { grid-template-columns: 1fr !important; }
+  .team-grid { grid-template-columns: 1fr !important; }
+  .proc-steps { grid-template-columns: 1fr !important; }
+  .ft-top { grid-template-columns: 1fr !important; gap: 2.5rem; }
+  .roi-chips { flex-direction: column; width: 100%; }
+  .roi-chip { width: 100%; text-align: center; }
+  .roi-grid { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>

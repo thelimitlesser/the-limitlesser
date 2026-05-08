@@ -89,11 +89,42 @@ h1 span { -webkit-text-stroke: 1px rgba(0,242,255,0.3); color: transparent; }
 .rv.on { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 1000px) {
-  nav { padding: 1.5rem 2rem; }
+  /* Hide custom cursor on mobile touch screens */
+  #cur, #cur-r { display: none !important; }
+  body { cursor: default !important; }
+  .bb-b, .bb-c { cursor: default !important; }
+
+  /* Mobile Nav */
+  nav { padding: 1.1rem 1.5rem; }
+  nav.stuck { padding: 1rem 1.5rem; }
   .n-cta { display: none; }
   .mob-toggle { display: flex; }
-  .f-grid, .p-grid { grid-template-columns: 1fr; }
-  .back-bar { width: calc(100% - 4rem); bottom: 1.5rem; justify-content: space-between; }
+
+  /* Sizing adjustments */
+  .hero { padding: 8rem 1.5rem 4rem; }
+  h1 { font-size: clamp(38px, 11vw, 72px) !important; line-height: 1.05 !important; letter-spacing: -3px !important; margin-bottom: 2rem !important; }
+  .h-desc { margin-bottom: 3rem !important; }
+
+  /* Section Padding */
+  .section { padding: 5rem 1.5rem !important; }
+  .s-header { margin-bottom: 4rem !important; }
+
+  /* Responsive Grids */
+  .f-grid, .p-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+  .f-card { padding: 3rem 2rem !important; border-radius: 16px; }
+  .p-card { padding: 3.5rem 2rem !important; border-radius: 20px; }
+
+  /* Floating Bottom Bar Navigation */
+  .back-bar {
+    width: calc(100% - 2.5rem);
+    bottom: 1.5rem;
+    padding: 0.6rem 0.8rem;
+    gap: 0.8rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bb-b { padding: 0 0.5rem !important; font-size: 10px; }
+  .bb-c { padding: 0.8rem 1.4rem !important; font-size: 10px; }
 }
 </style>
 </head>
@@ -234,6 +265,12 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
 const geometry = new THREE.BufferGeometry();
 const vertices = [];

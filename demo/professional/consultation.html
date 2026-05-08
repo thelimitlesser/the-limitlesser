@@ -18,7 +18,7 @@ label { display: block; font-size: 11px; text-transform: uppercase; letter-spaci
 input, select, textarea { width: 100%; padding: 1.2rem; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 15px; background: #fafafa; transition: border-color 0.3s; }
 input:focus { outline: none; border-color: var(--accent); background: #fff; }
 
-.submit-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 1.5rem; font-family: inherit; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 2rem; }
+.submit-btn { display: block; text-align: center; text-decoration: none; box-sizing: border-box; width: 100%; background: var(--accent); color: white; border: none; padding: 1.5rem; font-family: inherit; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 2rem; }
 .submit-btn:hover { background: #000; }
 .back { display: block; text-align: center; margin-top: 2.5rem; text-decoration: none; color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
 </style>
@@ -53,7 +53,7 @@ input:focus { outline: none; border-color: var(--accent); background: #fff; }
     <textarea rows="4" placeholder="Briefly describe the context of your inquiry..."></textarea>
   </div>
   
-  <a href="success.html" style="text-decoration:none;"><button class="submit-btn" type="button">Submit Request</button></a>
+  <a href="success.html" class="submit-btn">Submit Request</a>
   <a href="index.html" class="back">← Cancel Request</a>
 </div>
 </body>
