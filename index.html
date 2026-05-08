@@ -106,19 +106,45 @@ html:not(.unresolved) .page-content { animation: pageFadeIn 1.2s cubic-bezier(0.
 /* Mobile Menu Overlay */
 .mob-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .mob-menu-overlay.open { opacity: 1; visibility: visible; }
-.mob-menu { position: fixed; top: 1rem; right: 1rem; bottom: 1.5rem; width: 280px; background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; padding: 2rem 1.5rem; gap: 1rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
+.mob-menu { position: fixed; top: 1rem; right: 1rem; bottom: 1.5rem; width: 280px; background: rgba(10, 5, 0, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 10001; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 2rem 1.5rem; gap: 0.2rem; transform: translateX(calc(100% + 2rem)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); font-family: 'Inter', sans-serif; overflow-y: auto; box-sizing: border-box; }
 .mob-menu.open { transform: translateX(0); }
 .mob-menu-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
 .mob-menu-top .n-ll { font-family: var(--font-d); font-size: 13px; letter-spacing: 5px; color: rgba(255,255,255,0.8); text-transform: uppercase; line-height: 1; }
 .mob-close { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: 0.3s; padding: 0; }
 .mob-close svg { width: 24px; height: 24px; display: block; }
 .mob-close:hover { color: var(--accent); background: rgba(255,255,255,0.05); }
-.mob-menu.open { transform: translateX(0); }
-.mob-menu a.m-link { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; flex-direction: row-reverse; width: 100%; font-family: 'Inter', sans-serif; font-size: 20px; color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: -0.5px; line-height: 1.2; text-transform: none; text-align: right; }
-.mob-menu a.m-link svg { width: 20px; height: 20px; stroke: rgba(255,255,255,0.4); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+
+.mob-menu a.m-link { display: flex; align-items: center; justify-content: center; gap: 0.8rem; width: 85%; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: -0.5px; line-height: 1.2; text-transform: none; text-align: center; padding: 1rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.mob-menu a.m-link:nth-of-type(5) { border-bottom: none; }
+.mob-menu a.m-link svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.4); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
 .mob-menu a.m-link:hover { color: var(--accent); }
 .mob-menu a.m-link:hover svg { stroke: var(--accent); }
-.mob-menu .n-btn { margin-top: auto; background: var(--white); color: #000; font-size: 13px; padding: 1.2rem 2rem; width: 100%; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+.mob-menu .n-btn { margin-top: 1rem; background: var(--white); color: #000; font-size: 13px; padding: 1.1rem 2rem; width: 85% !important; text-align: center; justify-content: center; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+/* Mobile Language Dropdown Specific Styles */
+.mob-lang-wrap .lang-options {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  z-index: 10002;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: 0.3s;
+}
+.mob-lang-wrap .lang-dropdown.open .lang-options {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
 
 /* ─── Hero ─────────────────────────────────────── */
 #hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;overflow:hidden; text-align: center; padding-top: 12rem;}
@@ -834,7 +860,7 @@ body.loading { overflow: hidden; }
           </div>
           <svg class="lang-chevron" viewBox="0 0 10 6" style="width: 8px; fill: none; stroke: white; stroke-width: 2;"><path d="M1 1l4 4 4-4"/></svg>
         </div>
-        <div class="lang-options" style="position: absolute; bottom: calc(100% + 10px); left: 0; right: 0; background: #FFFFFF; border-radius: 16px; padding: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 10002; opacity: 0; visibility: hidden; pointer-events: none; transition: 0.3s;">
+        <div class="lang-options">
           <div class="lang-option" data-lang-opt="hu" onclick="selectLanguage('hu')" style="color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; align-items: center; gap: 12px;">
             <img src="https://flagcdn.com/w80/hu.png" class="lang-flag" style="width: 24px; height: 24px; border-radius: 50%;">
             <span style="font-size: 14px; font-weight: 500;">Magyar (HU)</span>
