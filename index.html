@@ -3077,17 +3077,19 @@
       document.getElementById('m4Step3Title').innerText = dict.m4_s3_t;
       document.getElementById('m4Step3Desc').innerText = dict.m4_s3_d;
 
-      document.getElementById('m4S1D1').innerText = dict.m4_s1_del1;
-      document.getElementById('m4S1D2').innerText = dict.m4_s1_del2;
-      document.getElementById('m4S1D3').innerText = dict.m4_s1_del3;
+      if (document.getElementById('m4S1D1')) {
+        document.getElementById('m4S1D1').innerText = dict.m4_s1_del1;
+        document.getElementById('m4S1D2').innerText = dict.m4_s1_del2;
+        document.getElementById('m4S1D3').innerText = dict.m4_s1_del3;
 
-      document.getElementById('m4S2D1').innerText = dict.m4_s2_del1;
-      document.getElementById('m4S2D2').innerText = dict.m4_s2_del2;
-      document.getElementById('m4S2D3').innerText = dict.m4_s2_del3;
+        document.getElementById('m4S2D1').innerText = dict.m4_s2_del1;
+        document.getElementById('m4S2D2').innerText = dict.m4_s2_del2;
+        document.getElementById('m4S2D3').innerText = dict.m4_s2_del3;
 
-      document.getElementById('m4S3D1').innerText = dict.m4_s3_del1;
-      document.getElementById('m4S3D2').innerText = dict.m4_s3_del2;
-      document.getElementById('m4S3D3').innerText = dict.m4_s3_del3;
+        document.getElementById('m4S3D1').innerText = dict.m4_s3_del1;
+        document.getElementById('m4S3D2').innerText = dict.m4_s3_del2;
+        document.getElementById('m4S3D3').innerText = dict.m4_s3_del3;
+      }
 
       // Modal 5: FAQ
       document.getElementById('m5Tag').innerText = dict.m5_tag;
@@ -3100,6 +3102,18 @@
       document.getElementById('a3').innerText = dict.a3;
       document.getElementById('q4').innerText = dict.q4;
       document.getElementById('a4').innerText = dict.a4;
+      if (document.getElementById('q5')) {
+        document.getElementById('q5').innerText = dict.q5;
+        document.getElementById('a5').innerText = dict.a5;
+      }
+      if (document.getElementById('q6')) {
+        document.getElementById('q6').innerText = dict.q6;
+        document.getElementById('a6').innerText = dict.a6;
+      }
+      if (document.getElementById('q7')) {
+        document.getElementById('q7').innerText = dict.q7;
+        document.getElementById('a7').innerText = dict.a7;
+      }
 
       // Modal 6: About Us
       document.getElementById('m6Tag').innerText = dict.m6_tag;
