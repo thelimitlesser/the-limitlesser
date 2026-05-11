@@ -8,10 +8,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
     :root {
-      --bg: #050200;
-      --accent: #FF8A00;
-      --accent2: #FFD600;
-      --accent3: rgba(255, 138, 0, 0.15);
+      --bg: #0B0A05;
+      --accent: #FFC700;
+      --accent2: #FFE066;
+      --accent3: rgba(255, 199, 0, 0.15);
       --white: #fff;
       --g1: #888; --g2: #1a1a1a; --g3: #111;
       --font-d: 'Times New Roman', Times, serif;
@@ -25,22 +25,22 @@
     /* Mouse Glow Effect (Flashlight) */
     #mouse-glow {
       position: fixed; top: 0; left: 0; width: 1200px; height: 1200px;
-      background: radial-gradient(circle, rgba(217,119,6,0.15) 0%, rgba(217,119,6,0.05) 30%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,199,0,0.15) 0%, rgba(255,199,0,0.05) 30%, transparent 70%);
       pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
       filter: blur(80px); opacity: 0; transition: opacity 1s ease;
     }
 
     .mesh-bg { 
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; 
-      background: #050200;
-      background: linear-gradient(135deg, #050200 0%, #1a0f00 25%, #2a1a00 50%, #1a0f00 75%, #050200 100%);
+      background: #0B0A05;
+      background: linear-gradient(135deg, #0B0A05 0%, #17150B 25%, #1F1C0E 50%, #17150B 75%, #0B0A05 100%);
       background-size: 100% 400%;
       background-attachment: fixed;
     }
     .mesh-ball { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.08; }
     .b1 { width: 900px; height: 900px; background: var(--accent); bottom: -20%; left: 50%; transform: translateX(-50%); }
     .b2 { width: 600px; height: 600px; background: var(--accent2); top: 10%; right: -10%; opacity: 0.08; }
-    .b3 { width: 800px; height: 800px; background: #993300; bottom: -30%; left: -10%; opacity: 0.1; }
+    .b3 { width: 800px; height: 800px; background: #D4A300; bottom: -30%; left: -10%; opacity: 0.1; }
 
     /* Global Bottom-Up Lighting */
     .global-light {
@@ -50,7 +50,7 @@
       transform: translateX(-50%);
       width: 150vw;
       height: 80vh;
-      background: radial-gradient(ellipse at 50% 100%, rgba(255,138,0,0.15) 0%, transparent 75%);
+      background: radial-gradient(ellipse at 50% 100%, rgba(255,199,0,0.15) 0%, transparent 75%);
       pointer-events: none;
       z-index: -1;
       filter: blur(80px);
@@ -130,7 +130,7 @@
         border: 1px solid rgba(255,255,255,0.08); 
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       }
-      nav.stuck { padding: 0.8rem 1.4rem; top: 0.6rem; border-color: rgba(217,119,6,0.2); }
+      nav.stuck { padding: 0.8rem 1.4rem; top: 0.6rem; border-color: rgba(255,199,0,0.2); }
       .lang-dropdown:not(.mob-lang-wrap .lang-dropdown) { display: none; }
       .n-links{display:none}
       .n-btn.nav-cta-btn { display: none; }
@@ -170,11 +170,11 @@
       padding: 1.4rem 3.5rem 1.4rem 1.5rem; color: var(--white); font-family: 'Inter', sans-serif; font-size: 15px; transition: 0.3s; box-sizing: border-box; 
     }
     .input-wrap .input-icon { position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 18px; pointer-events: none; }
-    .input-wrap input:focus, .input-wrap textarea:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(217,119,6,0.1); }
+    .input-wrap input:focus, .input-wrap textarea:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(255,199,0,0.1); }
     
     .q-nav-btns { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-    .q-btn { width: 100%; background: var(--accent); color: var(--white); border: none; border-radius: 16px; padding: 1.4rem; font-family: var(--font-h); font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.4s; letter-spacing: 0.5px; }
-    .q-btn:hover { background: #e67c00; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,138,0,0.3); }
+    .q-btn { width: 100%; background: var(--accent); color: var(--white); border: 1px solid var(--accent); border-radius: 16px; padding: 1.4rem; font-family: var(--font-h); font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.4s; letter-spacing: 0.5px; }
+    .q-btn:hover { background: #D4A300; border-color: #D4A300; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,199,0,0.35); }
     .q-btn-back { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1); }
     .q-btn-back:hover { background: rgba(255,255,255,0.1); color: var(--white); }
 
@@ -196,8 +196,8 @@
     }
     .select-options.open { opacity: 1; visibility: visible; transform: translateY(0); }
     .option { padding: 1.2rem 1.5rem; color: rgba(255,255,255,0.7); transition: 0.3s; cursor: pointer; font-size: 14px; }
-    .option:hover { background: rgba(255,138,0,0.1); color: var(--accent); }
-    .option.selected { background: rgba(255,138,0,0.2); color: var(--white); font-weight: 600; }
+    .option:hover { background: rgba(255,199,0,0.1); color: var(--accent); }
+    .option.selected { background: rgba(255,199,0,0.2); color: var(--white); font-weight: 600; }
 
     @media(max-width: 1050px) {
       .contact-container { grid-template-columns: 1fr; gap: 6rem; }
@@ -350,7 +350,7 @@
 
           <div class="calendly-premium-card" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; overflow: hidden; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.5);">
             <!-- Calendly inline widget begin -->
-            <div class="calendly-inline-widget" data-url="https://calendly.com/folyamat/egyeni-folyamat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=050200&text_color=ffffff&primary_color=FF8A00" style="min-width:320px;height:650px;"></div>
+            <div class="calendly-inline-widget" data-url="https://calendly.com/folyamat/egyeni-folyamat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0b0a05&text_color=ffffff&primary_color=ffc700" style="min-width:320px;height:700px;"></div>
             <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
             <!-- Calendly inline widget end -->
           </div>
@@ -362,7 +362,7 @@
     <div class="c-cards-bottom rv">
       <!-- Phone Card -->
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; border-radius: 24px; text-align: center; width: 100%;">
-        <div style="width: 50px; height: 50px; background: rgba(217,119,6,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
+        <div style="width: 50px; height: 50px; background: rgba(255,199,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); font-size: 20px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         </div>
         <p style="font-size: 14px; color: var(--g1); line-height: 1.6; margin-bottom: 2rem;" data-i18n="cont_phone_hint">Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.</p>
