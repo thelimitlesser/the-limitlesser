@@ -1565,8 +1565,11 @@
     @media(max-width: 768px) {
       header { padding: 1rem 1.5rem; }
       header.scrolled { padding: 0.8rem 1.5rem; }
-      main { padding: 7rem 1.2rem 3rem; }
+      main { padding: 11.5rem 1.2rem 3rem; }
       
+      .brand-hero { margin-bottom: 5.5rem; }
+      .ai-container { width: min(580px, 84vw); }
+
       /* Pills Row Scrollable Touch */
       .pills-wrap { overflow-x: auto; padding-bottom: 0.8rem; -webkit-overflow-scrolling: touch; display: block; }
       .pills-container { flex-wrap: nowrap; justify-content: flex-start; padding: 0 4px; width: max-content; }
@@ -1581,7 +1584,7 @@
       }
       .modal-overlay.open .modal-box { transform: translateY(0); }
       
-      .discovery-card { padding: 2rem 1.5rem; margin-top: 4rem; }
+      .discovery-card { padding: 2.2rem 1.5rem; margin-top: 9.5rem; }
       .discovery-card .cta-btn { width: 100%; }
     }
 
@@ -1754,17 +1757,12 @@
     }
 
     @media(max-width: 768px) {
-      .header-logo-wrap {
-        left: 1.5rem;
-        transform: translateY(-50%) translateY(15px) scale(0.85);
-        align-items: flex-start;
-        text-align: left;
-      }
-      .header-logo-wrap.scrolled {
-        transform: translateY(-50%) translateY(0) scale(1);
-      }
-      .header-logo-sub {
-        display: none;
+      .controls-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
       }
     }
   </style>
@@ -3169,41 +3167,59 @@
         runTypewriter();
       }
 
-      // Dynamic header logo subtitle width alignment
-      alignHeaderLogo();
+      // Dynamic logo subtitles width alignment
+      alignLogoSubtitles();
     }
 
-    function alignHeaderLogo() {
+    function alignLogoSubtitles() {
+      // 1. Align Header Logo Subtitle
       const textEl = document.querySelector('.header-logo-text');
       const subEl = document.getElementById('headerLogoSub');
-      if (!textEl || !subEl) return;
+      if (textEl && subEl) {
+        subEl.style.letterSpacing = 'normal';
+        subEl.style.marginRight = '0px';
+        subEl.style.fontSize = window.innerWidth <= 480 ? '6px' : '7.5px';
+        
+        const targetWidth = textEl.offsetWidth;
+        const naturalWidth = subEl.offsetWidth;
+        const textContent = subEl.innerText || subEl.textContent || '';
+        const numChars = textContent.length;
+        if (numChars > 1 && naturalWidth > 0) {
+          const neededSpacing = (targetWidth - naturalWidth) / (numChars - 1);
+          if (neededSpacing > 0) {
+            subEl.style.letterSpacing = neededSpacing + 'px';
+            subEl.style.marginRight = -neededSpacing + 'px';
+          }
+        }
+      }
 
-      // Reset to default spacing before layout measurement
-      subEl.style.letterSpacing = 'normal';
-      subEl.style.marginRight = '0px';
+      // 2. Align Main Hero Subtitle
+      const heroLogoEl = document.querySelector('.brand-logo');
+      const heroSubEl = document.getElementById('heroSubtitle');
+      if (heroLogoEl && heroSubEl) {
+        heroSubEl.style.letterSpacing = 'normal';
+        heroSubEl.style.marginRight = '0px';
+        heroSubEl.style.fontSize = window.innerWidth <= 480 ? '7.5px' : '10px';
 
-      // If hidden (e.g., on mobile width), skip math calculations to avoid division by zero
-      if (subEl.offsetWidth === 0) return;
-
-      const targetWidth = textEl.offsetWidth;
-      const textContent = subEl.innerText || subEl.textContent || '';
-      const numChars = textContent.length;
-      if (numChars <= 1) return;
-
-      const naturalWidth = subEl.offsetWidth;
-      const neededSpacing = (targetWidth - naturalWidth) / (numChars - 1);
-
-      if (neededSpacing > 0) {
-        subEl.style.letterSpacing = neededSpacing + 'px';
-        subEl.style.marginRight = -neededSpacing + 'px'; // Offset the trailing character letter-spacing
+        const targetWidth = heroLogoEl.offsetWidth;
+        const naturalWidth = heroSubEl.offsetWidth;
+        const textContent = heroSubEl.innerText || heroSubEl.textContent || '';
+        const numChars = textContent.length;
+        if (numChars > 1 && naturalWidth > 0) {
+          const neededSpacing = (targetWidth - naturalWidth) / (numChars - 1);
+          if (neededSpacing > 0) {
+            heroSubEl.style.letterSpacing = neededSpacing + 'px';
+            heroSubEl.style.marginRight = -neededSpacing + 'px';
+          }
+        }
       }
     }
 
     // Bind alignment to fonts loaded and window resize events
     if (document.fonts) {
-      document.fonts.ready.then(alignHeaderLogo);
+      document.fonts.ready.then(alignLogoSubtitles);
     }
-    window.addEventListener('resize', alignHeaderLogo);
+    window.addEventListener('resize', alignLogoSubtitles);
 
     // ─── Modal Open/Close System ───
     function openModal(id) {
