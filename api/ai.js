@@ -275,7 +275,7 @@ User email: ${email}`;
           },
           body: JSON.stringify({
             from: 'The Limitlesser <onboarding@resend.dev>',
-            to: ['hello@thelimitlesser.hu'],
+            to: ['the.limitlesser@gmail.com'],
             subject: teamSubject,
             html: teamHtml,
           }),

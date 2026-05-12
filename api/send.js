@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'The Limitlesser <onboarding@resend.dev>',
-        to: ['hello@thelimitlesser.hu'],
+        to: ['the.limitlesser@gmail.com'],
         subject: `🚀 Új ajánlatkérés: ${brandName || (lastName + ' ' + firstName)}`,
         html: `
           <div style="font-family: 'Inter', sans-serif; background-color: #050200; color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 20px; border: 1px solid #1a1a1a;">
