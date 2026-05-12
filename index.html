@@ -243,6 +243,7 @@
       letter-spacing: 0.44em; color: var(--text-secondary); text-transform: uppercase;
       margin-top: 0.6rem;
       margin-right: -0.44em; /* offset letter-spacing for perfect center alignment */
+      white-space: nowrap;
     }
 
     /* ─── AI Questionnaire Interface (4-step free text) ─── */
@@ -3167,11 +3168,11 @@
         runTypewriter();
       }
 
-      // Dynamic logo subtitles width alignment
-      alignLogoSubtitles();
+      // Dynamic header logo subtitle width alignment
+      alignHeaderLogo();
     }
 
-    function alignLogoSubtitles() {
+    function alignHeaderLogo() {
       // 1. Align Header Logo Subtitle
       const textEl = document.querySelector('.header-logo-text');
       const subEl = document.getElementById('headerLogoSub');
@@ -3192,34 +3193,13 @@
           }
         }
       }
-
-      // 2. Align Main Hero Subtitle
-      const heroLogoEl = document.querySelector('.brand-logo');
-      const heroSubEl = document.getElementById('heroSubtitle');
-      if (heroLogoEl && heroSubEl) {
-        heroSubEl.style.letterSpacing = 'normal';
-        heroSubEl.style.marginRight = '0px';
-        heroSubEl.style.fontSize = window.innerWidth <= 480 ? '7.5px' : '10px';
-
-        const targetWidth = heroLogoEl.offsetWidth;
-        const naturalWidth = heroSubEl.offsetWidth;
-        const textContent = heroSubEl.innerText || heroSubEl.textContent || '';
-        const numChars = textContent.length;
-        if (numChars > 1 && naturalWidth > 0) {
-          const neededSpacing = (targetWidth - naturalWidth) / (numChars - 1);
-          if (neededSpacing > 0) {
-            heroSubEl.style.letterSpacing = neededSpacing + 'px';
-            heroSubEl.style.marginRight = -neededSpacing + 'px';
-          }
-        }
-      }
     }
 
     // Bind alignment to fonts loaded and window resize events
     if (document.fonts) {
-      document.fonts.ready.then(alignLogoSubtitles);
+      document.fonts.ready.then(alignHeaderLogo);
     }
-    window.addEventListener('resize', alignLogoSubtitles);
+    window.addEventListener('resize', alignHeaderLogo);
 
     // ─── Modal Open/Close System ───
     function openModal(id) {
