@@ -3645,6 +3645,7 @@
       const modal = document.getElementById(id);
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       if (id === 'modalChallenges') {
         stopTypewriter();
         runTypewriter();
@@ -3655,6 +3656,7 @@
       const modal = document.getElementById(id);
       modal.classList.remove('open');
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       if (id === 'modalChallenges') {
         stopTypewriter();
       }
