@@ -944,7 +944,7 @@
 
     /* ─── Floating Glassmorphic Pills (Grid 4 on top, 3 below, Equal Size) ─── */
     .pills-wrap {
-      width: 100%; max-width: 900px; margin: 0 auto; display: flex; justify-content: center;
+      width: 100%; max-width: 900px; margin: 4.5rem auto 0; display: flex; justify-content: center;
       animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0;
     }
     .pills-container {
@@ -1586,7 +1586,7 @@
       .ai-container { width: min(580px, 84vw); }
 
       /* Pills Row Scrollable Touch */
-      .pills-wrap { overflow-x: auto; padding-bottom: 0.8rem; -webkit-overflow-scrolling: touch; display: block; }
+      .pills-wrap { margin-top: 4rem; overflow-x: auto; padding-bottom: 0.8rem; -webkit-overflow-scrolling: touch; display: block; }
       .pills-container { flex-wrap: nowrap; justify-content: flex-start; padding: 0 4px; width: max-content; }
       .pill { padding: 10px 20px; font-size: 13px; flex: 0 0 auto; min-width: auto; }
       
@@ -3366,16 +3366,16 @@
     const AI_QUESTIONS = {
       hu: [
         {
-          title: 'Mi az, ami most a legtöbb időt, energiát vagy pénzt viszi el a cégedben?',
-          sub:   'Fogalmazd meg a problémát, amire digitális megoldást keresel, és megnézzük hogyan tudunk segíteni.',
+          title: 'Miben segíthetünk?',
+          sub:   'Írd le miben tudnánk segíteni — bármilyen területen, bármilyen részletességgel.',
         },
         {
-          title: 'Milyen rendszereket használtok?',
-          sub:   'Ha nincs semmilyen rendszer, azt is írd le — ebből is tudunk kiindulni.',
+          title: 'Milyen iparágban és hogyan működik most a céged?',
+          sub:   'Írd le röviden az iparágatokat, mi megy jól, mi nem, és milyen rendszerekkel dolgoztok.',
         },
         {
-          title: 'Mi lenne számodra a siker — mit kellene másképp működnie 3 hónap múlva?',
-          sub:   'Nem kell pontos terv — elég ha leírod amire vágysz.',
+          title: 'Mi lenne a siker?',
+          sub:   'Nem kell pontos terv — elég ha leírod hova szeretnél eljutni.',
         },
         {
           title: 'Add meg az email címed',
@@ -3385,16 +3385,16 @@
       ],
       en: [
         {
-          title: 'What currently takes the most time, energy, or money in your business?',
-          sub:   'Describe the problem you\'re looking for a digital solution to — we\'ll show you how we can help.',
+          title: 'How can we help?',
+          sub:   'Describe what we can help with — in any area, with any level of detail.',
         },
         {
-          title: 'What systems do you use?',
-          sub:   'If you don\'t use any systems yet, that\'s fine too — we can start from there.',
+          title: 'In what industry and how does your company work now?',
+          sub:   'Briefly describe your industry, what goes well, what doesn\'t, and what systems you work with.',
         },
         {
-          title: 'What would success look like — what should be working differently in 3 months?',
-          sub:   'No need for a precise plan — just describe what you\'re aiming for.',
+          title: 'What would success look like?',
+          sub:   'No need for a precise plan — just describe where you want to get to.',
         },
         {
           title: 'Enter your email address',
@@ -3614,9 +3614,67 @@
         const data = await resp.json();
         aiRenderSolutionCard(data);
       } catch {
-        // Fallback: show static card based on answers
-        aiRenderSolutionCard(null);
+        // Fallback: generate highly intelligent, custom rule-based card from local answers
+        const fallbackData = generateSmartFallback(aiAnswers[0], aiAnswers[1], aiAnswers[2]);
+        aiRenderSolutionCard(fallbackData);
       }
+    }
+
+    // ── SMART FALLBACK GENERATOR ──────────────────────────────
+    function generateSmartFallback(q1, q2, q3) {
+      const isHu = currentLang !== 'en';
+      const text = ((q1 || '') + ' ' + (q2 || '') + ' ' + (q3 || '')).toLowerCase();
+      
+      let focim = isHu ? "Személyre szabott digitális stratégia" : "Tailored Digital Strategy";
+      let megoldas = "";
+      let eredmeny = "";
+
+      // 1. Webshop / Logisztika / Rendelések
+      if (text.includes("webshop") || text.includes("rendelés") || text.includes("termék") || text.includes("shopify") || text.includes("unas") || text.includes("gls") || text.includes("futár") || text.includes("szállít") || text.includes("woo")) {
+        focim = isHu ? "Automata rendeléskezelés és logisztika" : "Automated Order Processing & Logistics";
+        megoldas = isHu 
+          ? `A megadott folyamataid alapján egy olyan zárt rendszert hozunk létre, amely összeköti az eladási csatornádat a számlázással és a logisztikai partnerekkel. Megszüntetjük a kézi adatmásolást: a megrendelésekből automatikusan generáljuk a számlát és a szállítási címkét, így senkinek nem kell adatokat manuálisan pötyögnie és adminisztrálnia.`
+          : `Based on your shared processes, we will build an integrated flow linking your storefront directly to billing and logistics. By eliminating manual copy-pasting, invoices and shipping labels will be generated automatically, meaning nobody has to type details manually.`;
+        eredmeny = isHu 
+          ? `Ezáltal a manuális adminisztrációs feladatok 90%-át teljesen kiváltjuk, amivel heti 10-15 óra felesleges munkát spórolunk meg a csapatodnak. Megszűnnek a hibásan kitöltött szállítási címkék és az elmaradt státuszértesítések, így a növekedésre és a kiszolgálásra koncentrálhatsz.`
+          : `This replaces 90% of manual administrative tasks, saving your team 10-15 hours of unnecessary work weekly. It eliminates shipping address typos and delayed notifications, allowing you to focus on scaling and customer service.`;
+      } 
+      // 2. CRM / Lead követés / Értékesítés
+      else if (text.includes("lead") || text.includes("ügyfél") || text.includes("crm") || text.includes("ajánlat") || text.includes("visszahívás") || text.includes("értékesít")) {
+        focim = isHu ? "Automata lead-követő és CRM rendszer" : "Automated CRM & Lead Management System";
+        megoldas = isHu 
+          ? `Az érdeklődők és megkeresések kezelésére egy strukturált, felhőalapú belső rendszert építünk fel. A weboldaladról érkező megkeresések automatikusan bekerülnek egy központi táblába, azonnali visszajelzést és naptár-foglalót kapnak, a csapatod pedig automatikus emlékeztetőket lát a teendőkről.`
+          : `We will build a structured, cloud-based pipeline for incoming inquiries and leads. New prospects from your website automatically drop into a central system, receive instant confirmation with scheduling links, while your team gets automatic task reminders.`;
+        eredmeny = isHu 
+          ? `Ezzel teljes mértékben kiküszöböljük az elmaradt visszahívásokat és az e-mailek között elkallódó leadeket, amivel az értékesítési konverziód akár 30%-kal is javulhat. A csapatod heti 8-10 óra adminisztratív szervezési tehertől szabadul fel.`
+          : `This completely eliminates missed follow-ups and lost email threads, improving sales conversion rates by up to 30%. Your team saves 8-10 hours a week on scheduling and manual coordination.`;
+      } 
+      // 3. Excel táblák / Projektek / Építőipar
+      else if (text.includes("projekt") || text.includes("excel") || text.includes("táblázat") || text.includes("belső") || text.includes("építőipar") || text.includes("kivitelez")) {
+        focim = isHu ? "Egyedi belső projektkövető és irányítópult" : "Custom Project Tracking & Dashboard";
+        megoldas = isHu 
+          ? `Kiváltjuk az egymástól elszigetelt Excel táblázatokat és a papíralapú adatgyűjtést. Egy olyan egyedi, reszponzív belső platformot hozunk létre, ahol a helyszíni munkatársak mobilról is azonnal rögzíteni tudják a napi órákat, anyagokat és mérföldköveket, ami valós időben láthatóvá válik.`
+          : `We will replace isolated spreadsheets and paper-based data collection. We will build a custom, responsive internal dashboard where field workers can instantly log hours, materials, and milestones directly from their phones.`;
+        eredmeny = isHu 
+          ? `Valós idejű, átlátható képet kapsz az összes projekt nyereségességéről, így azonnal be tudsz avatkozni a költségek elszállása előtt. A heti vezetői összesítésekre szánt idő 85%-kal csökken, ami heti 12 óra tiszta megtakarítást jelent neked.`
+          : `You get real-time, transparent insights into every project's profitability, allowing you to intervene before costs escalate. The time spent on weekly management reports is reduced by 85%, saving you 12 hours every week.`;
+      } 
+      // 4. Általános / Echo / Dynamic Fallback
+      else {
+        const q1Clean = q1 ? (q1.length > 90 ? q1.substring(0, 90) + '...' : q1) : '';
+        const q2Clean = q2 ? (q2.length > 90 ? q2.substring(0, 90) + '...' : q2) : '';
+        const q3Clean = q3 ? (q3.length > 90 ? q3.substring(0, 90) + '...' : q3) : '';
+
+        megoldas = isHu 
+          ? `A(z) "${q1Clean}" céljaid eléréséhez egy olyan áramvonalas, személyre szabott digitális rendszert építünk fel, amely közvetlenül feloldja a(z) "${q2Clean}" működés során felmerülő nehézségeket. Kiváltjuk a felesleges kézi adatmásolásokat és összekötjük az elszigetelt folyamatokat.`
+          : `To achieve your goals of "${q1Clean}", we will build a streamlined, custom digital system that directly resolves the bottlenecks in your operations regarding "${q2Clean}". We eliminate redundant copy-pasting and integrate siloed workflows.`;
+        
+        eredmeny = isHu 
+          ? `Ezáltal a(z) "${q3Clean}" jövőképed kézzelfogható közelségbe kerül: a napi ismétlődő adminisztratív terheid 80-90%-a teljesen megszűnik, amivel heti legalább 10-15 óra tiszta munkaidőt spórolsz meg magadnak és a csapatodnak.`
+          : `This brings your vision of "${q3Clean}" within reach: 80-90% of your repetitive administrative tasks are automated, saving you and your team at least 10-15 hours of pure working time every week.`;
+      }
+
+      return { focim, megoldas, eredmeny };
     }
 
     // ── RENDER SOLUTION CARD ─────────────────────────────────
@@ -3624,10 +3682,9 @@
       const isHu = currentLang !== 'en';
       const CALENDLY_URL = 'https://calendly.com/limitlesser/discovery-call';
 
-      const focim   = data?.focim   || (isHu ? 'Személyre szabott megoldás a te helyzetedre' : 'A personalised solution for your situation');
-      const helyzet = data?.helyzet || (isHu ? 'Azonosítottuk a főbb kihívásokat a leírt helyzetedből.' : 'We identified the core challenges from your description.');
-      const rendszer = data?.rendszer || (isHu ? 'A meglévő eszközeid alapján meghatározzuk a legjobb integrációs pontokat.' : 'Based on your current tools, we\'ll identify the best integration points.');
-      const jovokep = data?.jovokep || (isHu ? '3 hónap múlva érezhetően gördülékenyebb lesz a napi működésed.' : 'In 3 months, your daily operations will run noticeably smoother.');
+      const focim    = data?.focim    || (isHu ? 'Személyre szabott megoldás a te helyzetedre' : 'A personalised solution for your situation');
+      const megoldas = data?.megoldas || (isHu ? 'A meglévő működésedre építve olyan rendszert tervezünk, ami leveszi a manuális terhek nagy részét.' : 'Building on your existing operations, we will design a system that relieves most of the manual burden.');
+      const eredmeny = data?.eredmeny || (isHu ? 'A folyamat magától fut majd, így a csapatod felszabadul a növekedés támogatására.' : 'The process will run automatically, freeing up your team to support growth.');
 
       solutionCard.innerHTML = `
         <p class="solution-kiscim">${isHu ? 'A te helyzetedre szabva' : 'Tailored to your situation'}</p>
@@ -3635,20 +3692,14 @@
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">01</p>
-          <p class="solution-blokk-cim">${isHu ? 'Amit azonosítottunk' : 'What we identified'}</p>
-          <p class="solution-blokk-szoveg">${helyzet}</p>
+          <p class="solution-blokk-cim">${isHu ? 'A megoldás' : 'The solution'}</p>
+          <p class="solution-blokk-szoveg">${megoldas}</p>
         </div>
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">02</p>
-          <p class="solution-blokk-cim">${isHu ? 'A meglévő rendszereiddel' : 'Working with your existing systems'}</p>
-          <p class="solution-blokk-szoveg">${rendszer}</p>
-        </div>
-
-        <div class="solution-blokk">
-          <p class="solution-blokk-szam">03</p>
-          <p class="solution-blokk-cim">${isHu ? '3 hónap múlva' : 'In 3 months'}</p>
-          <p class="solution-blokk-szoveg">${jovokep}</p>
+          <p class="solution-blokk-cim">${isHu ? 'A várható eredmény' : 'Expected result'}</p>
+          <p class="solution-blokk-szoveg">${eredmeny}</p>
         </div>
 
         <p class="solution-disclaimer">

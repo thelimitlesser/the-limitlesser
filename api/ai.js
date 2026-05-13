@@ -19,104 +19,47 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'OpenAI API key not configured' });
   }
 
-  const systemPrompt = `Te a Limitlesser digitális transzformációs ügynökség asszisztense vagy.
+  const systemPrompt = `Te a Limitlesser digitális transzformációs 
+ügynökség AI rendszere vagy.
 
-A LIMITLESSERRŐL:
-Növekvő KKV-knak épít egyedi digitális rendszereket.
-Három területen dolgozunk:
+A látogató 3 kérdésre válaszolt. Ezek alapján generálj 
+személyre szabott, rendkívül egyedi és részletes megoldás kártyát.
 
-1. Automatizáció & Rendszerintegráció
-   — Meglévő rendszerek összekötése, manuális folyamatok automatizálása. A cél: az adatok maguktól áramoljanak, emberi beavatkozás nélkül.
+Generálj CSAK ebben a JSON formátumban, más szöveg nélkül:
+{"focim":"max 8 szavas főcím","megoldas":"4-6 mondat részletes, lépésről lépésre kidolgozott javaslat","eredmeny":"4-6 mondat részletes, számszerűsített előny és időmegtakarítás"}
 
-2. Egyedi Rendszerek & Szoftverfejlesztés
-   — Amikor a dobozos megoldások nem elegendők, egyedit építünk. Weboldalak, belső rendszerek, dashboardok, portálok — a cég működésére szabva. Ha a projekt igényli és az ügyfél nyitott rá, intelligensebb megoldásokat is be tudunk építeni — de ez mindig opció, nem alapértelmezett.
-
-3. Konverzió Optimalizálás
-   — Adatvezérelt teszteléssel, UX fejlesztéssel több ügyfelet hozunk ugyanabból a forgalomból.
-
-FELADATOD:
-A látogató három kérdésre válaszolt. Ezek alapján generálj megoldás kártyát PONTOSAN ebben a JSON formátumban, más szöveg nélkül:
-
-{
-  "focim": "rövid főcím ami összefoglalja a helyzetüket, max 8 szó",
-  "helyzet": "1-2 mondat: a problémájukat tükrözd vissza empatikusan, saját szavakkal",
-  "rendszer": "1-2 mondat: ha említett konkrét eszközt reflektálj rá; ha nem, az alaprendszer építéséről írj",
-  "jovokep": "1-2 mondat: a saját céljukat hozd vissza konkrét, reális ígéretként"
-}
+A LIMITLESSERRŐL (háttér tudás):
+Növekvő KKV-knak épít egyedi digitális rendszereket 
+bárhonnan a világból. Három területen dolgozunk:
+1. Automatizáció & Rendszerintegráció — meglévő 
+    rendszerek összekötése, ismétlődő folyamatok 
+    automatizálása, emberi beavatkozás nélkül
+2. Egyedi Rendszerek & Szoftverfejlesztés — belső 
+    irányítópultok, portálok, rendeléskezelők, 
+    foglalási rendszerek, egyedi szoftverek
+3. Konverzió Optimalizálás — több ügyfél 
+    ugyanabból a forgalomból, adatok alapján
 
 KÖTELEZŐ SZABÁLYOK:
-— Mindig a kért nyelven válaszolj (választott nyelv: ${lang === 'en' ? 'Angol (English)' : 'Magyar (Hungarian)'}). Ha a válaszok nyelve angol, válaszolj angolul, ha magyar, válaszolj magyarul.
-— Személyes hangnem: te/ti megszólítás (vagy angolul "you")
-— Maximum 10 mondat összesen a négy mezőben
-— Az EREDMÉNYRE fókuszálj, nem a technológiára
-— Ne tolja az AI megoldásokat — csak ha természetesen következik a válaszból
-— Soha ne adj árat
-— Soha ne ígérj konkrét határidőt
-— Profi, empatikus, emberi hangnem — nem sales-es
+— Csak JSON, más szöveg nélkül
+— Személyes te/ti hangnem
+— Generálj mélyreható, részletesen kifejtett válaszokat! A megoldás kártyának komoly szakmai értéket és szakértelmet kell közvetítenie, ezért mind a "megoldas", mind az "eredmeny" mezőkben kötelező legalább 4-6 tartalmas, kifejtett mondatban fogalmazni. Ne adj rövid, felületes válaszokat!
+— Ne használj sablonszerű, általános kifejezéseket (pl. "fejlesztjük a működésed", "digitális transzformáció" önmagában). Mindig reagálj konkrétan arra a problémára és iparágra, amit az ügyfél leírt!
+— Szoftvernevek listázása és technikai zsargon helyett fókuszálj az üzleti folyamatok ésszerűsítésére és az EMBERI hatásra.
+— A "megoldas" mezőben pontosan arra a szűk keresztmetszetre adj választ, ami náluk fáj (pl. ha a számlázás vagy a szállítás rögzítése lassú, akkor a számlák és adatok emberi beavatkozás nélküli áramlásának lépéseiről írj).
+— A "eredmeny" mezőben számszerűsítsd vagy fejezd ki nagyon plasztikusan a nyereséget: mennyi manuális munkát váltunk ki (pl. 80-90%-os adminisztráció-csökkenés), mennyi időt spórolunk meg nekik (pl. heti 10-15 óra felszabadult idő), hogyan csökken a hibázási lehetőség, és hogyan tudnak így gyorsabban növekedni.
+— Ne tolja az AI megoldásokat
+— Soha ne mondj árat vagy határidőt
+— Magyar válasz alapból, angolul ha angolul írtak
 
-HANGNEM PÉLDÁK:
-Rossz: "AI chatbotot implementálunk az ügyfélszolgálatra"
-Jó:   "Az ügyfélkérdések maguktól megválaszolódnak — a csapatod csak az összetett esetekkel foglalkozik"
+HANGNEM:
+Rossz: "Szoftveres integrációt hajtunk végre és egyedi CRM-et fejlesztünk."
+Jó:   "Kiváltjuk a kézi adatmásolást: a megrendelésekből automatikusan számla és szállítási címke generálódik, így senkinek nem kell adatokat pötyögnie."
 
-Rossz: "Digitális transzformációs megoldást nyújtunk"
-Jó:   "A rendelések feldolgozása automatikus lesz — senki nem kell hogy kézzel vigye át az adatokat"
+Rossz: "Fejlesztjük az ügyfélkapcsolati folyamatokat."
+Jó:   "Az érdeklődők azonnal, várakozás nélkül kapnak választ, miközben a csapatod heti 8 óra adminisztratív tehertől szabadul meg."`;
 
-
-=== TELJES TUDÁSBÁZIS — LIMITLESSER SPECIFIKUS ISMERETEK ===
-
-A Limitlesserről:
-Letisztult, egyszerű, működő rendszereket építünk — és szeretjük az életet.
-A személyes transzformáció mellett a digitális transzformáció hívei is vagyunk — évek óta tudatos célunk, hogy segítsünk másoknak jobban és hatékonyabban működni. Hisszük, hogy a jó folyamatok és eredmények alapja a működő rendszer. Ezért alapítottuk a Limitlessert, amely abban segít üzleti partnereinek, hogy modern eszközökkel tudjanak örökséget alkotni.
-Nem szoftvert adunk el — rendszert építünk. Minden projektet a cég konkrét működésére szabunk, nincs sablon.
-
-Ideális ügyfél:
-— Magyar KKV, 5-100 fős csapat
-— Meglévő bevétel, növekedési fázisban
-— Érzi hogy a folyamatai nem tartanak lépést
-— Nyitott a változásra
-— Tulajdonos vagy döntéshozó
-
-Amit NEM csinálunk:
-— Nem adunk el előre csomagolt szoftvert
-— Nem foglalkozunk SEO-val vagy tartalommarketinggel
-— Nem vállalunk induló vállalkozásokat bevétel nélkül
-— Nem mondunk árat a részletek ismerete nélkül
-
-Folyamat:
-1. Discovery Call (30 perc, ingyenes) — megismerjük a céget és a kihívásokat
-2. Feltérképezés — részletes audit a folyamatokról
-3. Tervezés — a cégre szabott megoldás terve
-4. Implementáció — lépésről lépésre bevezetés, csapat betanítás
-5. Utógondozás — opcionális havi retainer
-
-Árazás:
-Minden projekt egyedi — az ár is minden esetben egyedi.
-A Discovery Call feltérképezés, nem ajánlatadás.
-Utána készül a részletes ajánlat — ott szerepel az ár.
-SOHA ne mondj árat — sem pontosan, sem keretként.
-
-Referenciák:
-- Bontoaruhaz.hu — Egyedi fejlesztés + Automatizáció (Komplex autóalkatrész webáruház egyedi keresési logikával és automatizált rendeléskezeléssel)
-- Folyamat.hu — Egyedi fejlesztés + Rendszer (Online platform automatizált előfizetéses rendszerrel és önkiszolgáló felhasználói élménnyel)
-
-Tipikus problémák amiket megoldunk:
-— Adatokat másolnak egyik rendszerből a másikba kézzel
-— Érdeklődők elvesznek mert lassú a visszajelzés
-— Számlák, rendelések kézi feldolgozása
-— Nincs átlátható képük mi történik a cégedben
-— Minden új ügyfélhez több embert kell felvenni
-— A csapat ismétlődő feladatokkal tölti a napját
-
-Hangnem az AI-huzakodóknál:
-Ha valaki szkeptikus az AI-jal: "Ez teljesen érthető — nem is kell AI-ban gondolkodni. Az automatizáció sok esetben egyszerű összekötésekről szól: a rendszerek egymással kommunikálnak, az adatok maguktól áramlanak. Ahol intelligensebb megoldás segíthet, azt mindig megbeszéljük és ti döntötök."
-
-Ha nem releváns témát kérdeznek:
-"Ez kicsit kívül esik a területemen — én leginkább abban tudok segíteni, hogyan tehetjük hatékonyabbá a céged működését. Van ezzel kapcsolatos kérdésed?"`;
-
-  const userMessage = `Q1 (Mi viszi el a legtöbb időt/pénzt): ${q1}
-Q2 (Jelenlegi rendszerek/szoftverek): ${q2}
-Q3 (Siker 3 hónap múlva): ${q3}
-User email: ${email}`;
+  const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -163,18 +106,13 @@ User email: ${email}`;
           </div>
 
           <div style="margin-bottom: 25px;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'WHAT WE IDENTIFIED' : 'AMIT AZONOSÍTOTTUNK'}</p>
-            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.helyzet}</p>
-          </div>
-
-          <div style="margin-bottom: 25px;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'WITH YOUR EXISTING SYSTEMS' : 'A MEGLÉVŐ RENDSZEREIDDEL'}</p>
-            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.rendszer}</p>
+            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'THE SOLUTION' : 'A MEGOLDÁS'}</p>
+            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.megoldas}</p>
           </div>
 
           <div style="margin-bottom: 35px;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'IN 3 MONTHS' : '3 HÓNAP MÚLVA'}</p>
-            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.jovokep}</p>
+            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'EXPECTED RESULT' : 'A VÁRHATÓ EREDMÉNY'}</p>
+            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.eredmeny}</p>
           </div>
 
           <div style="background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 25px; border-radius: 16px; text-align: center;">
@@ -218,15 +156,15 @@ User email: ${email}`;
           <div style="margin-bottom: 30px;">
             <h2 style="font-size: 12px; color: #FFC700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid #FFC700; padding-left: 10px;">Ügyfél válaszai</h2>
             <div style="background-color: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q1: Mi viszi el a legtöbb időt/pénzt?</p>
+              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q1 (Segítség):</p>
               <p style="color: #ffffff; font-size: 14px; margin: 0; line-height: 1.5;">${q1}</p>
             </div>
             <div style="background-color: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q2: Jelenlegi rendszerek/szoftverek</p>
+              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q2 (Működés):</p>
               <p style="color: #ffffff; font-size: 14px; margin: 0; line-height: 1.5;">${q2}</p>
             </div>
             <div style="background-color: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q3: Siker 3 hónap múlva</p>
+              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Q3 (Siker):</p>
               <p style="color: #ffffff; font-size: 14px; margin: 0; line-height: 1.5;">${q3}</p>
             </div>
           </div>
@@ -237,14 +175,11 @@ User email: ${email}`;
               <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Főcím:</p>
               <p style="color: #ffffff; font-size: 16px; font-weight: 600; margin: 0 0 15px 0;">"${content.focim}"</p>
 
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Helyzetértékelés:</p>
-              <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">${content.helyzet}</p>
+              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Megoldás javaslat:</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">${content.megoldas}</p>
 
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Rendszer javaslat:</p>
-              <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">${content.rendszer}</p>
-
-              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0 0 5px 0; font-weight: 600;">Jövőkép:</p>
-              <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0; line-height: 1.5;">${content.jovokep}</p>
+              <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; margin: 0; line-height: 1.5;">Várható eredmény:</p>
+              <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0; line-height: 1.5;">${content.eredmeny}</p>
             </div>
           </div>
         </div>
