@@ -1,5 +1,5 @@
 // api/chat.js
-// Vercel Serverless Function to communicate securely with OpenAI API
+// Vercel Serverless Function to communicate securely with Google Gemini API
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,10 +12,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing message parameter' });
   }
 
-  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const geminiApiKey = process.env.GEMINI_API_KEY;
 
-  if (!openaiApiKey) {
-    return res.status(500).json({ error: 'OpenAI API key not configured' });
+  if (!geminiApiKey) {
+    return res.status(500).json({ error: 'Gemini API key not configured' });
   }
 
   const systemPrompt = `You are the AI assistant of Limitlesser, a premium digital transformation agency. Limitlesser builds custom AI systems, process automation, and conversion rate optimization for growing SMBs (KKVs).
@@ -60,31 +60,34 @@ Example EN:
 Ensure the output is strictly valid JSON with no markdown wrapping, no backticks, and no extra text outside the JSON block.`;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
+        systemInstruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        contents: [
+          { role: 'user', parts: [{ text: message }] }
         ],
-        temperature: 0.3,
-        max_tokens: 400,
-        response_format: { type: 'json_object' }
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 400,
+          responseMimeType: 'application/json'
+        }
       }),
     });
 
     if (response.ok) {
-      const data = await response.json();
-      const content = JSON.parse(data.choices[0].message.content);
+      const geminiData = await response.json();
+      const contentText = geminiData.candidates[0].content.parts[0].text;
+      const content = JSON.parse(contentText);
       return res.status(200).json(content);
     } else {
       const errorData = await response.json();
-      return res.status(response.status).json({ error: errorData.error?.message || 'OpenAI API error' });
+      return res.status(response.status).json({ error: errorData.error?.message || 'Gemini API error' });
     }
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });

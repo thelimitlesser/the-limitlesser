@@ -12,11 +12,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing questionnaire data' });
   }
 
-  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const geminiApiKey = process.env.GEMINI_API_KEY;
   const resendApiKey = process.env.RESEND_API_KEY;
 
-  if (!openaiApiKey) {
-    return res.status(500).json({ error: 'OpenAI API key not configured' });
+  if (!geminiApiKey) {
+    return res.status(500).json({ error: 'Gemini API key not configured' });
   }
 
   const systemPrompt = `Te a Limitlesser digitális transzformációs ügynökség vezető stratégája és AI rendszere vagy. Te vagy a világ egyik legprofibb B2B technológiai konverziós szakértője.
@@ -57,34 +57,36 @@ Jó: "Amíg manuálisan adminisztráltok, a tűzoltás felőrli a növekedést. 
   const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `${systemPrompt}\n\nKÖTELEZŐ NYELVI SZABÁLY (LANGUAGE RULE):\n1. Az alapértelmezett válaszadási nyelv a(z) '${lang === 'en' ? 'en (angol / English)' : 'hu (magyar / Hungarian)'}' legyen.\n2. KIVÉTEL: Ha a felhasználó egyértelműen a másik nyelven fogalmazta meg a válaszait (pl. ha az alapértelmezett nyelv angol, de ő magyarul írt be válaszokat, vagy ha az alapértelmezett magyar, de ő angolul írt), akkor alkalmazkodj hozzá, és válaszolj az ő nyelvén!\n3. A teljes JSON választ egységesen ugyanazon a nyelven generáld!\n4. A JSON-ben adj vissza egy "lang" kulcsot is, aminek az értéke a generált válasz nyelve legyen: 'hu' vagy 'en'.`
-          },
-          { role: 'user', content: userMessage }
+        systemInstruction: {
+          parts: [
+            { text: `${systemPrompt}\n\nKÖTELEZŐ NYELVI SZABÁLY (LANGUAGE RULE):\n1. Az alapértelmezett válaszadási nyelv a(z) '${lang === 'en' ? 'en (angol / English)' : 'hu (magyar / Hungarian)'}' legyen.\n2. KIVÉTEL: Ha a felhasználó egyértelműen a másik nyelven fogalmazta meg a válaszait (pl. ha az alapértelmezett nyelv angol, de ő magyarul írt be válaszokat, vagy ha az alapértelmezett magyar, de ő angolul írt), akkor alkalmazkodj hozzá, és válaszolj az ő nyelvén!\n3. A teljes JSON választ egységesen ugyanazon a nyelven generáld!\n4. A JSON-ben adj vissza egy "lang" kulcsot is, aminek az értéke a generált válasz nyelve legyen: 'hu' vagy 'en'.` }
+          ]
+        },
+        contents: [
+          { role: 'user', parts: [{ text: userMessage }] }
         ],
-        temperature: 0.3,
-        max_tokens: 600,
-        response_format: { type: 'json_object' }
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 600,
+          responseMimeType: 'application/json'
+        }
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      return res.status(response.status).json({ error: errorData.error?.message || 'OpenAI API error' });
+      return res.status(response.status).json({ error: errorData.error?.message || 'Gemini API error' });
     }
 
-    const openAiData = await response.json();
-    const content = JSON.parse(openAiData.choices[0].message.content);
+    const geminiData = await response.json();
+    const contentText = geminiData.candidates[0].content.parts[0].text;
+    const content = JSON.parse(contentText);
 
     // If Resend API Key is configured, trigger emails asynchronously
     if (resendApiKey && email) {
