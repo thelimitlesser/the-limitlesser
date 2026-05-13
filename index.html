@@ -358,13 +358,13 @@
         padding-right: 140px;
       }
     }
-    .dark-mode .ai-text-input {
+    [data-mode="dark"] .ai-text-input {
       border-bottom-color: rgba(255,255,255,0.8);
     }
     .ai-text-input:focus {
       border-bottom-color: #1a1a1a;
     }
-    .dark-mode .ai-text-input:focus {
+    [data-mode="dark"] .ai-text-input:focus {
       border-bottom-color: #ffffff;
     }
     .ai-text-input::placeholder {
@@ -400,7 +400,7 @@
       transition: opacity 0.25s ease, transform 0.25s ease,
                   background 0.2s ease, border-color 0.2s ease;
     }
-    .dark-mode .ai-arrow-btn {
+    [data-mode="dark"] .ai-arrow-btn {
       border-color: rgba(255,255,255,0.2);
     }
     .ai-arrow-btn svg {
@@ -443,7 +443,7 @@
       transition: opacity 0.25s ease, transform 0.25s ease,
                   box-shadow 0.2s ease;
     }
-    .dark-mode .ai-submit-btn { background: rgba(255,255,255,0.9); color: #1a1a1a; }
+    [data-mode="dark"] .ai-submit-btn { background: rgba(255,255,255,0.9); color: #1a1a1a; }
     .ai-submit-btn.visible {
       opacity: 1;
       pointer-events: all;
@@ -1155,7 +1155,7 @@
       transition: all 0.2s ease;
     }
     
-    .dark-mode .deliv-tag {
+    [data-mode="dark"] .deliv-tag {
       background: rgba(255, 255, 255, 0.04);
       border-color: rgba(255, 255, 255, 0.08);
     }
