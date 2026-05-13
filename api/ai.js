@@ -26,7 +26,7 @@ A látogató 3 kérdésre válaszolt. Ezek alapján generálj
 személyre szabott, rendkívül egyedi és részletes megoldás kártyát.
 
 Generálj CSAK ebben a JSON formátumban, más szöveg nélkül:
-{"focim":"max 8 szavas főcím","megoldas":"4-6 mondat részletes, lépésről lépésre kidolgozott javaslat","eredmeny":"4-6 mondat részletes, számszerűsített előny és időmegtakarítás"}
+{"focim":"max 8 szavas főcím","megoldas":"4-6 mondat részletes, lépésről lépésre kidolgozott javaslat","eredmeny":"4-6 mondat részletes, számszerűsített előny és időmegtakarítás","lang":"a generált válasz nyelve: 'hu' vagy 'en'"}
 
 A LIMITLESSERRŐL (háttér tudás):
 Növekvő KKV-knak épít egyedi digitális rendszereket 
@@ -73,7 +73,7 @@ Jó:   "Az érdeklődők azonnal, várakozás nélkül kapnak választ, miközbe
         messages: [
           {
             role: 'system',
-            content: `${systemPrompt}\n\nKÖTELEZŐ NYELV (LANGUAGE RULE): A felhasználó az oldalon a(z) '${lang === 'en' ? 'en (angol / English)' : 'hu (magyar / Hungarian)'}' nyelvet választotta ki. Ezért a teljes JSON választ (a "focim", "megoldas", "eredmeny" kulcsok értékeit) KÖTELEZŐEN ezen a nyelven generáld!\nFor 'en' language, you must output your response values in English. For 'hu' language, you must output in Hungarian.`
+            content: `${systemPrompt}\n\nKÖTELEZŐ NYELVI SZABÁLY (LANGUAGE RULE):\n1. Az alapértelmezett válaszadási nyelv a(z) '${lang === 'en' ? 'en (angol / English)' : 'hu (magyar / Hungarian)'}' legyen.\n2. KIVÉTEL: Ha a felhasználó egyértelműen a másik nyelven fogalmazta meg a válaszait (pl. ha az alapértelmezett nyelv angol, de ő magyarul írt be válaszokat, vagy ha az alapértelmezett magyar, de ő angolul írt), akkor alkalmazkodj hozzá, és válaszolj az ő nyelvén!\n3. A teljes JSON választ egységesen ugyanazon a nyelven generáld!\n4. A JSON-ben adj vissza egy "lang" kulcsot is, aminek az értéke a generált válasz nyelve legyen: 'hu' vagy 'en'.`
           },
           { role: 'user', content: userMessage }
         ],
@@ -93,7 +93,7 @@ Jó:   "Az érdeklődők azonnal, várakozás nélkül kapnak választ, miközbe
 
     // If Resend API Key is configured, trigger emails asynchronously
     if (resendApiKey && email) {
-      const isEn = lang === 'en';
+      const isEn = (content.lang || lang) === 'en';
       const calendlyLink = 'https://calendly.com/limitlesser/discovery-call';
 
       // 1. Email to visitor
