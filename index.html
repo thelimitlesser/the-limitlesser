@@ -208,11 +208,11 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.5rem 4rem; background: transparent;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      transition: background 0.3s, padding 0.3s;
+      transition: background 0.3s, padding 0.3s, backdrop-filter 0.3s, -webkit-backdrop-filter 0.3s;
     }
     header.scrolled {
       background: var(--header-bg);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--card-border);
       padding: 1rem 4rem;
     }
@@ -238,12 +238,30 @@
 
     /* ─── Main Content Container ─── */
     main {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 8rem 2rem 4rem; max-width: 1200px; width: 100%; margin: 0 auto; z-index: 10;
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      padding: 0 2rem 4rem; max-width: 1200px; width: 100%; margin: 0 auto; z-index: 10;
+    }
+
+    .hero-screen-wrap {
+      min-height: 100vh;
+      width: 100%;
+      display: grid;
+      grid-template-rows: 1fr auto 1fr;
+      align-items: center;
+      justify-items: center;
+      box-sizing: border-box;
+      padding: 0; margin: 0;
     }
 
     /* ─── Branding Logo & Hero Title ─── */
-    .brand-hero { text-align: center; margin-top: -1.0rem; margin-bottom: 8.5rem; animation: fadeInUp 0.8s ease-out forwards; will-change: opacity, transform; }
+    .brand-hero { 
+      align-self: start;
+      margin-top: 2.35rem;
+      margin-bottom: 0;
+      text-align: center; 
+      animation: fadeInUp 0.8s ease-out forwards; 
+      will-change: opacity, transform; 
+    }
     .brand-logo {
       font-family: var(--font-d); font-size: clamp(26px, 4.2vw, 42px); font-weight: 500;
       letter-spacing: 0.26em; color: var(--text-primary); text-transform: uppercase; line-height: 1.1; margin-bottom: 0.5rem;
@@ -260,7 +278,8 @@
 
     /* ─── AI Questionnaire Interface (4-step free text) ─── */
     .ai-container {
-      width: min(680px, 94vw); margin-bottom: 3.5rem; position: relative;
+      width: min(680px, 94vw);
+      position: relative;
       animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0;
     }
 
@@ -347,7 +366,7 @@
       box-shadow: none;
       -webkit-appearance: none;
       appearance: none;
-      padding: 10px 50px 8px 0; /* space on the right for arrow button */
+      padding: 10px 50px 8px 50px; /* equal space on both sides for true centering */
       caret-color: #FFC700;
       transition: border-color 0.25s ease;
       box-sizing: border-box;
@@ -356,11 +375,47 @@
     }
     .ai-step.email-step .ai-text-input {
       padding-right: 180px; /* larger space for the email submit button text */
+      padding-left: 180px;
     }
     @media (max-width: 500px) {
       .ai-step.email-step .ai-text-input {
         padding-right: 140px;
+        padding-left: 20px; /* on mobile keep left padding smaller so long email fits */
       }
+    }
+    /* Zen Focus Mode Styles */
+    #header, 
+    .brand-hero, 
+    .pills-wrap, 
+    .discovery-card,
+    .ai-progress {
+      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    body.ai-focused-state #header,
+    body.ai-focused-state .brand-hero {
+      opacity: 0 !important;
+      transform: translateY(-50px) !important;
+      pointer-events: none !important;
+    }
+    body.ai-focused-state .pills-wrap,
+    body.ai-focused-state .discovery-card {
+      opacity: 0 !important;
+      transform: translateY(50px) !important;
+      pointer-events: none !important;
+    }
+    body.ai-focused-state #aiContainer {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 100% !important;
+      max-width: 720px !important;
+      padding: 0 1.5rem !important;
+      box-sizing: border-box !important;
+      z-index: 9999 !important;
+    }
+    body.ai-focused-state .ai-progress {
+      opacity: 0.15 !important;
     }
     [data-mode="dark"] .ai-text-input {
       border-bottom-color: rgba(255,255,255,0.8);
@@ -957,7 +1012,9 @@
 
     /* ─── Floating Glassmorphic Pills (Grid 4 on top, 3 below, Equal Size) ─── */
     .pills-wrap {
-      width: 100%; max-width: 900px; margin: 4.5rem auto 0; display: flex; justify-content: center;
+      align-self: start;
+      margin-top: 10rem;
+      width: 100%; max-width: 900px; display: flex; justify-content: center;
       animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0;
     }
     .pills-container {
@@ -975,7 +1032,7 @@
       text-align: center;
       box-shadow: var(--pill-shadow);
     }
-    #pillNavMenu { display: none !important; }
+    #pillNavMenu, #pillDiscoveryMobile { display: none !important; }
     .pill:hover {
       background: var(--pill-hover); border-color: var(--pill-border); transform: translateY(-4px) scale(1.02);
       box-shadow: var(--pill-hover-shadow);
@@ -985,9 +1042,13 @@
     .discovery-card {
       width: 100%; max-width: 720px; background: linear-gradient(135deg, #100E06 0%, #1F1B0B 100%);
       border: 1px solid rgba(255, 199, 0, 0.35); border-radius: 28px; padding: 2.8rem 2.2rem;
-      margin: 6rem auto 2rem; color: #FFFFFF; display: flex; flex-direction: column; gap: 1.5rem;
+      margin: 18rem auto 4rem; color: #FFFFFF; display: flex; flex-direction: column; gap: 1.5rem;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-      animation: fadeInUp 0.8s ease-out 0.6s forwards; opacity: 0;
+      opacity: 0; transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .discovery-card.scrolled-in {
+      opacity: 1; transform: translateY(0);
     }
     .disc-quote {
       font-family: var(--font-d); font-size: 18px; font-style: italic; line-height: 1.5;
@@ -1592,11 +1653,16 @@
     @media(max-width: 768px) {
       header { padding: 1rem 1.5rem; }
       header.scrolled { padding: 0.8rem 1.5rem; }
-      main { padding: 11.5rem 1.2rem 3rem; }
+      main { padding: 0 1.2rem 3rem; }
       
-      .brand-hero { margin-bottom: 5.5rem; }
+      .brand-hero, .pills-wrap {
+        width: 100%;
+      }
+      .brand-hero { margin-top: 6.5rem; margin-bottom: 0; }
+      .brand-logo { font-size: 28px !important; }
+      .pills-wrap { margin-top: 9rem; }
       .brand-subtitle {
-        font-size: 8px !important;
+        font-size: 8.5px !important;
         letter-spacing: 0.23em !important;
         margin-right: -0.23em !important;
       }
@@ -1616,12 +1682,17 @@
       .pills-container { flex-wrap: nowrap; justify-content: center; padding: 0; width: 100%; gap: 8px; max-width: 100%; }
       .pill { padding: 10px 12px; font-size: 12px; flex: 1; min-width: 0; text-align: center; white-space: nowrap; }
       
-      /* Hide long row of pills on mobile, showing only 1, 8 and NavMenu */
-      #pill2, #pill3, #pill4, #pill5, #pill6, #pill7 { display: none !important; }
-      #pillNavMenu {
+      /* Hide long row of pills on mobile, showing only Discovery Call and NavMenu */
+      #pill1, #pill2, #pill3, #pill4, #pill5, #pill6, #pill7, #pill8 { display: none !important; }
+      #pillDiscoveryMobile {
         display: inline-flex !important; align-items: center; justify-content: center; gap: 4px;
         background: var(--accent) !important; color: #000000 !important; border-color: var(--accent) !important;
         font-weight: 700 !important;
+      }
+      #pillNavMenu {
+        display: inline-flex !important; align-items: center; justify-content: center;
+        background: var(--pill-bg) !important; color: var(--text-primary) !important; border-color: var(--pill-border) !important;
+        font-weight: 500 !important;
       }
 
       /* Mobile Navigation Bottom-Drawer slide-up styles (75vh height) */
@@ -1692,7 +1763,7 @@
       }
       .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
       
-      .discovery-card { padding: 2.2rem 1.5rem; margin-top: 9.5rem; }
+      .discovery-card { padding: 2.2rem 1.5rem; margin-top: 14rem; }
       .discovery-card .cta-btn { width: 100%; box-sizing: border-box; }
     }
 
@@ -1925,43 +1996,46 @@
 
   <!-- Main Container -->
   <main>
-    <!-- Branding Logo Header -->
-    <div class="brand-hero">
-      <h1 class="brand-logo">Limit<span>lesser</span></h1>
-      <p class="brand-subtitle" id="heroSubtitle">Digitális Transzformáció KKV-knak</p>
-    </div>
-
-    <!-- AI Input container -->
-    <div class="ai-container" id="aiContainer">
-
-      <!-- Active step is rendered here -->
-      <div id="aiStepWrap" style="width:100%; text-align:center;"></div>
-
-      <!-- Progress dots -->
-      <div class="ai-progress" id="aiProgress">
-        <div class="ai-dot active" data-step="1"></div>
-        <div class="ai-dot" data-step="2"></div>
-        <div class="ai-dot" data-step="3"></div>
-        <div class="ai-dot" data-step="4"></div>
+    <div class="hero-screen-wrap">
+      <!-- Branding Logo Header -->
+      <div class="brand-hero">
+        <h1 class="brand-logo">Limit<span>lesser</span></h1>
+        <p class="brand-subtitle" id="heroSubtitle">Digitális Transzformáció KKV-knak</p>
       </div>
 
-      <!-- Solution card (hidden until API response) -->
-      <div class="solution-card" id="solutionCard" hidden></div>
+      <!-- AI Input container -->
+      <div class="ai-container" id="aiContainer">
 
-    </div>
+        <!-- Active step is rendered here -->
+        <div id="aiStepWrap" style="width:100%; text-align:center;"></div>
 
-    <!-- Horizontal Pill navigation -->
-    <div class="pills-wrap">
-      <div class="pills-container">
-        <button class="pill" onclick="openModal('modalChallenges')" id="pill8">Kihívások</button>
-        <button class="pill" onclick="openModal('modalSolutions')" id="pill1">Megoldásaink</button>
-        <button class="pill" onclick="openModal('modalCases')" id="pill2">Forgatókönyvek</button>
-        <button class="pill" onclick="openModal('modalWork')" id="pill3">Munkáink</button>
-        <button class="pill" onclick="openModal('modalProcess')" id="pill4">Hogyan dolgozunk?</button>
-        <button class="pill" onclick="openModal('modalFAQ')" id="pill5">GYIK</button>
-        <button class="pill" onclick="openModal('modalAbout')" id="pill6">Rólunk</button>
-        <button class="pill" onclick="openModal('modalContact')" id="pill7">Kapcsolat</button>
-        <button class="pill" onclick="openModal('modalNavMenu')" id="pillNavMenu">Továbbiak ☰</button>
+        <!-- Progress dots -->
+        <div class="ai-progress" id="aiProgress">
+          <div class="ai-dot active" data-step="1"></div>
+          <div class="ai-dot" data-step="2"></div>
+          <div class="ai-dot" data-step="3"></div>
+          <div class="ai-dot" data-step="4"></div>
+        </div>
+
+        <!-- Solution card (hidden until API response) -->
+        <div class="solution-card" id="solutionCard" hidden></div>
+
+      </div>
+
+      <!-- Horizontal Pill navigation -->
+      <div class="pills-wrap">
+        <div class="pills-container">
+          <button class="pill" onclick="openModal('modalChallenges')" id="pill8">Kihívások</button>
+          <button class="pill" onclick="openModal('modalSolutions')" id="pill1">Megoldásaink</button>
+          <button class="pill" onclick="openModal('modalCases')" id="pill2">Forgatókönyvek</button>
+          <button class="pill" onclick="openModal('modalWork')" id="pill3">Munkáink</button>
+          <button class="pill" onclick="openModal('modalProcess')" id="pill4">Hogyan dolgozunk?</button>
+          <button class="pill" onclick="openModal('modalFAQ')" id="pill5">GYIK</button>
+          <button class="pill" onclick="openModal('modalAbout')" id="pill6">Rólunk</button>
+          <button class="pill" onclick="openModal('modalContact')" id="pill7">Kapcsolat</button>
+          <button class="pill" onclick="openModal('modalContact')" id="pillDiscoveryMobile">Discovery Call</button>
+          <button class="pill" onclick="openModal('modalNavMenu')" id="pillNavMenu">Továbbiak ☰</button>
+        </div>
       </div>
     </div>
 
@@ -3840,6 +3914,7 @@
     const aiStepWrap  = document.getElementById('aiStepWrap');
     const aiProgress  = document.getElementById('aiProgress');
     const solutionCard = document.getElementById('solutionCard');
+    let isAiTransitioning = false;
 
     // ── RENDER STEP ─────────────────────────────────────────────
     function aiRenderStep(idx, fromDirection) {
@@ -3888,7 +3963,7 @@
             </div>
             ${isEmail
               ? `<button class="ai-submit-btn${savedVal.includes('@') ? ' visible' : ''}" id="aiSubmitBtn">
-                   ${currentLang === 'en' ? 'Create my solution \u2192' : 'Megold\u00e1som l\u00e9trehoz\u00e1sa \u2192'}
+                   ${currentLang === 'en' ? 'See my results \u2192' : 'L\u00e1ssam az eredm\u00e9nyt \u2192'}
                  </button>`
               : `<button class="ai-arrow-btn${savedVal.length >= 3 ? ' visible' : ''}" id="aiArrowBtn" aria-label="K\u00f6vetkez\u0151">
                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -3911,34 +3986,6 @@
         aiStepWrap.innerHTML = stepHTML;
         attachAiListeners(idx, isEmail);
       }
-
-      // Title label behaviour: hide on focus/input, restore if empty on blur
-      setTimeout(() => {
-        const titleEl = document.getElementById('aiQTitle');
-        const inputEl = document.querySelector('.ai-text-input');
-        if (titleEl && inputEl) {
-          // Pre-hide if the field already has a saved value
-          if (inputEl.value.trim().length > 0) titleEl.classList.add('hidden');
-
-          inputEl.addEventListener('focus', () => {
-            titleEl.classList.add('hidden');
-          });
-          inputEl.addEventListener('blur', () => {
-            if (inputEl.value.trim().length === 0) {
-              titleEl.classList.remove('hidden');
-            }
-          });
-
-          // Focus input when clicking anywhere on the wrapper (e.g. on the question text)
-          const wrapEl = inputEl.parentElement;
-          if (wrapEl) {
-            wrapEl.style.cursor = 'text';
-            wrapEl.addEventListener('click', () => {
-              inputEl.focus();
-            });
-          }
-        }
-      }, 60);
     }
 
     // ── ATTACH LISTENERS ──────────────────────────────────────
@@ -3946,8 +3993,43 @@
       const inputEl = document.querySelector('.ai-text-input');
       if (!inputEl) return;
 
-      // Focus input if user already answered this step
-      if (aiAnswers[idx]) inputEl.focus();
+      const titleEl = document.getElementById('aiQTitle');
+      if (titleEl) {
+        if (inputEl.value.trim().length > 0) titleEl.classList.add('hidden');
+
+        inputEl.addEventListener('focus', () => {
+          titleEl.classList.add('hidden');
+          document.body.classList.add('ai-focused-state');
+        });
+        inputEl.addEventListener('blur', () => {
+          if (inputEl.value.trim().length === 0) {
+            titleEl.classList.remove('hidden');
+          }
+          // Buffer timeout to 250ms to ensure transition has completed
+          setTimeout(() => {
+            if (isAiTransitioning) return;
+            const activeEl = document.activeElement;
+            const aiContainer = document.getElementById('aiContainer');
+            if (aiContainer && !aiContainer.contains(activeEl)) {
+              document.body.classList.remove('ai-focused-state');
+            }
+          }, 250);
+        });
+
+        // Focus input when clicking anywhere on the wrapper (e.g. on the question text)
+        const wrapEl = inputEl.parentElement;
+        if (wrapEl) {
+          wrapEl.style.cursor = 'text';
+          wrapEl.addEventListener('click', () => {
+            inputEl.focus();
+          });
+        }
+      }
+
+      // Reset transitioning flag after step has fully rendered without auto-focusing
+      setTimeout(() => {
+        isAiTransitioning = false;
+      }, 300);
 
       // Smooth auto-adjusting textarea height
       const adjustHeight = () => {
@@ -4005,6 +4087,7 @@
 
     // ── NEXT STEP ────────────────────────────────────────────
     function aiNextStep() {
+      isAiTransitioning = true;
       const inputEl = document.querySelector('.ai-text-input');
       if (inputEl) aiAnswers[aiStep] = inputEl.value.trim();
       if (aiStep < 3) {
@@ -4024,11 +4107,12 @@
       solutionCard.innerHTML = `
         <div class="ai-loading">
           <div class="ai-spinner"></div>
-          <span>${currentLang === 'en' ? 'Creating your personalised solution…' : 'Megoldásod elkészítése folyamatban…'}</span>
+          <span>${currentLang === 'en' ? 'Analyzing compatibility and automation potential…' : 'Alkalmassági és automatizációs elemzés készítése…'}</span>
           <span id="aiProgressCounter" style="margin-left: 10px; font-weight: bold; font-family: var(--font-d); color: var(--accent);">0%</span>
         </div>
       `;
       solutionCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      document.body.classList.remove('ai-focused-state');
 
       // Dim questionnaire
       aiStepWrap.style.opacity = '0.3';
@@ -4074,39 +4158,39 @@
       const isHu = currentLang !== 'en';
       const text = ((q1 || '') + ' ' + (q2 || '') + ' ' + (q3 || '')).toLowerCase();
       
-      let focim = isHu ? "Személyre szabott digitális stratégia" : "Tailored Digital Strategy";
+      let focim = isHu ? "Előzetes automatizációs kompatibilitás" : "Preliminary Automation Compatibility";
       let megoldas = "";
       let eredmeny = "";
 
       // 1. Webshop / Logisztika / Rendelések
       if (text.includes("webshop") || text.includes("rendelés") || text.includes("termék") || text.includes("shopify") || text.includes("unas") || text.includes("gls") || text.includes("futár") || text.includes("szállít") || text.includes("woo")) {
-        focim = isHu ? "Automata rendeléskezelés és logisztika" : "Automated Order Processing & Logistics";
+        focim = isHu ? "Rendeléskezelési automatizációs kompatibilitás" : "Order Management Compatibility";
         megoldas = isHu 
-          ? `A megadott folyamataid alapján egy olyan zárt rendszert hozunk létre, amely összeköti az eladási csatornádat a számlázással és a logisztikai partnerekkel. Megszüntetjük a kézi adatmásolást: a megrendelésekből automatikusan generáljuk a számlát és a szállítási címkét, így senkinek nem kell adatokat manuálisan pötyögnie és adminisztrálnia.`
-          : `Based on your shared processes, we will build an integrated flow linking your storefront directly to billing and logistics. By eliminating manual copy-pasting, invoices and shipping labels will be generated automatically, meaning nobody has to type details manually.`;
+          ? `A megadott folyamataid alapján az értékesítési és logisztikai működésed kiválóan alkalmas a Limitlesser automatizációs ökoszisztémájára. Számos hasonló felépítésű webshopot integráltunk már sikeresen, ahol a kézi adatmásolást és a számlázást teljesen felváltották az önműködő folyamatok.`
+          : `Based on your shared processes, your operational and logistics workflow is highly compatible with the Limitlesser automation ecosystem. We have successfully integrated numerous similar stores, completely replacing manual billing and copy-pasting with automated flows.`;
         eredmeny = isHu 
-          ? `Ezáltal a manuális adminisztrációs feladatok 90%-át teljesen kiváltjuk, amivel heti 10-15 óra felesleges munkát spórolunk meg a csapatodnak. Megszűnnek a hibásan kitöltött szállítási címkék és az elmaradt státuszértesítések, így a növekedésre és a kiszolgálásra koncentrálhatsz.`
-          : `This replaces 90% of manual administrative tasks, saving your team 10-15 hours of unnecessary work weekly. It eliminates shipping address typos and delayed notifications, allowing you to focus on scaling and customer service.`;
+          ? `Egy sikeres integrációval a manuális adminisztrációs terhek 90%-át kiválthatjuk, heti 10-15 óra tiszta időt spórolva a csapatodnak. Mivel felelős mérnöki munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni.`
+          : `A successful integration can replace 90% of manual administrative load, saving your team 10-15 hours weekly. As responsible engineers, we only provide a definitive architecture and commitment after a thorough evaluation of your systems.`;
       } 
       // 2. CRM / Lead követés / Értékesítés
       else if (text.includes("lead") || text.includes("ügyfél") || text.includes("crm") || text.includes("ajánlat") || text.includes("visszahívás") || text.includes("értékesít")) {
-        focim = isHu ? "Automata lead-követő és CRM rendszer" : "Automated CRM & Lead Management System";
+        focim = isHu ? "Lead-követő és CRM rendszer kompatibilitás" : "CRM & Lead Management Compatibility";
         megoldas = isHu 
-          ? `Az érdeklődők és megkeresések kezelésére egy strukturált, felhőalapú belső rendszert építünk fel. A weboldaladról érkező megkeresések automatikusan bekerülnek egy központi táblába, azonnali visszajelzést és naptár-foglalót kapnak, a csapatod pedig automatikus emlékeztetőket lát a teendőkről.`
-          : `We will build a structured, cloud-based pipeline for incoming inquiries and leads. New prospects from your website automatically drop into a central system, receive instant confirmation with scheduling links, while your team gets automatic task reminders.`;
+          ? `Az érdeklődők és megkeresések kezelésére leírt folyamatod teljes mértékben illeszkedik a felhőalapú belső rendszereink struktúrájához. Tapasztalataink szerint az ilyen szűk keresztmetszetek központi táblákkal és automata naptár-foglalókkal rendkívül hatékonyan feloldhatóak.`
+          : `Your lead and customer inquiry handling workflow fits perfectly within our cloud-based internal pipeline structures. Our experience shows that these bottlenecks can be resolved exceptionally well with centralized boards and automated schedulers.`;
         eredmeny = isHu 
-          ? `Ezzel teljes mértékben kiküszöböljük az elmaradt visszahívásokat és az e-mailek között elkallódó leadeket, amivel az értékesítési konverziód akár 30%-kal is javulhat. A csapatod heti 8-10 óra adminisztratív szervezési tehertől szabadul fel.`
-          : `This completely eliminates missed follow-ups and lost email threads, improving sales conversion rates by up to 30%. Your team saves 8-10 hours a week on scheduling and manual coordination.`;
+          ? `Ezzel az értékesítési konverziód akár 30%-kal is javulhat az elmaradt visszahívások kiküszöbölésével. Mivel felelős mérnöki munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni.`
+          : `This can improve your sales conversion rates by up to 30% by eliminating missed follow-ups. As responsible engineers, we only provide a definitive architecture and commitment after a thorough evaluation of your systems.`;
       } 
       // 3. Excel táblák / Projektek / Építőipar
       else if (text.includes("projekt") || text.includes("excel") || text.includes("táblázat") || text.includes("belső") || text.includes("építőipar") || text.includes("kivitelez")) {
-        focim = isHu ? "Egyedi belső projektkövető és irányítópult" : "Custom Project Tracking & Dashboard";
+        focim = isHu ? "Belső projektkövető platform alkalmasság" : "Project Tracking Platform Suitability";
         megoldas = isHu 
-          ? `Kiváltjuk az egymástól elszigetelt Excel táblázatokat és a papíralapú adatgyűjtést. Egy olyan egyedi, reszponzív belső platformot hozunk létre, ahol a helyszíni munkatársak mobilról is azonnal rögzíteni tudják a napi órákat, anyagokat és mérföldköveket, ami valós időben láthatóvá válik.`
-          : `We will replace isolated spreadsheets and paper-based data collection. We will build a custom, responsive internal dashboard where field workers can instantly log hours, materials, and milestones directly from their phones.`;
+          ? `A papíralapú adatgyűjtés és az elszigetelt Excel táblázatok kiváltása a Limitlesser egyik legfőbb szakterülete. A leírt folyamatok alapján a céged kiemelten alkalmas egy reszponzív, mobilról is kezelhető belső irányítópult bevezetésére.`
+          : `Replacing paper-based data collection and isolated spreadsheets is a core specialty of Limitlesser. Based on your description, your company is an outstanding candidate for a custom, mobile-friendly internal dashboard.`;
         eredmeny = isHu 
-          ? `Valós idejű, átlátható képet kapsz az összes projekt nyereségességéről, így azonnal be tudsz avatkozni a költségek elszállása előtt. A heti vezetői összesítésekre szánt idő 85%-kal csökken, ami heti 12 óra tiszta megtakarítást jelent neked.`
-          : `You get real-time, transparent insights into every project's profitability, allowing you to intervene before costs escalate. The time spent on weekly management reports is reduced by 85%, saving you 12 hours every week.`;
+          ? `Egy ilyen rendszerrel a heti vezetői összesítésekre szánt idő 85%-kal csökkenhet. Mivel felelős mérnöki munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni.`
+          : `Such a dashboard can reduce the time spent on weekly management reports by 85%. As responsible engineers, we only provide a definitive architecture and commitment after a thorough evaluation of your systems.`;
       } 
       // 4. Általános / Echo / Dynamic Fallback
       else {
@@ -4115,12 +4199,12 @@
         const q3Clean = q3 ? (q3.length > 90 ? q3.substring(0, 90) + '...' : q3) : '';
 
         megoldas = isHu 
-          ? `A(z) "${q1Clean}" céljaid eléréséhez egy olyan áramvonalas, személyre szabott digitális rendszert építünk fel, amely közvetlenül feloldja a(z) "${q2Clean}" működés során felmerülő nehézségeket. Kiváltjuk a felesleges kézi adatmásolásokat és összekötjük az elszigetelt folyamatokat.`
-          : `To achieve your goals of "${q1Clean}", we will build a streamlined, custom digital system that directly resolves the bottlenecks in your operations regarding "${q2Clean}". We eliminate redundant copy-pasting and integrate siloed workflows.`;
+          ? `A(z) "${q1Clean}" céljaid és a(z) "${q2Clean}" működésed alapján a jelenlegi struktúrád kiválóan alkalmas a digitális transzformációra. Tapasztalataink szerint az elszigetelt munkafolyamatok áramvonalasítása közvetlenül feloldja a növekedési gátakat.`
+          : `Based on your goals of "${q1Clean}" and operations regarding "${q2Clean}", your current structure is highly suitable for digital transformation. Our experience shows that streamlining siloed workflows directly unlocks growth bottlenecks.`;
         
         eredmeny = isHu 
-          ? `Ezáltal a(z) "${q3Clean}" jövőképed kézzelfogható közelségbe kerül: a napi ismétlődő adminisztratív terheid 80-90%-a teljesen megszűnik, amivel heti legalább 10-15 óra tiszta munkaidőt spórolsz meg magadnak és a csapatodnak.`
-          : `This brings your vision of "${q3Clean}" within reach: 80-90% of your repetitive administrative tasks are automated, saving you and your team at least 10-15 hours of pure working time every week.`;
+          ? `Ezáltal a(z) "${q3Clean}" jövőképed eléréséhez a napi adminisztratív terhek 80-90%-a automatizálhatóvá válik. Mivel felelős mérnöki munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni.`
+          : `To reach your vision of "${q3Clean}", 80-90% of daily administrative burdens can be automated. As responsible engineers, we only provide a definitive architecture and commitment after a thorough evaluation of your systems.`;
       }
 
       const ctaText = isHu 
@@ -4136,23 +4220,23 @@
       const isHu = currentLang !== 'en';
       const CALENDLY_URL = 'https://calendly.com/limitlesser/discovery-call';
 
-      const focim    = data?.focim    || (isHu ? 'Személyre szabott megoldás a te helyzetedre' : 'A personalised solution for your situation');
-      const megoldas = data?.megoldas || (isHu ? 'A meglévő működésedre építve olyan rendszert tervezünk, ami leveszi a manuális terhek nagy részét.' : 'Building on your existing operations, we will design a system that relieves most of the manual burden.');
-      const eredmeny = data?.eredmeny || (isHu ? 'A folyamat magától fut majd, így a csapatod felszabadul a növekedés támogatására.' : 'The process will run automatically, freeing up your team to support growth.');
+      const focim    = data?.focim    || (isHu ? 'Előzetes automatizációs kompatibilitás' : 'Preliminary Automation Compatibility');
+      const megoldas = data?.megoldas || (isHu ? 'A megosztott információk alapján a folyamataid kiválóan alkalmasak a Limitlesser automatizációs ökoszisztémájára.' : 'Based on your shared info, your processes are highly compatible with the Limitlesser automation ecosystem.');
+      const eredmeny = data?.eredmeny || (isHu ? 'A manuális terhek 80-90%-a automatizálhatóvá válik. Mivel felelős mérnöki munkát végzünk, konkrét ígéretet az átvilágítás után tudunk tenni.' : '80-90% of manual load can be automated. As responsible engineers, we make definitive commitments after discovery.');
 
       solutionCard.innerHTML = `
-        <p class="solution-kiscim">${isHu ? 'A te helyzetedre szabva' : 'Tailored to your situation'}</p>
+        <p class="solution-kiscim">${isHu ? 'Előzetes Alkalmassági Riport' : 'Preliminary Feasibility Report'}</p>
         <h2 class="solution-focim">${focim}</h2>
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">01</p>
-          <p class="solution-blokk-cim">${isHu ? 'A megoldás' : 'The solution'}</p>
+          <p class="solution-blokk-cim">${isHu ? 'Alkalmassági elemzés' : 'Compatibility Analysis'}</p>
           <p class="solution-blokk-szoveg">${megoldas}</p>
         </div>
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">02</p>
-          <p class="solution-blokk-cim">${isHu ? 'A várható eredmény' : 'Expected result'}</p>
+          <p class="solution-blokk-cim">${isHu ? 'Automatizációs potenciál & Kockázat' : 'Automation Potential & Risk'}</p>
           <p class="solution-blokk-szoveg">${eredmeny}</p>
         </div>
 
@@ -4184,6 +4268,18 @@
     window.addEventListener('load', () => {
       if (window.location.hash === '#contact') {
         setTimeout(() => openModal('modalContact'), 150);
+      }
+      const discCard = document.querySelector('.discovery-card');
+      if (discCard && window.IntersectionObserver) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              discCard.classList.add('scrolled-in');
+              observer.unobserve(discCard);
+            }
+          });
+        }, { threshold: 0.15 });
+        observer.observe(discCard);
       }
     });
   </script>
