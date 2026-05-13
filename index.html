@@ -1413,6 +1413,24 @@
       }
     }
 
+    @media (max-width: 600px) {
+      .mac-screen {
+        border-width: 6px !important;
+        border-radius: 8px 8px 0 0 !important;
+      }
+      .mac-base {
+        height: 10px !important;
+        border-radius: 0 0 10px 10px !important;
+        width: 104% !important;
+        margin-left: -2% !important;
+      }
+      .mac-base::before {
+        width: 45px !important;
+        height: 3px !important;
+        border-radius: 0 0 4px 4px !important;
+      }
+    }
+
     /* 3D Parallax Templates Grid (Iparági koncepciók) */
     .t-grid {
       display: grid;
