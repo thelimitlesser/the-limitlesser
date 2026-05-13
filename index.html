@@ -111,6 +111,9 @@
       position: fixed; inset: 0; background: #FFFFFF; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
     }
     [data-mode="dark"] #preloader { background: #0B0A05; }
+    html.no-preloader #preloader {
+      display: none !important;
+    }
     
     .preloader-content {
       display: flex;
@@ -1872,6 +1875,11 @@
   </style>
 </head>
 <body>
+  <script>
+    if (sessionStorage.getItem('preloader_shown')) {
+      document.documentElement.classList.add('no-preloader');
+    }
+  </script>
 
   <!-- Dynamic Glowing Background -->
   <div class="mesh-bg">
@@ -3230,6 +3238,48 @@
 
     // ─── Preloader progressive simulation ───
     window.addEventListener('DOMContentLoaded', () => {
+      // Capture click to demo links
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && link.href && link.href.includes('demo/')) {
+          sessionStorage.setItem('restore_scroll', window.scrollY);
+          const activeModal = document.querySelector('.modal-overlay.open');
+          if (activeModal) {
+            sessionStorage.setItem('restore_modal', activeModal.id);
+          } else {
+            sessionStorage.removeItem('restore_modal');
+          }
+        }
+      });
+
+      const isPreloaderShown = sessionStorage.getItem('preloader_shown');
+      if (isPreloaderShown) {
+        // Skip animation entirely, just apply theme, language and restore scroll/modal
+        applyMode(currentMode);
+        applyLanguage(currentLang);
+
+        const restoreScroll = sessionStorage.getItem('restore_scroll');
+        const restoreModal = sessionStorage.getItem('restore_modal');
+        if (restoreModal) {
+          openModal(restoreModal);
+        }
+        if (restoreScroll) {
+          window.scrollTo({
+            top: parseInt(restoreScroll, 10),
+            behavior: 'instant'
+          });
+          setTimeout(() => {
+            window.scrollTo({
+              top: parseInt(restoreScroll, 10),
+              behavior: 'instant'
+            });
+          }, 100); // Ensures layout calculation finishes
+        }
+        sessionStorage.removeItem('restore_scroll');
+        sessionStorage.removeItem('restore_modal');
+        return;
+      }
+
       const bar = document.getElementById('loaderLine');
       let progress = 0;
       
@@ -3251,6 +3301,7 @@
             preloader.style.opacity = '0';
             setTimeout(() => {
               preloader.style.display = 'none';
+              sessionStorage.setItem('preloader_shown', 'true');
             }, 800);
           }
         }, 500); // 500ms so user can appreciate the premium branding and animation
@@ -3265,7 +3316,10 @@
           preloader.classList.add('fade-out-active');
           setTimeout(() => {
             preloader.style.opacity = '0';
-            setTimeout(() => { preloader.style.display = 'none'; }, 800);
+            setTimeout(() => { 
+              preloader.style.display = 'none'; 
+              sessionStorage.setItem('preloader_shown', 'true');
+            }, 800);
           }, 500);
         }
       }, 3500);
