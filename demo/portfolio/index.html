@@ -52,50 +52,61 @@ body{background:var(--bp);color:var(--white);font-family:var(--font-b);overflow-
     font-family: var(--font-m);
 }
 
-/* UNIQUE BOTTOM BAR */
-.unique-bottom-bar {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9998;
+/* Standardized Back Bar */
+.back-bar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 8px 12px;
+  padding-left: 30px;
+  background: #222;
+  border-radius: 100px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  width: auto;
 }
-.ubb-pill {
-    background: rgba(10, 22, 40, 0.85);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 0.6rem;
-    border-radius: 100px;
-    display: flex;
-    gap: 0.5rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+.bb-b {
+  color: #aaa;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-family: var(--font-m);
+  font-weight: 600;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
 }
-.ubb-btn {
-    padding: 0.8rem 1.8rem;
-    border-radius: 100px;
-    text-decoration: none;
-    font-family: var(--font-h);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
+.bb-b:hover {
+  color: #fff;
 }
-.b-vissza {
-    color: var(--white);
-    background: transparent;
+.bb-c {
+  background: #ffc700;
+  color: #0b0a05;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: var(--font-m);
+  padding: 14px 35px;
+  border-radius: 100px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
 }
-.b-vissza:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-.b-akarom {
-    background: var(--amber);
-    color: var(--bp);
-}
-.b-akarom:hover {
-    background: var(--white);
-    transform: scale(1.05);
+.bb-c:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
 /* Nav */
@@ -207,8 +218,8 @@ nav.compact{padding:1rem 4rem}
 .bldg-layer{opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}
 .bldg-layer.visible{opacity:1;transform:translateY(0)}
 .build-phases{flex:1;display:flex;flex-direction:column}
-.build-phase{padding:4rem;border-bottom:1px solid var(--bp-line);min-height:50vh;display:flex;flex-direction:column;justify-content:center;position:relative;transition:background .4s}
-.build-phase.active{background:rgba(232,148,58,.03)}
+.build-phase{padding:4rem;border-bottom:1px solid var(--bp-line);min-height:50vh;display:flex;flex-direction:column;justify-content:center;position:relative;transition:all .4s ease;border-left:2px solid transparent}
+.build-phase.active{background:rgba(232,148,58,.03);border-left-color:var(--amber);padding-left:calc(4rem - 2px)}
 .build-phase::before{content:attr(data-num);font-family:var(--font-m);font-size:80px;font-weight:700;color:rgba(60,130,220,.06);position:absolute;top:2rem;right:2rem;line-height:1}
 .bp-tag{font-family:var(--font-m);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:1.5rem}
 .bp-title{font-family:var(--font-h);font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-1px;margin-bottom:1.2rem;line-height:1.1}
@@ -267,6 +278,7 @@ nav.compact{padding:1rem 4rem}
 .ci-label{font-family:var(--font-m);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber)}
 .ci-val{font-size:15px;color:var(--white)}
 .ct-right{padding:6rem 4rem}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .cf-label{font-family:var(--font-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;display:block}
 .cf-input{background:rgba(240,244,250,.04);border:1px solid var(--bp-line);padding:.85rem 1rem;font-size:14px;color:var(--white);font-family:var(--font-b);outline:none;transition:border-color .3s;width:100%;margin-bottom:1rem;border-radius:6px}
 .cf-input:focus{border-color:var(--amber)}
@@ -287,10 +299,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--bp-line);padding:3
 @media(max-width:900px){
   /* Mobile Navigation */
   nav{padding:1.1rem 1.5rem}.n-links,.n-cta{display:none}.mob-toggle{display:flex}
-
+ 
   /* Hero Section scaling */
-  #hero { padding: 8rem 1.5rem 4rem; min-height: auto; }
-  .hero-title{font-size:clamp(34px,9vw,64px);line-height: 1.15;letter-spacing: -2px;}
+  #hero { padding: 7rem 1.5rem 3rem; min-height: auto; }
+  .hero-title{font-size:clamp(30px, 8.5vw, 54px) !important;line-height: 1.25 !important;letter-spacing: -1.5px !important;}
+  .hero-tagline { font-size: 11px !important; letter-spacing: 1.5px !important; line-height: 1.6 !important; max-width: 90% !important; margin: 0 auto 3rem !important; }
+  .hero-btns { gap: 0.8rem !important; padding: 0 1rem !important; }
+  .btn-amber, .btn-bp { padding: 0.9rem 1.8rem !important; font-size: 10px !important; letter-spacing: 2px !important; }
   .hero-ticker {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -309,36 +324,48 @@ footer{position:relative;z-index:1;border-top:1px solid var(--bp-line);padding:3
   .ht-item:nth-child(3), .ht-item:nth-child(4) {
     border-bottom: none !important;
   }
-
+ 
   /* Sticky Blueprint Construction Header on Mobile */
+  #build { padding: 4rem 0 2rem !important; }
+  .build-header { padding: 0 1.5rem 2rem !important; }
   .build-container{flex-direction:column}
   .build-visual {
     position: sticky !important;
     top: 66px !important;
-    height: 220px !important;
+    height: 180px !important;
     min-height: auto !important;
     background: rgba(10,22,40,0.92) !important;
     backdrop-filter: blur(15px);
     z-index: 50;
     border-right: none !important;
     border-bottom: 1px solid var(--bp-line) !important;
-    padding: 1.5rem !important;
+    padding: 0.5rem 1.5rem !important;
   }
   #building-svg {
     height: 100% !important;
-    max-width: 260px !important;
+    max-width: 240px !important;
   }
   .build-phase {
-    padding: 3rem 1.5rem !important;
+    padding: 3.5rem 1.5rem !important;
     min-height: auto !important;
+    transition: all 0.4s ease !important;
+    border-left: 2px solid transparent !important;
+    border-bottom: 1px solid var(--bp-line) !important;
   }
-
+  .build-phase.active {
+    background: rgba(232, 148, 58, 0.05) !important;
+    border-left-color: var(--amber) !important;
+    padding-left: calc(1.5rem + 10px) !important;
+  }
+ 
   /* Projects List */
   .proj-header { padding: 0 1.5rem 2rem; }
   .proj-track { padding: 0 1.5rem; }
-  .proj-card{width:300px}
-  .pc-visual { height: 200px !important; }
-
+  .proj-card { width: 320px !important; }
+  .pc-visual { height: 210px !important; }
+  .pc-badge { font-size: 8px !important; padding: 0.15rem 0.4rem !important; }
+  .pc-coords { font-size: 8px !important; padding: 2px 4px !important; }
+ 
   /* Numbers & Metrics Grid */
   #numbers{grid-template-columns:1fr 1fr}
   .num-item {
@@ -352,22 +379,33 @@ footer{position:relative;z-index:1;border-top:1px solid var(--bp-line);padding:3
   .num-item:nth-child(3), .num-item:nth-child(4) {
     border-bottom: none !important;
   }
-
+ 
   /* Contact & Form */
   #contact{grid-template-columns:1fr}
   .ct-left { padding: 4rem 1.5rem; border-right: none; border-bottom: 1px solid var(--bp-line); }
   .ct-right { padding: 4rem 1.5rem; }
-
+  .cf-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 0 !important; }
+ 
   /* Footer */
   footer { padding: 3rem 1.5rem 8rem; }
+  .back-bar { width: calc(100% - 2rem) !important; bottom: 1rem !important; justify-content: space-between !important; gap: 0 !important; padding-left: 20px !important; padding-right: 8px !important; }
+  .bb-c { padding: 12px 24px !important; }
+}
+
+@media(max-width:600px){
+  #numbers { grid-template-columns: 1fr !important; }
+  .num-item {
+    border-right: none !important;
+    border-bottom: 1px solid var(--bp-line) !important;
+  }
+  .num-item:last-child {
+    border-bottom: none !important;
+  }
 }
 
 @media(max-width:480px){
-  .proj-card { width: 260px !important; }
-  .pc-visual { height: 170px !important; }
-  .cf-grid { display: flex; flex-direction: column; gap: 0; }
-  .ubb-pill { padding: 0.4rem !important; }
-  .ubb-btn { padding: 0.6rem 1.2rem !important; font-size: 10px !important; }
+  .proj-card { width: 280px !important; }
+  .pc-visual { height: 180px !important; }
 }
 </style>
 </head>
@@ -382,11 +420,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--bp-line);padding:3
 
 <div class="demo-badge">Demo</div>
 
-<div class="unique-bottom-bar">
-    <div class="ubb-pill">
-        <a href="../../index.html" class="ubb-btn b-vissza" data-i18n="btn_vissza">← VISSZA</a>
-        <a href="../../index.html#cta" class="ubb-btn b-akarom" data-i18n="btn_akarom">EZT SZERETNÉM →</a>
-    </div>
+<div class="back-bar">
+  <a href="../../index.html#templates" class="bb-b" data-i18n="btn_vissza">← VISSZA</a>
+  <a href="../../contact.html" class="bb-c" data-i18n="btn_akarom">EZT SZERETNÉM →</a>
 </div>
 
 <div class="mob-menu" id="mob-menu">

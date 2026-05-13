@@ -41,8 +41,8 @@ body.ch #cur-r{width:52px;height:52px;border-color:rgba(0,212,255,.5)}
 .back-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;gap:1.5rem;align-items:center;padding:8px 12px;padding-left:30px;background:#222;border-radius:100px;box-shadow:0 20px 40px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1)}
 .bb-b{color:#aaa;font-size:12px;letter-spacing:2px;text-decoration:none;font-family:var(--font-b);font-weight:600;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
 .bb-b:hover{color:#fff}
-.bb-c{background:var(--gold);color:#fff;font-size:12px;letter-spacing:2px;text-decoration:none;font-weight:700;font-family:var(--font-b);padding:14px 35px;border-radius:100px;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
-.bb-c:hover{background:#d4af37;transform:scale(1.02)}
+.bb-c{background:#ffc700;color:#0b0a05;font-size:12px;letter-spacing:2px;text-decoration:none;font-weight:700;font-family:var(--font-b);padding:14px 35px;border-radius:100px;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
+.bb-c:hover{opacity:0.9;transform:scale(1.02)}
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.6rem 5rem;background:rgba(244,246,250,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:padding .4s}
@@ -527,6 +527,8 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding
   /* Other layout grids */
   .impact-grid{grid-template-columns:1fr 1fr}.ind-grid{grid-template-columns:1fr 1fr}.cases-grid{grid-template-columns:1fr}.ins-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr 1fr}.proc-steps{grid-template-columns:1fr 1fr}.ft-top{grid-template-columns:1fr 1fr}
   #sticky-cta{bottom:5rem;right:1rem}
+  .back-bar { width: calc(100% - 2rem) !important; bottom: 1rem !important; justify-content: space-between !important; gap: 0 !important; padding-left: 20px !important; padding-right: 8px !important; }
+  .bb-c { padding: 12px 24px !important; }
 
   /* ROI box mobile */
   #roi{padding-left:1.5rem;padding-right:1.5rem}
