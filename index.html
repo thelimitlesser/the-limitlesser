@@ -4160,6 +4160,13 @@
     function retranslateQuestionnaire() {
       aiRenderStep(aiStep);
     }
+
+    // Check if we came from a demo page 'Ezt szeretném' button
+    window.addEventListener('load', () => {
+      if (window.location.hash === '#contact') {
+        setTimeout(() => openModal('modalContact'), 150);
+      }
+    });
   </script>
   <!-- Calendly Embed Widget Script -->
   <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
