@@ -71,7 +71,10 @@ Jó:   "Az érdeklődők azonnal, várakozás nélkül kapnak választ, miközbe
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: systemPrompt },
+          {
+            role: 'system',
+            content: `${systemPrompt}\n\nKÖTELEZŐ NYELV (LANGUAGE RULE): A felhasználó az oldalon a(z) '${lang === 'en' ? 'en (angol / English)' : 'hu (magyar / Hungarian)'}' nyelvet választotta ki. Ezért a teljes JSON választ (a "focim", "megoldas", "eredmeny" kulcsok értékeit) KÖTELEZŐEN ezen a nyelven generáld!\nFor 'en' language, you must output your response values in English. For 'hu' language, you must output in Hungarian.`
+          },
           { role: 'user', content: userMessage }
         ],
         temperature: 0.3,
