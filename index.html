@@ -4123,6 +4123,11 @@
           : `This brings your vision of "${q3Clean}" within reach: 80-90% of your repetitive administrative tasks are automated, saving you and your team at least 10-15 hours of pure working time every week.`;
       }
 
+      const ctaText = isHu 
+        ? " Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát, 30 perces szakmai beszélgetésre. Felesleges körök nélkül, tiszta lappal megnézzük, miben lehetünk valódi partnerek."
+        : " If you feel it's time to level up, let's sit down for a private, 30-minute professional consultation. No fluff, just a clear look at how we can be true partners.";
+      eredmeny += ctaText;
+
       return { focim, megoldas, eredmeny };
     }
 

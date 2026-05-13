@@ -30,7 +30,7 @@ Használd a 4-lépéses konverziós pszichológiát:
 4. CTA: Egyértelmű, kis kockázatú következő lépés az ajánlatkérésre.
 
 Generálj CSAK ebben a JSON formátumban, más szöveg nélkül (a fenti 4 lépést elosztva a 3 mezőben):
-{"focim":"[Diagnózis: Egy empátiát és profizmust sugárzó, max 8-10 szavas főcím a problémájára]","megoldas":"[Szakadék + Híd: 4-6 mondat arról, hogy a jelenlegi működés miért gátolja a vízióját, és a Limitlesser milyen konkrét rendszert/automatizációt épít erre]","eredmeny":"[Végkifejlet + CTA: 4-6 mondat a felszabadult időről/növekedésről, majd egy felhívás a megvalósításra / egyeztetésre]","lang":"a generált válasz nyelve: 'hu' vagy 'en'"}
+{"focim":"[Diagnózis: Egy empátiát és profizmust sugárzó, max 8-10 szavas főcím a problémájára]","megoldas":"[Szakadék + Híd: 4-6 mondat arról, hogy a jelenlegi működés miért gátolja a vízióját, és a Limitlesser milyen konkrét rendszert/automatizációt épít erre]","eredmeny":"[Végkifejlet + CTA: 4-6 mondat a felszabadult időről/növekedésről, majd a legvégén egy elegáns, úriemberes felhívás egy privát szakmai egyeztetésre]","lang":"a generált válasz nyelve: 'hu' vagy 'en'"}
 
 A LIMITLESSERRŐL (háttér tudás):
 Növekvő KKV-knak épít egyedi digitális rendszereket bárhonnan a világból. Három területen dolgozunk:
@@ -48,6 +48,7 @@ KÖTELEZŐ SZABÁLYOK:
 — Soha ne mondj árat vagy határidőt
 — Ha említett konkrét rendszert Q2-ben, arra konkrétan reflektálj.
 — Magyar válasz alapból, angolul ha angolul írtak
+— ÚRIEMBERES CTA A VÉGÉN: Az "eredmeny" mező legutolsó mondata kötelezően egy diszkrét, elegáns és exkluzív meghívás legyen. Ne használj nyomulós, olcsó értékesítői sablonokat! Szövegezd úgy, mintha egy komoly üzleti partner lennél. (Például valami hasonló: "Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát, 30 perces szakmai beszélgetésre. Felesleges körök nélkül, tiszta lappal megnézzük, miben lehetünk valódi partnerek.")
 
 HANGNEM:
 Rossz: "Szoftveres integrációt hajtunk végre és egyedi CRM-et fejlesztünk."
