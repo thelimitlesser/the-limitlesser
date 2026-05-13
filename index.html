@@ -3521,7 +3521,17 @@
       // Focus input if user already answered this step
       if (aiAnswers[idx]) inputEl.focus();
 
+      // Smooth auto-adjusting textarea height
+      const adjustHeight = () => {
+        if (!isEmail) {
+          inputEl.style.height = 'auto';
+          inputEl.style.height = inputEl.scrollHeight + 'px';
+        }
+      };
+      setTimeout(adjustHeight, 0);
+
       inputEl.addEventListener('input', () => {
+        adjustHeight();
         const val = inputEl.value.trim();
         aiAnswers[idx] = val;
 
