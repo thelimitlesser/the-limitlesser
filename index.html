@@ -66,9 +66,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; height: 100%; }
     body {
-      background: var(--bg);
-      background-image: var(--bg-gradient);
-      background-attachment: fixed;
       color: var(--text-primary);
       font-family: var(--font-b);
       overflow-x: hidden;
@@ -76,8 +73,20 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      transition: background 0.4s ease, color 0.4s ease;
+      transition: color 0.4s ease;
       position: relative;
+    }
+
+    /* Hardware-accelerated, glitch-free fixed background gradient (iOS scroll-safe) */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-color: var(--bg);
+      background-image: var(--bg-gradient);
+      pointer-events: none;
+      transition: background-color 0.4s ease;
     }
 
     /* Film grain SVG noise overlay (Dark Mode exclusive touch) */
@@ -962,6 +971,7 @@
       text-align: center;
       box-shadow: var(--pill-shadow);
     }
+    #pillNavMenu { display: none !important; }
     .pill:hover {
       background: var(--pill-hover); border-color: var(--pill-border); transform: translateY(-4px) scale(1.02);
       box-shadow: var(--pill-hover-shadow);
@@ -1589,10 +1599,76 @@
 
       .ai-container { width: min(580px, 84vw); }
 
-      /* Pills Row Scrollable Touch */
-      .pills-wrap { margin-top: 4rem; overflow-x: auto; padding-bottom: 0.8rem; -webkit-overflow-scrolling: touch; display: block; }
-      .pills-container { flex-wrap: nowrap; justify-content: flex-start; padding: 0 4px; width: max-content; }
-      .pill { padding: 10px 20px; font-size: 13px; flex: 0 0 auto; min-width: auto; }
+      /* Mobile Pills Layout (No Horizontal Scroll, 3 Symmetrical Pillars) */
+      .pills-wrap { margin-top: 4rem; overflow-x: visible; padding-bottom: 0; display: flex; justify-content: center; width: 100%; }
+      .pills-container { flex-wrap: nowrap; justify-content: center; padding: 0; width: 100%; gap: 8px; max-width: 100%; }
+      .pill { padding: 10px 12px; font-size: 12px; flex: 1; min-width: 0; text-align: center; white-space: nowrap; }
+      
+      /* Hide long row of pills on mobile, showing only 1, 8 and NavMenu */
+      #pill2, #pill3, #pill4, #pill5, #pill6, #pill7 { display: none !important; }
+      #pillNavMenu {
+        display: inline-flex !important; align-items: center; justify-content: center; gap: 4px;
+        background: var(--accent) !important; color: #000000 !important; border-color: var(--accent) !important;
+        font-weight: 700 !important;
+      }
+
+      /* Mobile Navigation Bottom-Drawer slide-up styles (75vh height) */
+      #modalNavMenu {
+        align-items: flex-end !important;
+        justify-content: center !important;
+      }
+      .nav-menu-modal {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 75vh !important;
+        max-height: 75vh !important;
+        border-radius: 28px 28px 0 0 !important;
+        padding: 1.8rem 1.5rem 1rem !important;
+        border: none !important;
+        border-top: 1px solid var(--modal-border) !important;
+        transform: translateY(100%) !important; /* Slide down off-screen */
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: 0 -15px 40px rgba(0,0,0,0.4) !important;
+        box-sizing: border-box !important;
+      }
+      .modal-overlay.open .nav-menu-modal {
+        transform: translateY(0) !important; /* Slide up nicely */
+      }
+      
+      .nav-menu-header { margin-bottom: 1.2rem; text-align: left; flex-shrink: 0; }
+      .nav-menu-header h3 { font-family: var(--font-h); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-top: 0.3rem; }
+      
+      .nav-menu-grid { 
+        display: flex; flex-direction: column; gap: 8px; margin-top: 0.4rem;
+        overflow-y: auto; flex: 1; padding-bottom: 2.5rem;
+        scrollbar-width: none;
+      }
+      .nav-menu-grid::-webkit-scrollbar { display: none; }
+      
+      .nav-menu-item {
+        display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border);
+        border-radius: 16px; text-decoration: none; transition: all 0.2s ease;
+        box-sizing: border-box;
+      }
+      [data-mode="light"] .nav-menu-item { background: rgba(0, 0, 0, 0.01); }
+      .nav-menu-item:active { background: var(--accent-light); border-color: var(--accent); }
+      
+      .nav-menu-icon {
+        width: 38px; height: 38px; background: rgba(255, 199, 0, 0.08);
+        border-radius: 10px; flex-shrink: 0; border: 1px solid rgba(255, 199, 0, 0.15);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .nav-menu-icon svg {
+        width: 18px; height: 18px; stroke: var(--accent); stroke-width: 2.2px; display: block;
+      }
+      
+      .nav-menu-content { display: flex; flex-direction: column; text-align: left; }
+      .nav-menu-title { font-family: var(--font-h); font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
+      .nav-menu-desc { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.25; }
       
       /* Mobile modal as centered floating card */
       .modal-overlay { align-items: center; justify-content: center; }
@@ -1868,6 +1944,7 @@
         <button class="pill" onclick="openModal('modalFAQ')" id="pill5">GYIK</button>
         <button class="pill" onclick="openModal('modalAbout')" id="pill6">Rólunk</button>
         <button class="pill" onclick="openModal('modalContact')" id="pill7">Kapcsolat</button>
+        <button class="pill" onclick="openModal('modalNavMenu')" id="pillNavMenu">Továbbiak ☰</button>
       </div>
     </div>
 
@@ -2034,6 +2111,93 @@
             Discovery Call foglalása
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Mobil Navigációs Menü -->
+  <div class="modal-overlay" id="modalNavMenu" onclick="closeModalOnOverlay(event, 'modalNavMenu')">
+    <div class="modal-box nav-menu-modal">
+      <button class="modal-close" onclick="closeModal('modalNavMenu')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="nav-menu-header">
+        <span class="tag" id="navMenuTag">Navigáció</span>
+        <h3 id="navMenuTitle">Válassz témakört</h3>
+      </div>
+      <div class="nav-menu-grid">
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalChallenges'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemChallenges">Kihívások</span>
+            <span class="nav-menu-desc" id="navDescChallenges">Amikor a növekedés utoléri a rendszereidet</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalSolutions'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1 .4 2.5 1.5 3.5.7.8 1.3 1.5 1.5 2.5"></path><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemSolutions">Megoldásaink</span>
+            <span class="nav-menu-desc" id="navDescSolutions">Személyre szabott digitális transzformáció</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalCases'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="12"></line><line x1="2" y1="17" x2="7" y2="22"></line><line x1="17" y1="17" x2="22" y2="22"></line><line x1="17" y1="7" x2="22" y2="12"></line></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemCases">Forgatókönyvek</span>
+            <span class="nav-menu-desc" id="navDescCases">Hogyan működnek a rendszereink élesben?</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalWork'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemWork">Munkáink</span>
+            <span class="nav-menu-desc" id="navDescWork">Sikeres ügyfélsztorik és esettanulmányok</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalProcess'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemProcess">Hogyan dolgozunk?</span>
+            <span class="nav-menu-desc" id="navDescProcess">A tervezéstől a teljes megvalósításig</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalFAQ'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemFAQ">GYIK</span>
+            <span class="nav-menu-desc" id="navDescFAQ">Gyakran ismételt kérdések és válaszok</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalAbout'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemAbout">Rólunk</span>
+            <span class="nav-menu-desc" id="navDescAbout">Kik vagyunk és miért csináljuk?</span>
+          </div>
+        </a>
+        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalContact'); return false;" class="nav-menu-item">
+          <div class="nav-menu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div class="nav-menu-content">
+            <span class="nav-menu-title" id="navItemContact">Kapcsolat</span>
+            <span class="nav-menu-desc" id="navDescContact">Lépj velünk kapcsolatba pár másodperc alatt</span>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -2531,6 +2695,25 @@
         pill5: "GYIK",
         pill6: "Rólunk",
         pill7: "Kapcsolat",
+        nav_menu_tag: "Navigáció",
+        nav_menu_title: "Válassz témakört",
+        nav_pill: "Továbbiak ☰",
+        nav_item_challenges: "Kihívások",
+        nav_desc_challenges: "Amikor a növekedés utoléri a rendszereidet",
+        nav_item_solutions: "Megoldásaink",
+        nav_desc_solutions: "Személyre szabott digitális transzformáció",
+        nav_item_cases: "Forgatókönyvek",
+        nav_desc_cases: "Hogyan működnek a rendszereink élesben?",
+        nav_item_work: "Munkáink",
+        nav_desc_work: "Sikeres ügyfélsztorik és esettanulmányok",
+        nav_item_process: "Hogyan dolgozunk?",
+        nav_desc_process: "A tervezéstől a teljes megvalósításig",
+        nav_item_faq: "GYIK",
+        nav_desc_faq: "Gyakran ismételt kérdések és válaszok",
+        nav_item_about: "Rólunk",
+        nav_desc_about: "Kik vagyunk és miért csináljuk?",
+        nav_item_contact: "Kapcsolat",
+        nav_desc_contact: "Lépj velünk kapcsolatba pár másodperc alatt",
         disc_quote: '"A jövőben nem azok a cégek nyernek, akik több eszközt használnak — hanem akik jobban felépített rendszereken működnek."',
         disc_title: "Derítsd ki, hol lassítják a rendszereid a céged növekedését",
         disc_body: "Egy 30 perces Discovery Call során feltárjuk, hol veszítesz időt és pénzt a napi működésben — és megmutatjuk, hogyan építenénk fel azt a rendszert, ami ezt megoldja.",
@@ -2693,6 +2876,25 @@
         pill5: "FAQ",
         pill6: "About Us",
         pill7: "Contact",
+        nav_menu_tag: "Navigation",
+        nav_menu_title: "Choose a Topic",
+        nav_pill: "More ☰",
+        nav_item_challenges: "Challenges",
+        nav_desc_challenges: "When growth outpaces your systems",
+        nav_item_solutions: "Our Solutions",
+        nav_desc_solutions: "Tailor-made digital transformation",
+        nav_item_cases: "Scenarios",
+        nav_desc_cases: "How our systems perform in action",
+        nav_item_work: "Our Work",
+        nav_desc_work: "Client success stories and case studies",
+        nav_item_process: "How We Work",
+        nav_desc_process: "From initial design to full implementation",
+        nav_item_faq: "FAQ",
+        nav_desc_faq: "Frequently asked questions and answers",
+        nav_item_about: "About Us",
+        nav_desc_about: "Who we are and why we do this",
+        nav_item_contact: "Contact",
+        nav_desc_contact: "Get in touch with us in seconds",
         disc_quote: '"In the future, companies won\'t win because they use more tools — but because they operate on better-structured systems."',
         disc_title: "Find out where your systems are slowing down your growth",
         disc_body: "During a 30-minute Discovery Call, we will uncover where you are losing time and money in your daily operations — and show you how we would build the system to solve it.",
@@ -3018,6 +3220,27 @@
       document.getElementById('pill5').innerText = dict.pill5;
       document.getElementById('pill6').innerText = dict.pill6;
       document.getElementById('pill7').innerText = dict.pill7;
+      if (document.getElementById('pillNavMenu')) {
+        document.getElementById('pillNavMenu').innerText = dict.nav_pill;
+        document.getElementById('navMenuTag').innerText = dict.nav_menu_tag;
+        document.getElementById('navMenuTitle').innerText = dict.nav_menu_title;
+        document.getElementById('navItemChallenges').innerText = dict.nav_item_challenges;
+        document.getElementById('navDescChallenges').innerText = dict.nav_desc_challenges;
+        document.getElementById('navItemSolutions').innerText = dict.nav_item_solutions;
+        document.getElementById('navDescSolutions').innerText = dict.nav_desc_solutions;
+        document.getElementById('navItemCases').innerText = dict.nav_item_cases;
+        document.getElementById('navDescCases').innerText = dict.nav_desc_cases;
+        document.getElementById('navItemWork').innerText = dict.nav_item_work;
+        document.getElementById('navDescWork').innerText = dict.nav_desc_work;
+        document.getElementById('navItemProcess').innerText = dict.nav_item_process;
+        document.getElementById('navDescProcess').innerText = dict.nav_desc_process;
+        document.getElementById('navItemFAQ').innerText = dict.nav_item_faq;
+        document.getElementById('navDescFAQ').innerText = dict.nav_desc_faq;
+        document.getElementById('navItemAbout').innerText = dict.nav_item_about;
+        document.getElementById('navDescAbout').innerText = dict.nav_desc_about;
+        document.getElementById('navItemContact').innerText = dict.nav_item_contact;
+        document.getElementById('navDescContact').innerText = dict.nav_desc_contact;
+      }
 
       // Permanent Discovery Card
       document.getElementById('discQuote').innerText = dict.disc_quote;
