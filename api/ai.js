@@ -189,6 +189,7 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
 
     return res.status(200).json(content);
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error('SERVER ERROR:', error);
+    return res.status(500).json({ error: error.message || 'Internal server error' });
   }
 }
