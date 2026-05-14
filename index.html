@@ -4187,7 +4187,7 @@
         <div class="ai-loading">
           <div class="ai-spinner"></div>
           <span>${currentLang === 'en' ? 'Analyzing compatibility and automation potential…' : 'Alkalmassági és automatizációs elemzés készítése…'}</span>
-          <span id="aiProgressCounter" style="margin-left: 10px; font-weight: bold; font-family: var(--font-d); color: var(--accent);">0%</span>
+          <span id="aiProgressCounter" style="margin-left: 10px; font-weight: bold; font-family: var(--font-h); color: var(--accent);">0%</span>
         </div>
       `;
       solutionCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -4329,7 +4329,7 @@
       const isRejected = data?.rejected === true;
       const statusText = isRejected 
         ? (isHu ? 'Nem releváns' : 'Not relevant') 
-        : (isHu ? 'Zöld utat kaptál' : 'Green light received');
+        : (isHu ? 'Stratégiai lehetőség' : 'Strategic Opportunity');
       
       const focim    = data?.focim    || (isHu ? 'Diagnózis' : 'Diagnosis');
       const megoldas = data?.megoldas || (isHu ? 'Alkalmas folyamatok.' : 'Suitable processes.');
@@ -4341,36 +4341,39 @@
           ${statusText}
         </div>
 
-        <h2 class="solution-focim" style="margin-bottom: 25px;">${focim}</h2>
+        <h2 class="solution-focim" style="margin-bottom: 20px; font-size: clamp(24px, 4vw, 30px); letter-spacing: -0.5px;">${focim}</h2>
 
         <div class="solution-blokk" style="border: none; margin: 0; padding: 0;">
-          <p class="solution-blokk-szoveg" style="font-size: 1.15rem; line-height: 1.6; color: #ffffff; opacity: 0.95;">
+          <p class="solution-blokk-szoveg" style="font-size: 1rem; line-height: 1.7; color: #ffffff; opacity: 0.95;">
             ${megoldas} ${eredmeny}
           </p>
           
           ${!isRejected ? `
-            <div style="margin-top: 30px; padding: 25px; background: rgba(255,199,0,0.04); border-radius: 16px; border: 1px solid rgba(255,199,0,0.12);">
-              <p style="font-style: italic; opacity: 0.85; font-size: 1rem; line-height: 1.6; color: #ffffff; margin: 0;">
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+              <p style="opacity: 0.7; font-size: 0.9rem; line-height: 1.6; color: #ffffff; margin: 0;">
                 ${isHu 
-                  ? "Mivel felelős szakmai munkát végzünk, konkrét architektúrát csak átvilágítás után tudunk tenni. Ha szintet lépnél, üljünk le egy privát beszélgetésre."
-                  : "As we perform responsible work, we can only provide a specific architecture after an audit. If you want to level up, let's have a private discussion."}
+                  ? "Mivel mi nem dobozos szoftvert árulunk, hanem egyedi architektúrát építünk, a pontos számokat egy 30 perces stratégiai átvilágítás során tudjuk meghatározni."
+                  : "Since we don't sell off-the-shelf software but build custom architectures, we can determine the exact numbers during a 30-minute strategic audit."}
               </p>
             </div>
           ` : ''}
         </div>
 
-        <div style="text-align: center; margin-top: 45px;">
-          <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" style="width: 100%; justify-content: center; padding: 18px; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(255, 199, 0, 0.2);">
-            ${isHu ? 'Időpontot foglalok' : 'Book a Discovery Call'}
-            <svg viewBox="0 0 24 24" style="margin-left: 10px; width: 20px; height: 20px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" style="width: auto; display: inline-flex; justify-content: center; padding: 15px 40px; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(255, 199, 0, 0.2);">
+            ${isHu ? 'STRATÉGIAI KONZULTÁCIÓ FOGLALÁSA' : 'BOOK STRATEGIC CONSULTATION'}
           </a>
-          <p style="font-size: 12px; opacity: 0.5; margin-top: 15px; letter-spacing: 1px;">
-            ${isHu ? 'INGYENES. KÖTELEZETTSÉGMENTES. 30 PERC.' : 'FREE. NO OBLIGATION. 30 MIN.'}
-          </p>
+          <div style="margin-top: 20px;">
+            <p style="font-size: 11px; opacity: 0.8; color: #FFC700; font-weight: 600; letter-spacing: 1px; margin-bottom: 5px;">
+              ${isHu ? 'FIGYELEM: HAVI 2 PROJEKTET VÁLLALUNK' : 'NOTICE: WE ACCEPT 2 PROJECTS PER MONTH'}
+            </p>
+            <p style="font-size: 11px; opacity: 0.5; color: #ffffff; letter-spacing: 1px;">
+              ${isHu ? 'INGYENES. KÖTELEZETTSÉGMENTES. 30 PERC.' : 'FREE. NO OBLIGATION. 30 MIN.'}
+            </p>
+          </div>
         </div>
       `;
       
-      // Smooth fade in
       solutionCard.style.opacity = '0';
       setTimeout(() => {
         solutionCard.style.transition = 'opacity 0.6s ease';
