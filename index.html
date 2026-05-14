@@ -4157,11 +4157,14 @@
 
       let fakeProgress = 0;
       const progressInterval = setInterval(() => {
-        fakeProgress += Math.floor(Math.random() * 6) + 1;
-        if (fakeProgress > 99) fakeProgress = 99;
+        if (fakeProgress < 30) fakeProgress += Math.floor(Math.random() * 8) + 5;
+        else if (fakeProgress < 60) fakeProgress += Math.floor(Math.random() * 4) + 2;
+        else if (fakeProgress < 98) fakeProgress += Math.floor(Math.random() * 2) + 1;
+        
+        if (fakeProgress > 98) fakeProgress = 98;
         const counterEl = document.getElementById('aiProgressCounter');
         if (counterEl) counterEl.innerText = fakeProgress + '%';
-      }, 400);
+      }, 300);
 
       try {
         // Call backend proxy (adjust endpoint as needed)
@@ -4179,13 +4182,23 @@
 
         if (!resp.ok) throw new Error('API error');
         const data = await resp.json();
+        
+        // Final jump to 100% and clear interval
         clearInterval(progressInterval);
-        aiRenderSolutionCard(data);
-      } catch {
-        // Fallback: generate highly intelligent, custom rule-based card from local answers
+        const counterEl = document.getElementById('aiProgressCounter');
+        if (counterEl) counterEl.innerText = '100%';
+        
+        setTimeout(() => {
+          aiRenderSolutionCard(data);
+        }, 500); // small delay for the 100% to be visible
+      } catch (err) {
         clearInterval(progressInterval);
-        const fallbackData = generateSmartFallback(aiAnswers[0], aiAnswers[1], aiAnswers[2]);
-        aiRenderSolutionCard(fallbackData);
+        solutionCard.innerHTML = `
+          <div class="ai-error" style="padding: 40px; text-align: center; color: #ff4d4d;">
+            <p>${currentLang === 'en' ? 'Sorry, something went wrong with the analysis. Please try again later.' : 'Sajnáljuk, hiba történt az elemzés során. Kérjük, próbáld meg később.'}</p>
+            <button onclick="location.reload()" class="cta-btn" style="margin-top: 20px;">${currentLang === 'en' ? 'Retry' : 'Újrapróbálkozás'}</button>
+          </div>
+        `;
       }
     }
 
