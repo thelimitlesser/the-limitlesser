@@ -89,6 +89,8 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
     }
 
     const geminiData = await response.json();
+    const contentText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    
     let content;
     try {
       // Clean up the text: sometimes AI adds markdown code blocks like ```json ... ```
