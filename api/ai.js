@@ -30,11 +30,7 @@ SZABÁLYOK:
 3. POTENCIÁL (eredmeny): 2-3 mondat a nyereségről + kötelező CTA: "Mivel felelős szakmai és stratégiai munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni. Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát, 30 perces szakmai beszélgetésre. Felesleges körök nélkül, tiszta lappal megnézzük, miben lehetünk valódi partnerek."
 
 RELEVANCIA: Ha nem szoftver/automatizáció, rejected=true és udvarias elutasítás (max 2 mondat).
-HANGNEM: Szakmai, tömör, exkluzív.`;i partnerek." (Vagy angolul ennek a pontos megfelelője).
-
-HANGNEM:
-Rossz: "Egy olyan egyedi szoftvert írunk neked, ami összeköti a rendszereidet."
-Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a Limitlesser automatizációs ökoszisztémájára. Számos hasonló működést integráltunk már sikeresen, kiváltva a manuális tűzoltást."`;
+HANGNEM: Szakmai, tömör, exkluzív.`;
 
   const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;
 
