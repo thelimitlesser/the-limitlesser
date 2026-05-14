@@ -32,7 +32,8 @@ SZABÁLYOK:
 
 A szakmai CTA-t NE írd bele, azt a rendszer automatikusan hozzáadja.
 RELEVANCIA: Ha nem szoftver/automatizáció, rejected=true és 1 mondatos elutasítás.
-HANGNEM: Szakmai, tömör, exkluzív.`;
+HANGNEM: Szakmai, tömör, exkluzív. 
+FONTOS: Szigorú TEGEZŐDÉS (te/ti)! SOHA ne használj magázódást (Ön/Önök), legyen közvetlen és baráti a hangvétel.`;
 
   const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;
 
