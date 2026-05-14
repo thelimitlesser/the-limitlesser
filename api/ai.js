@@ -77,7 +77,7 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
         ],
         generationConfig: {
           temperature: 0.3,
-          maxOutputTokens: 600,
+          maxOutputTokens: 2000,
           responseMimeType: 'application/json'
         }
       }),
@@ -107,10 +107,10 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
         try {
           content = JSON.parse(jsonMatch[0]);
         } catch (e) {
-          throw new Error('Could not parse AI response as JSON. Raw: ' + contentText.substring(0, 100));
+          throw new Error('Could not parse AI response as JSON. Raw: ' + contentText.substring(0, 500));
         }
       } else {
-        throw new Error('AI response contains no valid JSON. Raw: ' + (contentText ? contentText.substring(0, 100) : 'EMPTY RESPONSE'));
+        throw new Error('AI response contains no valid JSON. Raw: ' + (contentText ? contentText.substring(0, 500) : 'EMPTY RESPONSE'));
       }
     }
 
