@@ -4364,6 +4364,7 @@
           ` : ''}
         </div>
 
+        ${!isRejected ? `
         <div style="text-align: center; margin-top: 40px;">
           <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" style="width: auto; display: inline-flex; justify-content: center; padding: 15px 40px; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(255, 199, 0, 0.2);">
             ${isHu ? 'STRATÉGIAI KONZULTÁCIÓ FOGLALÁSA' : 'BOOK STRATEGIC CONSULTATION'}
@@ -4377,6 +4378,16 @@
             </p>
           </div>
         </div>
+        ` : `
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+          <p style="opacity: 0.6; font-size: 0.9rem; margin-bottom: 20px;">
+            ${isHu ? 'Ha úgy gondolod, tévedtünk, vagy más jellegű kérdésed van, keress minket bizalommal.' : 'If you think we made a mistake or have other questions, feel free to contact us.'}
+          </p>
+          <a href="#solutions" class="cta-btn" style="width: auto; display: inline-flex; justify-content: center; padding: 12px 30px; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #ffffff;">
+            ${isHu ? 'VISSZA A MEGOLDÁSAINKHOZ' : 'BACK TO SOLUTIONS'}
+          </a>
+        </div>
+        `}
       `;
       
       solutionCard.style.opacity = '0';
