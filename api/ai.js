@@ -60,7 +60,7 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
   const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,10 +107,10 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
         try {
           content = JSON.parse(jsonMatch[0]);
         } catch (e) {
-          throw new Error('Could not parse AI response as JSON');
+          throw new Error('Could not parse AI response as JSON. Raw: ' + contentText.substring(0, 100));
         }
       } else {
-        throw new Error('AI response contains no valid JSON');
+        throw new Error('AI response contains no valid JSON. Raw: ' + (contentText ? contentText.substring(0, 100) : 'EMPTY RESPONSE'));
       }
     }
 
