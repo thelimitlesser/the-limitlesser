@@ -4180,8 +4180,8 @@
           }),
         });
 
-        if (!resp.ok) throw new Error('API error');
         const data = await resp.json();
+        if (!resp.ok) throw new Error(data.error || 'API error');
         
         // Final jump to 100% and clear interval
         clearInterval(progressInterval);
@@ -4193,9 +4193,11 @@
         }, 500); // small delay for the 100% to be visible
       } catch (err) {
         clearInterval(progressInterval);
+        console.error('AI Error:', err);
         solutionCard.innerHTML = `
           <div class="ai-error" style="padding: 40px; text-align: center; color: #ff4d4d;">
-            <p>${currentLang === 'en' ? 'Sorry, something went wrong with the analysis. Please try again later.' : 'Sajnáljuk, hiba történt az elemzés során. Kérjük, próbáld meg később.'}</p>
+            <p>${currentLang === 'en' ? 'Error during analysis:' : 'Hiba az elemzés során:'}</p>
+            <p style="font-size: 12px; opacity: 0.8; margin-top: 5px;">${err.message}</p>
             <button onclick="location.reload()" class="cta-btn" style="margin-top: 20px;">${currentLang === 'en' ? 'Retry' : 'Újrapróbálkozás'}</button>
           </div>
         `;
