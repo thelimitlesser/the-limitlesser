@@ -30,7 +30,10 @@ Használd a 4-lépéses konverziós pszichológiát:
 4. FELELŐS CTA: Fejezd ki, hogy felelősségteljes mérnökökként látatlanban nem adunk kész szoftveres ígéreteket, hanem egy részletes átvilágításra hívjuk őket.
 
 Generálj CSAK ebben a JSON formátumban, más szöveg nélkül:
-{"focim":"[Diagnózis: Egy empátiát és profizmust sugárzó, max 8-10 szavas diagnózis a fő problémájára]","megoldas":"[Alkalmassági elemzés: 4-6 mondat arról, hogy a jelenlegi működés miért gátolja a vízióját, és a Limitlesser tapasztalatai alapján a leírt folyamatok miért kiemelten alkalmasak az automatizációra / integrációra]","eredmeny":"[Potenciál & Kockázat + CTA: 4-6 mondat arról, hogy milyen eredmények (idő/hatékonyság) érhetőek el, majd a legvégén a kötelező úriemberes, felelősségteljes felhívás egy Discovery Callra]","lang":"a generált válasz nyelve: 'hu' vagy 'en'"}
+{"focim":"[Diagnózis]","megoldas":"[Alkalmassági elemzés]","eredmeny":"[Potenciál & Kockázat + CTA]","lang":"hu/en", "rejected": true/false}
+
+RELEVANCIA SZABÁLY:
+Amennyiben a látogató kérdése/problémája EGYÁLTALÁN NEM kapcsolódik a Limitlesser szakterületéhez (pl. fizikai munka, ételrendelés, ezotéria, vagy bármi ami nem üzleti folyamat, szoftver vagy növekedés), akkor a "rejected" kulcs értéke legyen true, és a mezőket töltsd ki egy udvarias, de határozott elutasítással, amiben elmagyarázod, hogy mi miben segítünk (automatizáció, rendszerek, CRO). Ebben az esetben ne ígérj eredményt.
 
 A LIMITLESSERRŐL (háttér tudás):
 Növekvő KKV-knak épít egyedi digitális rendszereket bárhonnan a világból. Három területen dolgozunk:
@@ -91,52 +94,8 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
     // If Resend API Key is configured, trigger emails asynchronously
     if (resendApiKey && email) {
       const isEn = (content.lang || lang) === 'en';
-      const calendlyLink = 'https://calendly.com/limitlesser/discovery-call';
-
-      // 1. Email to visitor
-      const visitorSubject = isEn 
-        ? "Your Tailored Solution Summary — Limitlesser" 
-        : "A te helyzetedre szabott összefoglaló — Limitlesser";
-
-      const visitorHtml = `
-        <div style="font-family: 'Times New Roman', Times, serif; background-color: #0b0a05; color: #ffffff; padding: 40px; max-width: 650px; margin: 0 auto; border-radius: 24px; border: 1px solid rgba(255,199,0,0.15);">
-          <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 20px; margin-bottom: 30px; text-align: center;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin: 0;">${isEn ? 'TAILORED TO YOUR SITUATION' : 'A TE HELYZETEDRE SZABVA'}</p>
-            <h1 style="color: #ffffff; font-size: 26px; font-weight: 500; margin: 10px 0 0; font-family: 'Times New Roman', serif;">${content.focim}</h1>
-          </div>
-
-          <div style="margin-bottom: 25px;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'THE SOLUTION' : 'A MEGOLDÁS'}</p>
-            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.megoldas}</p>
-          </div>
-
-          <div style="margin-bottom: 35px;">
-            <p style="color: #FFC700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 8px 0; font-weight: 600;">${isEn ? 'EXPECTED RESULT' : 'A VÁRHATÓ EREDMÉNY'}</p>
-            <p style="color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.6; margin: 0;">${content.eredmeny}</p>
-          </div>
-
-          <div style="background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 25px; border-radius: 16px; text-align: center;">
-            <p style="color: rgba(255,255,255,0.4); font-size: 11px; line-height: 1.5; margin: 0 0 20px 0;">
-              ${isEn 
-                ? 'This is a preliminary summary based on the information you shared. Every situation is unique — for a complete and detailed analysis, book a free Discovery Call.' 
-                : 'Ez egy előzetes összefoglaló az általad megosztott információk alapján. Minden helyzet egyedi — a teljes és részletes elemzésért foglalj egy ingyenes Discovery Callt.'}
-            </p>
-            <a href="${calendlyLink}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #FFC700, #FFE066); color: #000000; text-decoration: none; padding: 14px 28px; border-radius: 100px; font-weight: 600; font-size: 14px; margin-bottom: 10px; transition: 0.3s;">
-              ${isEn ? 'Book Discovery Call →' : 'Discovery Call foglalása →'}
-            </a>
-            <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 5px 0 0 0;">
-              ${isEn ? 'Free. No obligation. 30 minutes.' : 'Ingyenes. Kötelezettségmentes. 30 perc.'}
-            </p>
-          </div>
-
-          <div style="margin-top: 40px; text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px;">
-            <p>&copy; 2026 Limitlesser. All rights reserved.</p>
-          </div>
-        </div>
-      `;
-
-      // 2. Email to Limitlesser team
-      const teamSubject = `🚀 Új lead (AI kérdőív): ${email}`;
+      const isRejected = content.rejected === true;
+      const teamSubject = `${isRejected ? '⚠️ NEM RELEVÁNS: ' : '🚀 Új lead (AI kérdőív): '}${email}`;
       const teamHtml = `
         <div style="font-family: 'Inter', sans-serif; background-color: #0b0a05; color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 20px; border: 1px solid rgba(255,199,0,0.15);">
           <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 20px; margin-bottom: 30px; text-align: center;">
@@ -145,7 +104,9 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
           </div>
 
           <div style="margin-bottom: 30px;">
-            <h2 style="font-size: 12px; color: #FFC700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid #FFC700; padding-left: 10px;">Lead adatok</h2>
+            <h2 style="font-size: 12px; color: ${isRejected ? '#ff4d4d' : '#FFC700'}; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-left: 3px solid ${isRejected ? '#ff4d4d' : '#FFC700'}; padding-left: 10px;">
+              ${isRejected ? 'Lead adatok (NEM RELEVÁNS)' : 'Lead adatok'}
+            </h2>
             <table style="width: 100%; border-collapse: collapse;">
               <tr><td style="padding: 8px 0; color: #888; width: 120px;">Email:</td><td style="padding: 8px 0; font-weight: 600;"><a href="mailto:${email}" style="color: #ffffff; text-decoration: none;">${email}</a></td></tr>
               <tr><td style="padding: 8px 0; color: #888;">Nyelv:</td><td style="padding: 8px 0; text-transform: uppercase;">${lang}</td></tr>
@@ -185,38 +146,21 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
         </div>
       `;
 
-      // Use Promise.allSettled to send emails without blocking the main response
-      Promise.allSettled([
-        // Send email to visitor
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${resendApiKey}`,
-          },
-          body: JSON.stringify({
-            from: 'The Limitlesser <onboarding@resend.dev>',
-            to: [email],
-            subject: visitorSubject,
-            html: visitorHtml,
-          }),
+      // Trigger email sending
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${resendApiKey}`,
+        },
+        body: JSON.stringify({
+          from: 'The Limitlesser <onboarding@resend.dev>',
+          to: ['the.limitlesser@gmail.com'],
+          subject: teamSubject,
+          html: teamHtml,
         }),
-        // Send email to team
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${resendApiKey}`,
-          },
-          body: JSON.stringify({
-            from: 'The Limitlesser <onboarding@resend.dev>',
-            to: ['the.limitlesser@gmail.com'],
-            subject: teamSubject,
-            html: teamHtml,
-          }),
-        })
-      ]).catch(err => {
-        console.error('Error sending background emails via Resend:', err);
+      }).catch(err => {
+        console.error('Error sending lead email via Resend:', err);
       });
     }
 

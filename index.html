@@ -130,7 +130,7 @@
       margin-right: -0.28em; /* offset letter-spacing for perfect centering */
       color: #1a1a1a;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 32px;
       opacity: 0;
       transform: translateY(20px);
       animation: preloaderLogoFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
@@ -1023,12 +1023,12 @@
     }
     .pill {
       display: inline-flex; align-items: center; justify-content: center;
-      padding: 14px 20px; border-radius: 100px; background: var(--pill-bg);
+      padding: 12px 18px; border-radius: 100px; background: var(--pill-bg);
       border: 1px solid var(--pill-border); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
-      font-family: var(--font-b); font-size: 14px; font-weight: 500; color: var(--text-primary);
+      font-family: var(--font-b); font-size: 13px; font-weight: 500; color: var(--text-primary);
       cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap;
       flex: 0 0 calc(25% - 0.75rem);
-      min-width: 175px;
+      min-width: 158px;
       text-align: center;
       box-shadow: var(--pill-shadow);
     }
@@ -1041,12 +1041,22 @@
     /* ─── Permanent Bottom Discovery Call CTA Card ─── */
     .discovery-card {
       width: 100%; max-width: 720px; background: linear-gradient(135deg, #100E06 0%, #1F1B0B 100%);
-      border: 1px solid rgba(255, 199, 0, 0.35); border-radius: 28px; padding: 2.8rem 2.2rem;
-      margin: 18rem auto 4rem; color: #FFFFFF; display: flex; flex-direction: column; gap: 1.5rem;
+      border: 1px solid rgba(255, 199, 0, 0.35); border-radius: 28px; padding: 3rem 2.2rem;
+      margin: 18rem auto 0; color: #FFFFFF; display: flex; flex-direction: column; gap: 1.2rem;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
       opacity: 0; transform: translateY(60px);
       transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .disc-num { color: #ffc700; }
+    .pulse-dot { animation: pulse-yellow 2s infinite; }
+    @keyframes pulse-yellow {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 199, 0, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 199, 0, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 199, 0, 0); }
+    }
+    .discovery-card .cta-btn { width: auto; min-width: 280px; align-self: center; }
+    .discovery-card .disc-checklist { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .discovery-card .disc-item { display: flex; align-items: flex-start; gap: 0.8rem; font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; text-align: left; }
     .discovery-card.scrolled-in {
       opacity: 1; transform: translateY(0);
     }
@@ -1683,7 +1693,7 @@
       .pill { padding: 10px 12px; font-size: 12px; flex: 1; min-width: 0; text-align: center; white-space: nowrap; }
       
       /* Hide long row of pills on mobile, showing only Discovery Call and NavMenu */
-      #pill1, #pill2, #pill3, #pill4, #pill5, #pill6, #pill7, #pill8 { display: none !important; }
+      #pill1, #pill2, #pill3, #pill4, #pill5, #pill6, #pill7 { display: none !important; }
       #pillDiscoveryMobile {
         display: inline-flex !important; align-items: center; justify-content: center; gap: 4px;
         background: var(--accent) !important; color: #000000 !important; border-color: var(--accent) !important;
@@ -1765,6 +1775,8 @@
       
       .discovery-card { padding: 2.2rem 1.5rem; margin-top: 14rem; }
       .discovery-card .cta-btn { width: 100%; box-sizing: border-box; }
+      .discovery-card .disc-checklist { padding-left: 0; }
+      .discovery-card .disc-item svg { display: none; }
     }
 
     /* ─── enlarged Contact Modal for Calendly inline widget ─── */
@@ -1964,7 +1976,6 @@
   <div id="preloader">
     <div class="preloader-content">
       <h2 class="preloader-logo">LIMIT<span>LESSER</span></h2>
-      <p class="preloader-subtitle" id="preloaderSubtitle" data-i18n="hero_subtitle">Digitális Transzformáció KKV-knak</p>
       <div class="preloader-line-wrap">
         <div class="preloader-line" id="loaderLine"></div>
       </div>
@@ -2025,7 +2036,6 @@
       <!-- Horizontal Pill navigation -->
       <div class="pills-wrap">
         <div class="pills-container">
-          <button class="pill" onclick="openModal('modalChallenges')" id="pill8">Kihívások</button>
           <button class="pill" onclick="openModal('modalSolutions')" id="pill1">Megoldásaink</button>
           <button class="pill" onclick="openModal('modalCases')" id="pill2">Forgatókönyvek</button>
           <button class="pill" onclick="openModal('modalWork')" id="pill3">Munkáink</button>
@@ -2033,7 +2043,7 @@
           <button class="pill" onclick="openModal('modalFAQ')" id="pill5">GYIK</button>
           <button class="pill" onclick="openModal('modalAbout')" id="pill6">Rólunk</button>
           <button class="pill" onclick="openModal('modalContact')" id="pill7">Kapcsolat</button>
-          <button class="pill" onclick="openModal('modalContact')" id="pillDiscoveryMobile">Discovery Call</button>
+          <button class="pill" onclick="openModal('modalContact')" id="pillDiscoveryMobile">Időpontot foglalok</button>
           <button class="pill" onclick="openModal('modalNavMenu')" id="pillNavMenu">Továbbiak ☰</button>
         </div>
       </div>
@@ -2041,42 +2051,41 @@
 
     <!-- Permanent Bottom CTA block -->
     <div class="discovery-card">
-      <p class="disc-quote" id="discQuote">
-        "A jövőben nem azok a cégek nyernek, akik több eszközt használnak — hanem akik jobban felépített rendszereken működnek."
-      </p>
       <div class="disc-header">
-        <span class="tag">Discovery Call</span>
-        <h3 id="discTitle">Derítsd ki, hol lassítják a rendszereid a céged növekedését</h3>
+        <h3 id="discTitle">Még nem egyértelmű, hogyan tovább?</h3>
       </div>
-      <p class="disc-body" id="discBody">
-        Egy 30 perces Discovery Call során feltárjuk, hol veszítesz időt és pénzt a napi működésben — és megmutatjuk, hogyan építenénk fel azt a rendszert, ami ezt megoldja.
+      <p class="disc-body" id="discBody" style="margin-bottom: 2rem; opacity: 0.8;">
+        Foglalj hozzánk egy díjmentes 30 perces hívást, ahol 3 lépés történik:
       </p>
       
-      <div class="disc-checklist">
-        <div class="disc-item">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          <span id="discCheck1"><strong>Átvilágítás:</strong> hol vannak a szűk keresztmetszetek</span>
+      <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 0 -2.2rem 2.5rem; width: auto;">
+      
+      <div class="disc-checklist" style="margin: 0 auto 2rem; max-width: 450px; display: flex; flex-direction: column; gap: 1.2rem; text-align: center;">
+        <div class="disc-item" style="display: block;">
+          <span id="discCheck1"><strong><span class="disc-num">1.</span> Felmérés:</strong> hol lehet fejleszteni, egyszerűsíteni, modernizálni, frissíteni, újat építeni</span>
         </div>
-        <div class="disc-item">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          <span id="discCheck2"><strong>Javaslat:</strong> konkrét fejlesztési lehetőségek</span>
+        <div class="disc-item" style="display: block;">
+          <span id="discCheck2"><strong><span class="disc-num">2.</span> Tanácsadás:</strong> konkrét fejlesztési lehetőséget nyújtunk (függetlenül attól, hogy velünk tervezed-e a megvalósítást)</span>
         </div>
-        <div class="disc-item">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          <span id="discCheck3"><strong>Ütemterv:</strong> hogyan és mikor valósulhat meg</span>
+        <div class="disc-item" style="display: block;">
+          <span id="discCheck3"><strong><span class="disc-num">3.</span> Tervezés & Kivitelezés:</strong> ha van fejlesztési lehetőség és potenciál, stratégiát tervezünk a megvalósításra</span>
         </div>
       </div>
 
-      <p class="disc-body" style="font-size: 12px; opacity: 0.6;" id="discUrgency">
-        Havonta korlátozott számú konzultációt vállalunk, hogy minden ügyfélre elegendő figyelmet tudjunk fordítani.
-      </p>
-
-      <div style="text-align: center; margin-top: 0.5rem;">
-        <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" id="discBtn" style="width: 100%;">
-          Discovery Call foglalása
+      <div style="text-align: center; margin-top: 2rem; margin-bottom: 0.5rem;">
+        <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" id="discBtn">
+          Időpontot foglalok
           <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-        <p style="font-size: 11px; opacity: 0.5; margin-top: 0.6rem; letter-spacing: 1px;" id="discSubText">INGYENES. KÖTELEZETTSÉGMENTES. 30 PERC.</p>
+        <p style="font-size: 11px; opacity: 0.5; margin-top: 0.8rem; letter-spacing: 1px;" id="discSubText">INGYENES HÍVÁS. NINCS KÖTELEZETTSÉG. 30 PERC.</p>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <div class="notice-badge" style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.8rem; padding: 0.6rem 1.5rem; background: rgba(255, 199, 0, 0.08); border: 1px solid rgba(255, 199, 0, 0.2); border-radius: 100px;">
+        <span class="pulse-dot" style="width: 8px; height: 8px; background: #ffc700; border-radius: 50%; display: inline-block;"></span>
+        <p style="font-size: 13px; color: #ffc700; margin: 0; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;" id="discNotice">
+          Figyelem: 1 hónapban maximum 2 megbízást vállalunk.
+        </p>
       </div>
     </div>
   </main>
@@ -2091,7 +2100,6 @@
       <div class="f-col" style="flex: 2; max-width: 480px;">
         <h4 id="footerNavTitle" style="margin-bottom: 1.2rem;">Navigáció</h4>
         <ul class="footer-nav-grid">
-          <li><a href="#" onclick="openModal('modalChallenges'); return false;" id="footerNavChallenges">Kihívások</a></li>
           <li><a href="#" onclick="openModal('modalSolutions'); return false;" id="footerNavSolutions">Megoldásaink</a></li>
           <li><a href="#" onclick="openModal('modalCases'); return false;" id="footerNavScenarios">Forgatókönyvek</a></li>
           <li><a href="#" onclick="openModal('modalWork'); return false;" id="footerNavWorks">Munkáink</a></li>
@@ -2140,7 +2148,7 @@
 
         <h3 style="color: var(--text-primary); font-family: var(--font-h); font-size: 15px; font-weight: 600; margin-top: 1.6rem; margin-bottom: 0.6rem;">1. AZ ÁSZF HATÁLYA ÉS CÉLJA</h3>
         <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;">Jelen Általános Szerződési Feltételek (a továbbiakban: ÁSZF) a <strong>Végtelen Folyamat Kft.</strong> (székhely: 1135 Budapest, Szent László út 34-38. C. ép. 60. ajtó, adószám: [ADÓSZÁM], a továbbiakban: Szolgáltató) által nyújtott digitális transzformációs, rendszerfejlesztési és kapcsolódó szolgáltatásokra vonatkoznak.</p>
-        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;">Az ÁSZF hatálya kiterjed minden olyan természetes és jogi személyre (a továbbiakban: Megrendelő), aki a Szolgáltató szolgáltatásait igénybe veszi, ideértve a weboldalon keresztül benyújtott kapcsolatfelvételi megkereséseket, a Discovery Call foglalásokat, valamint a megkötött egyedi szerződések alapján nyújtott szolgáltatásokat.</p>
+        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;">Az ÁSZF hatálya kiterjed minden olyan természetes és jogi személyre (a továbbiakban: Megrendelő), aki a Szolgáltató szolgáltatásait igénybe veszi, ideértve a weboldalon keresztül benyújtott kapcsolatfelvételi megkereséseket, az időpontfoglalásokat, valamint a megkötött egyedi szerződések alapján nyújtott szolgáltatásokat.</p>
         <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;">A Szolgáltató szolgáltatásainak igénybevételével a Megrendelő elfogadja jelen ÁSZF rendelkezéseit.</p>
 
         <h3 style="color: var(--text-primary); font-family: var(--font-h); font-size: 15px; font-weight: 600; margin-top: 1.6rem; margin-bottom: 0.6rem;">2. A SZOLGÁLTATÓ ADATAI</h3>
@@ -2154,8 +2162,8 @@
         <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>3.4 Kapcsolódó tanácsadás és stratégiai tervezés</strong><br>A fenti területekhez kapcsolódó üzleti és technológiai tanácsadás.</p>
 
         <h3 style="color: var(--text-primary); font-family: var(--font-h); font-size: 15px; font-weight: 600; margin-top: 1.6rem; margin-bottom: 0.6rem;">4. A SZERZŐDÉSKÖTÉS FOLYAMATA</h3>
-        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>4.1 Discovery Call</strong><br>A Megrendelő a weboldalon keresztül ingyenes, kötelezettségmentes Discovery Callt foglalhat. A Discovery Call feltérképező jellegű konzultáció, amelynek keretében a felek megismerik egymást és azonosítják az együttműködési lehetőségeket. A Discovery Call nem minősül ajánlatnak vagy szerződéskötésnek.</p>
-        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>4.2 Ajánlatadás</strong><br>A Discovery Call és a szükséges feltérképezés alapján a Szolgáltató egyedi írásos ajánlatot készít a Megrendelő részére. Az ajánlat tartalmazza a szolgáltatás pontos körét, az elvégzendő feladatokat, az ütemtervet és a díjazást.</p>
+        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>4.1 Konzultáció</strong><br>A Megrendelő a weboldalon keresztül ingyenes, kötelezettségmentes konzultációt foglalhat. A konzultáció feltérképező jellegű megbeszélés, amelynek keretében a felek megismerik egymást és azonosítják az együttműködési lehetőségeket. A konzultáció nem minősül ajánlatnak vagy szerződéskötésnek.</p>
+        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>4.2 Ajánlatadás</strong><br>A konzultáció és a szükséges feltérképezés alapján a Szolgáltató egyedi írásos ajánlatot készít a Megrendelő részére. Az ajánlat tartalmazza a szolgáltatás pontos körét, az elvégzendő feladatokat, az ütemtervet és a díjazást.</p>
         <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 1.2rem;"><strong>4.3 Szerződéskötés</strong><br>A szerződés az egyedi ajánlat Megrendelő általi írásos elfogadásával jön létre. Minden projekt esetén külön egyedi szerződés kerül megkötésre, amely az ÁSZF-fel együtt értelmezendő. Eltérés esetén az egyedi szerződés rendelkezései az irányadók.</p>
 
         <h3 style="color: var(--text-primary); font-family: var(--font-h); font-size: 15px; font-weight: 600; margin-top: 1.6rem; margin-bottom: 0.6rem;">5. DÍJAZÁS ÉS FIZETÉSI FELTÉTELEK</h3>
@@ -2236,12 +2244,12 @@
         <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 0.6rem;"><strong>3.1 AI kérdőív kitöltése</strong></p>
         <ul style="list-style-type: disc; padding-left: 1.2rem; margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 14px; line-height: 1.9;">
           <li><strong>Gyűjtött adatok:</strong> Email cím, szabad szöveges válaszok (üzleti kihívás, jelenlegi működés, célok).</li>
-          <li><strong>Cél:</strong> Személyre szabott megoldás kártya generálása, elküldése emailben, kapcsolatfelvétel a Discovery Call egyeztetése érdekében, üzletfejlesztés.</li>
+          <li><strong>Cél:</strong> Személyre szabott megoldás kártya generálása, elküldése emailben, kapcsolatfelvétel az időpont egyeztetése érdekében, üzletfejlesztés.</li>
           <li><strong>Jogalap:</strong> Az érintett önkéntes hozzájárulása (GDPR 6. cikk (1) a) pont).</li>
           <li><strong>Megőrzési idő:</strong> 2 év az utolsó kapcsolatfelvételtől, vagy a hozzájárulás visszavonásáig.</li>
         </ul>
 
-        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 0.6rem;"><strong>3.2 Discovery Call foglalás (Calendly)</strong></p>
+        <p style="font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 0.6rem;"><strong>3.2 Időpontfoglalás (Calendly)</strong></p>
         <ul style="list-style-type: disc; padding-left: 1.2rem; margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 14px; line-height: 1.9;">
           <li><strong>Gyűjtött adatok:</strong> Név, email cím, időpontfoglalási részletek.</li>
           <li><strong>Cél:</strong> Az időpontfoglalás lebonyolítása, előzetes egyeztetés.</li>
@@ -2356,12 +2364,12 @@
           <div class="modal-card" style="cursor: pointer; border-color: rgba(212, 163, 89, 0.2);" onclick="closeActiveModalAndOpenContact()">
             <span class="num" style="color: var(--accent);">04</span>
             <h4 id="m1Card4Title">Egyedi kihívásod van?</h4>
-            <p id="m1Card4Desc">Bármilyen összetett is a helyzeted, mi megtaláljuk a megoldást. Foglalj egy Discovery Callt, és tervezzük meg közösen!</p>
+            <p id="m1Card4Desc">Bármilyen összetett is a helyzeted, mi megtaláljuk a megoldást. Foglalj egy konzultációt, és tervezzük meg közösen!</p>
           </div>
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m1Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2480,7 +2488,7 @@
 
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m8Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2631,7 +2639,7 @@
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m2Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2691,35 +2699,35 @@
         <p style="font-size: 14px; text-align: center; margin-bottom: 1.5rem;" id="m3ConceptsDesc">Minden projektet egyedi designnal és stratégiával építünk — ízelítőnek néhány iparág-specifikus koncepció:</p>
         
         <div class="t-grid">
-          <a href="./demo/retail/index.html" class="t-card" style="--bg-img: url('templates/retail.png');">
+          <a href="./demo/retail/index.html" target="_blank" rel="noopener noreferrer" class="t-card" style="--bg-img: url('templates/retail.png');">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
             <h3>Retail</h3>
             <p id="tRetailDesc"></p>
           </a>
-          <a href="./demo/professional/index.html" class="t-card" style="--bg-img: url('templates/pro.png');">
+          <a href="./demo/professional/index.html" target="_blank" rel="noopener noreferrer" class="t-card" style="--bg-img: url('templates/pro.png');">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h2m5.66 0H20a2 2 0 012 2v10a2 2 0 01-2 2h-6.34M7 9h3m-3 4h3m-3 4h3"/></svg>
             <h3>Professional</h3>
             <p id="tProDesc"></p>
           </a>
-          <a href="./demo/corporate/index.html" class="t-card" style="--bg-img: url('templates/corp.png');">
+          <a href="./demo/corporate/index.html" target="_blank" rel="noopener noreferrer" class="t-card" style="--bg-img: url('templates/corp.png');">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M9 21V9l3-3 3 3v12M12 12h.01M12 15h.01M12 18h.01"/></svg>
             <h3>Corporate</h3>
             <p id="tCorpDesc"></p>
           </a>
-          <a href="./demo/portfolio/index.html" class="t-card" style="--bg-img: url('templates/portfolio.png');">
+          <a href="./demo/portfolio/index.html" target="_blank" rel="noopener noreferrer" class="t-card" style="--bg-img: url('templates/portfolio.png');">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l5 5M9.5 4.5l.5 2.5"/></svg>
             <h3>Portfolio</h3>
             <p id="tPortfolioDesc"></p>
           </a>
-          <a href="./demo/tech/index.html" class="t-card" style="--bg-img: url('templates/tech.png');">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <a href="./demo/tech/index.html" target="_blank" rel="noopener noreferrer" class="t-card" style="--bg-img: url('templates/tech.png');">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             <h3>Tech / SaaS</h3>
             <p id="tTechDesc"></p>
           </a>
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m3Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2760,7 +2768,7 @@
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m4Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2829,7 +2837,7 @@
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m5Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2866,7 +2874,7 @@
         </div>
         <div style="text-align: center; margin-top: 1.5rem;">
           <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m6Cta">
-            Discovery Call foglalása
+            Időpontot foglalok
           </button>
         </div>
       </div>
@@ -2886,7 +2894,7 @@
       </div>
       <div class="modal-content" style="align-items: center; text-align: center;">
         
-        <h3 style="font-family: var(--font-d); font-size: clamp(22px, 3.2vw, 28px); font-weight: 500; color: var(--accent); margin-top: 1rem; margin-bottom: 0.5rem;" id="m7CalendlyTitle">Discovery Call</h3>
+        <h3 style="font-family: var(--font-d); font-size: clamp(22px, 3.2vw, 28px); font-weight: 500; color: var(--accent); margin-top: 1rem; margin-bottom: 0.5rem;" id="m7CalendlyTitle">Konzultáció</h3>
         <p style="font-size: 16px; opacity: 0.8; margin-bottom: 1.5rem;" id="m7CalendlyIntro">Foglalj le egy 30 perces konzultációt közvetlenül a naptáramba.</p>
 
         <!-- Calendly Inline Embed Widget -->
@@ -2924,6 +2932,15 @@
         page_title: "Limitlesser — Digitális Transzformáció KKV-knak",
         hero_subtitle: "Digitális Transzformáció KKV-knak",
         ai_placeholder: "Mit szeretnél? Írd le a problémát:",
+        ai_rejected_title: "Ez a terület kívül esik a szakterületünkön",
+        ai_rejected_body: "A Limitlesser elsősorban digitális transzformációval, folyamatautomatizálással és egyedi szoftverrendszerek építésével foglalkozik. A megadott információk alapján úgy tűnik, olyan fizikai szolgáltatást vagy terméket keresel, amiben nem mi vagyunk a legmegfelelőbb partnerek.",
+        ai_rejected_outcome: "Mi abban tudunk segíteni, hogyan tegyük hatékonyabbá egy meglévő cég belső működését technológiai eszközökkel. Ha mégis van ilyen jellegű kihívásod, várunk egy Discovery Callra.",
+        ai_rejected_label: "Kívül esik a fókuszunkon",
+        ai_rejected_q1: "Miért nem tudunk segíteni?",
+        ai_rejected_q2: "Miben tudunk segíteni?",
+        ai_report_label: "Előzetes Alkalmassági Riport",
+        ai_report_q1: "Alkalmassági elemzés",
+        ai_report_q2: "Automatizációs potenciál & Kockázat",
         ai_sub_info: "Fogalmazd meg a problémát, amire digitális megoldást keresel, és AI kollégánk azonnal segít megmondani, hogy jó helyen jársz-e a megoldáért.",
         pill1: "Megoldásaink",
         pill2: "Forgatókönyvek",
@@ -2951,15 +2968,14 @@
         nav_desc_about: "Kik vagyunk és miért csináljuk?",
         nav_item_contact: "Kapcsolat",
         nav_desc_contact: "Lépj velünk kapcsolatba pár másodperc alatt",
-        disc_quote: '"A jövőben nem azok a cégek nyernek, akik több eszközt használnak — hanem akik jobban felépített rendszereken működnek."',
-        disc_title: "Derítsd ki, hol lassítják a rendszereid a céged növekedését",
-        disc_body: "Egy 30 perces Discovery Call során feltárjuk, hol veszítesz időt és pénzt a napi működésben — és megmutatjuk, hogyan építenénk fel azt a rendszert, ami ezt megoldja.",
-        disc_check1: "<strong>Átvilágítás:</strong> hol vannak a szűk keresztmetszetek",
-        disc_check2: "<strong>Javaslat:</strong> konkrét fejlesztési lehetőségek",
-        disc_check3: "<strong>Ütemterv:</strong> hogyan és mikor valósulhat meg",
-        disc_urgency: "Havonta korlátozott számú konzultációt vállalunk, hogy minden ügyfélre elegendő figyelmet tudjunk fordítani.",
-        disc_btn: "Discovery Call foglalása",
-        disc_subtext: "INGYENES. KÖTELEZETTSÉGMENTES. 30 PERC.",
+        disc_title: "Még nem egyértelmű, hogyan tovább?",
+        disc_body: "Foglalj hozzánk egy díjmentes 30 perces hívást, ahol 3 lépés történik:",
+        disc_check1: "<strong><span class=\"disc-num\">1.</span> Felmérés:</strong> hol lehet fejleszteni, egyszerűsíteni, modernizálni, frissíteni, újat építeni",
+        disc_check2: "<strong><span class=\"disc-num\">2.</span> Tanácsadás:</strong> konkrét fejlesztési lehetőséget nyújtunk (függetlenül attól, hogy velünk tervezed-e a megvalósítást)",
+        disc_check3: "<strong><span class=\"disc-num\">3.</span> Tervezés & Kivitelezés:</strong> ha van fejlesztési lehetőség és potenciál, stratégiát tervezünk a megvalósításra",
+        disc_btn: "Időpontot foglalok",
+        disc_subtext: "INGYENES HÍVÁS. NINCS KÖTELEZETTSÉG. 30 PERC.",
+        disc_notice: "Figyelem: 1 hónapban maximum 2 megbízást vállalunk.",
         
         m1_tag: "Megoldásaink",
         m1_title: "Így oldjuk meg",
@@ -2971,7 +2987,7 @@
         m1_c3_t: "Konverzió Optimalizálás",
         m1_c3_d: "Minden rendszer annyit ér, amennyit az üzleti eredményekben visszahoz. Ezért nem állunk meg a fejlesztésnél — mérjük, teszteljük és folyamatosan finomhangoljuk az ügyfélutad minden pontját, hogy a forgalomból a lehető legtöbb érdeklődő váljon tényleges ügyféllé.",
         m1_c4_t: "Egyedi kihívásod van?",
-        m1_c4_d: "Bármilyen összetett is a helyzeted, mi megtaláljuk a megoldást. Foglalj egy Discovery Callt, és tervezzük meg közösen!",
+        m1_c4_d: "Bármilyen összetett is a helyzeted, mi megtaláljuk a megoldást. Foglalj egy konzultációt, és tervezzük meg közösen!",
         m1_cta: "Kérj ajánlatot",
 
         m2_tag: "FORGATÓKÖNYVEK",
@@ -3072,7 +3088,7 @@
         m7_tag: "KAPCSOLAT",
         m7_header: "Vedd fel velünk a kapcsolatot!",
         m7_title: "Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén!",
-        m7_calendly_title: "Discovery Call",
+        m7_calendly_title: "Konzultáció",
         m7_calendly_intro: "Foglalj le egy 30 perces konzultációt közvetlenül a naptáramba.",
         m7_phone_intro: "Ha inkább telefonon keresnél minket, az alábbi számon elérsz minket munkanapokon, munkaidőben.",
         m7_social: "Vagy kövess minket:",
@@ -3080,7 +3096,7 @@
         ai_analyzing: "Elemzés folyamatban...",
         ai_next_step: "Még egy gyors kérdés — körülbelül mekkora a csapatod?",
         sol_title: "A TE HELYZETEDRE SZABOTT MEGOLDÁS",
-        sol_btn: "Discovery Call foglalása →",
+        sol_btn: "Időpontot foglalok →",
         sol_sub: "Ingyenes. Kötelezettségmentes. 30 perc.",
         sol_email_lbl: "Add meg az email címed és elküldjük neked ezt az összefoglalót:",
         sol_email_btn: "Küldés →",
@@ -3088,23 +3104,32 @@
         sol_email_error: "Hiba történt az email küldése során.",
 
         pill8: "Kihívások",
-        m1_cta: "Discovery Call foglalása",
-        m2_cta: "Discovery Call foglalása",
-        m3_cta: "Discovery Call foglalása",
-        m4_cta: "Discovery Call foglalása",
-        m5_cta: "Discovery Call foglalása",
-        m6_cta: "Discovery Call foglalása",
+        m1_cta: "Időpontot foglalok",
+        m2_cta: "Időpontot foglalok",
+        m3_cta: "Időpontot foglalok",
+        m4_cta: "Időpontot foglalok",
+        m5_cta: "Időpontot foglalok",
+        m6_cta: "Időpontot foglalok",
         m8_tag: "KIHÍVÁSOK",
         m8_title: "Amikor a növekedés utoléri a rendszereidet",
         m8_intro: "Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. A folyamatok, amelyek korábban működtek, elkezdenek lassítani.",
         m8_hook_title: "Segítünk, ha...",
         m8_outro: "Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.",
-        m8_cta: "Discovery Call foglalása"
+        m8_cta: "Időpontot foglalok"
       },
       en: {
         page_title: "Limitlesser — Digital Transformation for SMBs",
         hero_subtitle: "Digital Transformation for SMBs",
         ai_placeholder: "What's your challenge? Describe the problem:",
+        ai_rejected_title: "This topic is outside our expertise",
+        ai_rejected_body: "Limitlesser focuses primarily on digital transformation, process automation, and building custom software systems. Based on the information shared, it seems you are looking for a physical service or product where we are not the best fit.",
+        ai_rejected_outcome: "We specialize in making existing business operations more efficient through technology. If you have such a challenge, we'd still love to hear from you in a Discovery Call.",
+        ai_rejected_label: "Outside our focus",
+        ai_rejected_q1: "Why we can't help",
+        ai_rejected_q2: "What we DO help with",
+        ai_report_label: "Preliminary Feasibility Report",
+        ai_report_q1: "Compatibility Analysis",
+        ai_report_q2: "Automation Potential & Risk",
         ai_sub_info: "Describe the problem you're looking to solve digitally, and our AI will immediately help you find out if you're in the right place.",
         pill1: "Solutions",
         pill2: "Use Cases",
@@ -3132,15 +3157,14 @@
         nav_desc_about: "Who we are and why we do this",
         nav_item_contact: "Contact",
         nav_desc_contact: "Get in touch with us in seconds",
-        disc_quote: '"In the future, companies won\'t win because they use more tools — but because they operate on better-structured systems."',
-        disc_title: "Find out where your systems are slowing down your growth",
-        disc_body: "During a 30-minute Discovery Call, we will uncover where you are losing time and money in your daily operations — and show you how we would build the system to solve it.",
-        disc_check1: "<strong>Diagnostics:</strong> pinpointing the bottlenecks",
-        disc_check2: "<strong>Proposal:</strong> concrete automation and development opportunities",
-        disc_check3: "<strong>Roadmap:</strong> how and when it can be realized",
-        disc_urgency: "We accept a limited number of consultations per month to ensure every client gets absolute priority focus.",
-        disc_btn: "Book a Discovery Call",
-        disc_subtext: "FREE. NO OBLIGATION. 30 MINUTES.",
+        disc_title: "Not clear on how to proceed yet?",
+        disc_body: "Book a free 30-minute call with us, where 3 steps happen:",
+        disc_check1: "<strong><span class=\"disc-num\">1.</span> Assessment:</strong> where to improve, simplify, modernize, update, or build anew",
+        disc_check2: "<strong><span class=\"disc-num\">2.</span> Consulting:</strong> we provide concrete development opportunities (regardless of whether you plan implementation with us)",
+        disc_check3: "<strong><span class=\"disc-num\">3.</span> Design & Execution:</strong> if there's development opportunity and potential, we design a strategy for implementation",
+        disc_btn: "Book a call",
+        disc_subtext: "FREE CALL. NO OBLIGATION. 30 MINUTES.",
+        disc_notice: "Attention: we accept a maximum of 2 projects per month.",
 
         m1_tag: "Solutions",
         m1_title: "How We Solve It",
@@ -3286,6 +3310,7 @@
 
     // ─── App Global State ───
     let currentLang = localStorage.getItem('lang') || 'hu';
+    let isLangManuallySet = localStorage.getItem('lang') !== null;
     let currentMode = localStorage.getItem('theme') || 'light';
     let isFlipped = false;
     
@@ -3297,6 +3322,17 @@
 
     // ─── Preloader progressive simulation ───
     window.addEventListener('DOMContentLoaded', () => {
+      // Auto-detect language via IP if not manually set
+      if (!isLangManuallySet) {
+        fetch('/api/geo')
+          .then(r => r.json())
+          .then(data => {
+            if (data.country && data.country !== 'HU') {
+              currentLang = 'en';
+              applyLanguage('en');
+            }
+          }).catch(() => { /* fallback to default hu */ });
+      }
       // Capture click to demo links
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
@@ -3340,15 +3376,17 @@
       }
 
       const bar = document.getElementById('loaderLine');
-      let progress = 0;
+      let progress = 5; // start with a little progress immediately
+      bar.style.width = progress + '%';
       
       const interval = setInterval(() => {
         if (progress < 90) {
-          progress += Math.floor(Math.random() * 15) + 5;
+          // Smaller, more frequent steps for a "smoother" look
+          progress += Math.floor(Math.random() * 3) + 1;
           if (progress > 90) progress = 90;
           bar.style.width = progress + '%';
         }
-      }, 100);
+      }, 80);
 
       window.addEventListener('load', () => {
         clearInterval(interval);
@@ -3363,7 +3401,7 @@
               sessionStorage.setItem('preloader_shown', 'true');
             }, 800);
           }
-        }, 500); // 500ms so user can appreciate the premium branding and animation
+        }, 600); // slight pause at 100% for satisfaction
       });
 
       // Emergency Fallback
@@ -3483,14 +3521,14 @@
       }
 
       // Pill Buttons
-      document.getElementById('pill1').innerText = dict.pill1;
-      document.getElementById('pill8').innerText = dict.pill8;
-      document.getElementById('pill2').innerText = dict.pill2;
-      document.getElementById('pill3').innerText = dict.pill3;
-      document.getElementById('pill4').innerText = dict.pill4;
-      document.getElementById('pill5').innerText = dict.pill5;
-      document.getElementById('pill6').innerText = dict.pill6;
-      document.getElementById('pill7').innerText = dict.pill7;
+      if (document.getElementById('pill1')) document.getElementById('pill1').innerText = dict.pill1;
+      if (document.getElementById('pill2')) document.getElementById('pill2').innerText = dict.pill2;
+      if (document.getElementById('pill3')) document.getElementById('pill3').innerText = dict.pill3;
+      if (document.getElementById('pill4')) document.getElementById('pill4').innerText = dict.pill4;
+      if (document.getElementById('pill5')) document.getElementById('pill5').innerText = dict.pill5;
+      if (document.getElementById('pill6')) document.getElementById('pill6').innerText = dict.pill6;
+      if (document.getElementById('pill7')) document.getElementById('pill7').innerText = dict.pill7;
+      if (document.getElementById('pillDiscoveryMobile')) document.getElementById('pillDiscoveryMobile').innerText = dict.m1_cta;
       if (document.getElementById('pillNavMenu')) {
         document.getElementById('pillNavMenu').innerText = dict.nav_pill;
         document.getElementById('navMenuTag').innerText = dict.nav_menu_tag;
@@ -3514,14 +3552,13 @@
       }
 
       // Permanent Discovery Card
-      document.getElementById('discQuote').innerText = dict.disc_quote;
       document.getElementById('discTitle').innerText = dict.disc_title;
       document.getElementById('discBody').innerText = dict.disc_body;
       document.getElementById('discCheck1').innerHTML = dict.disc_check1;
       document.getElementById('discCheck2').innerHTML = dict.disc_check2;
       document.getElementById('discCheck3').innerHTML = dict.disc_check3;
-      document.getElementById('discUrgency').innerText = dict.disc_urgency;
-      document.getElementById('discBtn').innerText = dict.disc_btn;
+      if (document.getElementById('discNotice')) document.getElementById('discNotice').innerText = dict.disc_notice;
+      document.getElementById('discBtn').innerHTML = dict.disc_btn + ' <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
       document.getElementById('discSubText').innerText = dict.disc_subtext;
 
       // Modal 1: Solutions
@@ -3637,10 +3674,9 @@
       document.getElementById('m6Body3').innerHTML = dict.m6_b3;
 
       // Footer
-      document.getElementById('footerTagline').innerText = dict.footer_tagline;
-      document.getElementById('footerNavTitle').innerText = dict.footer_nav;
+      if (document.getElementById('footerTagline')) document.getElementById('footerTagline').innerText = dict.footer_tagline;
+      if (document.getElementById('footerNavTitle')) document.getElementById('footerNavTitle').innerText = dict.footer_nav;
       if (document.getElementById('footerNavHome')) document.getElementById('footerNavHome').innerText = dict.footer_nav_home;
-      if (document.getElementById('footerNavChallenges')) document.getElementById('footerNavChallenges').innerText = dict.footer_nav_challenges;
       if (document.getElementById('footerNavSolutions')) document.getElementById('footerNavSolutions').innerText = dict.footer_nav_solutions;
       if (document.getElementById('footerNavScenarios')) document.getElementById('footerNavScenarios').innerText = dict.footer_nav_scenarios;
       if (document.getElementById('footerNavWorks')) document.getElementById('footerNavWorks').innerText = dict.footer_nav_works;
@@ -3648,9 +3684,9 @@
       if (document.getElementById('footerNavFaq')) document.getElementById('footerNavFaq').innerText = dict.footer_nav_faq;
       if (document.getElementById('footerNavAbout')) document.getElementById('footerNavAbout').innerText = dict.footer_nav_about;
       if (document.getElementById('footerNavContact')) document.getElementById('footerNavContact').innerText = dict.footer_nav_contact;
-      document.getElementById('footerCopy').innerHTML = dict.footer_copy;
-      document.getElementById('footerAszf').innerText = dict.footer_aszf;
-      document.getElementById('footerPrivacy').innerText = dict.footer_privacy;
+      if (document.getElementById('footerCopy')) document.getElementById('footerCopy').innerHTML = dict.footer_copy;
+      if (document.getElementById('footerAszf')) document.getElementById('footerAszf').innerText = dict.footer_aszf;
+      if (document.getElementById('footerPrivacy')) document.getElementById('footerPrivacy').innerText = dict.footer_privacy;
 
       // Modal 7: Contact
       if (document.getElementById('m7Tag')) document.getElementById('m7Tag').innerText = dict.m7_tag;
@@ -4158,6 +4194,18 @@
       const isHu = currentLang !== 'en';
       const text = ((q1 || '') + ' ' + (q2 || '') + ' ' + (q3 || '')).toLowerCase();
       
+      // Rejection check for completely irrelevant topics
+      const irrelevantKeywords = ["pizza", "burger", "plumber", "vízszerelő", "festés", "painting", "massage", "masszázs", "barber", "fodrász", "taxi", "cleaning", "takarítás"];
+      if (irrelevantKeywords.some(kw => text.includes(kw))) {
+        const dict = localTranslations[currentLang];
+        return {
+          rejected: true,
+          focim: dict.ai_rejected_title,
+          megoldas: dict.ai_rejected_body,
+          eredmeny: dict.ai_rejected_outcome
+        };
+      }
+
       let focim = isHu ? "Előzetes automatizációs kompatibilitás" : "Preliminary Automation Compatibility";
       let megoldas = "";
       let eredmeny = "";
@@ -4219,36 +4267,40 @@
     function aiRenderSolutionCard(data) {
       const isHu = currentLang !== 'en';
       const CALENDLY_URL = 'https://calendly.com/limitlesser/discovery-call';
+      const dict = localTranslations[currentLang];
 
+      const isRejected = data?.rejected === true;
+      const kiscim = isRejected ? dict.ai_rejected_label : dict.ai_report_label;
+      
       const focim    = data?.focim    || (isHu ? 'Előzetes automatizációs kompatibilitás' : 'Preliminary Automation Compatibility');
       const megoldas = data?.megoldas || (isHu ? 'A megosztott információk alapján a folyamataid kiválóan alkalmasak a Limitlesser automatizációs ökoszisztémájára.' : 'Based on your shared info, your processes are highly compatible with the Limitlesser automation ecosystem.');
       const eredmeny = data?.eredmeny || (isHu ? 'A manuális terhek 80-90%-a automatizálhatóvá válik. Mivel felelős mérnöki munkát végzünk, konkrét ígéretet az átvilágítás után tudunk tenni.' : '80-90% of manual load can be automated. As responsible engineers, we make definitive commitments after discovery.');
 
       solutionCard.innerHTML = `
-        <p class="solution-kiscim">${isHu ? 'Előzetes Alkalmassági Riport' : 'Preliminary Feasibility Report'}</p>
+        <p class="solution-kiscim" style="${isRejected ? 'color: #ff4d4d;' : ''}">${kiscim}</p>
         <h2 class="solution-focim">${focim}</h2>
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">01</p>
-          <p class="solution-blokk-cim">${isHu ? 'Alkalmassági elemzés' : 'Compatibility Analysis'}</p>
+          <p class="solution-blokk-cim">${isRejected ? dict.ai_rejected_q1 : dict.ai_report_q1}</p>
           <p class="solution-blokk-szoveg">${megoldas}</p>
         </div>
 
         <div class="solution-blokk">
           <p class="solution-blokk-szam">02</p>
-          <p class="solution-blokk-cim">${isHu ? 'Automatizációs potenciál & Kockázat' : 'Automation Potential & Risk'}</p>
+          <p class="solution-blokk-cim">${isRejected ? dict.ai_rejected_q2 : dict.ai_report_q2}</p>
           <p class="solution-blokk-szoveg">${eredmeny}</p>
         </div>
 
         <p class="solution-disclaimer">
           ${isHu
-            ? 'Ez egy előzetes összefoglaló az általad megosztott információk alapján. Minden helyzet egyedi — a teljes és részletes elemzésért foglalj egy ingyenes Discovery Callt.'
+            ? 'Ez egy előzetes összefoglaló az általad megosztott információk alapján. Minden helyzet egyedi — a teljes és részletes elemzésért foglalj egy ingyenes konzultációt.'
             : 'This is a preliminary summary based on the information you shared. Every situation is unique — book a free Discovery Call for a full detailed analysis.'}
         </p>
 
         <div class="solution-cta">
           <a href="${CALENDLY_URL}" target="_blank" class="solution-cta-btn">
-            ${isHu ? 'Discovery Call foglalása' : 'Book a Discovery Call'} →
+            ${isHu ? 'Időpontot foglalok' : 'Book a Discovery Call'} →
           </a>
           <p class="solution-cta-small">${isHu ? 'Ingyenes. Kötelezettségmentes. 30 perc.' : 'Free. No obligation. 30 minutes.'}</p>
         </div>

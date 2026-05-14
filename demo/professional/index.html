@@ -359,23 +359,24 @@ nav.compact{padding:1.2rem 5rem}
 
 <div class="demo-badge">Demo</div>
 <div class="back-bar">
-  <a href="../../index.html#templates" class="bb-b">← VISSZA</a>
-  <a href="../../index.html#contact" class="bb-c">EZT SZERETNÉM →</a>
+  <a href="../../index.html#templates" class="bb-b" data-i18n="demo_back">← VISSZA</a>
+  <a href="../../index.html#contact" class="bb-c" data-i18n="demo_cta">EZT SZERETNÉM →</a>
 </div>
 
 <nav id="mnav">
   <a href="#" class="n-logo" onclick="window.scrollTo(0,0);return false">
-    <span class="n-logo-top">Est. 2003</span>
-    <span class="n-logo-main">Vance &amp; Associates</span>
+    <div class="n-logo-top">Global Advisory</div>
+    <div class="n-logo-main">Vance & Associates</div>
   </a>
   <ul class="n-links">
-    <li><a href="#expertise">Szakterületek</a></li>
-    <li><a href="#results">Eredmények</a></li>
-    <li><a href="#team">Csapat</a></li>
-    <li><a href="#process">Folyamat</a></li>
+    <li><a href="#expertise" data-i18n="nav_expertise">Szakterületeink</a></li>
+    <li><a href="#team" data-i18n="nav_team">Csapatunk</a></li>
+    <li><a href="#cases" data-i18n="nav_cases">Eredmények</a></li>
   </ul>
-  <a href="#consultation" class="n-cta">Konzultáció foglalása</a>
-  <button class="hamb" id="hamb"><span></span><span></span><span></span></button>
+  <div class="n-right">
+    <a href="#contact" class="n-cta" data-i18n="prof_hero_btn1">Konzultáció foglalása</a>
+    <button class="hamb" id="hamb"><span></span><span></span></button>
+  </div>
 </nav>
 
 <div class="nav-overlay" id="ov">
@@ -395,18 +396,27 @@ nav.compact{padding:1.2rem 5rem}
 <!-- ══ HERO ══ -->
 <div class="hero">
   <div class="hero-left">
-    <span class="hero-eyebrow rv">Global Strategic Partners</span>
-    <h1 class="hero-title rv d1">Stratégiai <em>Advocacy.</em><br>Kivételes eredmények.</h1>
-    <div class="hero-line rv d2"></div>
-    <p class="hero-desc rv d2">A Vance & Associates átfogó jogi és stratégiai tanácsadást nyújt vezető globális cégeknek és vállalati döntéshozóknak — ahol a leginkább számít.</p>
-    <div class="hero-btns rv d3">
-      <a href="#consultation" class="btn-navy">Ingyenes konzultáció</a>
-      <a href="#expertise" class="btn-outline">Szakterületek</a>
+    <div class="hero-eyebrow rv" data-i18n="prof_hero_t1">High-Stakes</div>
+    <h1 class="hero-title rv" data-i18n="prof_hero_t2">Stratégiai <em>Tanácsadás.</em></h1>
+    <div class="hero-line rv"></div>
+    <p class="hero-desc rv" data-i18n="prof_hero_desc">Az összetett jogi és üzleti kihívások megoldása nem szerencse kérdése. Adatvezérelt stratégia, 25 év tapasztalat és könyörtelen precizitás.</p>
+    <div class="hero-btns rv">
+      <a href="#contact" class="btn-navy" data-i18n="prof_hero_btn1">Konzultáció foglalása</a>
+      <a href="#expertise" class="btn-outline" data-i18n="prof_hero_btn2">Szakterületeink</a>
     </div>
-    <div class="hero-stats rv d4">
-      <div><span class="hs-num" data-target="22"><span>0</span><span style="color:var(--gold)">+</span></span><span class="hs-label">Év tapasztalat</span></div>
-      <div><span class="hs-num" data-target="94"><span>0</span><span style="color:var(--gold)">%</span></span><span class="hs-label">Sikeres ügyek</span></div>
-      <div><span class="hs-num" data-target="1400"><span>0</span><span style="font-size:.6em;color:var(--gold)">+</span></span><span class="hs-label">Ügyfél</span></div>
+    <div class="hero-stats rv">
+      <div class="hs-item">
+        <span class="hs-num" data-target="1400" data-suffix="+"><span>0</span><span>+</span></span>
+        <span class="hs-label" data-i18n="prof_stat1_l">Sikeres ügy</span>
+      </div>
+      <div class="hs-item">
+        <span class="hs-num" data-target="850" data-suffix=" Mrd"><span>0</span></span>
+        <span class="hs-label" data-i18n="prof_stat2_l">Mrd Ft kezelt vagyon</span>
+      </div>
+      <div class="hs-item">
+        <span class="hs-num" data-target="25" data-suffix="+"><span>0</span><span>+</span></span>
+        <span class="hs-label" data-i18n="prof_stat3_l">Év tapasztalat</span>
+      </div>
     </div>
   </div>
   <div class="hero-right">
@@ -882,5 +892,6 @@ document.querySelectorAll('.tcard').forEach(c=>{
   c.addEventListener('mouseleave',()=>{c.style.transform=''});
 });
 </script>
+<script src="../../js/i18n.js"></script>
 </body>
 </html>

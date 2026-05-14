@@ -585,26 +585,26 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding
 
 <!-- BACK BAR (Standardized) -->
 <div class="back-bar">
-  <a href="../../index.html#templates" class="bb-b">← VISSZA</a>
-  <a href="../../index.html#contact" class="bb-c">EZT SZERETNÉM →</a>
+  <a href="../../index.html#templates" class="bb-b" data-i18n="demo_back">← VISSZA</a>
+  <a href="../../index.html#contact" class="bb-c" data-i18n="demo_cta">EZT SZERETNÉM →</a>
 </div>
 
 <!-- STICKY CTA -->
 <div id="sticky-cta">
-  <a href="#contact" class="scta"><span class="scta-dot"></span>Stratégiai megbeszélés</a>
+  <a href="#contact" class="scta"><span class="scta-dot"></span><span data-i18n="demo_corp_cta">Stratégiai megbeszélés</span></a>
 </div>
 
 <!-- MOBILE MENU -->
 <div class="mob-menu" id="mob-menu">
-  <a href="#solutions" onclick="toggleMob()">Megoldások</a>
+  <a href="#solutions" onclick="toggleMob()" data-i18n="nav_solutions">Megoldások</a>
   <div class="mob-divider"></div>
-  <a href="#cases" onclick="toggleMob()">Eredmények</a>
+  <a href="#cases" onclick="toggleMob()" data-i18n="nav_impact">Eredmények</a>
   <div class="mob-divider"></div>
-  <a href="#team" onclick="toggleMob()">Csapat</a>
+  <a href="#team" onclick="toggleMob()" data-i18n="nav_team">Csapat</a>
   <div class="mob-divider"></div>
-  <a href="#process" onclick="toggleMob()">Folyamat</a>
+  <a href="#process" onclick="toggleMob()" data-i18n="nav_process">Folyamat</a>
   <div class="mob-divider"></div>
-  <a href="#contact" class="mob-cta-lnk" onclick="toggleMob()">Stratégiai megbeszélés</a>
+  <a href="#contact" class="mob-cta-lnk" onclick="toggleMob()" data-i18n="demo_corp_cta">Stratégiai megbeszélés</a>
 </div>
 
 <!-- NAV -->
@@ -617,13 +617,13 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding
     </div>
   </a>
   <ul class="n-links">
-    <li><a href="#solutions">Megoldások</a></li>
-    <li><a href="#impact">Eredmények</a></li>
-    <li><a href="#roi">ROI Kalkulátor</a></li>
-    <li><a href="#insights">Insights</a></li>
+    <li><a href="#solutions" data-i18n="nav_solutions">Megoldások</a></li>
+    <li><a href="#impact" data-i18n="nav_impact">Eredmények</a></li>
+    <li><a href="#roi" data-i18n="pill3">ROI Kalkulátor</a></li>
+    <li><a href="#insights" data-i18n="pill4">Insights</a></li>
   </ul>
   <div class="n-right">
-    <a href="#contact" class="n-cta">Stratégiai megbeszélés</a>
+    <a href="#contact" class="n-cta" data-i18n="demo_corp_cta">Stratégiai megbeszélés</a>
     <button class="mob-toggle" id="mob-toggle" onclick="toggleMob()"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -631,25 +631,25 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.05);padding
 <!-- HERO -->
 <div class="hero">
   <div class="hero-left">
-    <div class="h-kicker rv"><div class="hk-line"></div><span class="hk-text">Global Strategic Advisory</span></div>
-    <h1 class="h-title rv d1">Ambitious<br>companies<br>grow <em>faster.</em></h1>
-    <p class="h-tagline rv d2">A Meridian komplex vállalati kihívásokra ad adatvezérelt, skálázható stratégiai megoldásokat — 18 éve, 340+ vezető vállalatnak.</p>
+    <div class="h-kicker rv"><div class="hk-line"></div><span class="hk-text" data-i18n="demo_corp_tag">Global Strategic Advisory</span></div>
+    <h1 class="h-title rv d1" data-i18n="demo_corp_h1">Ambitious<br>companies<br>grow <em>faster.</em></h1>
+    <p class="h-tagline rv d2" data-i18n="demo_corp_sub">A Meridian komplex vállalati kihívásokra ad adatvezérelt, skálázható stratégiai megoldásokat — 18 éve, 340+ vezető vállalatnak.</p>
     <div class="h-btns rv d3">
-      <a href="#contact" class="btn-primary">Stratégiai megbeszélés</a>
-      <a href="#solutions" class="btn-secondary">Megoldásaink →</a>
+      <a href="#contact" class="btn-primary" data-i18n="demo_corp_cta">Stratégiai megbeszélés</a>
+      <a href="#solutions" class="btn-secondary" data-i18n="demo_corp_sol">Megoldásaink →</a>
     </div>
     <div class="h-metrics rv d4">
       <div class="hm-item">
         <span class="hm-num" data-target="340"><span>0</span><span style="color:var(--blue)">+</span></span>
-        <span class="hm-label">Vállalati ügyfél</span>
+        <span class="hm-label" data-i18n="demo_corp_stat1_l">Vállalati ügyfél</span>
       </div>
       <div class="hm-item">
         <span class="hm-num" data-target="3" data-suffix="×"><span>0</span></span>
-        <span class="hm-label">Átlag növekedés</span>
+        <span class="hm-label" data-i18n="demo_corp_stat2_l">Átlag növekedés</span>
       </div>
       <div class="hm-item">
         <span class="hm-num" data-target="18"><span>0</span><span style="color:var(--blue)">+</span></span>
-        <span class="hm-label">Év tapasztalat</span>
+        <span class="hm-label" data-i18n="demo_corp_stat3_l">Év tapasztalat</span>
       </div>
     </div>
   </div>
@@ -1785,5 +1785,6 @@ function generateReport() {
   prev.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+<script src="../../js/i18n.js"></script>
 </body>
 </html>

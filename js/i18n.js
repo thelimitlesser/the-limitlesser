@@ -4,7 +4,7 @@ const translations = {
     nav_solutions: "Megoldások",
     nav_process: "Folyamat",
     nav_cta: "Kezdjük el",
-    hero_main_title: "Életre keltjük az <em>elképzeléseid</em>",
+    hero_main_title: "Életre keltjük az <em>elképzeléseidet</em>",
     hero_eyebrow: "",
     hero_sub: "Személyre szabott digitális transzformáció KKV-knak, határok nélkül",
     hero_cta_free: "Ajánlatkérés",
@@ -64,7 +64,7 @@ const translations = {
     service_6_title: "Egyedi Automatizáció & Admin",
     service_6_desc: "Saját fejlesztésű irányítópult, ahol egy gombnyomással kezelhetsz mindent. Felejtsd el a külső platformokat: teljes kontroll és drasztikus időmegtakarítás egyetlen felületen.",
     process_4_link: "ÁTADÁS",
-    footer_tagline: "A vállalkozásod teljes potenciálját hozzuk felszínre egyedi digitális megoldásokkel és automatizált rendszerekkel.",
+    footer_tagline: "A vállalkozásod teljes potenciálját hozzuk felszínre egyedi digitális megoldásokkal és automatizált rendszerekkel.",
     footer_nav: "Navigáció",
     footer_services: "Szolgáltatások",
     footer_data: "Cégadatok",
@@ -95,6 +95,25 @@ const translations = {
     word_4: "elavult design",
     word_5: "bizalmatlanság",
     word_6: "kiesett bevétel",
+    // Common UI
+    pill1: "Üzleti weboldalak",
+    pill2: "Webshop rendszerek",
+    pill3: "AI Automatizáció",
+    pill4: "Márkaépítés",
+    pill5: "Online oktatás",
+    pill6: "Konzultáció",
+    pill7: "Árak",
+    nav_solutions: "Megoldások",
+    nav_impact: "Eredmények",
+    nav_team: "Csapat",
+    nav_process: "Folyamat",
+    nav_expertise: "Szakterületeink",
+    nav_cases: "Eredmények",
+    nav_projects: "Projektek",
+    nav_stats: "Adatok",
+    nav_contact: "Kapcsolat",
+    nav_build: "Építés",
+    port_nav_sub: "GEN.KIVITELEZŐ // 2005",
     // Demo pages
     demo_back: "← VISSZA AZ ÜGYNÖKSÉGRE",
     demo_identity_h1: "Globális megoldások, lokális szakértelem.",
@@ -114,6 +133,59 @@ const translations = {
     demo_pro_f2_d: "Teljes körű digitális jogi biztonság és szabályozási tanácsadás.",
     demo_pro_f3_t: "Brand Audit",
     demo_pro_f3_d: "Vállalati identitásod elemzése és modernizálása a globális expanzióhoz.",
+    // Tech Demo
+    demo_tech_tag: "v.2.0 Hibrid Intelligencia",
+    demo_tech_h1: "A mesterséges<br><em>intelligencia</em> jövője",
+    demo_tech_desc: "Skálázható neurális hálózatok és prediktív algoritmusok a következő generációs digitális ökoszisztémákhoz.",
+    demo_tech_c1_t: "Neurális Motor",
+    demo_tech_c1_d: "Nagy teljesítményű gépi tanulási modellek, amik valós időben alkalmazkodnak a piaci változásokhoz.",
+    demo_tech_c2_t: "Kvantum Logika",
+    demo_tech_c2_d: "Hibrid kvantumszámítási algoritmusok, amik a legkomplexebb adathalmazokat is másodpercek alatt elemzik.",
+    demo_tech_c3_t: "Auto-Skálázás",
+    demo_tech_c3_d: "Felhő-alapú infrastruktúra, ami automatikusan skálázódik a terhelés függvényében.",
+    // Corporate Demo
+    demo_corp_tag: "Globális Stratégiai Tanácsadás",
+    demo_corp_h1: "Az ambiciózus cégek<br>gyorsabban <em>nőnek.</em>",
+    demo_corp_sub: "A Meridian komplex vállalati kihívásokra nyújt adatvezérelt, skálázható stratégiai megoldásokat — 18 éve, 340+ vezető vállalatnak.",
+    demo_corp_stat1_l: "Vállalati ügyfél",
+    demo_corp_stat2_l: "Átlag növekedés",
+    demo_corp_stat3_l: "Év tapasztalat",
+    demo_corp_cta: "Stratégiai megbeszélés",
+    demo_corp_sol: "Megoldásaink →",
+    // Portfolio Demo
+    port_hero_t1: "Nem csak",
+    port_hero_t2: "építünk",
+    port_hero_t3: "Bizonyítunk",
+    port_hero_sub: "Generálkivitelezés_a_tervezéstől_a_kulcsátadásig. 320+ projekt. 20 év. 98% határidő-tartás.",
+    port_hero_btn1: "Árajánlat kérése",
+    port_hero_btn2: "Projektek →",
+    port_stat_projects: "ÁTADOTT PROJEKT",
+    port_stat_years: "ÉV TAPASZTALAT",
+    port_stat_deadline: "HATÁRIDŐ",
+    port_stat_response: "VÁLASZIDŐ",
+    port_build_t1: "Ahogy egy épület",
+    port_build_t2: "megszületik",
+    port_p1_tag: "Fázis_01 // Alapozás",
+    port_p1_title: "Az alap mindent meghatároz",
+    port_p1_desc: "Talajmechanikai vizsgálat, tereprendezés, vízszigetelés és monolit vasbeton alaplemez.",
+    port_p2_tag: "Fázis_02 // Szerkezet",
+    port_p2_title: "Falak, födémek, nyílászárók",
+    port_p2_desc: "Teherhordó falazat, vasbeton födém, tetőszerkezet felépítése.",
+    port_p3_tag: "Fázis_03 // Tető & Burkolat",
+    port_p3_title: "A szerkezet lezárul",
+    port_p3_desc: "Tetőfedés, homlokzati hőszigetelés, külső burkolás.",
+    port_p4_tag: "Fázis_04 // Belső & Átadás",
+    port_p4_title: "Kulcsrakész állapot",
+    port_p4_desc: "Belső gépészet, villanyszerelés, burkolás, festés, műszaki átadás.",
+    // Professional Demo
+    prof_hero_t1: "High-Stakes",
+    prof_hero_t2: "Stratégiai <em>Tanácsadás.</em>",
+    prof_hero_desc: "Az összetett jogi és üzleti kihívások megoldása nem szerencse kérdése. Adatvezérelt stratégia, 25 év tapasztalat és könyörtelen precizitás.",
+    prof_hero_btn1: "Konzultáció foglalása",
+    prof_hero_btn2: "Szakterületeink",
+    prof_stat1_l: "Sikeres ügy",
+    prof_stat2_l: "Mrd Ft kezelt vagyon",
+    prof_stat3_l: "Év tapasztalat",
     // Retail Demo specific
     retail_nav_coll: "Kollekció",
     retail_nav_watches: "Órák",
@@ -183,7 +255,7 @@ const translations = {
     strategy_strong_sentence: "A jövőben nem azok a cégek nyernek, akik több eszközt használnak, hanem akik tisztábban működnek — emberileg és technológiailag is.",
     cta_main_title_new: "Érdemes nálatok automatizálni?<br><span style='color: var(--accent)'>Nézzük meg.</span>",
     cta_main_sub_new: "Egy rövid beszélgetés során segítünk felmérni, hol vannak a szűk keresztmetszetek — és hogy van-e valódi üzleti értelme automatizálni.",
-    cta_main_btn_new: "Discovery Call foglalása",
+    cta_main_btn_new: "Időpontot foglalok",
     cta_main_hint_new: "Ingyenes. Nincs kötelezettség.",
     cta_main_quote_new: "\"Nem minden cégnek van szüksége automatizációra — de ahol igen, ott jelentős különbséget tud hozni.\"",
     nav_contact: "Kapcsolat",
@@ -191,8 +263,8 @@ const translations = {
     hero_btn_book: "Foglalj időpontot",
     hero_btn_work: "Munkáink",
     hero_offer_title: "<em style='font-style: normal; color: var(--accent);'>Derítsd ki,</em> hol lassítják a rendszereid a céged növekedését",
-    hero_offer_sub: "Egy 30 perces Discovery Call során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.",
-    hero_offer_btn: "Discovery Call foglalása",
+    hero_offer_sub: "Egy 30 perces konzultáció során feltárjuk, hol vesztesz időt, pénzt és hatékonyságot — és megmutatjuk, hogyan automatizálnánk ezt AI-val.",
+    hero_offer_btn: "Időpontot foglalok",
     hero_scroll: "Görgess",
     context_tag: "Kihívások",
     context_footer_note: "Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.",
@@ -212,7 +284,7 @@ const translations = {
     results_main_title: "Mit jelent ez a <em>gyakorlatban</em>?",
     p_cat_1: "WEBÁRUHÁZ / AUTÓ",
     p_cat_2: "MEMBERSHIP / COMMUNITY",
-    audit_btn_book: "Foglalj időpontot a Discovery Callra",
+    audit_btn_book: "Időpontot foglalok",
     audit_hint_no_ob: "Ingyenes beszélgetés. Nincs kötelezettség.",
     faq_tag: "GYIK",
     faq_title: "Gyakori <em>kérdések</em>",
@@ -297,7 +369,7 @@ const translations = {
     serv_quote_btn: "AJÁNLATKÉRÉS INDÍTÁSA →",
     // Contact Page HU
     cont_hero_title: "Vedd fel velünk a kapcsolatot!",
-    cont_calendly_title: "Foglalj időpontot egy Discovery Call-ra!",
+    cont_calendly_title: "Foglalj le egy konzultációt!",
     cont_calendly_sub: "Válassz egy szabad időpontot egy kötetlen, 30 perces beszélgetéshez, ahol átnézzük a folyamataidat.",
     cont_hero_sub: "Kérdésed van, érdeklődnél szolgáltatásaink iránt, vagy csak szeretnél többet megtudni rólunk? Ne habozz – vedd fel velünk a kapcsolatot az elérhetőségeink egyikén! Legyen szó e-mailről vagy telefonhívásról, örömmel segítünk, és minden megkeresésre a lehető leghamarabb válaszolunk.",
     cont_email_hint: "Ha szeretnéd felvenni velünk a kapcsolatot manuálisan, kérlek, írj e-mailt az alábbi címre.",
@@ -314,7 +386,7 @@ const translations = {
     cont_ph_lname: "Vezetéknév",
     cont_ph_email: "pelda@email.hu",
     cont_ph_phone: "+36 30 123 4567",
-    cont_label_privacy: "A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href='privacy.html' style='color: var(--white); text-decoration: underline;'>Adatvédelmi Nyilatkozat</a>-ban foglaltakat és annak feltételeit.",
+    cont_label_privacy: "A továbblépéssel kijelented, hogy elolvastad és elfogadtad az <a href='privacy.html' style='color: var(--white); text-decoration: underline;'>Adatvédelmi Nyilatkozatban</a> foglaltakat és annak feltételeit.",
     cont_label_newsletter: "Hozzájárulok, hogy a The Limitlesser a jövőben e-mailben megkereséseket küldjön számomra.",
     cont_btn_submit: "Árajánlat kérése →"
   },
@@ -415,6 +487,25 @@ const translations = {
     word_4: "outdated design",
     word_5: "distrust",
     word_6: "lost revenue",
+    // Common UI
+    pill1: "Business Websites",
+    pill2: "E-commerce Systems",
+    pill3: "AI Automation",
+    pill4: "Brand Identity",
+    pill5: "Online Education",
+    pill6: "Consultation",
+    pill7: "Pricing",
+    nav_solutions: "Solutions",
+    nav_impact: "Impact",
+    nav_team: "Team",
+    nav_process: "Process",
+    nav_expertise: "Expertise",
+    nav_cases: "Cases",
+    nav_projects: "Projects",
+    nav_stats: "Stats",
+    nav_contact: "Contact",
+    nav_build: "Build",
+    port_nav_sub: "GEN. CONTRACTOR // 2005",
     // Demo pages
     demo_back: "← BACK TO AGENCY",
     demo_identity_h1: "Global solutions, local expertise.",
@@ -434,6 +525,59 @@ const translations = {
     demo_pro_f2_d: "Full digital legal security and regulatory advisory.",
     demo_pro_f3_t: "Brand Audit",
     demo_pro_f3_d: "Analyzing and modernizing your corporate identity for global expansion.",
+    // Tech Demo
+    demo_tech_tag: "v.2.0 Hybrid Intelligence",
+    demo_tech_h1: "Future of<br><em>Artificial</em> Intelligence",
+    demo_tech_desc: "Scalable neural networks and predictive algorithms for next-generation digital ecosystems.",
+    demo_tech_c1_t: "Neural Engine",
+    demo_tech_c1_d: "High-performance machine learning models that adapt to market changes in real-time.",
+    demo_tech_c2_t: "Quantum Logic",
+    demo_tech_c2_d: "Hybrid quantum computing algorithms that analyze the most complex datasets in seconds.",
+    demo_tech_c3_t: "Auto-Scale",
+    demo_tech_c3_d: "Cloud-based infrastructure that automatically scales based on the load.",
+    // Corporate Demo
+    demo_corp_tag: "Global Strategic Advisory",
+    demo_corp_h1: "Ambitious<br>companies<br>grow <em>faster.</em>",
+    demo_corp_sub: "Meridian provides data-driven, scalable strategic solutions for complex corporate challenges — for 18 years, to 340+ leading companies.",
+    demo_corp_stat1_l: "Corporate Clients",
+    demo_corp_stat2_l: "Average Growth",
+    demo_corp_stat3_l: "Years of Experience",
+    demo_corp_cta: "Strategic Meeting",
+    demo_corp_sol: "Our Solutions →",
+    // Portfolio Demo
+    port_hero_t1: "We don't",
+    port_hero_t2: "just build",
+    port_hero_t3: "We prove",
+    port_hero_sub: "General contracting from design to key handover. 320+ projects. 20 years. 98% deadline accuracy.",
+    port_hero_btn1: "Request Quote",
+    port_hero_btn2: "Projects →",
+    port_stat_projects: "COMPLETED PROJECTS",
+    port_stat_years: "YEARS OF EXPERIENCE",
+    port_stat_deadline: "ON-TIME DELIVERY",
+    port_stat_response: "RESPONSE TIME",
+    port_build_t1: "How a building",
+    port_build_t2: "is born",
+    port_p1_tag: "Phase_01 // Foundation",
+    port_p1_title: "The base defines everything",
+    port_p1_desc: "Geotechnical survey, landscaping, waterproofing and monolithic reinforced concrete base.",
+    port_p2_tag: "Phase_02 // Structure",
+    port_p2_title: "Walls, slabs, windows",
+    port_p2_desc: "Load-bearing masonry, concrete slabs, and roof structure construction.",
+    port_p3_tag: "Phase_03 // Roof & Shell",
+    port_p3_title: "Closing the structure",
+    port_p3_desc: "Roofing, facade insulation, exterior cladding and window installation.",
+    port_p4_tag: "Phase_04 // Interior & Handover",
+    port_p4_title: "Turnkey readiness",
+    port_p4_desc: "Interior engineering, electrical, flooring, painting and technical handover.",
+    // Professional Demo
+    prof_hero_t1: "High-Stakes",
+    prof_hero_t2: "Strategic <em>Advisory.</em>",
+    prof_hero_desc: "Solving complex legal and business challenges is not a matter of luck. Data-driven strategy, 25 years of experience, and ruthless precision.",
+    prof_hero_btn1: "Book a Consultation",
+    prof_hero_btn2: "Practice Areas",
+    prof_stat1_l: "Successful Cases",
+    prof_stat2_l: "Billion HUF Assets",
+    prof_stat3_l: "Years Experience",
     // Retail Demo specific
     retail_nav_coll: "Collection",
     retail_nav_watches: "Watches",
@@ -500,7 +644,7 @@ const translations = {
     strategy_tag: "Strategy",
     strategy_title_new: "The quality of operations determines the <span style='color: var(--accent)'>pace of growth</span>",
     strategy_sub_original: "The more complex a company's operation becomes, the more important it is for processes to be well-structured. Automation doesn't just save time — it enables more predictable growth.",
-    strategy_strong_sentence: "\"In the future, the winners won't be those who use more tools, but those who operate more clearly — both humanly and technologically.\"",
+    strategy_strong_sentence: "\"In the future, the winners won't be those who use more tools, but those who operate more clearly — both on a human and technological level.\"",
     cta_main_title_new: "Is automation worth it for you?<br><span style='color: var(--accent)'>Let's find out.</span>",
     cta_main_sub_new: "In a brief conversation, we'll help assess where the bottlenecks are — and if automation makes real business sense.",
     cta_main_btn_new: "Book a Discovery Call",
@@ -532,7 +676,7 @@ const translations = {
     results_main_title: "What does this mean in <em>practice</em>?",
     p_cat_1: "WEBSHOP / AUTOMOTIVE",
     p_cat_2: "MEMBERSHIP / COMMUNITY",
-    audit_btn_book: "Book a Discovery Call slot",
+    audit_btn_book: "Book a Discovery Call",
     audit_hint_no_ob: "Free consultation. No obligation.",
     faq_tag: "FAQ",
     faq_title: "Frequently Asked <em>Questions</em>",
@@ -547,7 +691,7 @@ const translations = {
     // About Page EN
     about_hero_tag: "Our Mission",
     about_hero_title_v2: "<i style='color:#FF8A00; font-style:italic;'>Clean,</i> <i style='color:#FF8A00; font-style:italic;'>simple,</i> <i style='color:#FF8A00; font-style:italic;'>working</i> systems we build — <br> and we love life. :)",
-    about_sub_1: "Beside <em>personal transformation</em>, we are believers in <em>digital transformation</em> — for years, our conscious goal has been to help others operate <em>better and more efficiently</em>.",
+    about_sub_1: "Besides <em>personal transformation</em>, we are believers in <em>digital transformation</em> — for years, our conscious goal has been to help others operate <em>better and more efficiently</em>.",
     about_sub_2: "We believe that the foundation of good processes and results is a <em>working system</em>.",
     about_sub_3: "That's why we founded Limitlesser, which helps its business partners create a <em>legacy</em> with <em>modern tools</em>.",
     about_para_1: "Often, there is more value in a business than the market initially sees. Our goal is to bring these <b>hidden treasures</b> to the surface and make them visible to those who truly need them.",
@@ -566,7 +710,7 @@ const translations = {
     about_view_para: "The Limitlesser is built on an approach where the website is not the destination, but the engine. We think in streamlined systems and structures that don't just look good — they work.",
     about_vals_title: "Our Values",
     about_val_1_t: "Limitlessness",
-    about_val_1_d: "We know no impossible in the fields of technology and creativity. We start where others stop.",
+    about_val_1_d: "For us, nothing is impossible in the fields of technology and creativity. We start where others stop.",
     about_val_2_t: "Precision",
     about_val_2_d: "Every pixel and every line of code has a purpose. Luxury lies in the details.",
     about_val_3_t: "Result-focused",
@@ -640,15 +784,15 @@ const translations = {
   }
 };
 
-let currentLang = localStorage.getItem('limitlesser_lang');
+let currentLang = localStorage.getItem('lang');
 
 async function detectLanguage() {
   if (currentLang) return currentLang;
   
   try {
-    const response = await fetch('https://ipapi.co/json/');
+    const response = await fetch('/api/geo');
     const data = await response.json();
-    if (data.country_code === 'HU') {
+    if (data.country && data.country === 'HU') {
       return 'hu';
     }
   } catch (error) {
@@ -659,7 +803,7 @@ async function detectLanguage() {
 
 function updateContent(lang) {
   currentLang = lang;
-  localStorage.setItem('limitlesser_lang', lang);
+  localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
