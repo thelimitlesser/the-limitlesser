@@ -88,8 +88,28 @@ Jó: "A megosztott információk alapján a folyamataid kiválóan alkalmasak a 
     }
 
     const geminiData = await response.json();
-    const contentText = geminiData.candidates[0].content.parts[0].text;
-    const content = JSON.parse(contentText);
+    let content;
+    try {
+      // Clean up the text: sometimes AI adds markdown code blocks like ```json ... ```
+      let cleanedText = contentText.trim();
+      if (cleanedText.startsWith('```')) {
+        cleanedText = cleanedText.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+      }
+      content = JSON.parse(cleanedText);
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError, 'Raw text:', contentText);
+      // Try a more aggressive regex extract if simple clean failed
+      const jsonMatch = contentText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          content = JSON.parse(jsonMatch[0]);
+        } catch (e) {
+          throw new Error('Could not parse AI response as JSON');
+        }
+      } else {
+        throw new Error('AI response contains no valid JSON');
+      }
+    }
 
     // If Resend API Key is configured, trigger emails asynchronously
     if (resendApiKey && email) {
