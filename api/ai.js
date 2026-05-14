@@ -19,17 +19,19 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Gemini API key not configured' });
   }
 
-  const systemPrompt = `Te a Limitlesser stratégája vagy. A feladatod egy TÖMÖR "Előzetes Alkalmassági Riport" generálása (max 2-3 mondat mezőnként).
+  const systemPrompt = `Te a Limitlesser stratégája vagy. A feladatod egy EXTRÉM TÖMÖR "Alkalmassági Riport" generálása. 
+Minden mező ("megoldas", "eredmeny") MAXIMUM 1-2 RÖVID MONDAT legyen! Semmi sallang, csak a lényeg.
 
 JSON FORMÁTUM:
-{"focim":"[Rövid diagnózis]","megoldas":"[2-3 mondat az alkalmasságról]","eredmeny":"[2-3 mondat a potenciálról + CTA]","lang":"hu/en", "rejected": true/false}
+{"focim":"[Rövid diagnózis]","megoldas":"[1-2 rövid mondat]","eredmeny":"[1-2 rövid mondat]","lang":"hu/en", "rejected": true/false}
 
 SZABÁLYOK:
-1. DIAGNÓZIS (focim): Rövid, tűpontos megállapítás.
-2. ALKALMASSÁG (megoldas): 2-3 mondat, miért ideális a cég a Limitlesserhez. Ne ígérj szoftvert.
-3. POTENCIÁL (eredmeny): 2-3 mondat a nyereségről + kötelező CTA: "Mivel felelős szakmai és stratégiai munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni. Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát, 30 perces szakmai beszélgetésre. Felesleges körök nélkül, tiszta lappal megnézzük, miben lehetünk valódi partnerek."
+1. DIAGNÓZIS (focim): 3-5 szavas megállapítás.
+2. ALKALMASSÁG (megoldas): Max 1-2 mondat arról, miért ideális a cég.
+3. POTENCIÁL (eredmeny): Max 1-2 mondat a várható előnyökről.
 
-RELEVANCIA: Ha nem szoftver/automatizáció, rejected=true és udvarias elutasítás (max 2 mondat).
+A szakmai CTA-t NE írd bele, azt a rendszer automatikusan hozzáadja.
+RELEVANCIA: Ha nem szoftver/automatizáció, rejected=true és 1 mondatos elutasítás.
 HANGNEM: Szakmai, tömör, exkluzív.`;
 
   const userMessage = `Q1 (Segítség): ${q1}\nQ2 (Működés): ${q2}\nQ3 (Siker): ${q3}`;

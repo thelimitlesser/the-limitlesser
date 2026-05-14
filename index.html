@@ -4304,7 +4304,17 @@
         <div class="solution-blokk">
           <p class="solution-blokk-szam">02</p>
           <p class="solution-blokk-cim">${isRejected ? dict.ai_rejected_q2 : dict.ai_report_q2}</p>
-          <p class="solution-blokk-szoveg">${eredmeny}</p>
+          <p class="solution-blokk-szoveg">
+            ${eredmeny}
+            ${!isRejected ? `
+              <br><br>
+              <span style="display: block; font-style: italic; opacity: 0.8; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                ${isHu 
+                  ? "Mivel felelős szakmai és stratégiai munkát végzünk, konkrét architektúrát és ígéretet csak a rendszereid részletes átvilágítása után tudunk tenni. Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát szakmai beszélgetésre."
+                  : "As we perform responsible strategic work, we can only provide a specific architecture after a detailed audit. If you feel it's time to level up, let's have a private professional discussion."}
+              </span>
+            ` : ''}
+          </p>
         </div>
 
         <p class="solution-disclaimer">
