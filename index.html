@@ -534,9 +534,8 @@
     .solution-card {
       width: min(680px, 92vw);
       margin: 48px auto 0;
-      background: #181818;
-      border-radius: 20px;
-      padding: 36px;
+      background: transparent;
+      padding: 0;
       animation: aiSolUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
       opacity: 0;
     }
@@ -1021,7 +1020,7 @@
         text-align: center;
       }
       .solution-card {
-        padding: 28px 20px;
+        padding: 0;
       }
     }
 
@@ -4279,6 +4278,13 @@
     function aiRenderSolutionCard(data) {
       const isHu = currentLang !== 'en';
       const isRejected = data?.rejected === true;
+
+      // Hide the questionnaire container to make space for the result
+      const aiContainer = document.getElementById('aiContainer');
+      if (aiContainer) aiContainer.style.display = 'none';
+      
+      // Show and style the solution card
+      solutionCard.style.display = 'block';
       
       if (!isRejected) {
         // GREEN TEMPLATE CARD
@@ -4302,7 +4308,7 @@
             </p>
             
             <div style="margin-bottom: 35px;">
-              <h3 style="font-family: var(--font-h); font-size: 20px; font-weight: 600; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-h); font-size: 20px; font-weight: 600; margin-bottom: 24px;">
                 ${isHu ? 'Mi a <span style="color: #FFC700;">következő</span> lépés?' : 'What is the <span style="color: #FFC700;">next</span> step?'}
               </h3>
               <p style="font-family: var(--font-b); font-size: 16px; opacity: 0.85;">
