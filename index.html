@@ -4127,6 +4127,11 @@
       }
     }
 
+    // ── SUBMIT (step 4 — email) ──────────────────────────────
+    async function aiHandleSubmit() {
+      const inputEl = document.querySelector('.ai-text-input');
+      if (inputEl) aiAnswers[3] = inputEl.value.trim();
+
       // Hide questionnaire immediately
       const aiContainer = document.getElementById('aiContainer');
       if (aiContainer) aiContainer.style.display = 'none';
@@ -4138,7 +4143,7 @@
       solutionCard.innerHTML = `
         <div class="ai-loading">
           <div class="ai-spinner"></div>
-          <span>${currentLang === 'en' ? 'Processing data and establishing strategic diagnosis…' : 'Adatok feldolgozása és stratégiai diagnózis felállítása…'}</span>
+          <span>${currentLang === 'en' ? 'Compiling professional diagnosis and strategic roadmap…' : 'Szakmai diagnózis és stratégiai útiterv összeállítása…'}</span>
           <span id="aiProgressCounter" style="margin-left: 10px; font-weight: bold; font-family: var(--font-h); color: var(--accent);">0%</span>
         </div>
       `;
