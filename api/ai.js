@@ -159,21 +159,23 @@ FONTOS: Szigorú TEGEZŐDÉS (te/ti)! SOHA ne használj magázódást. Legyél k
       `;
 
       // Trigger email sending
-      fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: 'The Limitlesser <onboarding@resend.dev>',
-          to: ['the.limitlesser@gmail.com'],
-          subject: teamSubject,
-          html: teamHtml,
-        }),
-      }).catch(err => {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${resendApiKey}`,
+          },
+          body: JSON.stringify({
+            from: 'The Limitlesser <onboarding@resend.dev>',
+            to: ['the.limitlesser@gmail.com'],
+            subject: teamSubject,
+            html: teamHtml,
+          }),
+        });
+      } catch (err) {
         console.error('Error sending lead email via Resend:', err);
-      });
+      }
     }
 
     return res.status(200).json(content);
