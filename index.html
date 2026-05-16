@@ -536,8 +536,7 @@
       margin: 48px auto 0;
       background: transparent;
       padding: 0;
-      animation: aiSolUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
-      opacity: 0;
+      opacity: 1;
     }
     @keyframes aiSolUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -4128,14 +4127,14 @@
       }
     }
 
-    // ── SUBMIT (step 4 — email) ──────────────────────────────
-    async function aiHandleSubmit() {
-      const inputEl = document.querySelector('.ai-text-input');
-      if (inputEl) aiAnswers[3] = inputEl.value.trim();
+      // Hide questionnaire immediately
+      const aiContainer = document.getElementById('aiContainer');
+      if (aiContainer) aiContainer.style.display = 'none';
 
       // Show loading state in card
       solutionCard.removeAttribute('hidden');
       solutionCard.style.display = 'block';
+      solutionCard.style.opacity = '1';
       solutionCard.innerHTML = `
         <div class="ai-loading">
           <div class="ai-spinner"></div>
@@ -4143,13 +4142,8 @@
           <span id="aiProgressCounter" style="margin-left: 10px; font-weight: bold; font-family: var(--font-h); color: var(--accent);">0%</span>
         </div>
       `;
-      solutionCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      solutionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       document.body.classList.remove('ai-focused-state');
-
-      // Dim questionnaire
-      aiStepWrap.style.opacity = '0.3';
-      aiStepWrap.style.pointerEvents = 'none';
-      aiProgress.style.opacity = '0.3';
 
       let fakeProgress = 0;
       const progressInterval = setInterval(() => {
@@ -4279,12 +4273,13 @@
       const isHu = currentLang !== 'en';
       const isRejected = data?.rejected === true;
 
-      // Hide the questionnaire container to make space for the result
+      // Ensure questionnaire is hidden
       const aiContainer = document.getElementById('aiContainer');
       if (aiContainer) aiContainer.style.display = 'none';
       
       // Show and style the solution card
       solutionCard.style.display = 'block';
+      solutionCard.style.opacity = '1';
       
       if (!isRejected) {
         // GREEN TEMPLATE CARD
