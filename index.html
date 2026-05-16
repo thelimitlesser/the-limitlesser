@@ -1725,9 +1725,16 @@
       }
 
       .ai-container { width: min(580px, 84vw); }
+      .ai-q-title { 
+        white-space: normal !important; 
+        text-align: center; 
+        bottom: 12px !important; 
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+      }
 
       /* Mobile Pills Layout (No Horizontal Scroll, 3 Symmetrical Pillars) */
-      .pills-wrap { margin-top: 4rem; overflow-x: visible; padding-bottom: 0; display: flex; justify-content: center; width: 100%; }
+      .pills-wrap { margin-top: 7rem; overflow-x: visible; padding-bottom: 0; display: flex; justify-content: center; width: 100%; }
       .pills-container { flex-wrap: nowrap; justify-content: center; padding: 0; width: 100%; gap: 8px; max-width: 100%; }
       .pill { padding: 10px 12px; font-size: 12px; flex: 1; min-width: 0; text-align: center; white-space: nowrap; }
       
@@ -1796,6 +1803,21 @@
       }
       .nav-menu-icon svg {
         width: 18px; height: 18px; stroke: var(--accent); stroke-width: 2.2px; display: block;
+      }
+
+      /* Email step mobile fix: move button below input */
+      .ai-step.email-step .ai-text-input {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        text-align: center;
+      }
+      .ai-submit-btn {
+        position: static !important;
+        display: inline-flex !important;
+        margin-top: 20px;
+        opacity: 1 !important;
+        pointer-events: all !important;
+        padding: 12px 30px !important;
       }
       
       .nav-menu-content { display: flex; flex-direction: column; text-align: left; }
@@ -2427,15 +2449,6 @@
         <h3 id="navMenuTitle">Válassz témakört</h3>
       </div>
       <div class="nav-menu-grid">
-        <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalChallenges'); return false;" class="nav-menu-item">
-          <div class="nav-menu-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          </div>
-          <div class="nav-menu-content">
-            <span class="nav-menu-title" id="navItemChallenges">Kihívások</span>
-            <span class="nav-menu-desc" id="navDescChallenges">Amikor a növekedés utoléri a rendszereidet</span>
-          </div>
-        </a>
         <a href="#" onclick="closeModal('modalNavMenu'); openModal('modalSolutions'); return false;" class="nav-menu-item">
           <div class="nav-menu-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1 .4 2.5 1.5 3.5.7.8 1.3 1.5 1.5 2.5"></path><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line></svg>
@@ -2499,38 +2512,6 @@
             <span class="nav-menu-desc" id="navDescContact">Lépj velünk kapcsolatba pár másodperc alatt</span>
           </div>
         </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 8: Challenges (Kihívások) -->
-  <div class="modal-overlay" id="modalChallenges" onclick="closeModalOnOverlay(event, 'modalChallenges')">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('modalChallenges')">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <span class="modal-tag" id="m8Tag">KIHÍVÁSOK</span>
-      <h2 class="modal-title" id="m8Title">Amikor a növekedés utoléri a rendszereidet</h2>
-      <div class="modal-content">
-        <p id="m8Intro">
-          Sok cég eljut arra a pointra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. A folyamatok, amelyek korábban működtek, elkezdenek lassítani.
-        </p>
-
-        <!-- Dynamic Typewriter Hook Area -->
-        <div class="typewriter-section" style="margin: 1rem 0; min-height: 220px; display: flex; flex-direction: column; justify-content: center; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.5rem;">
-          <h4 style="font-family: var(--font-d); font-size: 18px; color: var(--accent); margin-bottom: 1rem;" id="m8HookTitle">Segítünk, ha...</h4>
-          <p class="typewriter-text" id="m8Typewriter" style="font-size: clamp(14px, 2vw, 16px); line-height: 1.6; color: var(--text-primary); font-weight: 400; font-family: var(--font-sans); min-height: 110px;"></p>
-        </div>
-
-        <p id="m8Outro" style="font-family: var(--font-d); font-size: clamp(16px, 2.5vw, 18px); color: var(--text-primary); text-align: center; margin-top: 1.5rem; font-weight: 500;">
-          Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.
-        </p>
-
-        <div style="text-align: center; margin-top: 1.5rem;">
-          <button class="cta-btn" onclick="closeActiveModalAndOpenContact()" id="m8Cta">
-            Időpontot foglalok
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -2991,8 +2972,7 @@
         nav_menu_tag: "Navigáció",
         nav_menu_title: "Válassz témakört",
         nav_pill: "Továbbiak ☰",
-        nav_item_challenges: "Kihívások",
-        nav_desc_challenges: "Amikor a növekedés utoléri a rendszereidet",
+
         nav_item_solutions: "Megoldásaink",
         nav_desc_solutions: "Személyre szabott digitális transzformáció",
         nav_item_cases: "Forgatókönyvek",
@@ -3114,7 +3094,7 @@
         footer_tagline: "Digitális Transzformáció KKV-knak",
         footer_nav: "Navigáció",
         footer_nav_home: "Kezdőlap",
-        footer_nav_challenges: "Kihívások",
+
         footer_nav_solutions: "Megoldásaink",
         footer_nav_scenarios: "Forgatókönyvek",
         footer_nav_works: "Munkáink",
@@ -3144,19 +3124,13 @@
         sol_email_success: "Sikeresen elküldtük az összefoglalót!",
         sol_email_error: "Hiba történt az email küldése során.",
 
-        pill8: "Kihívások",
+
         m1_cta: "Időpontot foglalok",
         m2_cta: "Időpontot foglalok",
         m3_cta: "Időpontot foglalok",
         m4_cta: "Időpontot foglalok",
         m5_cta: "Időpontot foglalok",
-        m6_cta: "Időpontot foglalok",
-        m8_tag: "KIHÍVÁSOK",
-        m8_title: "Amikor a növekedés utoléri a rendszereidet",
-        m8_intro: "Sok cég eljut arra a pontra, ahol a növekedés már nem csak lehetőség, hanem kihívás is. A folyamatok, amelyek korábban működtek, elkezdenek lassítani.",
-        m8_hook_title: "Segítünk, ha...",
-        m8_outro: "Ilyenkor nem több eszközre van szükség — hanem jobban felépített rendszerekre.",
-        m8_cta: "Időpontot foglalok"
+        m6_cta: "Időpontot foglalok"
       },
       en: {
         page_title: "Limitlesser — Digital Transformation for SMBs",
@@ -3182,8 +3156,7 @@
         nav_menu_tag: "Navigation",
         nav_menu_title: "Choose a Topic",
         nav_pill: "More ☰",
-        nav_item_challenges: "Challenges",
-        nav_desc_challenges: "When growth outpaces your systems",
+
         nav_item_solutions: "Our Solutions",
         nav_desc_solutions: "Tailor-made digital transformation",
         nav_item_cases: "Scenarios",
@@ -3305,7 +3278,7 @@
         footer_tagline: "Digital Transformation for SMEs",
         footer_nav: "Navigation",
         footer_nav_home: "Home",
-        footer_nav_challenges: "Challenges",
+
         footer_nav_solutions: "Solutions",
         footer_nav_scenarios: "Scenarios",
         footer_nav_works: "Our Work",
@@ -3335,19 +3308,13 @@
         sol_email_success: "Summary sent successfully!",
         sol_email_error: "Something went wrong sending the email.",
 
-        pill8: "Challenges",
+
         m1_cta: "Book a Discovery Call",
         m2_cta: "Book a Discovery Call",
         m3_cta: "Book a Discovery Call",
         m4_cta: "Book a Discovery Call",
         m5_cta: "Book a Discovery Call",
-        m6_cta: "Book a Discovery Call",
-        m8_tag: "CHALLENGES",
-        m8_title: "When growth catches up with your systems",
-        m8_intro: "Many companies reach a point where growth is no longer just an opportunity, but a challenge. Processes that worked before begin to slow you down.",
-        m8_hook_title: "We help you if...",
-        m8_outro: "In times like these, you don't need more tools — you need better structured systems.",
-        m8_cta: "Book a Discovery Call"
+        m6_cta: "Book a Discovery Call"
       }
     };
 
@@ -3576,8 +3543,7 @@
         document.getElementById('pillNavMenu').innerText = dict.nav_pill;
         document.getElementById('navMenuTag').innerText = dict.nav_menu_tag;
         document.getElementById('navMenuTitle').innerText = dict.nav_menu_title;
-        document.getElementById('navItemChallenges').innerText = dict.nav_item_challenges;
-        document.getElementById('navDescChallenges').innerText = dict.nav_desc_challenges;
+
         document.getElementById('navItemSolutions').innerText = dict.nav_item_solutions;
         document.getElementById('navDescSolutions').innerText = dict.nav_desc_solutions;
         document.getElementById('navItemCases').innerText = dict.nav_item_cases;
@@ -3747,19 +3713,7 @@
       if (document.getElementById('m5Cta')) document.getElementById('m5Cta').innerText = dict.m5_cta;
       if (document.getElementById('m6Cta')) document.getElementById('m6Cta').innerText = dict.m6_cta;
 
-      // Modal 8: Challenges
-      if (document.getElementById('m8Tag')) document.getElementById('m8Tag').innerText = dict.m8_tag;
-      if (document.getElementById('m8Title')) document.getElementById('m8Title').innerText = dict.m8_title;
-      if (document.getElementById('m8Intro')) document.getElementById('m8Intro').innerText = dict.m8_intro;
-      if (document.getElementById('m8HookTitle')) document.getElementById('m8HookTitle').innerText = dict.m8_hook_title;
-      if (document.getElementById('m8Outro')) document.getElementById('m8Outro').innerText = dict.m8_outro;
-      if (document.getElementById('m8Cta')) document.getElementById('m8Cta').innerText = dict.m8_cta;
 
-      // Typewriter bilingual sync if challenges modal is open
-      if (document.getElementById('modalChallenges') && document.getElementById('modalChallenges').classList.contains('open')) {
-        stopTypewriter();
-        runTypewriter();
-      }
 
       // Dynamic header logo subtitle width alignment
       alignHeaderLogo();
@@ -4324,71 +4278,91 @@
     // ── RENDER SOLUTION CARD ─────────────────────────────────
     function aiRenderSolutionCard(data) {
       const isHu = currentLang !== 'en';
-      const dict = localTranslations[currentLang];
-
       const isRejected = data?.rejected === true;
-      const statusText = isRejected 
-        ? (isHu ? 'Nem releváns' : 'Not relevant') 
-        : (isHu ? 'Stratégiai lehetőség' : 'Strategic Opportunity');
       
-      const focim    = data?.focim    || (isHu ? 'Diagnózis' : 'Diagnosis');
-      const megoldas = data?.megoldas || (isHu ? 'Alkalmas folyamatok.' : 'Suitable processes.');
-      const eredmeny = data?.eredmeny || (isHu ? 'Jelentős potenciál.' : 'Significant potential.');
-
-      solutionCard.innerHTML = `
-        <div class="status-badge ${isRejected ? 'status-red' : 'status-green'}">
-          <div class="dot"></div>
-          ${statusText}
-        </div>
-
-        <h2 class="solution-focim" style="margin-bottom: 20px; font-size: clamp(24px, 4vw, 30px); letter-spacing: -0.5px;">${focim}</h2>
-
-        <div class="solution-blokk" style="border: none; margin: 0; padding: 0;">
-          <p class="solution-blokk-szoveg" style="font-size: 1rem; line-height: 1.7; color: #ffffff; opacity: 0.95;">
-            ${megoldas} ${eredmeny}
-          </p>
-          
-          ${!isRejected ? `
-            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-              <p style="opacity: 0.7; font-size: 0.9rem; line-height: 1.6; color: #ffffff; margin: 0;">
-                ${isHu 
-                  ? "Mivel mi nem dobozos szoftvert árulunk, hanem egyedi architektúrát építünk, a pontos számokat egy 30 perces stratégiai átvilágítás során tudjuk meghatározni."
-                  : "Since we don't sell off-the-shelf software but build custom architectures, we can determine the exact numbers during a 30-minute strategic audit."}
-              </p>
-              <p style="opacity: 0.9; font-size: 0.95rem; line-height: 1.6; color: #ffffff; margin-top: 15px;">
-                ${isHu
-                  ? "Ha úgy érzed, eljött az ideje szintet lépni, üljünk le egy privát, 30 perces stratégiai beszélgetésre. Felesleges körök nélkül megnézzük, miben lehetünk valódi partnerek."
-                  : "If you feel it's time to level up, let's sit down for a private, 30-minute strategic consultation. No fluff, just a clear look at how we can be true partners."}
+      if (!isRejected) {
+        // GREEN TEMPLATE CARD
+        solutionCard.innerHTML = `
+          <div style="background: #237a00; color: #ffffff; border-radius: 24px; padding: 40px 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+            <!-- Large Checkmark Icon -->
+            <div style="margin-bottom: 25px;">
+              <svg viewBox="0 0 24 24" style="width: 70px; height: 70px; fill: none; stroke: #FFC700; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 10px rgba(255,199,0,0.3));">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            
+            <h2 style="font-family: var(--font-h); font-size: clamp(24px, 5vw, 32px); font-weight: 700; margin-bottom: 20px; line-height: 1.2; color: #ffffff;">
+              ${isHu ? 'A helyzeted esélyes a szintlépésre!' : 'Your situation is ready for a level up!'}
+            </h2>
+            
+            <p style="font-family: var(--font-b); font-size: 17px; line-height: 1.6; opacity: 0.95; margin-bottom: 35px; max-width: 480px; margin-left: auto; margin-right: auto;">
+              ${isHu 
+                ? 'Ahhoz, hogy pontosan lássuk a lehetőségeket, szükséges pontosabban tudnunk pár dolgot a működéseddel kapcsolatban.' 
+                : 'To accurately see the possibilities, we need to know a few more things about your operations.'}
+            </p>
+            
+            <div style="margin-bottom: 35px;">
+              <h3 style="font-family: var(--font-h); font-size: 20px; font-weight: 600; margin-bottom: 8px;">
+                ${isHu ? 'Mi a <span style="color: #FFC700;">következő</span> lépés?' : 'What is the <span style="color: #FFC700;">next</span> step?'}
+              </h3>
+              <p style="font-family: var(--font-b); font-size: 16px; opacity: 0.85;">
+                ${isHu ? 'Foglalj időpontot egy 30 perces konzultációra hozzánk:' : 'Book a 30-minute consultation with us:'}
               </p>
             </div>
-          ` : ''}
-        </div>
 
-        ${!isRejected ? `
-        <div style="text-align: center; margin-top: 40px;">
-          <a href="#" onclick="openModal('modalContact'); return false;" class="cta-btn" style="width: auto; display: inline-flex; justify-content: center; padding: 15px 40px; font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(255, 199, 0, 0.2);">
-            ${isHu ? 'STRATÉGIAI KONZULTÁCIÓ FOGLALÁSA' : 'BOOK STRATEGIC CONSULTATION'}
-          </a>
-          <div style="margin-top: 20px;">
-            <p style="font-size: 11px; opacity: 0.8; color: #FFC700; font-weight: 600; letter-spacing: 1px; margin-bottom: 5px;">
-              ${isHu ? 'FIGYELEM: HAVI 2 PROJEKTET VÁLLALUNK' : 'NOTICE: WE ACCEPT 2 PROJECTS PER MONTH'}
+            <div style="margin-bottom: 20px;">
+              <button onclick="openModal('modalContact')" style="background: #FFC700; color: #000000; border: none; padding: 18px 45px; font-weight: 800; font-size: 17px; border-radius: 100px; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(255,199,0,0.3); font-family: var(--font-h); text-transform: uppercase; letter-spacing: 0.5px;">
+                ${isHu ? 'Foglalok időpontot' : 'I\'ll book an appointment'}
+              </button>
+            </div>
+
+            <p style="font-size: 13px; opacity: 0.75; font-family: var(--font-b); font-weight: 500;">
+              ${isHu ? 'A konzultáció ingyenes és kötelezettségmentes, online történik.' : 'The consultation is free, non-binding, and takes place online.'}
             </p>
-            <p style="font-size: 11px; opacity: 0.5; color: #ffffff; letter-spacing: 1px;">
-              ${isHu ? 'INGYENES. KÖTELEZETTSÉGMENTES. 30 PERC.' : 'FREE. NO OBLIGATION. 30 MIN.'}
+
+            <div style="margin-top: 40px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.15);">
+               <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.15); padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; color: #FFC700; border: 1px solid rgba(255,199,0,0.2); letter-spacing: 0.5px;">
+                  <span style="display: inline-block; width: 8px; height: 8px; background: #FFC700; border-radius: 50%; animation: pulse 2s infinite;"></span>
+                  ${isHu ? 'HAVI 2 PROJEKTET VÁLLALUNK' : 'WE ACCEPT 2 PROJECTS PER MONTH'}
+               </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // RED TEMPLATE CARD (Professional Rejection)
+        solutionCard.innerHTML = `
+          <div style="background: #7a0000; color: #ffffff; border-radius: 24px; padding: 40px 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+            <!-- Info Icon -->
+            <div style="margin-bottom: 25px;">
+              <svg viewBox="0 0 24 24" style="width: 70px; height: 70px; fill: none; stroke: rgba(255,255,255,0.8); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            
+            <h2 style="font-family: var(--font-h); font-size: clamp(22px, 4.5vw, 28px); font-weight: 700; margin-bottom: 20px; line-height: 1.2; color: #ffffff;">
+              ${isHu ? 'Ez a projekt jelenleg kívül esik a fókuszunkon.' : 'This project is currently outside our focus.'}
+            </h2>
+            
+            <p style="font-family: var(--font-b); font-size: 15px; line-height: 1.7; opacity: 0.9; margin-bottom: 35px; max-width: 460px; margin-left: auto; margin-right: auto;">
+              ${isHu 
+                ? 'A Limitlesser küldetése a KKV-k digitális szintlépése szoftveres automatizációval és stratégiai fejlesztéssel. Az általad leírt kihívás jelenleg nem illeszkedik abba a technológiai keretrendszerbe, amelyben a tőlünk elvárható maximális értéket tudnánk neked szállítani.' 
+                : 'Limitlesser\'s mission is to support the digital growth of SMEs through software automation and strategic development. The challenge you described currently does not fit into the technological framework where we can guarantee the maximum value expected from us.'}
+            </p>
+            
+            <div style="margin-bottom: 10px;">
+              <button onclick="window.location.reload()" style="background: rgba(255,255,255,0.15); color: #ffffff; border: 1px solid rgba(255,255,255,0.3); padding: 14px 35px; font-weight: 600; font-size: 15px; border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-h); text-transform: uppercase; letter-spacing: 1px;">
+                ${isHu ? 'Vissza a megoldásokhoz' : 'Back to solutions'}
+              </button>
+            </div>
+
+            <p style="font-size: 12px; opacity: 0.6; font-family: var(--font-b); margin-top: 25px;">
+              ${isHu ? 'Ha más jellegű technológiai kérdésed van, keress minket bizalommal.' : 'If you have other technological questions, feel free to contact us.'}
             </p>
           </div>
-        </div>
-        ` : `
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-          <p style="opacity: 0.6; font-size: 0.9rem; margin-bottom: 20px;">
-            ${isHu ? 'Ha úgy gondolod, tévedtünk, vagy más jellegű kérdésed van, keress minket bizalommal.' : 'If you think we made a mistake or have other questions, feel free to contact us.'}
-          </p>
-          <a href="#solutions" class="cta-btn" style="width: auto; display: inline-flex; justify-content: center; padding: 12px 30px; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #ffffff;">
-            ${isHu ? 'VISSZA A MEGOLDÁSAINKHOZ' : 'BACK TO SOLUTIONS'}
-          </a>
-        </div>
-        `}
-      `;
+        `;
+      }
       
       solutionCard.style.opacity = '0';
       setTimeout(() => {
