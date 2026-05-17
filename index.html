@@ -1028,8 +1028,29 @@
       }
       .solution-card {
         padding: 0;
-        margin-top: 24px;
-        width: 94vw;
+        margin: 24px auto 0 !important;
+        width: 100% !important;
+        max-width: 680px !important;
+        box-sizing: border-box !important;
+      }
+      /* Prevent viewport jumping and ensure perfect centering in focus state on mobile */
+      body.ai-focused-state #header,
+      body.ai-focused-state .brand-hero,
+      body.ai-focused-state .pills-wrap,
+      body.ai-focused-state .discovery-card {
+        display: none !important;
+      }
+      body.ai-focused-state #aiContainer {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        margin: auto !important;
+        padding: 0 1.5rem !important;
+        width: 100% !important;
+        max-width: 580px !important;
+        box-sizing: border-box !important;
+        z-index: 9999 !important;
       }
     }
 
