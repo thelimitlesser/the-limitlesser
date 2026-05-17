@@ -1,0 +1,51 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/adatvedelem", "destination": "/privacy.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/aszf", "destination": "/aszf.html" },
+    { "source": "/terms", "destination": "/aszf.html" },
+    
+    { "source": "/digitalizacio/webshop-es-kereskedelem", "destination": "/demo/retail/index.html" },
+    { "source": "/solutions/retail-and-ecommerce", "destination": "/demo/retail/index.html" },
+    
+    { "source": "/digitalizacio/szoftver-es-technologia", "destination": "/demo/tech/index.html" },
+    { "source": "/solutions/tech-and-saas", "destination": "/demo/tech/index.html" },
+    { "source": "/digitalizacio/szoftver-es-technologia/dashboard", "destination": "/demo/tech/dashboard.html" },
+    { "source": "/solutions/tech-and-saas/dashboard", "destination": "/demo/tech/dashboard.html" },
+    
+    { "source": "/digitalizacio/kkv-es-vallalati-megoldasok", "destination": "/demo/corporate/index.html" },
+    { "source": "/solutions/corporate-and-enterprise", "destination": "/demo/corporate/index.html" },
+    { "source": "/digitalizacio/kkv-es-vallalati-megoldasok/struktura", "destination": "/demo/corporate/solutions.html" },
+    { "source": "/solutions/corporate-and-enterprise/structure", "destination": "/demo/corporate/solutions.html" },
+    
+    { "source": "/digitalizacio/ugynoksegek-es-szolgaltatok", "destination": "/demo/professional/index.html" },
+    { "source": "/solutions/agencies-and-services", "destination": "/demo/professional/index.html" },
+    { "source": "/digitalizacio/ugynoksegek-es-szolgaltatok/konzultacio", "destination": "/demo/professional/consultation.html" },
+    { "source": "/solutions/agencies-and-services/consultation", "destination": "/demo/professional/consultation.html" },
+    
+    { "source": "/digitalizacio/projektalapu-es-kreativ-cegek", "destination": "/demo/portfolio/index.html" },
+    { "source": "/solutions/project-and-portfolio", "destination": "/demo/portfolio/index.html" },
+    { "source": "/digitalizacio/projektalapu-es-kreativ-cegek/esettanulmany", "destination": "/demo/portfolio/project.html" },
+    { "source": "/solutions/project-and-portfolio/case-study", "destination": "/demo/portfolio/project.html" },
+    
+    { "source": "/konzultacio/sikeres-foglalas", "destination": "/demo/professional/success.html" },
+    { "source": "/consultation/booking-success", "destination": "/demo/professional/success.html" },
+    
+    { "source": "/megoldasaink", "destination": "/index.html" },
+    { "source": "/solutions", "destination": "/index.html" },
+    { "source": "/forgatokonyvek", "destination": "/index.html" },
+    { "source": "/scenarios", "destination": "/index.html" },
+    { "source": "/munkaink", "destination": "/index.html" },
+    { "source": "/work", "destination": "/index.html" },
+    { "source": "/hogyan-dolgozunk", "destination": "/index.html" },
+    { "source": "/process", "destination": "/index.html" },
+    { "source": "/gyik", "destination": "/index.html" },
+    { "source": "/faq", "destination": "/index.html" },
+    { "source": "/rolunk", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/kapcsolat", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" }
+  ]
+}

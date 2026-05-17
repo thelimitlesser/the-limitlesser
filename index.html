@@ -3404,6 +3404,8 @@
         const restoreModal = sessionStorage.getItem('restore_modal');
         if (restoreModal) {
           openModal(restoreModal);
+        } else {
+          checkUrlAndOpenModal();
         }
         if (restoreScroll) {
           window.scrollTo({
@@ -3446,6 +3448,7 @@
             setTimeout(() => {
               preloader.style.display = 'none';
               sessionStorage.setItem('preloader_shown', 'true');
+              checkUrlAndOpenModal();
             }, 800);
           }
         }, 600); // slight pause at 100% for satisfaction
@@ -3463,6 +3466,7 @@
             setTimeout(() => { 
               preloader.style.display = 'none'; 
               sessionStorage.setItem('preloader_shown', 'true');
+              checkUrlAndOpenModal();
             }, 800);
           }, 500);
         }
@@ -3785,9 +3789,31 @@
     }
     window.addEventListener('resize', alignHeaderLogo);
 
+    // ─── Modal Path Mapping for History API ───
+    const modalPathMap = {
+      'modalSolutions': { hu: '/megoldasaink', en: '/solutions' },
+      'modalCases': { hu: '/forgatokonyvek', en: '/scenarios' },
+      'modalWork': { hu: '/munkaink', en: '/work' },
+      'modalProcess': { hu: '/hogyan-dolgozunk', en: '/process' },
+      'modalFAQ': { hu: '/gyik', en: '/faq' },
+      'modalAbout': { hu: '/rolunk', en: '/about' },
+      'modalContact': { hu: '/kapcsolat', en: '/contact' }
+    };
+
+    function checkUrlAndOpenModal() {
+      const path = window.location.pathname;
+      for (const [modalId, pathData] of Object.entries(modalPathMap)) {
+        if (path === pathData.hu || path === pathData.en) {
+          openModal(modalId, true); // Pass true to prevent pushing another state on load
+          break;
+        }
+      }
+    }
+
     // ─── Modal Open/Close System ───
-    function openModal(id) {
+    function openModal(id, skipStatePush = false) {
       const modal = document.getElementById(id);
+      if (!modal) return;
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
@@ -3795,17 +3821,48 @@
         stopTypewriter();
         runTypewriter();
       }
+      
+      // Update browser URL history
+      if (!skipStatePush && modalPathMap[id]) {
+        const path = currentLang === 'en' ? modalPathMap[id].en : modalPathMap[id].hu;
+        window.history.pushState({ modalId: id }, '', path);
+      }
     }
 
     function closeModal(id) {
       const modal = document.getElementById(id);
+      if (!modal) return;
       modal.classList.remove('open');
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       if (id === 'modalChallenges') {
         stopTypewriter();
       }
+
+      // Revert browser URL to home page
+      const pathData = modalPathMap[id];
+      if (pathData) {
+        if (window.location.pathname === pathData.hu || window.location.pathname === pathData.en) {
+          window.history.pushState(null, '', '/');
+        }
+      }
     }
+
+    // Handle back/forward navigation natively
+    window.addEventListener('popstate', (e) => {
+      // Close all open modals first
+      const openModals = document.querySelectorAll('.modal-overlay.open');
+      openModals.forEach(m => {
+        m.classList.remove('open');
+      });
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+
+      // Reopen modal if stored in history state
+      if (e.state && e.state.modalId) {
+        openModal(e.state.modalId, true);
+      }
+    });
 
     function closeModalOnOverlay(e, id) {
       if (e.target.classList.contains('modal-overlay')) {
