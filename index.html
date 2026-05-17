@@ -1034,6 +1034,16 @@
         box-sizing: border-box !important;
       }
       /* Prevent viewport jumping and ensure perfect centering in focus state on mobile */
+      html:has(body.ai-focused-state) {
+        overflow: hidden !important;
+        height: 100% !important;
+      }
+      body.ai-focused-state {
+        position: fixed !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+      }
       body.ai-focused-state #header,
       body.ai-focused-state .brand-hero,
       body.ai-focused-state .pills-wrap,
@@ -1041,11 +1051,11 @@
         display: none !important;
       }
       body.ai-focused-state #aiContainer {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        transform: none !important;
-        margin: auto !important;
+        position: fixed !important;
+        top: 38% !important; /* Perfect optical center above the mobile keyboard */
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        margin: 0 !important;
         padding: 0 1.5rem !important;
         width: 100% !important;
         max-width: 580px !important;
