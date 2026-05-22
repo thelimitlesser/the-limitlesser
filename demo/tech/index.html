@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QUANTUM — AI-Powered Data Ecosystem</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -249,7 +250,7 @@ const translations = {
 };
 
 function syncLanguage() {
-  const savedLang = localStorage.getItem('limitlesser_lang') || 'hu';
+  const savedLang = localStorage.getItem('lang') || 'hu';
   const t = translations[savedLang];
   document.getElementById('h-eyebrow').textContent = t.eyebrow;
   document.getElementById('h-title').innerHTML = t.title;

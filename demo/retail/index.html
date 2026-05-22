@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AURELIA — Luxury Collection</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -285,7 +286,7 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
 
 .demo-badge{position:fixed;top:0;right:0;background:var(--accent);color:#fff;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:.32rem .9rem;z-index:99999;font-weight:700;font-family:var(--font-b)}
 
-.rv{opacity:0;transform:translateY(18px);transition:opacity .85s,transform .85s}.rv.on{opacity:1;transform:none}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .85s,transform .85s;pointer-events:all}.rv.on{opacity:1;transform:none}
 .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
 .back-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;gap:1.5rem;align-items:center;padding:8px 12px;padding-left:30px;background:#222;border-radius:100px;box-shadow:0 20px 40px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1)}
 .bb-b{color:#aaa;font-size:12px;letter-spacing:2px;text-decoration:none;font-family:var(--font-b);font-weight:600;transition:all .3s;text-transform:uppercase;display:flex;align-items:center;gap:0.6rem}
@@ -465,10 +466,10 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
 </nav>
 
 <div class="mob-menu" id="mob-menu">
-  <a href="#" onclick="showV('home');toggleMob();return false">KOLLEKCIÓ</a>
-  <a href="#" onclick="filt('watch',null);showV('home');toggleMob();return false">ÓRÁK</a>
-  <a href="#" onclick="filt('leather',null);showV('home');toggleMob();return false">BŐRÁRU</a>
-  <a href="#" onclick="showV('home');toggleMob();return false">VISSZA</a>
+  <a href="#" onclick="showV('home');toggleMob();return false" data-i18n="retail_nav_coll">KOLLEKCIÓ</a>
+  <a href="#" onclick="filt('watch',null);showV('home');toggleMob();return false" data-i18n="retail_nav_watches">ÓRÁK</a>
+  <a href="#" onclick="filt('leather',null);showV('home');toggleMob();return false" data-i18n="retail_nav_leather">BŐRÁRU</a>
+  <a href="#" onclick="showV('home');toggleMob();return false" data-i18n="retail_nav_back">VISSZA</a>
 </div>
 
 <!-- Cart overlay -->
@@ -483,11 +484,11 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
     <div class="csbtr"><div class="csbf" id="csbf" style="width:0%"></div></div>
   </div>
   <div class="cft" id="cfoot" style="display:none">
-    <div class="cst"><span>Részösszeg</span><span id="csub">0 Ft</span></div>
-    <div class="cst"><span>Szállítás</span><span id="cship2">Ingyenes</span></div>
-    <div class="cgt"><span>Összesen</span><span id="cgrand">0 Ft</span></div>
+    <div class="cst"><span data-i18n="retail_cart_subtotal">Részösszeg</span><span id="csub">0 Ft</span></div>
+    <div class="cst"><span data-i18n="retail_cart_shipping">Szállítás</span><span id="cship2">Ingyenes</span></div>
+    <div class="cgt"><span data-i18n="retail_cart_total">Összesen</span><span id="cgrand">0 Ft</span></div>
     <button class="chbtn" onclick="goCO()" data-i18n="retail_checkout_title">Fizetés →</button>
-    <button class="ccbtn" onclick="closeCart()">Vásárlás folytatása</button>
+    <button class="ccbtn" onclick="closeCart()" data-i18n="retail_cart_continue">Vásárlás folytatása</button>
   </div>
 </div>
 
@@ -498,7 +499,7 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
     <h1 class="h-title" data-i18n="retail_hero_title">Prémium<br><em>Kollekció</em></h1>
     <p class="h-sub" data-i18n="retail_hero_sub">Korlátozott darabszámú luxus kiegészítők</p>
     <a href="#pgrid" class="h-btn" data-i18n="retail_hero_cta">Kollekció felfedezése</a>
-    <div class="h-scroll"><div class="h-scroll-l"></div>Görgess</div>
+    <div class="h-scroll"><div class="h-scroll-l"></div><span data-i18n="retail_scroll">Görgess</span></div>
   </section>
   <div class="trust">
     <div class="ti"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg><span data-i18n="retail_trust_ship">Ingyenes szállítás 50 000 Ft felett</span></div>
@@ -517,29 +518,29 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
 
   <div class="qs">
     <span class="qm">"</span>
-    <p class="qt rv">"Az ízlés nem véletlen. Minden AURELIA darab egy életre szóló döntés megnyilvánulása."</p>
+    <p class="qt rv" data-i18n="retail_quote">"Az ízlés nem véletlen. Minden AURELIA darab egy életre szóló döntés megnyilvánulása."</p>
     <span class="qa rv">— Vogue Luxury Review, 2025</span>
   </div>
   <div class="ns">
     <span class="nlbl" data-i18n="retail_newsletter_lbl">The Circle</span>
     <h2 class="nt rv" data-i18n="retail_newsletter_title">Exkluzív<br><em>tagság</em></h2>
     <p class="np rv" data-i18n="retail_newsletter_sub">Elsőként értesülj új kollekciókról és limitált darabokról.</p>
-    <div class="nf rv d2"><input type="email" class="ni" placeholder="Email cím"><button class="nb" data-i18n="retail_newsletter_cta">Csatlakozás</button></div>
+    <div class="nf rv d2"><input type="email" class="ni" data-i18n-placeholder="retail_newsletter_email_placeholder" placeholder="Email cím"><button class="nb" data-i18n="retail_newsletter_cta">Csatlakozás</button></div>
   </div>
   <footer>
     <div class="fg">
       <div><div class="fbr">AURELIA</div><p class="fbs" data-i18n="retail_footer_tag">Prémium limitált kollekciók azoknak, akik értékeket képviselnek — nem csak tárgyakat vásárolnak.</p></div>
-      <div><span class="fct" data-i18n="retail_footer_c1">Kollekció</span><ul class="fls"><li><a href="#">Új érkezők</a></li><li><a href="#" data-i18n="retail_nav_watches">Órák</a></li><li><a href="#" data-i18n="retail_cat_frag">Illatszerek</a></li><li><a href="#" data-i18n="retail_nav_leather">Bőráru</a></li></ul></div>
-      <div><span class="fct" data-i18n="retail_footer_c2">Vásárlás</span><ul class="fls"><li><a href="#">Szállítás</a></li><li><a href="#">Visszaküldés</a></li><li><a href="#">Garancia</a></li><li><a href="#">GYIK</a></li></ul></div>
+      <div><span class="fct" data-i18n="retail_footer_c1">Kollekció</span><ul class="fls"><li><a href="#" data-i18n="retail_footer_new_arrivals">Új érkezők</a></li><li><a href="#" data-i18n="retail_nav_watches">Órák</a></li><li><a href="#" data-i18n="retail_cat_frag">Illatszerek</a></li><li><a href="#" data-i18n="retail_nav_leather">Bőráru</a></li></ul></div>
+      <div><span class="fct" data-i18n="retail_footer_c2">Vásárlás</span><ul class="fls"><li><a href="#" data-i18n="retail_footer_shop_shipping">Szállítás</a></li><li><a href="#" data-i18n="retail_footer_shop_returns">Visszaküldés</a></li><li><a href="#" data-i18n="retail_footer_shop_warranty">Garancia</a></li><li><a href="#" data-i18n="retail_footer_shop_faq">GYIK</a></li></ul></div>
       <div><span class="fct" data-i18n="retail_footer_c3">Kapcsolat</span><ul class="fls"><li><a href="#">hello@aurelia.hu</a></li><li><a href="#">+36 1 234 5678</a></li><li><a href="#">Instagram</a></li></ul></div>
     </div>
-    <div class="fbot"><span>© 2025 AURELIA</span><div style="display:flex;gap:2rem"><a href="#" style="color:inherit;text-decoration:none">Adatvédelem</a><a href="#" style="color:inherit;text-decoration:none">ÁSZF</a></div></div>
+    <div class="fbot"><span>© 2025 AURELIA</span><div style="display:flex;gap:2rem"><a href="#" style="color:inherit;text-decoration:none" data-i18n="retail_footer_privacy">Adatvédelem</a><a href="#" style="color:inherit;text-decoration:none" data-i18n="retail_footer_tos">ÁSZF</a></div></div>
   </footer>
 </div>
 
 <!-- PRODUCT VIEW -->
 <div id="view-product" class="view pdv">
-  <div class="pdb"><a href="#" onclick="showV('home');return false">Főoldal</a><span>›</span><a href="#" onclick="showV('home');return false" data-i18n="retail_nav_coll">Kollekció</a><span>›</span><span id="pdbname">Termék</span></div>
+  <div class="pdb"><a href="#" onclick="showV('home');return false" data-i18n="retail_nav_home">Főoldal</a><span>›</span><a href="#" onclick="showV('home');return false" data-i18n="retail_nav_coll">Kollekció</a><span>›</span><span id="pdbname">Termék</span></div>
   <div class="pdi">
     <div class="pdg">
       <div class="pdt-wrap" id="pdtw"></div>
@@ -550,12 +551,12 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
       <h1 class="pdn" id="pdname"></h1>
       <div class="rrow"><div class="rst" id="pdstars"></div><span class="rct" id="pdrct"></span></div>
       <div class="pdpr" id="pdprice"></div>
-      <div class="pdtx">ÁFÁ-val és szállítással</div>
+      <div class="pdtx" data-i18n="retail_product_vat_shipping">ÁFÁ-val és szállítással</div>
       <div class="div"></div>
       <p style="font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:1.8rem" id="pddesc"></p>
-      <div><span class="ol">Szín: <span id="selcol" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><div class="cols" id="pdcols"></div></div>
+      <div><span class="ol"><span data-i18n="retail_product_color">Szín</span>: <span id="selcol" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><div class="cols" id="pdcols"></div></div>
       <div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem"><span class="ol" style="margin:0" data-i18n="retail_product_size">Méret: <span id="selsz" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><a href="#" style="font-size:11px;text-decoration:underline;color:var(--muted);cursor:none">Mérettáblázat</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem"><span class="ol" style="margin:0" data-i18n="retail_product_size">Méret: <span id="selsz" style="font-weight:300;text-transform:none;letter-spacing:0"></span></span><a href="#" style="font-size:11px;text-decoration:underline;color:var(--muted);cursor:none" data-i18n="retail_product_size_chart">Mérettáblázat</a></div>
         <div class="szs" id="pdsizes"></div>
       </div>
       <div><span class="ol" data-i18n="retail_product_qty">Mennyiség</span>
@@ -565,28 +566,28 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
           <button class="wb" id="wbtn" onclick="toggleW(this)">♡</button>
         </div>
       </div>
-      <div class="pship"><span>🚀 Ingyenes szállítás</span><span>🔄 30 napos visszaküldés</span><span>🛡️ Lifetime garancia</span></div>
+      <div class="pship"><span data-i18n="retail_trust_ship">🚀 Ingyenes szállítás</span><span data-i18n="retail_trust_ret">🔄 30 napos visszaküldés</span><span data-i18n="retail_trust_guar">🛡️ Lifetime garancia</span></div>
       <div class="acc-wrap">
         <div class="ai">
-          <div class="ah" onclick="toggleAcc(this)"><span>Termékleírás</span><span class="aa">+</span></div>
+          <div class="ah" onclick="toggleAcc(this)"><span data-i18n="retail_product_accordion_desc">Termékleírás</span><span class="aa">+</span></div>
           <div class="ab"><div class="abi" id="acc-desc"></div></div>
         </div>
         <div class="ai">
-          <div class="ah" onclick="toggleAcc(this)"><span>Anyag & Gondozás</span><span class="aa">+</span></div>
+          <div class="ah" onclick="toggleAcc(this)"><span data-i18n="retail_product_accordion_mat">Anyag & Gondozás</span><span class="aa">+</span></div>
           <div class="ab"><div class="abi" id="acc-mat"></div></div>
         </div>
         <div class="ai op">
-          <div class="ah" onclick="toggleAcc(this)"><span>Szállítás & Visszaküldés</span><span class="aa">+</span></div>
-          <div class="ab"><div class="abi">50 000 Ft feletti rendelésekhez ingyenes futárszállítás 1–3 munkanap alatt. Visszaküldés 30 napon belül. Az eredeti csomagolásban kérjük visszaküldeni.</div></div>
+          <div class="ah" onclick="toggleAcc(this)"><span data-i18n="retail_product_accordion_ship">Szállítás & Visszaküldés</span><span class="aa">+</span></div>
+          <div class="ab"><div class="abi" data-i18n="retail_product_accordion_ship_text">50 000 Ft feletti rendelésekhez ingyenes futárszállítás 1–3 munkanap alatt. Visszaküldés 30 napon belül. Az eredeti csomagolásban kérjük visszaküldeni.</div></div>
         </div>
       </div>
     </div>
   </div>
   <div class="rvs">
-    <div class="rvh"><h2 class="rvt">Vásárlói vélemények</h2><div class="rvo"><span style="color:var(--accent);font-size:15px">★★★★★</span> 4.9 / 5</div></div>
+    <div class="rvh"><h2 class="rvt" data-i18n="retail_product_reviews_title">Vásárlói vélemények</h2><div class="rvo"><span style="color:var(--accent);font-size:15px">★★★★★</span> 4.9 / 5</div></div>
     <div class="rvg" id="pdrevs"></div>
   </div>
-  <div class="reld"><h2 class="relt">Kapcsolódó termékek</h2><div class="relg" id="pdrel"></div></div>
+  <div class="reld"><h2 class="relt" data-i18n="retail_product_related_title">Kapcsolódó termékek</h2><div class="relg" id="pdrel"></div></div>
 </div>
 
 <!-- CHECKOUT VIEW -->
@@ -594,74 +595,74 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
   <div class="coi">
     <div class="col">
       <div class="cos">
-        <div class="cost a" id="st0" onclick="goSt(0)">1. Szállítás</div>
-        <div class="cost" id="st1" onclick="goSt(1)">2. Fizetés</div>
-        <div class="cost" id="st2" onclick="goSt(2)">3. Összefoglalás</div>
+        <div class="cost a" id="st0" onclick="goSt(0)" data-i18n="retail_checkout_step1">1. Szállítás</div>
+        <div class="cost" id="st1" onclick="goSt(1)" data-i18n="retail_checkout_step2">2. Fizetés</div>
+        <div class="cost" id="st2" onclick="goSt(2)" data-i18n="retail_checkout_step3">3. Összefoglalás</div>
       </div>
       <!-- Step 0 -->
       <div class="cop a" id="cs0">
-        <h2 class="cot">Kapcsolattartási adatok</h2>
+        <h2 class="cot" data-i18n="retail_checkout_contact_title">Kapcsolattartási adatok</h2>
         <div class="fg2">
-          <div class="fgr"><label class="fl">Keresztnév</label><input class="fi" type="text" placeholder="Anna"></div>
-          <div class="fgr"><label class="fl">Vezetéknév</label><input class="fi" type="text" placeholder="Kovács"></div>
-          <div class="fgr ff"><label class="fl">Email cím</label><input class="fi" type="email" placeholder="anna@example.hu"></div>
-          <div class="fgr ff"><label class="fl">Telefonszám</label><input class="fi" type="tel" placeholder="+36 30 123 4567"></div>
+          <div class="fgr"><label class="fl" data-i18n="retail_checkout_first_name">Keresztnév</label><input class="fi" type="text" placeholder="Anna"></div>
+          <div class="fgr"><label class="fl" data-i18n="retail_checkout_last_name">Vezetéknév</label><input class="fi" type="text" placeholder="Kovács"></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_email">Email cím</label><input class="fi" type="email" placeholder="anna@example.hu"></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_phone">Telefonszám</label><input class="fi" type="tel" placeholder="+36 30 123 4567"></div>
         </div>
-        <h3 style="font-family:var(--font-d);font-size:20px;font-weight:300;margin:1.5rem 0 1.2rem">Szállítási cím</h3>
+        <h3 style="font-family:var(--font-d);font-size:20px;font-weight:300;margin:1.5rem 0 1.2rem" data-i18n="retail_checkout_shipping_title">Szállítási cím</h3>
         <div class="fg2">
-          <div class="fgr ff"><label class="fl">Ország</label><select class="fsel"><option>Magyarország</option><option>Ausztria</option><option>Németország</option></select></div>
-          <div class="fgr" style="grid-column:1/-1"><label class="fl">Irányítószám & Város</label><div style="display:grid;grid-template-columns:110px 1fr;gap:.8rem"><input class="fi" type="text" placeholder="1051"><input class="fi" type="text" placeholder="Budapest"></div></div>
-          <div class="fgr ff"><label class="fl">Utca, házszám</label><input class="fi" type="text" placeholder="Váci utca 12. II/4."></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_country">Ország</label><select class="fsel"><option>Magyarország</option><option>Ausztria</option><option>Németország</option></select></div>
+          <div class="fgr" style="grid-column:1/-1"><label class="fl" data-i18n="retail_checkout_zip_city">Irányítószám & Város</label><div style="display:grid;grid-template-columns:110px 1fr;gap:.8rem"><input class="fi" type="text" placeholder="1051"><input class="fi" type="text" placeholder="Budapest"></div></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_address">Utca, házszám</label><input class="fi" type="text" placeholder="Váci utca 12. II/4."></div>
         </div>
-        <div style="margin-top:1.2rem"><label style="display:flex;align-items:center;gap:.7rem;cursor:none;font-size:13px;color:var(--muted)"><input type="checkbox" style="accent-color:var(--accent)"> Számlázási cím = szállítási cím</label></div>
+        <div style="margin-top:1.2rem"><label style="display:flex;align-items:center;gap:.7rem;cursor:none;font-size:13px;color:var(--muted)"><input type="checkbox" style="accent-color:var(--accent)"> <span data-i18n="retail_checkout_billing_same">Számlázási cím = szállítási cím</span></label></div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <button class="cnbtn" onclick="goSt(1)">Tovább a fizetéshez →</button>
-          <button class="cblnk" onclick="showV('home')">← Vissza a kollekciókhoz</button>
+          <button class="cnbtn" onclick="goSt(1)" data-i18n="retail_checkout_to_payment">Tovább a fizetéshez →</button>
+          <button class="cblnk" onclick="showV('home')" data-i18n="retail_checkout_back_to_collections">← Vissza a kollekciókhoz</button>
         </div>
       </div>
       <!-- Step 1 -->
       <div class="cop" id="cs1">
-        <h2 class="cot">Fizetési adatok</h2>
+        <h2 class="cot" data-i18n="retail_checkout_payment_title">Fizetési adatok</h2>
         <div class="cardv">
           <div class="cvc"><div></div><div></div><div></div><div></div></div>
           <div class="cvn" id="cvn">•••• •••• •••• ••••</div>
-          <div class="cvb"><div><div class="cvlb">Kártyabirtokos</div><div id="cvnm">AURELIA GUEST</div></div><div><div class="cvlb">Lejárat</div><div id="cvex">HH/ÉÉ</div></div></div>
+          <div class="cvb"><div><div class="cvlb" data-i18n="retail_checkout_card_holder_label">Kártyabirtokos</div><div id="cvnm">AURELIA GUEST</div></div><div><div class="cvlb" data-i18n="retail_checkout_card_expiry_label">Lejárat</div><div id="cvex">HH/ÉÉ</div></div></div>
         </div>
         <div class="fg2">
-          <div class="fgr ff"><label class="fl">Kártyaszám</label><input class="fi" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCrd(this)"></div>
-          <div class="fgr ff"><label class="fl">Kártyabirtokos neve</label><input class="fi" type="text" placeholder="KOVÁCS ANNA" oninput="document.getElementById('cvnm').textContent=this.value||'AURELIA GUEST'"></div>
-          <div class="fgr"><label class="fl">Lejárat</label><input class="fi" type="text" placeholder="HH / ÉÉ" maxlength="7" oninput="fmtExp(this)"></div>
-          <div class="fgr"><label class="fl">CVV</label><input class="fi" type="password" placeholder="•••" maxlength="3"></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_card_number">Kártyaszám</label><input class="fi" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCrd(this)"></div>
+          <div class="fgr ff"><label class="fl" data-i18n="retail_checkout_card_holder_name">Kártyabirtokos neve</label><input class="fi" type="text" placeholder="KOVÁCS ANNA" oninput="document.getElementById('cvnm').textContent=this.value||'AURELIA GUEST'"></div>
+          <div class="fgr"><label class="fl" data-i18n="retail_checkout_card_expiry_label">Lejárat</label><input class="fi" type="text" placeholder="HH / ÉÉ" maxlength="7" oninput="fmtExp(this)"></div>
+          <div class="fgr"><label class="fl" data-i18n="retail_checkout_card_cvv">CVV</label><input class="fi" type="password" placeholder="•••" maxlength="3"></div>
         </div>
-        <div class="sse">🔒 256-bites SSL titkosítás. Ez egy demo — ne add meg valódi bankkártya adataidat.</div>
+        <div class="sse" data-i18n="retail_checkout_ssl_note">🔒 256-bites SSL titkosítás. Ez egy demo — ne add meg valódi bankkártya adataidat.</div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-          <button class="cnbtn" onclick="goSt(2)">Rendelés áttekintése →</button>
-          <button class="cblnk" onclick="goSt(0)">← Szállítási adatok</button>
+          <button class="cnbtn" onclick="goSt(2)" data-i18n="retail_checkout_to_summary">Rendelés áttekintése →</button>
+          <button class="cblnk" onclick="goSt(0)" data-i18n="retail_checkout_back_to_shipping">← Szállítási adatok</button>
         </div>
       </div>
       <!-- Step 2 -->
       <div class="cop" id="cs2">
-        <h2 class="cot">Rendelés összefoglalása</h2>
+        <h2 class="cot" data-i18n="retail_checkout_summary_title">Rendelés összefoglalása</h2>
         <div id="orits"></div>
         <div style="margin-top:1.4rem;padding:1.4rem;background:var(--subtle);border:1px solid var(--border);border-radius:16px;">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Szállítási cím</div>
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem" data-i18n="retail_checkout_shipping_address_label">Szállítási cím</div>
           <div style="font-size:14px;line-height:1.7">Kovács Anna<br>1051 Budapest, Váci utca 12.<br>+36 30 123 4567</div>
         </div>
         <div style="margin-top:.8rem;padding:1.4rem;background:var(--subtle);border:1px solid var(--border);border-radius:16px;">
-          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Fizetési mód</div>
-          <div style="font-size:14px">💳 Bankkártya — •••• •••• •••• 3456</div>
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem" data-i18n="retail_checkout_payment_method_label">Fizetési mód</div>
+          <div style="font-size:14px" data-i18n="retail_checkout_payment_card_desc">💳 Bankkártya — •••• •••• •••• 3456</div>
         </div>
         <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:2rem">
-          <button class="cnbtn" style="background:var(--accent);color:#fff" onclick="placeOrd()">Rendelés leadása ✓</button>
-          <button class="cblnk" onclick="goSt(1)">← Fizetési adatok</button>
+          <button class="cnbtn" style="background:var(--accent);color:#fff" onclick="placeOrd()" data-i18n="retail_checkout_place_order">Rendelés leadása ✓</button>
+          <button class="cblnk" onclick="goSt(1)" data-i18n="retail_checkout_back_to_payment">← Fizetési adatok</button>
         </div>
       </div>
     </div>
     <div class="cor">
-      <div class="csum-t">Rendelés összegzése</div>
+      <div class="csum-t" data-i18n="retail_checkout_summary_side_title">Rendelés összegzése</div>
       <div id="cosum"></div>
       <div class="cstt" id="costt"></div>
-      <div class="prow"><input class="proi" type="text" placeholder="Kedvezmény kód"><button class="prob">Alkalmaz</button></div>
+      <div class="prow"><input class="proi" type="text" placeholder="Kedvezmény kód" data-i18n-placeholder="retail_checkout_coupon_placeholder"><button class="prob" data-i18n="retail_checkout_coupon_apply">Alkalmaz</button></div>
     </div>
   </div>
 </div>
@@ -671,14 +672,14 @@ footer{background:var(--fg);color:rgba(255,255,255,.4);padding:5rem 4rem 2.5rem}
   <div class="si">
     <div class="sck"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
     <h1 class="stit" data-i18n="retail_success_title">Köszönjük<br><em>rendelésed!</em></h1>
-    <p class="ssub">Visszaigazolást küldtünk az email címedre.<br>Hamarosan feldolgozzuk a rendelésed.</p>
-    <div class="sord">Rendelésszám: <strong>AU-2025-4821</strong></div><br><br>
-    <div class="sdel"><span class="sdlb">Várható kézbesítés</span><span class="sdv">2025. május 2–4.</span></div><br>
-    <a href="#" class="sbtn" onclick="resetS();return false">Vissza a kollekciókhoz</a>
+    <p class="ssub" data-i18n="retail_success_sub">Visszaigazolást küldtünk az email címedre.<br>Hamarosan feldolgozzuk a rendelésed.</p>
+    <div class="sord"><span data-i18n="retail_success_order_num">Rendelésszám:</span> <strong>AU-2025-4821</strong></div><br><br>
+    <div class="sdel"><span class="sdlb" data-i18n="retail_success_delivery">Várható kézbesítés</span><span class="sdv">2025. május 2–4.</span></div><br>
+    <a href="#" class="sbtn" onclick="resetS();return false" data-i18n="retail_success_back">Vissza a kollekciókhoz</a>
   </div>
 </div>
 
-<script src="../js/i18n.js"></script>
+<script src="../../js/i18n.js"></script>
 <script>
 // Cursor
 const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
@@ -692,48 +693,93 @@ document.querySelectorAll('a,button,.pc').forEach(el=>{
 window.addEventListener('scroll',()=>document.getElementById('mnav').classList.toggle('c',scrollY>60));
 
 const PRODS=[
-  {id:1,name:'Aether Chronograph',cat:'watch',catL:'Órák',price:1250000,em:'⌚',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000',badge:'Limitált',rat:4.9,rct:128,
-   cols:[{n:'Arany/Fekete',c:'#1a1a1a'},{n:'Ezüst/Fehér',c:'#b0b0b0'},{n:'Rose Gold',c:'#b5746d'}],
+  {id:1,
+   name:{hu:'Aether Chronograph',en:'Aether Chronograph'},
+   cat:'watch',
+   catL:{hu:'Órák',en:'Watches'},
+   price:1250000,priceEur:3190,em:'⌚',img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000',
+   badge:{hu:'Limitált',en:'Limited'},rat:4.9,rct:128,
+   cols:[{n:{hu:'Arany/Fekete',en:'Gold/Black'},c:'#1a1a1a'},{n:{hu:'Ezüst/Fehér',en:'Silver/White'},c:'#b0b0b0'},{n:{hu:'Rose Gold',en:'Rose Gold'},c:'#b5746d'}],
    szs:['XS','S','M','L','XL'],
-   desc:'Svájci mozgású, szafírüveges kronográf. A kézzel csiszolt tok 316L nemesacélból készül, a szíj prémium bőrből.',
-   mat:'316L nemesacél tok, szafír kristályüveg, valódi bőr szíj. Svájci ETA mozgás.',imgs:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000']},
-  {id:2,name:'Essence du Noir',cat:'fragrance',catL:'Illatszerek',price:85000,em:'🧴',img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000',rat:4.8,rct:89,
-   cols:[{n:'50ml',c:'#c5a059'},{n:'100ml',c:'#8a6d3b'},{n:'200ml',c:'#5a4525'}],
+   desc:{hu:'Svájci mozgású, szafírüveges kronográf. A kézzel csiszolt tok 316L nemesacélból készül, a szíj prémium bőrből.',en:'Swiss-movement chronograph with sapphire glass. The hand-polished case is made of 316L stainless steel, the strap is premium leather.'},
+   mat:{hu:'316L nemesacél tok, szafír kristályüveg, valódi bőr szíj. Svájci ETA mozgás.',en:'316L stainless steel case, sapphire crystal glass, genuine leather strap. Swiss ETA movement.'},
+   imgs:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000']},
+  {id:2,
+   name:{hu:'Essence du Noir',en:'Essence du Noir'},
+   cat:'fragrance',
+   catL:{hu:'Illatszerek',en:'Fragrances'},
+   price:85000,priceEur:219,em:'🧴',img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000',rat:4.8,rct:89,
+   cols:[{n:{hu:'50ml',en:'50ml'},c:'#c5a059'},{n:{hu:'100ml',en:'100ml'},c:'#8a6d3b'},{n:{hu:'200ml',en:'200ml'},c:'#5a4525'}],
    szs:['50ml','100ml','200ml'],
-   desc:'Fekete rózsa, oud és mocha alapjegyek — egy parfüm, ami az emlékezetbe vésődik. Exkluzív, 500 palackos szériában.',
-   mat:'Alkohol, Aqua, Parfum. Vegan formula, állatokon nem tesztelve. Francia eredet.',imgs:['https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000']},
-  {id:3,name:'Nocturne Leather Bag',cat:'leather',catL:'Bőráru',price:480000,em:'👜',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000',badge:'Bestseller',rat:5.0,rct:64,
-   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Cognac',c:'#8b4513'},{n:'Krém',c:'#e8e0d0'}],
+   desc:{hu:'Fekete rózsa, oud és mocha alapjegyek — egy parfüm, ami az emlékezetbe vésődik. Exkluzív, 500 palackos szériában.',en:'Black rose, oud, and mocha base notes — a fragrance that lingers in memory. Exclusive, 500-bottle series.'},
+   mat:{hu:'Alkohol, Aqua, Parfum. Vegan formula, állatokon nem tesztelve. Francia eredet.',en:'Alcohol, Aqua, Parfum. Vegan formula, cruelty-free. French origin.'},
+   imgs:['https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=1000']},
+  {id:3,
+   name:{hu:'Nocturne Leather Bag',en:'Nocturne Leather Bag'},
+   cat:'leather',
+   catL:{hu:'Bőráru',en:'Leather Goods'},
+   price:480000,priceEur:1290,em:'👜',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000',
+   badge:{hu:'Bestseller',en:'Bestseller'},rat:5.0,rct:64,
+   cols:[{n:{hu:'Fekete',en:'Black'},c:'#1a1a1a'},{n:{hu:'Cognac',en:'Cognac'},c:'#8b4513'},{n:{hu:'Krém',en:'Cream'},c:'#e8e0d0'}],
    szs:['Mini','Standard','Maxi'],
-   desc:'Olasz full-grain bőrből kézzel varrott tote. A patinás réz hardver and a dupla varrat évtizedekre szóló tartósságot garantál.',
-   mat:'Full-grain olasz bőr, réz hardver. Kézzel varrott. Made in Italy.',imgs:['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000']},
-  {id:4,name:'Eclipse Sunglasses',cat:'jewel',catL:'Kiegészítők',price:65000,em:'🕶️',img:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000',badge:'Új',rat:4.7,rct:41,
-   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Arany',c:'#c5a059'},{n:'Ezüst',c:'#c0c0c0'}],
+   desc:{hu:'Olasz full-grain bőrből kézzel varrott tote. A patinás réz hardver and a dupla varrat évtizedekre szóló tartósságot garantál.',en:'Hand-stitched tote from Italian full-grain leather. Patinated brass hardware and double stitching guarantee decades of durability.'},
+   mat:{hu:'Full-grain olasz bőr, réz hardver. Kézzel varrott. Made in Italy.',en:'Full-grain Italian leather, brass hardware. Hand-stitched. Made in Italy.'},
+   imgs:['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1000']},
+  {id:4,
+   name:{hu:'Eclipse Sunglasses',en:'Eclipse Sunglasses'},
+   cat:'jewel',
+   catL:{hu:'Kiegészítők',en:'Accessories'},
+   price:65000,priceEur:169,em:'🕶️',img:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000',
+   badge:{hu:'Új',en:'New'},rat:4.7,rct:41,
+   cols:[{n:{hu:'Fekete',en:'Black'},c:'#1a1a1a'},{n:{hu:'Arany',en:'Gold'},c:'#c5a059'},{n:{hu:'Ezüst',en:'Silver'},c:'#c0c0c0'}],
    szs:['Egységes'],
-   desc:'Acetát and titánium keretek, polarizált UV400 lencsékkel. Olasz tervező darab, limitált szériában.',
-   mat:'Olasz acetát and titánium keret, polarizált CR-39 lencse.',imgs:['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000']},
-  {id:5,name:'Velvet Clutch',cat:'leather',catL:'Bőráru',price:125000,em:'💼',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000',rat:4.9,rct:37,
-   cols:[{n:'Fekete',c:'#1a1a1a'},{n:'Bordó',c:'#7b2d45'},{n:'Éjkék',c:'#1a237e'}],
+   desc:{hu:'Acetát and titánium keretek, polarizált UV400 lencsékkel. Olasz tervező darab, limitált szériában.',en:'Acetate and titanium frames with polarized UV400 lenses. Italian designer piece, limited series.'},
+   mat:{hu:'Olasz acetát and titánium keret, polarizált CR-39 lencse.',en:'Italian acetate and titanium frame, polarized CR-39 lenses.'},
+   imgs:['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=1000']},
+  {id:5,
+   name:{hu:'Velvet Clutch',en:'Velvet Clutch'},
+   cat:'leather',
+   catL:{hu:'Bőráru',en:'Leather Goods'},
+   price:125000,priceEur:320,em:'💼',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000',rat:4.9,rct:37,
+   cols:[{n:{hu:'Fekete',en:'Black'},c:'#1a1a1a'},{n:{hu:'Bordó',en:'Burgundy'},c:'#7b2d45'},{n:{hu:'Éjkék',en:'Midnight Blue'},c:'#1a237e'}],
    szs:['Egységes'],
-   desc:'Bársony and bőr kombinációja arany láncos vállpánttal. Az esti rendezvények tökéletes kísérője.',
-   mat:'Olasz bársony and kordován bőr, aranyozott réz hardver. Belső irha bélés.',imgs:['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000']},
-  {id:6,name:'Obsidian Ring Set',cat:'jewel',catL:'Ékszerek',price:290000,em:'💍',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000',badge:'Limitált',rat:4.8,rct:52,
-   cols:[{n:'Fehér Arany',c:'#e0e0e0'},{n:'Sárga Arany',c:'#c5a059'},{n:'Rozé Arany',c:'#b5746d'}],
+   desc:{hu:'Bársony and bőr kombinációja arany láncos vállpánttal. Az esti rendezvények tökéletes kísérője.',en:'Combination of velvet and leather with a gold chain shoulder strap. The perfect companion for evening events.'},
+   mat:{hu:'Olasz bársony and kordován bőr, aranyozott réz hardver. Belső irha bélés.',en:'Italian velvet and cordovan leather, gold-plated brass hardware. Suede lining.'},
+   imgs:['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=1000']},
+  {id:6,
+   name:{hu:'Obsidian Ring Set',en:'Obsidian Ring Set'},
+   cat:'jewel',
+   catL:{hu:'Ékszerek',en:'Jewelry'},
+   price:290000,priceEur:750,em:'💍',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000',
+   badge:{hu:'Limitált',en:'Limited'},rat:4.8,rct:52,
+   cols:[{n:{hu:'Fehér Arany',en:'White Gold'},c:'#e0e0e0'},{n:{hu:'Sárga Arany',en:'Yellow Gold'},c:'#c5a059'},{n:{hu:'Rozé Arany',en:'Rose Gold'},c:'#b5746d'}],
    szs:['48','50','52','54','56','58'],
-   desc:'18 karátos arany kézzel metszett obsidián kővel. Minden követ egyedi mintázata tesz megismételhetetlenné.',
-   mat:'18 karátos arany, természetes obsidián kő. Kézzel metszett and polírozva.',imgs:['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000']},
+   desc:{hu:'18 karátos arany kézzel metszett obsidián kővel. Minden követ egyedi mintázata tesz megismételhetetlenné.',en:'18 karat gold with hand-cut obsidian stone. Each stone\'s unique pattern makes it one-of-a-kind.'},
+   mat:{hu:'18 karátos arany, természetes obsidián kő. Kézzel metszett and polírozva.',en:'18 karat gold, natural obsidian stone. Hand-cut and polished.'},
+   imgs:['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1000']},
 ];
 
 const cart=[];
 let curProd=null,curQty=1;
-const FREE=50000;
+const FREE=50000, FREE_EUR=130;
+
+// ── Price helpers ──────────────────────────────────────────────
+function getPrice(p,lang){return lang==='en'?p.priceEur:p.price;}
+function getPriceFromCartItem(it,lang){return lang==='en'?it.priceEur:it.price;}
+function formatPrice(amount,lang){return lang==='en'?'€'+amount.toLocaleString('en-US'):amount.toLocaleString('hu-HU')+' Ft';}
+function freeThreshold(lang){return lang==='en'?FREE_EUR:FREE;}
 
 function renderProds(f='all'){
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
   const g=document.getElementById('pgrid');g.innerHTML='';
   const ps=f==='all'?PRODS:PRODS.filter(p=>p.cat===f);
   ps.forEach(p=>{
     const d=document.createElement('div');d.className='pc rv';
-    d.innerHTML=`<div class="pib">${p.badge?`<span class="pbadge">${p.badge}</span>`:''}<button class="pw" onclick="event.stopPropagation()">♡</button><img class="pci" src="${p.img}"></div><div class="pi"><span class="pcat">${p.catL}</span><div class="pn">${p.name}</div><div class="pb"><span class="pp">${p.price.toLocaleString('hu-HU')} Ft</span><div class="pstars">${'★'.repeat(Math.round(p.rat))}<span style="font-size:10px;color:var(--muted);margin-left:.2rem">(${p.rct})</span></div></div></div>`;
+    const badgeText=p.badge && p.badge[lang]?`<span class="pbadge">${p.badge[lang]}</span>`:'';
+    const catLText=p.catL[lang] || '';
+    const nameText=p.name[lang] || '';
+    const priceText=formatPrice(getPrice(p,lang),lang);
+    d.innerHTML=`<div class="pib">${badgeText}<button class="pw" onclick="event.stopPropagation()">♡</button><img class="pci" src="${p.img}"></div><div class="pi"><span class="pcat">${catLText}</span><div class="pn">${nameText}</div><div class="pb"><span class="pp">${priceText}</span><div class="pstars">${'★'.repeat(Math.round(p.rat))}<span style="font-size:10px;color:var(--muted);margin-left:.2rem">(${p.rct})</span></div></div></div>`;
     d.addEventListener('click',()=>openProd(p));
     g.appendChild(d);
   });
@@ -747,17 +793,18 @@ function filt(cat,btn){
 }
 
 function openProd(p){
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
   curProd=p;curQty=1;
-  document.getElementById('pdbname').textContent=p.name;
-  document.getElementById('pdcat').textContent=p.catL;
-  document.getElementById('pdname').textContent=p.name;
-  document.getElementById('pdprice').textContent=p.price.toLocaleString('hu-HU')+' Ft';
-  document.getElementById('pddesc').textContent=p.desc;
+  document.getElementById('pdbname').textContent=p.name[lang];
+  document.getElementById('pdcat').textContent=p.catL[lang];
+  document.getElementById('pdname').textContent=p.name[lang];
+  document.getElementById('pdprice').textContent=formatPrice(getPrice(p,lang),lang);
+  document.getElementById('pddesc').textContent=p.desc[lang];
   document.getElementById('pdstars').innerHTML='★'.repeat(Math.round(p.rat))+'☆'.repeat(5-Math.round(p.rat));
-  document.getElementById('pdrct').textContent=`${p.rat}/5 (${p.rct} vélemény)`;
+  document.getElementById('pdrct').textContent=lang==='hu'?`${p.rat}/5 (${p.rct} vélemény)`:`${p.rat}/5 (${p.rct} reviews)`;
   document.getElementById('qdis').textContent='1';
-  document.getElementById('acc-desc').textContent=p.desc;
-  document.getElementById('acc-mat').textContent=p.mat;
+  document.getElementById('acc-desc').textContent=p.desc[lang];
+  document.getElementById('acc-mat').textContent=p.mat[lang];
   // thumbs
   const tw=document.getElementById('pdtw');tw.innerHTML='';
   p.imgs.forEach((img,i)=>{
@@ -772,11 +819,11 @@ function openProd(p){
   const cd=document.getElementById('pdcols');cd.innerHTML='';
   p.cols.forEach((c,i)=>{
     const b=document.createElement('div');b.className='co'+(i===0?' a':'');
-    b.style.background=c.c;b.title=c.n;
-    b.onclick=()=>{document.querySelectorAll('.co').forEach(x=>x.classList.remove('a'));b.classList.add('a');document.getElementById('selcol').textContent=c.n};
+    b.style.background=c.c;b.title=c.n[lang];
+    b.onclick=()=>{document.querySelectorAll('.co').forEach(x=>x.classList.remove('a'));b.classList.add('a');document.getElementById('selcol').textContent=c.n[lang]};
     cd.appendChild(b);
   });
-  document.getElementById('selcol').textContent=p.cols[0].n;
+  document.getElementById('selcol').textContent=p.cols[0].n[lang];
   // sizes
   const sd=document.getElementById('pdsizes');sd.innerHTML='';
   p.szs.forEach((s,i)=>{
@@ -787,52 +834,68 @@ function openProd(p){
   document.getElementById('selsz').textContent=p.szs[0];
   // reviews
   const revs=[
-    {n:'K. Ágnes',d:'2025. ápr. 12.',t:'Gyönyörű darab, pontosan olyan mint a fotókon. A csomagolás is luxus volt. Biztosan visszatérek.',s:5},
-    {n:'M. Balázs',d:'2025. már. 28.',t:'Megérte minden forintot. Kézzel fogható a minőség. Szállítás is gyors, 2 nap alatt megérkezett.',s:5},
-    {n:'T. Réka',d:'2025. feb. 15.',t:'Elegáns, időtlen design. Már több AURELIA darabom van és ez sem okozott csalódást.',s:5},
+    {n:'K. Ágnes',d:lang==='hu'?'2025. ápr. 12.':'Apr 12, 2025',t:lang==='hu'?'Gyönyörű darab, pontosan olyan mint a fotókon. A csomagolás is luxus volt. Biztosan visszatérek.':'Beautiful piece, exactly as in the photos. The packaging was also luxurious. I will definitely return.',s:5},
+    {n:'M. Balázs',d:lang==='hu'?'2025. már. 28.':'Mar 28, 2025',t:lang==='hu'?'Megérte minden forintot. Kézzel fogható a minőség. Szállítás is gyors, 2 nap alatt megérkezett.':'Worth every penny. The quality is tangible. Shipping is also fast, arrived in 2 days.',s:5},
+    {n:'T. Réka',d:lang==='hu'?'2025. feb. 15.':'Feb 15, 2025',t:lang==='hu'?'Elegáns, időtlen design. Már több AURELIA darabom van és ez sem okozott csalódást.':'Elegant, timeless design. I already have several AURELIA pieces and this one did not disappoint either.',s:5},
   ];
   document.getElementById('pdrevs').innerHTML=revs.map(r=>`<div class="rvc"><div class="rss">${'★'.repeat(r.s)}</div><p class="rtx">"${r.t}"</p><div style="display:flex;justify-content:space-between"><span class="ran">${r.n}</span><span class="rdt">${r.d}</span></div></div>`).join('');
   // related
   const rel=PRODS.filter(x=>x.id!==p.id).slice(0,3);
-  document.getElementById('pdrel').innerHTML=rel.map(r=>`<div class="pc" onclick='openProd(${JSON.stringify(r)})' style="cursor:none"><div class="pib"><img class="pci" src="${r.img}"></div><div class="pi"><span class="pcat">${r.catL}</span><div class="pn">${r.name}</div><div class="pp">${r.price.toLocaleString('hu-HU')} Ft</div></div></div>`).join('');
+  document.getElementById('pdrel').innerHTML=rel.map(r=>`<div class="pc" onclick='openProd(${JSON.stringify(r)})' style="cursor:none"><div class="pib"><img class="pci" src="${r.img}"></div><div class="pi"><span class="pcat">${r.catL[lang]}</span><div class="pn">${r.name[lang]}</div><div class="pp">${r.price.toLocaleString(lang==='hu'?'hu-HU':'en-US')}${lang==='hu'?' Ft':' HUF'}</div></div></div>`).join('');
   showV('product');window.scrollTo(0,0);
 }
 
 function chQty(d){curQty=Math.max(1,curQty+d);document.getElementById('qdis').textContent=curQty}
 function addFromPD(){
   if(!curProd)return;
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
   const sz=document.querySelector('.so.a')?.textContent||curProd.szs[0];
   const col=document.getElementById('selcol').textContent;
   addToCart(curProd,sz,col,curQty);
   openCart();
 }
 function toggleW(btn){btn.textContent=btn.textContent==='♡'?'♥':'♡';btn.style.color=btn.textContent==='♥'?'var(--accent)':''}
+customElements.define('a-acc', class extends HTMLElement {}); // no-op fallback
 function toggleAcc(h){h.parentElement.classList.toggle('op')}
 
 function addToCart(p,sz,col,qty=1){
   const ex=cart.find(i=>i.id===p.id&&i.sz===sz&&i.col===col);
-  if(ex)ex.qty+=qty;else cart.push({id:p.id,name:p.name,img:p.img,price:p.price,sz,col,qty});
+  if(ex)ex.qty+=qty;else cart.push({id:p.id,name:p.name,img:p.img,price:p.price,priceEur:p.priceEur||0,sz,col,qty});
   updateCart();
 }
 function updateCart(){
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
+  const FREE_T=freeThreshold(lang);
   const tot=cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cc').textContent=tot;
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const ship=sub>=FREE?0:2990;
+  const sub=cart.reduce((s,i)=>s+getPriceFromCartItem(i,lang)*i.qty,0);
+  const ship=sub>=FREE_T?0:(lang==='en'?8:2990);
   const grand=sub+ship;
   const list=document.getElementById('citems');
   const foot=document.getElementById('cfoot');
   const shipEl=document.getElementById('cship');
-  if(!cart.length){list.innerHTML='<div class="ce"><div class="ce-ic">🛒</div><div class="ce-t">A kosár üres</div><div class="ce-s">Adj hozzá termékeket</div></div>';foot.style.display='none';shipEl.style.display='none';return}
-  list.innerHTML=cart.map((it,i)=>`<div class="cit"><div class="cim"><img src="${it.img}"></div><div><div class="cin">${it.name}</div><div class="cim2">${it.sz} · ${it.col}</div><div class="ciq"><button class="cqb" onclick="updQ(${i},-1)">−</button><div class="cqn">${it.qty}</div><button class="cqb" onclick="updQ(${i},1)">+</button></div><button class="cirm" onclick="remCart(${i})">Eltávolítás</button></div><div class="cip">${(it.price*it.qty).toLocaleString('hu-HU')} Ft</div></div>`).join('');
+  if(!cart.length){
+    list.innerHTML=lang==='hu'
+      ?'<div class="ce"><div class="ce-ic">🛒</div><div class="ce-t">A kosár üres</div><div class="ce-s">Adj hozzá termékeket</div></div>'
+      :'<div class="ce"><div class="ce-ic">🛒</div><div class="ce-t">Your cart is empty</div><div class="ce-s">Add products</div></div>';
+    foot.style.display='none';shipEl.style.display='none';return;
+  }
+  
+  const removeText=lang==='hu'?'Eltávolítás':'Remove';
+  list.innerHTML=cart.map((it,i)=>`<div class="cit"><div class="cim"><img src="${it.img}"></div><div><div class="cin">${it.name[lang]}</div><div class="cim2">${it.sz} · ${it.col}</div><div class="ciq"><button class="cqb" onclick="updQ(${i},-1)">−</button><div class="cqn">${it.qty}</div><button class="cqb" onclick="updQ(${i},1)">+</button></div><button class="cirm" onclick="remCart(${i})">${removeText}</button></div><div class="cip">${formatPrice(getPriceFromCartItem(it,lang)*it.qty,lang)}</div></div>`).join('');
   foot.style.display='block';shipEl.style.display='block';
-  document.getElementById('csub').textContent=sub.toLocaleString('hu-HU')+' Ft';
-  document.getElementById('cship2').textContent=ship===0?'Ingyenes':'2 990 Ft';
-  document.getElementById('cgrand').textContent=grand.toLocaleString('hu-HU')+' Ft';
-  const pct=Math.min(sub/FREE*100,100);
+  
+  document.getElementById('csub').textContent=formatPrice(sub,lang);
+  document.getElementById('cship2').textContent=ship===0?(lang==='hu'?'Ingyenes':'Free'):formatPrice(ship,lang);
+  document.getElementById('cgrand').textContent=formatPrice(grand,lang);
+  const pct=Math.min(sub/FREE_T*100,100);
   document.getElementById('csbf').style.width=pct+'%';
-  const rem=FREE-sub;
-  document.getElementById('csbt').innerHTML=rem>0?`Még <strong>${rem.toLocaleString('hu-HU')} Ft</strong> az ingyenes szállításhoz`:`<strong style="color:var(--accent)">✓ Ingyenes szállítás!</strong>`;
+  const rem=FREE_T-sub;
+  if(lang==='hu'){
+    document.getElementById('csbt').innerHTML=rem>0?`Még <strong>${rem.toLocaleString('hu-HU')} Ft</strong> az ingyenes szállításhoz`:`<strong style="color:var(--accent)">✓ Ingyenes szállítás!</strong>`;
+  }else{
+    document.getElementById('csbt').innerHTML=rem>0?`Only <strong>€${rem.toLocaleString('en-US')}</strong> away from free shipping`:`<strong style="color:var(--accent)">✓ Free shipping!</strong>`;
+  }
   buildCoSum();
 }
 function updQ(i,d){cart[i].qty=Math.max(1,cart[i].qty+d);updateCart()}
@@ -849,14 +912,21 @@ function goSt(n){
   if(n===2)buildOrRev();
 }
 function buildCoSum(){
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const ship=sub>=FREE?0:2990;
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
+  const FREE_T=freeThreshold(lang);
+  const sub=cart.reduce((s,i)=>s+getPriceFromCartItem(i,lang)*i.qty,0);
+  const ship=sub>=FREE_T?0:(lang==='en'?8:2990);
   const grand=sub+ship;
-  document.getElementById('cosum').innerHTML=cart.map(i=>`<div class="csi"><div class="cs-im"><img src="${i.img}"><span class="csqb">${i.qty}</span></div><span class="cs-nm">${i.name}<br><span style="color:var(--muted);font-size:11px">${i.sz} · ${i.col}</span></span><span class="cs-pr">${(i.price*i.qty).toLocaleString('hu-HU')} Ft</span></div>`).join('');
-  document.getElementById('costt').innerHTML=`<div class="csr"><span>Részösszeg</span><span>${sub.toLocaleString('hu-HU')} Ft</span></div><div class="csr"><span>Szállítás</span><span>${ship===0?'Ingyenes':'2 990 Ft'}</span></div><div class="csr tot"><span>Összesen</span><span>${grand.toLocaleString('hu-HU')} Ft</span></div>`;
+  document.getElementById('cosum').innerHTML=cart.map(i=>`<div class="csi"><div class="cs-im"><img src="${i.img}"><span class="csqb">${i.qty}</span></div><span class="cs-nm">${i.name[lang]}<br><span style="color:var(--muted);font-size:11px">${i.sz} · ${i.col}</span></span><span class="cs-pr">${formatPrice(getPriceFromCartItem(i,lang)*i.qty,lang)}</span></div>`).join('');
+  const subText=lang==='hu'?'Részösszeg':'Subtotal';
+  const shipLabel=lang==='hu'?'Szállítás':'Shipping';
+  const shipVal=ship===0?(lang==='hu'?'Ingyenes':'Free'):formatPrice(ship,lang);
+  const totalText=lang==='hu'?'Összesen':'Total';
+  document.getElementById('costt').innerHTML=`<div class="csr"><span>${subText}</span><span>${formatPrice(sub,lang)}</span></div><div class="csr"><span>${shipLabel}</span><span>${shipVal}</span></div><div class="csr tot"><span>${totalText}</span><span>${formatPrice(grand,lang)}</span></div>`;
 }
 function buildOrRev(){
-  document.getElementById('orits').innerHTML=cart.map(i=>`<div class="ori"><div class="ori-img"><img src="${i.img}"></div><div class="ori-n" style="flex:1"><div class="ori-n">${i.name}</div><div class="ori-m">${i.sz} · ${i.col} · ${i.qty} db</div></div><div class="ori-p">${(i.price*i.qty).toLocaleString('hu-HU')} Ft</div></div>`).join('');
+  const lang=currentLang || localStorage.getItem('lang') || 'hu';
+  document.getElementById('orits').innerHTML=cart.map(i=>`<div class="ori"><div class="ori-img"><img src="${i.img}"></div><div class="ori-n" style="flex:1"><div class="ori-n">${i.name[lang]}</div><div class="ori-m">${i.sz} · ${i.col} · ${i.qty} ${lang==='hu'?'db':'pcs'}</div></div><div class="ori-p">${formatPrice(getPriceFromCartItem(i,lang)*i.qty,lang)}</div></div>`).join('');
 }
 function placeOrd(){cart.length=0;updateCart();showV('success');window.scrollTo(0,0)}
 function fmtCrd(el){let v=el.value.replace(/\D/g,'').slice(0,16);el.value=v.replace(/(.{4})/g,'$1 ').trim();document.getElementById('cvn').textContent=(v+'•'.repeat(16-v.length)).replace(/(.{4})/g,'$1 ').trim()}
@@ -870,12 +940,21 @@ function toggleMob(){
   const m=document.getElementById('mob-menu'), t=document.getElementById('mob-toggle');
   m.classList.toggle('open'); t.classList.toggle('open');
 }
+
+// i18n dynamic re-rendering hook
+document.addEventListener('i18nReady', () => {
+  renderProds('all');
+  if (curProd) {
+    openProd(curProd);
+  }
+  updateCart();
+});
+
 renderProds('all');
 </script>
-<script src="../../js/i18n.js"></script>
 <div class="back-bar">
-  <a href="../../index.html#templates" class="bb-b" data-i18n="demo_back">← VISSZA</a>
-  <a href="../../index.html#contact" class="bb-c" data-i18n="demo_cta">EZT SZERETNÉM →</a>
+  <a href="/index.html#templates" class="bb-b" data-i18n="demo_back">← VISSZA AZ ÜGYNÖKSÉGRE</a>
+  <a href="/index.html#contact" class="bb-c" data-i18n="demo_cta">EZT SZERETNÉM →</a>
 </div>
 </body>
 </html>

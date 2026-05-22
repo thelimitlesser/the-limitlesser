@@ -46,6 +46,14 @@
     { "source": "/rolunk", "destination": "/index.html" },
     { "source": "/about", "destination": "/index.html" },
     { "source": "/kapcsolat", "destination": "/index.html" },
-    { "source": "/contact", "destination": "/index.html" }
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/en", "destination": "/index.html" },
+    { "source": "/en/solutions", "destination": "/index.html" },
+    { "source": "/en/scenarios", "destination": "/index.html" },
+    { "source": "/en/work", "destination": "/index.html" },
+    { "source": "/en/process", "destination": "/index.html" },
+    { "source": "/en/faq", "destination": "/index.html" },
+    { "source": "/en/about", "destination": "/index.html" },
+    { "source": "/en/contact", "destination": "/index.html" }
   ]
 }

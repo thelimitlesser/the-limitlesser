@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Do not index demo pages
+Disallow: /demo/
+
+Sitemap: https://limitlesser.com/sitemap.xml
